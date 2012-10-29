@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ruby | Go ahead!]]></title>
+  <link href="http://repeatedly.github.com/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://repeatedly.github.com/"/>
+  <updated>2012-10-29T09:00:08+09:00</updated>
+  <id>http://repeatedly.github.com/</id>
+  <author>
+    <name><![CDATA[Masahiro Nakagawa]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Collect invalid documents for bulk-insert in mongo-ruby-driver]]></title>
+    <link href="http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/"/>
+    <updated>2012-02-29T11:49:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver</id>
+    <content type="html"><![CDATA[<p>Mongo gem 1.6.0 includes <a href="https://github.com/mongodb/mongo-ruby-driver/pull/82">my pull request</a>(and <a href="https://github.com/mongodb/mongo-ruby-driver/commit/a4343e53feb582103366bb9c02628a4c6b29fcbd">HISTORY</a>).</p>
+
+<h2>Background</h2>
+
+<p>Now, a service consists of many systems in production.
+As a result, some systems insert broken or invalid data to MongoDB.</p>
+
+<p>Here is problem.</p>
+
+<p>mongo-ruby-driver's bulk-insert is dead or alive.
+If inserting docs has one invalid docuemnt, then insert operation failed.
+In addition, we can't find invalid documents.</p>
+
+<p>This behavior is not usable.
+We want to handle invalid documents,
+e.g. output to local file, ignoring documents and etc.</p>
+
+<p>My pull request resolves this problem.</p>
+
+<h2>Usage</h2>
+
+<p>I introduced <code>:collect_on_error</code> to <em>insert</em> options.</p>
+
+<p><em>insert</em> without <code>:collect_on_error</code>:</p>
+
+<p>```ruby</p>
+
+<h1>docs is [{}, {}, ...]</h1>
+
+<p>result = collection.insert(docs)
+```</p>
+
+<p><em>result</em> is an array of inserted document.</p>
+
+<p><em>insert</em> with <code>:collect_on_error</code>:</p>
+
+<p><code>ruby
+result, invalid_docs = collection.insert(docs, :collect_on_error =&gt; true)
+</code></p>
+
+<p><em>result</em> is same as insert without <code>:collect_on_error</code>.
+<em>invalid_docs</em> is an array of invalid document which removed ObjectId field.
+We can handle <em>invalid_docs</em> manually.
+For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4656aa3948fce280158f718356f00764ea558ef9#L2R103">fluent-plugin-mongo</a>.</p>
+
+<p>Enjoy MongoDB with Ruby!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Fluentd meetup in Japan]]></title>
+    <link href="http://repeatedly.github.com/2012/02/fluentd-meetup-in-japan/"/>
+    <updated>2012-02-06T01:07:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/02/fluentd-meetup-in-japan</id>
+    <content type="html"><![CDATA[<p><a href="http://www.zusaar.com/event/193104">Fluentd meetup in Japan</a> was held on Feb 4th.</p>
+
+<p>This meetup included more than 120 over hackers. It has been really exciting and I had a great time. Thanks to Fluentd developers and users!</p>
+
+<h2>My presentation</h2>
+
+<p>I talked about "Dive into Fluent plugin". The purpose of this presentaion shares know-how of Fluentd plugin. I hope this presentation helps your developing of Fluend plugin.</p>
+
+<p>I didn't talk about some un-documented features, e.g. EventStream families, ObjectBufferedOutput, the details of DetachMultiProcessMixin and etc. Let's dive into Fluentd source code if you know these features.</p>
+
+<p>Enjoy Fluentd and plugins :)</p>
+
+<ul>
+<li>Slideshare(en)</li>
+</ul>
+
+
+<div style = "width:425px" id = "__ss_11411503"> <strong style = "display:block;margin:12px 0 4px"><a href = "http://www.slideshare.net/repeatedly/fluentd-meetup-dive-into-fluent-plugin" title = "Fluentd meetup dive into fluent plugin" target = "_blank">Fluentd meetup dive into fluent plugin</a></strong> <iframe src = "http://www.slideshare.net/slideshow/embed_code/11411503" width = "425" height = "355" frameborder = "0" marginwidth = "0" marginheight = "0" scrolling = "no"></iframe> <div style = "padding:5px 0 12px"> View more <a href = "http://www.slideshare.net/" target = "_blank">presentations</a> from <a href = "http://www.slideshare.net/repeatedly" target = "_blank">N Masahiro</a> </div> </div>
+
+
+<ul>
+<li>Ustream(ja)</li>
+</ul>
+
+
+<iframe src = "http://www.ustream.tv/embed/recorded/20207654" width = "608" height = "368" scrolling = "no" frameborder = "0" style = "border: 0px none transparent;"></iframe>
+
+
+<p>Sorry, the first few minutes is lost.</p>
+
+<ul>
+<li><a href="http://togetter.com/li/252178">Togetter</a>(ja)</li>
+<li><a href="http://www.flickr.com/photos/koyhoge/sets/72157629164501855">flickr photos by koyhoge</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

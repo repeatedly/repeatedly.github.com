@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: D | Go ahead!]]></title>
+  <link href="http://repeatedly.github.com/categories/d/atom.xml" rel="self"/>
+  <link href="http://repeatedly.github.com/"/>
+  <updated>2012-10-29T09:00:08+09:00</updated>
+  <id>http://repeatedly.github.com/</id>
+  <author>
+    <name><![CDATA[Masahiro Nakagawa]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[DConf 2013 on kickstarter!]]></title>
+    <link href="http://repeatedly.github.com/2012/10/dconf-2013-on-kickstarter/"/>
+    <updated>2012-10-29T08:30:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/10/dconf-2013-on-kickstarter</id>
+    <content type="html"><![CDATA[<p>Walter launched <a href="http://www.kickstarter.com/projects/2083649206/the-d-programming-language-conference-2013-0">"The D Programming Language Conference 2013" on kickstarter</a> in the last week.
+I have already pledged, and total pledged now passed the 50% :)</p>
+
+<p>Please pledge your support!</p>
+
+<p>Forum: <a href="http://forum.dlang.org/thread/k63vi8$1qp0$1@digitalmars.com">DConf 2013 on kickstarter.com: we're live!</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Released denv]]></title>
+    <link href="http://repeatedly.github.com/2012/05/released-denv/"/>
+    <updated>2012-05-14T06:47:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/05/released-denv</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/denv">denv</a> is a D version of rbenv.</p>
+
+<p>It enables you to manage multiple versions of D environment.<br />
+See <a href="https://github.com/repeatedly/denv/blob/master/README.md">README</a> for more details.</p>
+
+<ul>
+<li><a href="http://forum.dlang.org/thread/fqcnqqphbfymgymnwqjx@forum.dlang.org">Announce at digitalmars.D.announce</a></li>
+<li><a href="https://github.com/repeatedly/denv">denv for contest programming</a> (in Japanese)</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Download script written in D]]></title>
+    <link href="http://repeatedly.github.com/2012/03/download-script-written-in-d/"/>
+    <updated>2012-03-20T15:02:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/03/download-script-written-in-d</id>
+    <content type="html"><![CDATA[<p>Tested under dmd 2.058.</p>
+
+<p><div><script src='https://gist.github.com/2114104.js?file='></script>
+<noscript><pre><code>// Written in the D programming language.
+
+/**
+ * High peformance downloader
+ *
+ * Implemented according to &lt;a href=&quot;http://yusukebe.com/archives/20120229/072808.html&quot;&gt;this implementation&lt;/a&gt;.
+ *
+ * Example:
+ * -----
+ * dmd -L-lcurl -run downloader.d
+ * -----
+ */
+
+import core.atomic : atomicOp;
+
+import std.array       : join;
+import std.conv        : to;
+import std.getopt      : getopt;
+import std.file        : exists, mkdir;
+import std.json        : parseJSON, toJSON;
+import std.path        : buildPath, setExtension;
+import std.parallelism : parallel;
+import std.md5         : getDigestString;
+import std.net.curl    : get, download;
+import std.regex       : match;
+import std.string      : toLower;
+import std.stdio       : writeln;
+import std.uri         : encode;
+
+@trusted
+string buildQuery(in string[string] params)
+{
+    string[] queries;
+
+    foreach (k, v; params)
+        queries ~= encode(k) ~ &quot;=&quot; ~ encode(v);
+
+    return queries.join(&quot;&amp;&quot;);
+}
+
+void main(string[] args)
+{
+    immutable AppURI = &quot;http://api.bing.net/json.aspx&quot;;
+    immutable AppId  = &quot;Your AppId&quot;;
+    string storeDir  = &quot;./op_images&quot;;
+    string query     = &quot;おっぱい&quot;;
+    size_t page      = 0;
+
+    getopt(args,
+           &quot;query&quot;, &amp;query,
+           &quot;dir&quot;,   &amp;storeDir,
+           &quot;page&quot;,  &amp;page);
+
+    if (!storeDir.exists)
+        mkdir(storeDir);
+
+    writeln(&quot;Configuration: query = &quot;, query, &quot;, dir = &quot;, storeDir, &quot;, offset = &quot;, page);
+
+    for (shared(size_t) downloadCount; true; page++) {
+        immutable uri = AppURI ~ '?' ~ buildQuery([&quot;AppId&quot;:        AppId,
+                                                   &quot;Version&quot;:      &quot;2.2&quot;,
+                                                   &quot;Market&quot;:       &quot;ja-JP&quot;,
+                                                   &quot;Sources&quot;:      &quot;Image&quot;,
+                                                   &quot;Image.Count&quot;:  &quot;50&quot;,
+                                                   &quot;Image.Offset&quot;: to!string(page * 50),
+                                                   &quot;Adult&quot;:        &quot;off&quot;, 
+                                                   &quot;Query&quot;:        query]);
+        auto response = get(uri);
+        auto result   = parseJSON(response).object[&quot;SearchResponse&quot;];
+        if (&quot;Errors&quot; in result.object) {
+            writeln(&quot;Error: reason = &quot;, toJSON(&amp;result.object[&quot;Errors&quot;]));
+            break;
+        }
+
+        foreach (ref entry; parallel(result.object[&quot;Image&quot;].object[&quot;Results&quot;].array)) {
+            immutable downloadUri = entry.object[&quot;MediaUrl&quot;].str;
+            if (!downloadUri.match(&quot;.jpe?g$&quot;))
+                continue;
+
+            immutable path = buildPath(storeDir, downloadUri.getDigestString().toLower.setExtension(&quot;jpg&quot;));
+            if (path.exists)
+                continue;
+
+            download(downloadUri, path);
+
+            atomicOp!&quot;+=&quot;(downloadCount, 1);
+            writeln(downloadCount, &quot; : downloaded... &quot;, downloadUri);
+        }
+    }
+
+    writeln(&quot;done!&quot;);
+}</code></pre></noscript></div>
+</p>
+
+<p>This code consists of many D features for scripting :)</p>
+
+<p>Enjoy!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Released fluent-logger-d]]></title>
+    <link href="http://repeatedly.github.com/2012/02/released-fluent-logger-d/"/>
+    <updated>2012-02-21T21:16:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/02/released-fluent-logger-d</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/fluent/fluent-logger-d">fluent-logger-d</a>.</p>
+
+<p>This client library has some TODOs, but works fine.
+I tested posting 5,000,000 messages with 5 threads, no problem.</p>
+
+<p>In fact, D community now doesn't want such library.
+Because current D community doesn't face to the production.</p>
+
+<p>I hope this library with <a href="http://fluentd.org/">Fluentd</a> helps your system design in the future.</p>
+]]></content>
+  </entry>
+  
+</feed>

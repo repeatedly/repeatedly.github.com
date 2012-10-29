@@ -1,0 +1,439 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>YAML engine mismatched problem in RubyGems - Go ahead!</title>
+  <meta name="author" content="Masahiro Nakagawa">
+
+  
+  <meta name="description" content="Overview I hit this problem at fluent-plugin-mongo 0.6.0.
+Some user failed fluent-plugin-mongo 0.6.0 installation with following message. 1
+2
+3
+# &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://repeatedly.github.com/2012/01/yaml-engine-mismatched-problem-in-rubygems">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Go ahead!" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Go ahead!</a></h1>
+  
+    <h2>Memoization for Everything</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:repeatedly.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/works">Works</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">YAML engine mismatched problem in RubyGems</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-18T02:55:00+09:00" pubdate data-updated="true">Jan 18<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Overview</h1>
+
+<p>I hit this problem at fluent-plugin-mongo 0.6.0.
+Some user failed fluent-plugin-mongo 0.6.0 installation with following message.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># fluent-gem install fluent-plugin-mongo
+</span><span class='line'>ERROR:  While executing gem ... (NoMethodError)
+</span><span class='line'>    undefined method `call' for nil:NilClass</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In short, you should use the range form, e.g.:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span><span class="o">.</span><span class="n">add_dependency</span> <span class="s2">&quot;mongo&quot;</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;&gt;= 1.5.2&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;= 1.5.2&quot;</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>for an exact match dependency for old or <strong>Syck</strong> environment when building a gem.</p>
+
+<h1>Detail</h1>
+
+<p><strong>YAML</strong> has &#8216;=&#8217; keyword for default key.</p>
+
+<p><strong>RubyGems</strong> uses &#8216;=&#8217; for an exact match dependency.
+Current Ruby&#8217;s <strong>YAML</strong> engine is <strong>Psych</strong>. <strong>Psych</strong> treat unquoted &#8216;=&#8217; correctly.</p>
+
+<p>For example, if you add an exact match dependency to the gem:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span><span class="o">.</span><span class="n">add_dependency</span> <span class="s2">&quot;mongo&quot;</span><span class="p">,</span> <span class="s2">&quot;= 1.5.2&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>then <strong>Psych</strong> generates following metadata:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="p-Indicator">-</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Dependency</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mongo</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">requirement</span><span class="p-Indicator">:</span> <span class="nl">&amp;id002</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Requirement</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">none</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">requirements</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="p-Indicator">-</span> <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">=</span>
+</span><span class='line'>      <span class="p-Indicator">-</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Version</span>
+</span><span class='line'>        <span class="l-Scalar-Plain">version</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1.5.2</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">:runtime</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">prerelease</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">version_requirements</span><span class="p-Indicator">:</span> <span class="nv">*id002</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Problem is here. See line <em>6</em>.</p>
+
+<p>Old Ruby&#8217;s <strong>YAML</strong> engine is <strong>Syck</strong>. <strong>Syck</strong> can&#8217;t treat unquoted &#8216;=&#8217; correctly.
+In <strong>Psych</strong>, the result of loading this metadata is correct:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;= 1.5.2&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>but, <strong>Syck</strong> parses unquoted &#8216;=&#8217; as a <strong>YAML</strong>&#8217;s default key by mistake.
+So loaded result is broken:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;#&lt;Syck::DefaultKey:0x0000010380cc40&gt; 1.5.2&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>RubyGems</strong> don&#8217;t know <code>#&lt;Syck::DefaultKey:0x0000010380cc40></code> operation.
+In the result, the gem installation failed in <strong>Syck</strong> environement.</p>
+
+<h1>Solution</h1>
+
+<h2>Use the range form for an exact match dependency</h2>
+
+<p><strong>Psych</strong> and <strong>Syck</strong> treat &#8216;&lt;=&#8217; / &#8216;>=&#8217; correctly,
+so we can use following form to avoid this problem.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span><span class="o">.</span><span class="n">add_dependency</span> <span class="s2">&quot;mongo&quot;</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;&gt;= 1.5.2&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;= 1.5.2&quot;</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is an ad-hoc approach, but works fine :)<br />
+I strongly recommend this approach.</p>
+
+<h2>Update <strong>RubyGems</strong> for user</h2>
+
+<p>Latest <strong>RubyGems</strong> fixed this problem. See <a href="https://github.com/ruby/ruby/blob/trunk/lib/rubygems/requirement.rb#L164">repository</a></p>
+
+<h2>Build a gem using <strong>Syck</strong></h2>
+
+<p>Using <strong>Syck</strong>, generated metadata is below:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="p-Indicator">-</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Dependency</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mongo</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">requirement</span><span class="p-Indicator">:</span> <span class="nl">&amp;id002</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Requirement</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">none</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">requirements</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="p-Indicator">-</span> <span class="p-Indicator">-</span> <span class="s">&quot;=&quot;</span>
+</span><span class='line'>      <span class="p-Indicator">-</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Version</span>
+</span><span class='line'>        <span class="l-Scalar-Plain">version</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1.5.2</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">:runtime</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">prerelease</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">version_requirements</span><span class="p-Indicator">:</span> <span class="nv">*id002</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Syck</strong> treat &#8216;&#8221;=&#8221;&#8217; as a string, not default key. So we can use &#8216;=&#8217; for an exact match dependency.</p>
+
+<p>If you use <strong>Bundler</strong>, then put <code>YAML::ENGINE.yamler = "syck"</code> on top of gemspec to enable Syck engine.
+But some environment doesn&#8217;t have Syck engine, so this approch doesn&#8217;t work in such environment&#8230;</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Masahiro Nakagawa</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-18T02:55:00+09:00" pubdate data-updated="true">Jan 18<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/ruby/'>ruby</a>, <a class='category' href='/categories/rubygems/'>rubygems</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/2012/01/yaml-engine-mismatched-problem-in-rubygems/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/2012/01/yaml-engine-mismatched-problem-in-rubygems/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/01/released-fluent-plugin-mongo-0.6.0/" title="Previous Post: Released fluent-plugin-mongo 0.6.0">&laquo; Released fluent-plugin-mongo 0.6.0</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/02/fluentd-meetup-in-japan/" title="next Post: Fluentd meetup in Japan">Fluentd meetup in Japan &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/10/dconf-2013-on-kickstarter/">DConf 2013 on kickstarter!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/05/released-denv/">Released denv</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/04/lt-at-fluentd-casual-talks/">LT at Fluentd Casual Talks</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/03/download-script-written-in-d/">Download script written in D</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/">Collect invalid documents for bulk-insert in mongo-ruby-driver</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/repeatedly">@repeatedly</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'repeatedly',
+            count: 4,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("repeatedly", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/repeatedly" class="twitter-follow-button" data-show-count="false">Follow @repeatedly</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Masahiro Nakagawa -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'repeatedly';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://repeatedly.github.com/2012/01/yaml-engine-mismatched-problem-in-rubygems/';
+        var disqus_url = 'http://repeatedly.github.com/2012/01/yaml-engine-mismatched-problem-in-rubygems/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

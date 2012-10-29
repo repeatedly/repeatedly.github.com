@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mspgack-rpc | Go ahead!]]></title>
+  <link href="http://repeatedly.github.com/categories/mspgack-rpc/atom.xml" rel="self"/>
+  <link href="http://repeatedly.github.com/"/>
+  <updated>2012-10-29T09:00:08+09:00</updated>
+  <id>http://repeatedly.github.com/</id>
+  <author>
+    <name><![CDATA[Masahiro Nakagawa]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Released MessagePack RPC Python 0.2.0]]></title>
+    <link href="http://repeatedly.github.com/2012/01/released-msgpack-rpc-python-0.2.0/"/>
+    <updated>2012-01-10T08:48:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/01/released-msgpack-rpc-python-0.2.0</id>
+    <content type="html"><![CDATA[<p>Source package is <a href="http://pypi.python.org/pypi/msgpack-rpc-python/0.2.0">here</a>.</p>
+
+<p>The main feature is MessagePack RPC Server support.<br />
+Example is below:</p>
+
+<p>```python
+import msgpackrpc</p>
+
+<p>class SumServer:
+  def sum(x, y):</p>
+
+<pre><code>return x + y
+</code></pre>
+
+<p>server = msgpackrpc.Server(SumServer())
+server.listen(msgpackrpc.Address("localhost", 10000))
+server.start()
+```</p>
+
+<p>You can use Client to access this server:</p>
+
+<p><code>python
+client = msgpackrpc.Client(msgpackrpc.Address("localhost", 10000))
+client.call("sum", 1, 2) # =&gt; 3
+</code></p>
+
+<h2>Other improvements</h2>
+
+<ul>
+<li>Support Python 3 (tested with Python 3.2.2)</li>
+<li>Add notify request to Client</li>
+<li>Add (un)pack_encoding option for MessagePack (de)serializer</li>
+</ul>
+
+
+<h2>TODO</h2>
+
+<p>Current implementaion lacks some features compared to Ruby implementaion.
+I will add new features, e.g. advanced return, async return, etc.
+In addition, I will refactor the internal architecture.</p>
+]]></content>
+  </entry>
+  
+</feed>

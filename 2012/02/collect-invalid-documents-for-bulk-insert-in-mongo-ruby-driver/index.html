@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Go ahead!</title>
+  <title>Collect invalid documents for bulk-insert in mongo-ruby-driver - Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Walter launched &#8220;The D Programming Language Conference 2013&#8221; on kickstarter in the last week.
-I have already pledged, and total pledged &hellip;">
+  <meta name="description" content="Mongo gem 1.6.0 includes my pull request(and HISTORY). Background Now, a service consists of many systems in production.
+As a result, some systems &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@ I have already pledged, and total pledged &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.com">
+  <link rel="canonical" href="http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -64,284 +64,12 @@ I have already pledged, and total pledged &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/2012/10/dconf-2013-on-kickstarter/">DConf 2013 on kickstarter!</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-29T08:30:00+09:00" pubdate data-updated="true">Oct 29<span>th</span>, 2012</time>
-        
-         | <a href="/2012/10/dconf-2013-on-kickstarter/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Walter launched <a href="http://www.kickstarter.com/projects/2083649206/the-d-programming-language-conference-2013-0">&#8220;The D Programming Language Conference 2013&#8221; on kickstarter</a> in the last week.
-I have already pledged, and total pledged now passed the 50% :)</p>
-
-<p>Please pledge your support!</p>
-
-<p>Forum: <a href="http://forum.dlang.org/thread/k63vi8$1qp0$1@digitalmars.com">DConf 2013 on kickstarter.com: we&#8217;re live!</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/05/released-denv/">Released denv</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-14T06:47:00+09:00" pubdate data-updated="true">May 14<span>th</span>, 2012</time>
-        
-         | <a href="/2012/05/released-denv/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="https://github.com/repeatedly/denv">denv</a> is a D version of rbenv.</p>
-
-<p>It enables you to manage multiple versions of D environment.<br />
-See <a href="https://github.com/repeatedly/denv/blob/master/README.md">README</a> for more details.</p>
-
-<ul>
-<li><a href="http://forum.dlang.org/thread/fqcnqqphbfymgymnwqjx@forum.dlang.org">Announce at digitalmars.D.announce</a></li>
-<li><a href="https://github.com/repeatedly/denv">denv for contest programming</a> (in Japanese)</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/04/lt-at-fluentd-casual-talks/">LT at Fluentd Casual Talks</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-12T20:18:00+09:00" pubdate data-updated="true">Apr 12<span>th</span>, 2012</time>
-        
-         | <a href="/2012/04/lt-at-fluentd-casual-talks/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://atnd.org/events/27808">Fluentd Casual Talks</a> will be held in Japan.</p>
-
-<p>I will talk about &#8220;The Melancholy of Plugin Developer&#8221; in LT section.</p>
-
-<p>See you at the event!</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/03/download-script-written-in-d/">Download script written in D</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-20T15:02:00+09:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
-        
-         | <a href="/2012/03/download-script-written-in-d/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Tested under dmd 2.058.</p>
-
-<div><script src='https://gist.github.com/2114104.js?file='></script>
-<noscript><pre><code>// Written in the D programming language.
-
-/**
- * High peformance downloader
- *
- * Implemented according to &lt;a href=&quot;http://yusukebe.com/archives/20120229/072808.html&quot;&gt;this implementation&lt;/a&gt;.
- *
- * Example:
- * -----
- * dmd -L-lcurl -run downloader.d
- * -----
- */
-
-import core.atomic : atomicOp;
-
-import std.array       : join;
-import std.conv        : to;
-import std.getopt      : getopt;
-import std.file        : exists, mkdir;
-import std.json        : parseJSON, toJSON;
-import std.path        : buildPath, setExtension;
-import std.parallelism : parallel;
-import std.md5         : getDigestString;
-import std.net.curl    : get, download;
-import std.regex       : match;
-import std.string      : toLower;
-import std.stdio       : writeln;
-import std.uri         : encode;
-
-@trusted
-string buildQuery(in string[string] params)
-{
-    string[] queries;
-
-    foreach (k, v; params)
-        queries ~= encode(k) ~ &quot;=&quot; ~ encode(v);
-
-    return queries.join(&quot;&amp;&quot;);
-}
-
-void main(string[] args)
-{
-    immutable AppURI = &quot;http://api.bing.net/json.aspx&quot;;
-    immutable AppId  = &quot;Your AppId&quot;;
-    string storeDir  = &quot;./op_images&quot;;
-    string query     = &quot;おっぱい&quot;;
-    size_t page      = 0;
-
-    getopt(args,
-           &quot;query&quot;, &amp;query,
-           &quot;dir&quot;,   &amp;storeDir,
-           &quot;page&quot;,  &amp;page);
-
-    if (!storeDir.exists)
-        mkdir(storeDir);
-
-    writeln(&quot;Configuration: query = &quot;, query, &quot;, dir = &quot;, storeDir, &quot;, offset = &quot;, page);
-
-    for (shared(size_t) downloadCount; true; page++) {
-        immutable uri = AppURI ~ '?' ~ buildQuery([&quot;AppId&quot;:        AppId,
-                                                   &quot;Version&quot;:      &quot;2.2&quot;,
-                                                   &quot;Market&quot;:       &quot;ja-JP&quot;,
-                                                   &quot;Sources&quot;:      &quot;Image&quot;,
-                                                   &quot;Image.Count&quot;:  &quot;50&quot;,
-                                                   &quot;Image.Offset&quot;: to!string(page * 50),
-                                                   &quot;Adult&quot;:        &quot;off&quot;, 
-                                                   &quot;Query&quot;:        query]);
-        auto response = get(uri);
-        auto result   = parseJSON(response).object[&quot;SearchResponse&quot;];
-        if (&quot;Errors&quot; in result.object) {
-            writeln(&quot;Error: reason = &quot;, toJSON(&amp;result.object[&quot;Errors&quot;]));
-            break;
-        }
-
-        foreach (ref entry; parallel(result.object[&quot;Image&quot;].object[&quot;Results&quot;].array)) {
-            immutable downloadUri = entry.object[&quot;MediaUrl&quot;].str;
-            if (!downloadUri.match(&quot;.jpe?g$&quot;))
-                continue;
-
-            immutable path = buildPath(storeDir, downloadUri.getDigestString().toLower.setExtension(&quot;jpg&quot;));
-            if (path.exists)
-                continue;
-
-            download(downloadUri, path);
-
-            atomicOp!&quot;+=&quot;(downloadCount, 1);
-            writeln(downloadCount, &quot; : downloaded... &quot;, downloadUri);
-        }
-    }
-
-    writeln(&quot;done!&quot;);
-}</code></pre></noscript></div>
-
-
-<p>This code consists of many D features for scripting :)</p>
-
-<p>Enjoy!</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/">Collect invalid documents for bulk-insert in mongo-ruby-driver</a></h1>
+      <h1 class="entry-title">Collect invalid documents for bulk-insert in mongo-ruby-driver</h1>
     
     
       <p class="meta">
@@ -359,14 +87,14 @@ void main(string[] args)
 
 <time datetime="2012-02-29T11:49:00+09:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
         
-         | <a href="/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/#disqus_thread">Comments</a>
+         | <a href="#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Mongo gem 1.6.0 includes <a href="https://github.com/mongodb/mongo-ruby-driver/pull/82">my pull request</a>(and <a href="https://github.com/mongodb/mongo-ruby-driver/commit/a4343e53feb582103366bb9c02628a4c6b29fcbd">HISTORY</a>).</p>
+<div class="entry-content"><p>Mongo gem 1.6.0 includes <a href="https://github.com/mongodb/mongo-ruby-driver/pull/82">my pull request</a>(and <a href="https://github.com/mongodb/mongo-ruby-driver/commit/a4343e53feb582103366bb9c02628a4c6b29fcbd">HISTORY</a>).</p>
 
 <h2>Background</h2>
 
@@ -414,20 +142,69 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
 
 <p>Enjoy MongoDB with Ruby!</p>
 </div>
+
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Masahiro Nakagawa</span></span>
+
+      
+
+
+
+
+
+
+
+
   
 
 
-    </article>
+<time datetime="2012-02-29T11:49:00+09:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
+      
+
+<span class="categories">
   
-  <div class="pagination">
+    <a class='category' href='/categories/ruby/'>Ruby</a>, <a class='category' href='/categories/mongodb/'>mongodb</a>
+  
+</span>
+
+
+    </p>
     
-      <a class="prev" href="/page/2/">&larr; Older</a>
-    
-    <a href="/archives">Archives</a>
-    
-  </div>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
 </div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/02/released-fluent-logger-d/" title="Previous Post: Released fluent-logger-d">&laquo; Released fluent-logger-d</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/03/download-script-written-in-d/" title="next Post: Download script written in D">Download script written in D &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -460,7 +237,7 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
 <section>
   <h1>Github Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/repeatedly">@repeatedly</a> on Github
@@ -490,7 +267,7 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -510,6 +287,7 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -524,7 +302,10 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
       var disqus_shortname = 'repeatedly';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/';
+        var disqus_url = 'http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

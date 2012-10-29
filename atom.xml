@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Go ahead!]]></title>
+  <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
+  <link href="http://repeatedly.github.com/"/>
+  <updated>2012-10-29T09:00:08+09:00</updated>
+  <id>http://repeatedly.github.com/</id>
+  <author>
+    <name><![CDATA[Masahiro Nakagawa]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[DConf 2013 on kickstarter!]]></title>
+    <link href="http://repeatedly.github.com/2012/10/dconf-2013-on-kickstarter/"/>
+    <updated>2012-10-29T08:30:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/10/dconf-2013-on-kickstarter</id>
+    <content type="html"><![CDATA[<p>Walter launched <a href="http://www.kickstarter.com/projects/2083649206/the-d-programming-language-conference-2013-0">&#8220;The D Programming Language Conference 2013&#8221; on kickstarter</a> in the last week.
+I have already pledged, and total pledged now passed the 50% :)</p>
+
+<p>Please pledge your support!</p>
+
+<p>Forum: <a href="http://forum.dlang.org/thread/k63vi8$1qp0$1@digitalmars.com">DConf 2013 on kickstarter.com: we&#8217;re live!</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Released denv]]></title>
+    <link href="http://repeatedly.github.com/2012/05/released-denv/"/>
+    <updated>2012-05-14T06:47:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/05/released-denv</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/denv">denv</a> is a D version of rbenv.</p>
+
+<p>It enables you to manage multiple versions of D environment.<br />
+See <a href="https://github.com/repeatedly/denv/blob/master/README.md">README</a> for more details.</p>
+
+<ul>
+<li><a href="http://forum.dlang.org/thread/fqcnqqphbfymgymnwqjx@forum.dlang.org">Announce at digitalmars.D.announce</a></li>
+<li><a href="https://github.com/repeatedly/denv">denv for contest programming</a> (in Japanese)</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[LT at Fluentd Casual Talks]]></title>
+    <link href="http://repeatedly.github.com/2012/04/lt-at-fluentd-casual-talks/"/>
+    <updated>2012-04-12T20:18:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/04/lt-at-fluentd-casual-talks</id>
+    <content type="html"><![CDATA[<p><a href="http://atnd.org/events/27808">Fluentd Casual Talks</a> will be held in Japan.</p>
+
+<p>I will talk about &#8220;The Melancholy of Plugin Developer&#8221; in LT section.</p>
+
+<p>See you at the event!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Download script written in D]]></title>
+    <link href="http://repeatedly.github.com/2012/03/download-script-written-in-d/"/>
+    <updated>2012-03-20T15:02:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/03/download-script-written-in-d</id>
+    <content type="html"><![CDATA[<p>Tested under dmd 2.058.</p>
+
+<div><script src='https://gist.github.com/2114104.js?file='></script>
+<noscript><pre><code>// Written in the D programming language.
+
+/**
+ * High peformance downloader
+ *
+ * Implemented according to &lt;a href=&quot;http://yusukebe.com/archives/20120229/072808.html&quot;&gt;this implementation&lt;/a&gt;.
+ *
+ * Example:
+ * -----
+ * dmd -L-lcurl -run downloader.d
+ * -----
+ */
+
+import core.atomic : atomicOp;
+
+import std.array       : join;
+import std.conv        : to;
+import std.getopt      : getopt;
+import std.file        : exists, mkdir;
+import std.json        : parseJSON, toJSON;
+import std.path        : buildPath, setExtension;
+import std.parallelism : parallel;
+import std.md5         : getDigestString;
+import std.net.curl    : get, download;
+import std.regex       : match;
+import std.string      : toLower;
+import std.stdio       : writeln;
+import std.uri         : encode;
+
+@trusted
+string buildQuery(in string[string] params)
+{
+    string[] queries;
+
+    foreach (k, v; params)
+        queries ~= encode(k) ~ &quot;=&quot; ~ encode(v);
+
+    return queries.join(&quot;&amp;&quot;);
+}
+
+void main(string[] args)
+{
+    immutable AppURI = &quot;http://api.bing.net/json.aspx&quot;;
+    immutable AppId  = &quot;Your AppId&quot;;
+    string storeDir  = &quot;./op_images&quot;;
+    string query     = &quot;おっぱい&quot;;
+    size_t page      = 0;
+
+    getopt(args,
+           &quot;query&quot;, &amp;query,
+           &quot;dir&quot;,   &amp;storeDir,
+           &quot;page&quot;,  &amp;page);
+
+    if (!storeDir.exists)
+        mkdir(storeDir);
+
+    writeln(&quot;Configuration: query = &quot;, query, &quot;, dir = &quot;, storeDir, &quot;, offset = &quot;, page);
+
+    for (shared(size_t) downloadCount; true; page++) {
+        immutable uri = AppURI ~ '?' ~ buildQuery([&quot;AppId&quot;:        AppId,
+                                                   &quot;Version&quot;:      &quot;2.2&quot;,
+                                                   &quot;Market&quot;:       &quot;ja-JP&quot;,
+                                                   &quot;Sources&quot;:      &quot;Image&quot;,
+                                                   &quot;Image.Count&quot;:  &quot;50&quot;,
+                                                   &quot;Image.Offset&quot;: to!string(page * 50),
+                                                   &quot;Adult&quot;:        &quot;off&quot;, 
+                                                   &quot;Query&quot;:        query]);
+        auto response = get(uri);
+        auto result   = parseJSON(response).object[&quot;SearchResponse&quot;];
+        if (&quot;Errors&quot; in result.object) {
+            writeln(&quot;Error: reason = &quot;, toJSON(&amp;result.object[&quot;Errors&quot;]));
+            break;
+        }
+
+        foreach (ref entry; parallel(result.object[&quot;Image&quot;].object[&quot;Results&quot;].array)) {
+            immutable downloadUri = entry.object[&quot;MediaUrl&quot;].str;
+            if (!downloadUri.match(&quot;.jpe?g$&quot;))
+                continue;
+
+            immutable path = buildPath(storeDir, downloadUri.getDigestString().toLower.setExtension(&quot;jpg&quot;));
+            if (path.exists)
+                continue;
+
+            download(downloadUri, path);
+
+            atomicOp!&quot;+=&quot;(downloadCount, 1);
+            writeln(downloadCount, &quot; : downloaded... &quot;, downloadUri);
+        }
+    }
+
+    writeln(&quot;done!&quot;);
+}</code></pre></noscript></div>
+
+
+<p>This code consists of many D features for scripting :)</p>
+
+<p>Enjoy!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Collect invalid documents for bulk-insert in mongo-ruby-driver]]></title>
+    <link href="http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/"/>
+    <updated>2012-02-29T11:49:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver</id>
+    <content type="html"><![CDATA[<p>Mongo gem 1.6.0 includes <a href="https://github.com/mongodb/mongo-ruby-driver/pull/82">my pull request</a>(and <a href="https://github.com/mongodb/mongo-ruby-driver/commit/a4343e53feb582103366bb9c02628a4c6b29fcbd">HISTORY</a>).</p>
+
+<h2>Background</h2>
+
+<p>Now, a service consists of many systems in production.
+As a result, some systems insert broken or invalid data to MongoDB.</p>
+
+<p>Here is problem.</p>
+
+<p>mongo-ruby-driver&#8217;s bulk-insert is dead or alive.
+If inserting docs has one invalid docuemnt, then insert operation failed.
+In addition, we can&#8217;t find invalid documents.</p>
+
+<p>This behavior is not usable.
+We want to handle invalid documents,
+e.g. output to local file, ignoring documents and etc.</p>
+
+<p>My pull request resolves this problem.</p>
+
+<h2>Usage</h2>
+
+<p>I introduced <code>:collect_on_error</code> to <em>insert</em> options.</p>
+
+<p><em>insert</em> without <code>:collect_on_error</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># docs is [{}, {}, ...]</span>
+</span><span class='line'><span class="n">result</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">docs</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>result</em> is an array of inserted document.</p>
+
+<p><em>insert</em> with <code>:collect_on_error</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">result</span><span class="p">,</span> <span class="n">invalid_docs</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">docs</span><span class="p">,</span> <span class="ss">:collect_on_error</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>result</em> is same as insert without <code>:collect_on_error</code>.
+<em>invalid_docs</em> is an array of invalid document which removed ObjectId field.
+We can handle <em>invalid_docs</em> manually.
+For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4656aa3948fce280158f718356f00764ea558ef9#L2R103">fluent-plugin-mongo</a>.</p>
+
+<p>Enjoy MongoDB with Ruby!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Released fluent-logger-d]]></title>
+    <link href="http://repeatedly.github.com/2012/02/released-fluent-logger-d/"/>
+    <updated>2012-02-21T21:16:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/02/released-fluent-logger-d</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/fluent/fluent-logger-d">fluent-logger-d</a>.</p>
+
+<p>This client library has some TODOs, but works fine.
+I tested posting 5,000,000 messages with 5 threads, no problem.</p>
+
+<p>In fact, D community now doesn&#8217;t want such library.
+Because current D community doesn&#8217;t face to the production.</p>
+
+<p>I hope this library with <a href="http://fluentd.org/">Fluentd</a> helps your system design in the future.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Fluentd meetup in Japan]]></title>
+    <link href="http://repeatedly.github.com/2012/02/fluentd-meetup-in-japan/"/>
+    <updated>2012-02-06T01:07:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/02/fluentd-meetup-in-japan</id>
+    <content type="html"><![CDATA[<p><a href="http://www.zusaar.com/event/193104">Fluentd meetup in Japan</a> was held on Feb 4th.</p>
+
+<p>This meetup included more than 120 over hackers. It has been really exciting and I had a great time. Thanks to Fluentd developers and users!</p>
+
+<h2>My presentation</h2>
+
+<p>I talked about &#8220;Dive into Fluent plugin&#8221;. The purpose of this presentaion shares know-how of Fluentd plugin. I hope this presentation helps your developing of Fluend plugin.</p>
+
+<p>I didn&#8217;t talk about some un-documented features, e.g. EventStream families, ObjectBufferedOutput, the details of DetachMultiProcessMixin and etc. Let&#8217;s dive into Fluentd source code if you know these features.</p>
+
+<p>Enjoy Fluentd and plugins :)</p>
+
+<ul>
+<li>Slideshare(en)</li>
+</ul>
+
+
+<div style = "width:425px" id = "__ss_11411503"> <strong style = "display:block;margin:12px 0 4px"><a href = "http://www.slideshare.net/repeatedly/fluentd-meetup-dive-into-fluent-plugin" title = "Fluentd meetup dive into fluent plugin" target = "_blank">Fluentd meetup dive into fluent plugin</a></strong> <iframe src = "http://www.slideshare.net/slideshow/embed_code/11411503" width = "425" height = "355" frameborder = "0" marginwidth = "0" marginheight = "0" scrolling = "no"></iframe> <div style = "padding:5px 0 12px"> View more <a href = "http://www.slideshare.net/" target = "_blank">presentations</a> from <a href = "http://www.slideshare.net/repeatedly" target = "_blank">N Masahiro</a> </div> </div>
+
+
+<ul>
+<li>Ustream(ja)</li>
+</ul>
+
+
+<iframe src = "http://www.ustream.tv/embed/recorded/20207654" width = "608" height = "368" scrolling = "no" frameborder = "0" style = "border: 0px none transparent;"></iframe>
+
+
+<p>Sorry, the first few minutes is lost.</p>
+
+<ul>
+<li><a href="http://togetter.com/li/252178">Togetter</a>(ja)</li>
+<li><a href="http://www.flickr.com/photos/koyhoge/sets/72157629164501855">flickr photos by koyhoge</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[YAML engine mismatched problem in RubyGems]]></title>
+    <link href="http://repeatedly.github.com/2012/01/yaml-engine-mismatched-problem-in-rubygems/"/>
+    <updated>2012-01-18T02:55:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/01/yaml-engine-mismatched-problem-in-rubygems</id>
+    <content type="html"><![CDATA[<h1>Overview</h1>
+
+<p>I hit this problem at fluent-plugin-mongo 0.6.0.
+Some user failed fluent-plugin-mongo 0.6.0 installation with following message.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># fluent-gem install fluent-plugin-mongo
+</span><span class='line'>ERROR:  While executing gem ... (NoMethodError)
+</span><span class='line'>    undefined method `call' for nil:NilClass</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In short, you should use the range form, e.g.:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span><span class="o">.</span><span class="n">add_dependency</span> <span class="s2">&quot;mongo&quot;</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;&gt;= 1.5.2&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;= 1.5.2&quot;</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>for an exact match dependency for old or <strong>Syck</strong> environment when building a gem.</p>
+
+<h1>Detail</h1>
+
+<p><strong>YAML</strong> has &#8216;=&#8217; keyword for default key.</p>
+
+<p><strong>RubyGems</strong> uses &#8216;=&#8217; for an exact match dependency.
+Current Ruby&#8217;s <strong>YAML</strong> engine is <strong>Psych</strong>. <strong>Psych</strong> treat unquoted &#8216;=&#8217; correctly.</p>
+
+<p>For example, if you add an exact match dependency to the gem:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span><span class="o">.</span><span class="n">add_dependency</span> <span class="s2">&quot;mongo&quot;</span><span class="p">,</span> <span class="s2">&quot;= 1.5.2&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>then <strong>Psych</strong> generates following metadata:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="p-Indicator">-</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Dependency</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mongo</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">requirement</span><span class="p-Indicator">:</span> <span class="nl">&amp;id002</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Requirement</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">none</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">requirements</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="p-Indicator">-</span> <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">=</span>
+</span><span class='line'>      <span class="p-Indicator">-</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Version</span>
+</span><span class='line'>        <span class="l-Scalar-Plain">version</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1.5.2</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">:runtime</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">prerelease</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">version_requirements</span><span class="p-Indicator">:</span> <span class="nv">*id002</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Problem is here. See line <em>6</em>.</p>
+
+<p>Old Ruby&#8217;s <strong>YAML</strong> engine is <strong>Syck</strong>. <strong>Syck</strong> can&#8217;t treat unquoted &#8216;=&#8217; correctly.
+In <strong>Psych</strong>, the result of loading this metadata is correct:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;= 1.5.2&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>but, <strong>Syck</strong> parses unquoted &#8216;=&#8217; as a <strong>YAML</strong>&#8217;s default key by mistake.
+So loaded result is broken:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;#&lt;Syck::DefaultKey:0x0000010380cc40&gt; 1.5.2&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>RubyGems</strong> don&#8217;t know <code>#&lt;Syck::DefaultKey:0x0000010380cc40></code> operation.
+In the result, the gem installation failed in <strong>Syck</strong> environement.</p>
+
+<h1>Solution</h1>
+
+<h2>Use the range form for an exact match dependency</h2>
+
+<p><strong>Psych</strong> and <strong>Syck</strong> treat &#8216;&lt;=&#8217; / &#8216;>=&#8217; correctly,
+so we can use following form to avoid this problem.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span><span class="o">.</span><span class="n">add_dependency</span> <span class="s2">&quot;mongo&quot;</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;&gt;= 1.5.2&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;= 1.5.2&quot;</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is an ad-hoc approach, but works fine :)<br />
+I strongly recommend this approach.</p>
+
+<h2>Update <strong>RubyGems</strong> for user</h2>
+
+<p>Latest <strong>RubyGems</strong> fixed this problem. See <a href="https://github.com/ruby/ruby/blob/trunk/lib/rubygems/requirement.rb#L164">repository</a></p>
+
+<h2>Build a gem using <strong>Syck</strong></h2>
+
+<p>Using <strong>Syck</strong>, generated metadata is below:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="p-Indicator">-</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Dependency</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mongo</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">requirement</span><span class="p-Indicator">:</span> <span class="nl">&amp;id002</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Requirement</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">none</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">requirements</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="p-Indicator">-</span> <span class="p-Indicator">-</span> <span class="s">&quot;=&quot;</span>
+</span><span class='line'>      <span class="p-Indicator">-</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Version</span>
+</span><span class='line'>        <span class="l-Scalar-Plain">version</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1.5.2</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">:runtime</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">prerelease</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">version_requirements</span><span class="p-Indicator">:</span> <span class="nv">*id002</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Syck</strong> treat &#8216;&#8221;=&#8221;&#8217; as a string, not default key. So we can use &#8216;=&#8217; for an exact match dependency.</p>
+
+<p>If you use <strong>Bundler</strong>, then put <code>YAML::ENGINE.yamler = "syck"</code> on top of gemspec to enable Syck engine.
+But some environment doesn&#8217;t have Syck engine, so this approch doesn&#8217;t work in such environment&#8230;</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Released fluent-plugin-mongo 0.6.0]]></title>
+    <link href="http://repeatedly.github.com/2012/01/released-fluent-plugin-mongo-0.6.0/"/>
+    <updated>2012-01-16T09:18:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/01/released-fluent-plugin-mongo-0.6.0</id>
+    <content type="html"><![CDATA[<p>Gem page is <a href="https://rubygems.org/gems/fluent-plugin-mongo">here</a>.</p>
+
+<p>This version requires mongo gem version 1.5.2 for Replica Set.</p>
+
+<h2>New features</h2>
+
+<h3>Replica Set support</h3>
+
+<p>You can use <em>mongo_replset</em> for connecting to Replica Set cluster.</p>
+
+<p>Example configuration is below:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="nt">&lt;match</span> <span class="s">mongo.**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> mongo_replset
+</span><span class='line'>  <span class="nb">database</span> fluent
+</span><span class='line'>  <span class="nb">collection</span> logs
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># each node separated by &#39;,&#39;</span>
+</span><span class='line'>  <span class="nb">nodes</span> localhost:27017,localhost:27018,localhost:27019
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># num_retries is threshold at failover, default is 60.</span>
+</span><span class='line'>  <span class="c"># If retry count reached this threshold, mongo plugin raises an exception.</span>
+</span><span class='line'>  <span class="err">num_</span><span class="nb">retries</span> <span class="m">30</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># following optional parameters passed to ReplSetConnection of mongo-ruby-driver.</span>
+</span><span class='line'>  <span class="c"># See mongo-ruby-driver docs for more detail.</span>
+</span><span class='line'>  <span class="c">#name replset_name</span>
+</span><span class='line'>  <span class="c">#read secondary</span>
+</span><span class='line'>  <span class="c">#refresh_mode sync</span>
+</span><span class='line'>  <span class="c">#refresh_interval 60</span>
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Handling invalid records</h3>
+
+<p>Fluentd is an event collector, so Mongo plugin should handle an invalid record as a BSON.</p>
+
+<p>Mongo plugin approach marshals an invalid record when mongo-ruby-driver detects such record.
+And Mongo plugin inserts marshaled record as a broken data to same collection.</p>
+
+<p>If passed following invalid record:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="o">:</span> <span class="s2">&quot;invalid value&quot;</span><span class="p">,</span> <span class="s2">&quot;key2&quot;</span><span class="o">:</span> <span class="s2">&quot;valid value&quot;</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="o">:</span> <span class="nx">ISODate</span><span class="p">(</span><span class="s2">&quot;2012-01-15T21:09:53Z&quot;</span><span class="p">)}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>then Mongo plugin converts this record to following format:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span><span class="s2">&quot;__broken_data&quot;</span><span class="o">:</span> <span class="nx">Marshal</span><span class="p">.</span><span class="nx">dump</span> <span class="nx">result</span> <span class="nx">of</span> <span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="o">:</span> <span class="s2">&quot;invalid value&quot;</span><span class="p">,</span> <span class="s2">&quot;key2&quot;</span><span class="o">:</span> <span class="s2">&quot;valid value&quot;</span><span class="p">},</span> <span class="s2">&quot;time&quot;</span><span class="o">:</span> <span class="nx">ISODate</span><span class="p">(</span><span class="s2">&quot;2012-01-15T21:09:53Z&quot;</span><span class="p">)}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the result, we can rescue and analyze a broken data later.</p>
+
+<h4>NOTE</h4>
+
+<p>Mongo-ruby-driver cannot detect an invalid attribute,
+so Mongo plugin marshals all attributes excluding Fluentd keys(&#8220;tag_key&#8221; and &#8220;time_key&#8221;).</p>
+
+<h4>Ignore an invalid record</h4>
+
+<p>If you want to ignore an invalid record, set <em>ignore_invalid_document</em> parameter in match.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="nt">&lt;match</span> <span class="s">forward.*</span><span class="nt">&gt;</span>
+</span><span class='line'>  ...
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># ignore invalid documents at write operation</span>
+</span><span class='line'>  <span class="err">ignore_invalid_</span><span class="nb">document</span> true
+</span><span class='line'>
+</span><span class='line'>  ...
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Tag mapped mode in <em>mongo</em> type</h3>
+
+<p>0.6.0 merges <em>mongo_tag_collection</em> type into <em>mongo</em> type.
+You can use <em>tag_mapped</em> parameter in <em>mongo</em> type for enabling tag mapped mode.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="nt">&lt;match</span> <span class="s">forward.*</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> mongo
+</span><span class='line'>  <span class="nb">database</span> fluent
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># You use &#39;tag_mapped&#39;, then tag mapped mode enabled.</span>
+</span><span class='line'>  <span class="err">tag_</span><span class="nb">mapped</span>
+</span><span class='line'>
+</span><span class='line'>  # If tag is <span class="s2">&quot;forward.foo.bar&quot;</span>, then prefix <span class="s2">&quot;forward.&quot;</span> is removed.
+</span><span class='line'>  <span class="c"># Collection name to insert is &quot;foo.bar&quot;.</span>
+</span><span class='line'>  <span class="err">remove_tag_</span><span class="nb">prefix</span> forward.
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># This configuration is used if tag not found. Default is &#39;untagged&#39;.</span>
+</span><span class='line'>  <span class="nb">collection</span> misc
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># Other configurations here</span>
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>TODO</h2>
+
+<ul>
+<li>Support multi-process processing using DetachMultiProcessMixin</li>
+<li>Support authentication if needed</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Released MessagePack RPC Python 0.2.0]]></title>
+    <link href="http://repeatedly.github.com/2012/01/released-msgpack-rpc-python-0.2.0/"/>
+    <updated>2012-01-10T08:48:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/01/released-msgpack-rpc-python-0.2.0</id>
+    <content type="html"><![CDATA[<p>Source package is <a href="http://pypi.python.org/pypi/msgpack-rpc-python/0.2.0">here</a>.</p>
+
+<p>The main feature is MessagePack RPC Server support.<br />
+Example is below:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">msgpackrpc</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">SumServer</span><span class="p">:</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">server</span> <span class="o">=</span> <span class="n">msgpackrpc</span><span class="o">.</span><span class="n">Server</span><span class="p">(</span><span class="n">SumServer</span><span class="p">())</span>
+</span><span class='line'><span class="n">server</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">msgpackrpc</span><span class="o">.</span><span class="n">Address</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">))</span>
+</span><span class='line'><span class="n">server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can use Client to access this server:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">client</span> <span class="o">=</span> <span class="n">msgpackrpc</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">msgpackrpc</span><span class="o">.</span><span class="n">Address</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">))</span>
+</span><span class='line'><span class="n">client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s">&quot;sum&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c"># =&gt; 3</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Other improvements</h2>
+
+<ul>
+<li>Support Python 3 (tested with Python 3.2.2)</li>
+<li>Add notify request to Client</li>
+<li>Add (un)pack_encoding option for MessagePack (de)serializer</li>
+</ul>
+
+
+<h2>TODO</h2>
+
+<p>Current implementaion lacks some features compared to Ruby implementaion.
+I will add new features, e.g. advanced return, async return, etc.
+In addition, I will refactor the internal architecture.</p>
+]]></content>
+  </entry>
+  
+</feed>
