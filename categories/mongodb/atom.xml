@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mongodb | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/mongodb/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2012-10-29T09:00:08+09:00</updated>
+  <updated>2012-10-31T04:36:15+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,373 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Mongoプラグインの仕様]]></title>
+    <link href="http://repeatedly.github.com/ja/2012/10/fluent-plugin-mongo-spec/"/>
+    <updated>2012-10-31T03:30:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2012/10/fluent-plugin-mongo-spec</id>
+    <content type="html"><![CDATA[<p>分散パフォーマンステスト関係を書こうと思っていたんですが，よくよく考えたらMongoプラグインについて日本語でまともな記事を書いたことなかったので書きます．</p>
+
+<p>このエントリは<a href="http://www.zusaar.com/event/415005">ウィークリーFluentdユースケースエントリリレー</a>の参加エントリです．</p>
+
+<!-- more -->
+
+
+<h1>概要</h1>
+
+<p>Mongoプラグインは<a href="http://www.mongodb.org/">MongoDB</a>に対するInput/Outputプラグインを提供します．またユーティリティとして，MongoDBのcappedコレクションに対してtailを行うmongo-tailコマンドも付属しています．</p>
+
+<p>リポジトリ: <a href="https://github.com/fluent/fluent-plugin-mongo">https://github.com/fluent/fluent-plugin-mongo</a></p>
+
+<p>MongoDBは内部はBSONですが，API的にはJSONでやりとりしており，また明示的なスキーマもいらないため，Fluentd周辺では集計サーバやテンポラリサーバとして広く利用されています．
+td-agentには既に同梱されているため，td-agentを利用している方は特別なインストールをすることなく使えます．</p>
+
+<h1>Outputプラグイン</h1>
+
+<p>Outputプラグインには3タイプ用意されています．</p>
+
+<ul>
+<li><strong>mongo</strong>: 単一のMongoDBに出力</li>
+<li><strong>mongo_replset</strong>: レプリカセットで構築されているMongoDBに出力</li>
+<li><strong>mongo_backup</strong>: ローカルのMongoDBに保存しつつ，他のプラグインを使って出力．利用者もほとんどいないため，今回は割愛．</li>
+</ul>
+
+
+<p>以降に設定含めもう少し詳しく書いて行きます</p>
+
+<h2>mongo</h2>
+
+<p>MongoDBにイベントを書き込みます．BufferedOutputを利用しているため，イベントをバッファリングし，フラッシュする時にバルクでMongoDBに書き込みます．</p>
+
+<p>```aconf
+<match mongo.**>
+  type mongo</p>
+
+<p>  database fluentd
+  collection log
+  host host1
+  port 10000
+</match>
+```</p>
+
+<p>これが基本的な設定の例です．この設定に対してApacheのログを読み込ませた場合には，例えば以下のようになります．</p>
+
+<p>```js
+$ mongo --host host1 --port 10000</p>
+
+<blockquote><p>use fluentd
+db.log.find()
+{"host": "127.0.0.1", "method": "GET", "path": "/", "code": "200", ...}
+...
+```</p></blockquote>
+
+<ul>
+<li>database (必須)</li>
+</ul>
+
+
+<p>イベントを書き込むデータベース名を指定します．</p>
+
+<ul>
+<li>collection (デフォルト: untagged)</li>
+</ul>
+
+
+<p>イベントを書き込むコレクション名を指定します．</p>
+
+<ul>
+<li>host (デフォルト: localhost)</li>
+</ul>
+
+
+<p>書き込み先のMongoDBのホストを指定します．</p>
+
+<ul>
+<li>port (デフォルト: 27017)</li>
+</ul>
+
+
+<p>書き込み先のMongoDBのポートを指定します．</p>
+
+<ul>
+<li>バッファの設定</li>
+</ul>
+
+
+<p>BufferedOutputを使用しているため，バッファに関してもいくつか指定出来る項目があります．指定出来る項目については，公式ドキュメントの<a href="http://fluentd.org/doc/plugin.html#buffered-output-plugins">バッファプラグイン</a>を見てください．</p>
+
+<ul>
+<li>ミックスイン</li>
+</ul>
+
+
+<p>SetTagKeyMixinとSetTimeKeyMixinの二つを利用しています．そのため，この設定も利用出来ます．</p>
+
+<h3>認証</h3>
+
+<p>MongoDBのユーザ認証を使うようにします．以下のように <em>user</em> と <em>password</em> を設定に書きます．</p>
+
+<p>```aconf
+<match mongo.**>
+  type mongo
+  # ...</p>
+
+<p>  user handa
+  password shinobu
+</match>
+```</p>
+
+<h3>capped</h3>
+
+<p>MongoDBの場合，出力先のコレクションに<a href="http://www.mongodb.org/display/DOCS/Capped+Collections">cappedコレクション</a>を使いたくなる時が結構あります．そのため，設定で指定することが出来ます．</p>
+
+<p>```aconf
+<match mongo.**>
+  type mongo
+  # ...</p>
+
+<p>  capped
+  capped_max  100
+  capped_size 100m
+</match>
+```</p>
+
+<ul>
+<li>capped</li>
+</ul>
+
+
+<p>これを書くと作られるコレクションがcappedコレクションになります．この項目を指定した場合，以下の二つの設定が使用されます．</p>
+
+<ul>
+<li>capped_size (必須)</li>
+</ul>
+
+
+<p>cappedコレクションの容量を指定します．</p>
+
+<ul>
+<li>capped_max (オプション)</li>
+</ul>
+
+
+<p>cappedコレクションで保存出来るドキュメント数を指定します．</p>
+
+<h3>tag_mapped</h3>
+
+<p>MongoDBのようにコレクションが勝手に作られるデータベースを使っていると，Fluentdのタグに対応したそれぞれのコレクションに勝手に振り分けて保存したい時が出てきます．その時には <em>tag_mapped</em> を使います．</p>
+
+<p>```aconf
+<match mongo.**>
+  type mongo
+  #...</p>
+
+<p>  tag_mapped
+  remove_tag_prefix mongo.
+</match>
+```</p>
+
+<ul>
+<li>tag_mapped</li>
+</ul>
+
+
+<p>これを書くとtag_mappedが有効になります．</p>
+
+<ul>
+<li>remove_tag_prefix</li>
+</ul>
+
+
+<p>タグからコレクション名を抽出する時に，この設定を元に整形します．指定された文字列でタグの先頭から正規表現マッチを行い，そのマッチした部分を削除します．
+上記の例でmongo.fooというタグが来た場合， <em>remove_tag_prefix</em> がない場合にはmongo.fooというコレクションに書き込むが，"remove_tag_prefix mongo."があった場合には"mongo."が削除されfooというコレクションに書き込みます．</p>
+
+<h2>mongo_replset</h2>
+
+<p>MongoDBのレプリカセットにイベントを書き込みます．<strong>mongo_replset</strong> タイプは <strong>mongo</strong> タイプを継承して実装しているため， <em>database</em> や <em>tag_mapped</em> など，基本的な設定は <strong>mongo</strong> タイプを引き継ぎます．そのため，ここでは <strong>mongo_replset</strong> だけの設定に関して書きます</p>
+
+<p>```aconf
+<match mongo.**>
+  type mongo_replset
+  #...</p>
+
+<p>  nodes host1:27017,host2:27018,host3:27019
+  num_retries 30</p>
+
+<p>  name replset_name
+  read secondary
+  refresh_mode sync
+  refresh_interval 60
+</match>
+```</p>
+
+<ul>
+<li>nodes (必須)</li>
+</ul>
+
+
+<p><strong>mongo</strong> タイプではhost/portのペアを指定していましたが， <strong>mongo_replset</strong> タイプではレプリカセットのクラスタを指定します．現時点でFluentdは一つの設定項目に複数の値を指定する方法がないので，例のようにhost:portのリストを','で区切って指定します．</p>
+
+<ul>
+<li>num_retries (デフォルト: 60回)</li>
+</ul>
+
+
+<p>フェイルオーバーなどで一時的に繋がらない時に，何回リトライするかを指定します．この回数を超えた場合にプラグインは例外を投げます．</p>
+
+<ul>
+<li>name, read, refresh_mode, refresh_interval (全てオプション)</li>
+</ul>
+
+
+<p>これらはMongoクライアントのReplsetConnectionにそのまま渡されます．Rubyクライアントでの詳細は<a href="http://api.mongodb.org/ruby/1.6.4/Mongo/ReplSetConnection.html#initialize-instance_method">RDoc</a>や<a href="http://api.mongodb.org/ruby/current/file.REPLICA_SETS.html">レプリカセットの説明</a>を参照してください．</p>
+
+<h1>Inputプラグイン</h1>
+
+<p>Inputプラグインは今のところ <strong>mongo_tail</strong> タイプのみです．</p>
+
+<h2>mongo_tail</h2>
+
+<p>このInputプラグインは，in_tailと同じような動作をMongoDBのcappedコレクションに対して行います(通常のコレクションではソートされた状態で，位置を覚えて取得することが出来ないためです)．また，MongoDBから取得するドキュメントの'_id'フィールドの値はObjectIDになっておりJSONやMessagePackで扱えないため，'_id_str'フィールドに文字列としてセットされます．</p>
+
+<p>```aconf
+<source>
+  type mongo_tail</p>
+
+<p>  database fluentd
+  collection capped_log
+  host host1
+  port 10000</p>
+
+<p>  tag mongo.log
+  time_key time
+  id_store_file /path/to/last_id
+</source>
+```</p>
+
+<ul>
+<li>tag (必須 or tag_keyがあるときはオプション)</li>
+</ul>
+
+
+<p>出力先のタグを指定する．<em>tag_key</em> が指定されていた場合には，そちらが優先される．</p>
+
+<ul>
+<li>tag_key (必須 or tagがあるときはオプション)</li>
+</ul>
+
+
+<p>入力のドキュメントから <em>tag_key</em> で指定されたフィールドの値を取得し，その値をイベントのタグとする．見つからない場合は'mongo.missing_tag'がタグとなる．</p>
+
+<ul>
+<li>time_key (オプション)</li>
+</ul>
+
+
+<p>入力のドキュメントから <em>time_key</em> で指定されたフィールドを取得し，イベントの時間とする．なければ入力を取得した時を，イベントの時間とする．</p>
+
+<ul>
+<li>id_store_file (オプション)</li>
+</ul>
+
+
+<p>最後に取得したドキュメントのObjectIDを保存し，tailのポジションを記憶する．再起動した場合にはこのObjectIDを元にtailを再開する．指定しない場合には保存せず，再起動したら再度末尾からtailするようになる．</p>
+
+<ul>
+<li>database, collection, host, port (必須，必須，デフォルト: localhost, デフォルト: 27017)</li>
+</ul>
+
+
+<p>Outputプラグインの <strong>mongo</strong> タイプと指定は同じですが， <em>collection</em> が必須になっている所が違います．</p>
+
+<h2>認証</h2>
+
+<p>Outputプラグインと同じです．</p>
+
+<h1>気をつけること</h1>
+
+<p>以下では利用する際に注意する所と，なんでそうなっているかを説明します．</p>
+
+<h2>buffer_chunk_limitの制限</h2>
+
+<p>mongoのOutputプラグインでは， <em>buffer_chunk_limit</em> に上限が設けられています．上限は</p>
+
+<ul>
+<li>MongoDBのバージョンが1.8未満だと2MB</li>
+<li>MongoDBのバージョンが1.8以上だと10MB</li>
+</ul>
+
+
+<p>という感じに分けられています．これは，MongoDBで有名なドキュメント制限に由来しており，制限より大きなドキュメントや操作はクライアントやMongoDB本体で弾かれます．
+ドキュメント制限ギリギリではない理由は，MessagePackとBSONのサイズの違いによります．JSONと較べるとMessagePackは小さくなる傾向にあり，BSONはあまり変わらないか少し大きくなる傾向にあります．特に整数などが項目に多いと顕著になるため，このように制限の約半分くらいにしています．しかしこれもヒューリスティックな制限であるため，実際のログの傾向などを調べて，適切な <em>buffer_chunk_limit</em> を指定する必要があります．</p>
+
+<h2>コレクションの設定チェック</h2>
+
+<p>今のところはcappedのチェックしかしてませんが，違う設定で既に存在しているコレクションに書き込もうとしていた場合には，以下のような例外を投げるようにしています．これは設定の使い回しなどで，うっかり誤ったコレクションに書き込むなどのミスを防ぐためにつけています．</p>
+
+<p><code>sh
+"New configuration is different from existing collection: new = foo, old = bar"
+</code></p>
+
+<p>また，tag＼<em>mappedの場合は現在細かな指定が出来ないため，デフォルトではこのチェックはしないようになっています．
+この動作のon/offを切り替えるには </em>disable_collection_check_ で指定します．</p>
+
+<p><code>aconf
+&lt;match mongo.**&gt;
+  #...
+  disable_collection_check true
+&lt;/match&gt;
+</code></p>
+
+<h2>壊れているドキュメントの扱い</h2>
+
+<p>様々なアプリケーションのログをFluentdに流し込んでいると，たまにBSONとしてシリアライズ出来ないログが混じったりすることがあります(文字コードが壊れている，MongoDBとしてInvalidなフォーマットを持っている)．この場合に，Fluentdとしてはログを勝手に捨てることは出来ません．なので，mongoのOutputプラグインでは，そのようなログはバイナリにしてMongoDBに保存するようにしています．
+例えば以下のようなログが来たとします:</p>
+
+<p><code>js
+{"key1": "invalid value", "key2": "valid value", "time": ISODate("2012-01-15T21:09:53Z") }
+</code></p>
+
+<p>この時key1の値がBSONに出来ないので，その壊れているフィールドと，Mixinで特別扱いされるtimeなどのフィールドを除くその他のフィールドを丸ごとバイナリに変換します(なぜ丸ごとするのかというと，RubyのBSONライブラリが失敗したフィールドを教えてくれないからです)．その結果，以下のようなフォーマットになります．</p>
+
+<p><code>js
+{"__broken_data": BinData(0, Marshal.dump result of {"key1": "invalid value", "key2": "valid value"}), "time": ISODate("2012-01-15T21:09:53Z") }
+</code></p>
+
+<p>バイナリになった壊れたデータは'__broken_data'という特別なフィールドにセットされ，再度insertが行われます．後でこの壊れたデータをチェックしたい場合には，以下のようなRubyスクリプトでチェックすることが出来ます</p>
+
+<p><code>rb
+collection.find({'__broken_data' =&gt; {'$exists' =&gt; true}}).each do |doc|
+  p Marshal.load(doc['__broken_data'].to_s) #=&gt; {"key1": "invalid value", "key2": "valid value"}
+end
+</code></p>
+
+<p>ここまで書いてなんですが，そもそもログの種類によっては壊れているものは捨てても良い場合があると思います．その時は， <em>ignore_invalid_record</em> を使うことで捨てることが出来ます</p>
+
+<p><code>aconf
+&lt;match mongo.**&gt;
+  #...
+  ignore_invalid_record true
+&lt;/match&gt;
+</code></p>
+
+<h2>MongoDBそのものの制限</h2>
+
+<p>これはプラグインではどうしもようないので，使う前にチェックしてください．</p>
+
+<ul>
+<li><a href="http://www.mongodb.org/display/DOCS/Legal+Key+Names">Legal Key Names</a></li>
+<li><a href="http://docs.mongodb.org/manual/release-notes/2.2/#restrictions-on-collection-names">Restrictions on Collection Names</a></li>
+</ul>
+
+
+<h1>まとめ</h1>
+
+<p>図を書く元気がなかったので文字が多くなりましたが，MongoDBをFluentdで使う時に利用出来るプラグインとその設定について書きました．MongoDBを使った事例に関してはスライドやブログが既にいくつかあるので，興味をある方は検索してみてください．
+また，使っていてなんか不具合があった場合にはissueやpull requestをして頂ければと思います．</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Collect invalid documents for bulk-insert in mongo-ruby-driver]]></title>

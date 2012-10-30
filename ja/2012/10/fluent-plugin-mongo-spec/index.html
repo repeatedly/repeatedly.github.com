@@ -1,0 +1,732 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Mongoプラグインの仕様 - Go ahead!</title>
+  <meta name="author" content="Masahiro Nakagawa">
+
+  
+  <meta name="description" content="分散パフォーマンステスト関係を書こうと思っていたんですが，よくよく考えたらMongoプラグインについて日本語でまともな記事を書いたことなかったので書きます． このエントリはウィークリーFluentdユースケースエントリリレーの参加エントリです． 概要 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://repeatedly.github.com/ja/2012/10/fluent-plugin-mongo-spec">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Go ahead!" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Go ahead!</a></h1>
+  
+    <h2>Memoization for Everything</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:repeatedly.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+
+
+  
+<ul class="main-navigation">
+  <li><a href="/ja/archives">Archives</a></li>
+  <li><a href="/">English</a></li>
+</ul>
+
+  
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Mongoプラグインの仕様</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-31T03:30:00+09:00" pubdate data-updated="true">Oct 31<span>st</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>分散パフォーマンステスト関係を書こうと思っていたんですが，よくよく考えたらMongoプラグインについて日本語でまともな記事を書いたことなかったので書きます．</p>
+
+<p>このエントリは<a href="http://www.zusaar.com/event/415005">ウィークリーFluentdユースケースエントリリレー</a>の参加エントリです．</p>
+
+<!-- more -->
+
+
+<h1>概要</h1>
+
+<p>Mongoプラグインは<a href="http://www.mongodb.org/">MongoDB</a>に対するInput/Outputプラグインを提供します．またユーティリティとして，MongoDBのcappedコレクションに対してtailを行うmongo-tailコマンドも付属しています．</p>
+
+<p>リポジトリ: <a href="https://github.com/fluent/fluent-plugin-mongo">https://github.com/fluent/fluent-plugin-mongo</a></p>
+
+<p>MongoDBは内部はBSONですが，API的にはJSONでやりとりしており，また明示的なスキーマもいらないため，Fluentd周辺では集計サーバやテンポラリサーバとして広く利用されています．
+td-agentには既に同梱されているため，td-agentを利用している方は特別なインストールをすることなく使えます．</p>
+
+<h1>Outputプラグイン</h1>
+
+<p>Outputプラグインには3タイプ用意されています．</p>
+
+<ul>
+<li><strong>mongo</strong>: 単一のMongoDBに出力</li>
+<li><strong>mongo_replset</strong>: レプリカセットで構築されているMongoDBに出力</li>
+<li><strong>mongo_backup</strong>: ローカルのMongoDBに保存しつつ，他のプラグインを使って出力．利用者もほとんどいないため，今回は割愛．</li>
+</ul>
+
+
+<p>以降に設定含めもう少し詳しく書いて行きます</p>
+
+<h2>mongo</h2>
+
+<p>MongoDBにイベントを書き込みます．BufferedOutputを利用しているため，イベントをバッファリングし，フラッシュする時にバルクでMongoDBに書き込みます．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;match</span> <span class="s">mongo.**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> mongo
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">database</span> fluentd
+</span><span class='line'>  <span class="nb">collection</span> log
+</span><span class='line'>  <span class="nb">host</span> host1
+</span><span class='line'>  <span class="nb">port</span> <span class="m">10000</span>
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これが基本的な設定の例です．この設定に対してApacheのログを読み込ませた場合には，例えば以下のようになります．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">$</span> <span class="nx">mongo</span> <span class="o">--</span><span class="nx">host</span> <span class="nx">host1</span> <span class="o">--</span><span class="nx">port</span> <span class="mi">10000</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="nx">use</span> <span class="nx">fluentd</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">find</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span><span class="s2">&quot;host&quot;</span><span class="o">:</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="s2">&quot;method&quot;</span><span class="o">:</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;path&quot;</span><span class="o">:</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="s2">&quot;code&quot;</span><span class="o">:</span> <span class="s2">&quot;200&quot;</span><span class="p">,</span> <span class="p">...}</span>
+</span><span class='line'><span class="p">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>database (必須)</li>
+</ul>
+
+
+<p>イベントを書き込むデータベース名を指定します．</p>
+
+<ul>
+<li>collection (デフォルト: untagged)</li>
+</ul>
+
+
+<p>イベントを書き込むコレクション名を指定します．</p>
+
+<ul>
+<li>host (デフォルト: localhost)</li>
+</ul>
+
+
+<p>書き込み先のMongoDBのホストを指定します．</p>
+
+<ul>
+<li>port (デフォルト: 27017)</li>
+</ul>
+
+
+<p>書き込み先のMongoDBのポートを指定します．</p>
+
+<ul>
+<li>バッファの設定</li>
+</ul>
+
+
+<p>BufferedOutputを使用しているため，バッファに関してもいくつか指定出来る項目があります．指定出来る項目については，公式ドキュメントの<a href="http://fluentd.org/doc/plugin.html#buffered-output-plugins">バッファプラグイン</a>を見てください．</p>
+
+<ul>
+<li>ミックスイン</li>
+</ul>
+
+
+<p>SetTagKeyMixinとSetTimeKeyMixinの二つを利用しています．そのため，この設定も利用出来ます．</p>
+
+<h3>認証</h3>
+
+<p>MongoDBのユーザ認証を使うようにします．以下のように <em>user</em> と <em>password</em> を設定に書きます．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;match</span> <span class="s">mongo.**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> mongo
+</span><span class='line'>  <span class="c"># ...</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">user</span> handa
+</span><span class='line'>  <span class="nb">password</span> shinobu
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>capped</h3>
+
+<p>MongoDBの場合，出力先のコレクションに<a href="http://www.mongodb.org/display/DOCS/Capped+Collections">cappedコレクション</a>を使いたくなる時が結構あります．そのため，設定で指定することが出来ます．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;match</span> <span class="s">mongo.**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> mongo
+</span><span class='line'>  <span class="c"># ...</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">capped</span>
+</span><span class='line'>  capped_max  <span class="m">100</span>
+</span><span class='line'>  <span class="err">capped_</span><span class="nb">size</span> <span class="m">100</span>m
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>capped</li>
+</ul>
+
+
+<p>これを書くと作られるコレクションがcappedコレクションになります．この項目を指定した場合，以下の二つの設定が使用されます．</p>
+
+<ul>
+<li>capped_size (必須)</li>
+</ul>
+
+
+<p>cappedコレクションの容量を指定します．</p>
+
+<ul>
+<li>capped_max (オプション)</li>
+</ul>
+
+
+<p>cappedコレクションで保存出来るドキュメント数を指定します．</p>
+
+<h3>tag_mapped</h3>
+
+<p>MongoDBのようにコレクションが勝手に作られるデータベースを使っていると，Fluentdのタグに対応したそれぞれのコレクションに勝手に振り分けて保存したい時が出てきます．その時には <em>tag_mapped</em> を使います．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;match</span> <span class="s">mongo.**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> mongo
+</span><span class='line'>  <span class="c">#...</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="err">tag_</span><span class="nb">mapped</span>
+</span><span class='line'>  remove_tag_prefix mongo.
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>tag_mapped</li>
+</ul>
+
+
+<p>これを書くとtag_mappedが有効になります．</p>
+
+<ul>
+<li>remove_tag_prefix</li>
+</ul>
+
+
+<p>タグからコレクション名を抽出する時に，この設定を元に整形します．指定された文字列でタグの先頭から正規表現マッチを行い，そのマッチした部分を削除します．
+上記の例でmongo.fooというタグが来た場合， <em>remove_tag_prefix</em> がない場合にはmongo.fooというコレクションに書き込むが，&#8221;remove_tag_prefix mongo.&#8221;があった場合には&#8221;mongo.&#8221;が削除されfooというコレクションに書き込みます．</p>
+
+<h2>mongo_replset</h2>
+
+<p>MongoDBのレプリカセットにイベントを書き込みます．<strong>mongo_replset</strong> タイプは <strong>mongo</strong> タイプを継承して実装しているため， <em>database</em> や <em>tag_mapped</em> など，基本的な設定は <strong>mongo</strong> タイプを引き継ぎます．そのため，ここでは <strong>mongo_replset</strong> だけの設定に関して書きます</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;match</span> <span class="s">mongo.**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> mongo_replset
+</span><span class='line'>  <span class="c">#...</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">nodes</span> host1:27017,host2:27018,host3:27019
+</span><span class='line'>  <span class="err">num_</span><span class="nb">retries</span> <span class="m">30</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">name</span> replset_name
+</span><span class='line'>  <span class="nb">read</span> secondary
+</span><span class='line'>  <span class="err">refresh_</span><span class="nb">mode</span> sync
+</span><span class='line'>  <span class="err">refresh_</span><span class="nb">interval</span> <span class="m">60</span>
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>nodes (必須)</li>
+</ul>
+
+
+<p><strong>mongo</strong> タイプではhost/portのペアを指定していましたが， <strong>mongo_replset</strong> タイプではレプリカセットのクラスタを指定します．現時点でFluentdは一つの設定項目に複数の値を指定する方法がないので，例のようにhost:portのリストを&#8217;,&#8217;で区切って指定します．</p>
+
+<ul>
+<li>num_retries (デフォルト: 60回)</li>
+</ul>
+
+
+<p>フェイルオーバーなどで一時的に繋がらない時に，何回リトライするかを指定します．この回数を超えた場合にプラグインは例外を投げます．</p>
+
+<ul>
+<li>name, read, refresh_mode, refresh_interval (全てオプション)</li>
+</ul>
+
+
+<p>これらはMongoクライアントのReplsetConnectionにそのまま渡されます．Rubyクライアントでの詳細は<a href="http://api.mongodb.org/ruby/1.6.4/Mongo/ReplSetConnection.html#initialize-instance_method">RDoc</a>や<a href="http://api.mongodb.org/ruby/current/file.REPLICA_SETS.html">レプリカセットの説明</a>を参照してください．</p>
+
+<h1>Inputプラグイン</h1>
+
+<p>Inputプラグインは今のところ <strong>mongo_tail</strong> タイプのみです．</p>
+
+<h2>mongo_tail</h2>
+
+<p>このInputプラグインは，in_tailと同じような動作をMongoDBのcappedコレクションに対して行います(通常のコレクションではソートされた状態で，位置を覚えて取得することが出来ないためです)．また，MongoDBから取得するドキュメントの&#8217;_id&#8217;フィールドの値はObjectIDになっておりJSONやMessagePackで扱えないため，&#8217;_id_str&#8217;フィールドに文字列としてセットされます．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> mongo_tail
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">database</span> fluentd
+</span><span class='line'>  <span class="nb">collection</span> capped_log
+</span><span class='line'>  <span class="nb">host</span> host1
+</span><span class='line'>  <span class="nb">port</span> <span class="m">10000</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">tag</span> mongo.log
+</span><span class='line'>  <span class="err">time_</span><span class="nb">key</span> time
+</span><span class='line'>  <span class="err">id_store_</span><span class="nb">file</span> <span class="sx">/path/to/last_id</span>
+</span><span class='line'><span class="nt">&lt;/source&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>tag (必須 or tag_keyがあるときはオプション)</li>
+</ul>
+
+
+<p>出力先のタグを指定する．<em>tag_key</em> が指定されていた場合には，そちらが優先される．</p>
+
+<ul>
+<li>tag_key (必須 or tagがあるときはオプション)</li>
+</ul>
+
+
+<p>入力のドキュメントから <em>tag_key</em> で指定されたフィールドの値を取得し，その値をイベントのタグとする．見つからない場合は&#8217;mongo.missing_tag&#8217;がタグとなる．</p>
+
+<ul>
+<li>time_key (オプション)</li>
+</ul>
+
+
+<p>入力のドキュメントから <em>time_key</em> で指定されたフィールドを取得し，イベントの時間とする．なければ入力を取得した時を，イベントの時間とする．</p>
+
+<ul>
+<li>id_store_file (オプション)</li>
+</ul>
+
+
+<p>最後に取得したドキュメントのObjectIDを保存し，tailのポジションを記憶する．再起動した場合にはこのObjectIDを元にtailを再開する．指定しない場合には保存せず，再起動したら再度末尾からtailするようになる．</p>
+
+<ul>
+<li>database, collection, host, port (必須，必須，デフォルト: localhost, デフォルト: 27017)</li>
+</ul>
+
+
+<p>Outputプラグインの <strong>mongo</strong> タイプと指定は同じですが， <em>collection</em> が必須になっている所が違います．</p>
+
+<h2>認証</h2>
+
+<p>Outputプラグインと同じです．</p>
+
+<h1>気をつけること</h1>
+
+<p>以下では利用する際に注意する所と，なんでそうなっているかを説明します．</p>
+
+<h2>buffer_chunk_limitの制限</h2>
+
+<p>mongoのOutputプラグインでは， <em>buffer_chunk_limit</em> に上限が設けられています．上限は</p>
+
+<ul>
+<li>MongoDBのバージョンが1.8未満だと2MB</li>
+<li>MongoDBのバージョンが1.8以上だと10MB</li>
+</ul>
+
+
+<p>という感じに分けられています．これは，MongoDBで有名なドキュメント制限に由来しており，制限より大きなドキュメントや操作はクライアントやMongoDB本体で弾かれます．
+ドキュメント制限ギリギリではない理由は，MessagePackとBSONのサイズの違いによります．JSONと較べるとMessagePackは小さくなる傾向にあり，BSONはあまり変わらないか少し大きくなる傾向にあります．特に整数などが項目に多いと顕著になるため，このように制限の約半分くらいにしています．しかしこれもヒューリスティックな制限であるため，実際のログの傾向などを調べて，適切な <em>buffer_chunk_limit</em> を指定する必要があります．</p>
+
+<h2>コレクションの設定チェック</h2>
+
+<p>今のところはcappedのチェックしかしてませんが，違う設定で既に存在しているコレクションに書き込もうとしていた場合には，以下のような例外を投げるようにしています．これは設定の使い回しなどで，うっかり誤ったコレクションに書き込むなどのミスを防ぐためにつけています．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="s2">&quot;New configuration is different from existing collection: new = foo, old = bar&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>また，tag＼<em>mappedの場合は現在細かな指定が出来ないため，デフォルトではこのチェックはしないようになっています．
+この動作のon/offを切り替えるには </em>disable_collection_check_ で指定します．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;match</span> <span class="s">mongo.**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="c">#...</span>
+</span><span class='line'>  <span class="err">disable_collection_</span><span class="nb">check</span> true
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>壊れているドキュメントの扱い</h2>
+
+<p>様々なアプリケーションのログをFluentdに流し込んでいると，たまにBSONとしてシリアライズ出来ないログが混じったりすることがあります(文字コードが壊れている，MongoDBとしてInvalidなフォーマットを持っている)．この場合に，Fluentdとしてはログを勝手に捨てることは出来ません．なので，mongoのOutputプラグインでは，そのようなログはバイナリにしてMongoDBに保存するようにしています．
+例えば以下のようなログが来たとします:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="o">:</span> <span class="s2">&quot;invalid value&quot;</span><span class="p">,</span> <span class="s2">&quot;key2&quot;</span><span class="o">:</span> <span class="s2">&quot;valid value&quot;</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="o">:</span> <span class="nx">ISODate</span><span class="p">(</span><span class="s2">&quot;2012-01-15T21:09:53Z&quot;</span><span class="p">)</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>この時key1の値がBSONに出来ないので，その壊れているフィールドと，Mixinで特別扱いされるtimeなどのフィールドを除くその他のフィールドを丸ごとバイナリに変換します(なぜ丸ごとするのかというと，RubyのBSONライブラリが失敗したフィールドを教えてくれないからです)．その結果，以下のようなフォーマットになります．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span><span class="s2">&quot;__broken_data&quot;</span><span class="o">:</span> <span class="nx">BinData</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">Marshal</span><span class="p">.</span><span class="nx">dump</span> <span class="nx">result</span> <span class="nx">of</span> <span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="o">:</span> <span class="s2">&quot;invalid value&quot;</span><span class="p">,</span> <span class="s2">&quot;key2&quot;</span><span class="o">:</span> <span class="s2">&quot;valid value&quot;</span><span class="p">}),</span> <span class="s2">&quot;time&quot;</span><span class="o">:</span> <span class="nx">ISODate</span><span class="p">(</span><span class="s2">&quot;2012-01-15T21:09:53Z&quot;</span><span class="p">)</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>バイナリになった壊れたデータは&#8217;__broken_data&#8217;という特別なフィールドにセットされ，再度insertが行われます．後でこの壊れたデータをチェックしたい場合には，以下のようなRubyスクリプトでチェックすることが出来ます</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='rb'><span class='line'><span class="n">collection</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s1">&#39;__broken_data&#39;</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="s1">&#39;$exists&#39;</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">}})</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">doc</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">p</span> <span class="no">Marshal</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">doc</span><span class="o">[</span><span class="s1">&#39;__broken_data&#39;</span><span class="o">].</span><span class="n">to_s</span><span class="p">)</span> <span class="c1">#=&gt; {&quot;key1&quot;: &quot;invalid value&quot;, &quot;key2&quot;: &quot;valid value&quot;}</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ここまで書いてなんですが，そもそもログの種類によっては壊れているものは捨てても良い場合があると思います．その時は， <em>ignore_invalid_record</em> を使うことで捨てることが出来ます</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;match</span> <span class="s">mongo.**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="c">#...</span>
+</span><span class='line'>  <span class="err">ignore_invalid_</span><span class="nb">record</span> true
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>MongoDBそのものの制限</h2>
+
+<p>これはプラグインではどうしもようないので，使う前にチェックしてください．</p>
+
+<ul>
+<li><a href="http://www.mongodb.org/display/DOCS/Legal+Key+Names">Legal Key Names</a></li>
+<li><a href="http://docs.mongodb.org/manual/release-notes/2.2/#restrictions-on-collection-names">Restrictions on Collection Names</a></li>
+</ul>
+
+
+<h1>まとめ</h1>
+
+<p>図を書く元気がなかったので文字が多くなりましたが，MongoDBをFluentdで使う時に利用出来るプラグインとその設定について書きました．MongoDBを使った事例に関してはスライドやブログが既にいくつかあるので，興味をある方は検索してみてください．
+また，使っていてなんか不具合があった場合にはissueやpull requestをして頂ければと思います．</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Masahiro Nakagawa</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-31T03:30:00+09:00" pubdate data-updated="true">Oct 31<span>st</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/fluentd/'>fluentd</a>, <a class='category' href='/categories/mongodb/'>mongodb</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2012/10/fluent-plugin-mongo-spec/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2012/10/fluent-plugin-mongo-spec/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/10/dconf-2013-on-kickstarter/" title="Previous Post: DConf 2013 on kickstarter!">&laquo; DConf 2013 on kickstarter!</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/ja/2012/10/fluent-plugin-mongo-spec/">Mongoプラグインの仕様</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/10/dconf-2013-on-kickstarter/">DConf 2013 on kickstarter!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/05/released-denv/">Released denv</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/04/lt-at-fluentd-casual-talks/">LT at Fluentd Casual Talks</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/03/download-script-written-in-d/">Download script written in D</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/repeatedly">@repeatedly</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'repeatedly',
+            count: 4,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("repeatedly", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/repeatedly" class="twitter-follow-button" data-show-count="false">Follow @repeatedly</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Masahiro Nakagawa -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'repeatedly';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://repeatedly.github.com/ja/2012/10/fluent-plugin-mongo-spec/';
+        var disqus_url = 'http://repeatedly.github.com/ja/2012/10/fluent-plugin-mongo-spec/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
