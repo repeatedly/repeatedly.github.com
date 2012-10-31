@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Change The Game - Go ahead!</title>
+  <meta name="author" content="Masahiro Nakagawa">
+
+  
+  <meta name="description" content="知ってる人はもう知っているとは思いますが，10月をもって1年と10ヶ月勤めた謎のベンチャーPreferred Infrastructure, Incを去りました．PFIの方々，本当に有り難うございました！
+エントリを書けと色々な人に脅されているので，てきとうに書きます． 環境 インターンで飛び込み &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://repeatedly.github.com/ja/2012/11/change-the-game">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Go ahead!" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Go ahead!</a></h1>
+  
+    <h2>Memoization for Everything</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:repeatedly.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+
+
+  
+<ul class="main-navigation">
+  <li><a href="/ja/archives">Archives</a></li>
+  <li><a href="/">English</a></li>
+</ul>
+
+  
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Change The Game</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-01T00:00:00+09:00" pubdate data-updated="true">Nov 1<span>st</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>知ってる人はもう知っているとは思いますが，10月をもって1年と10ヶ月勤めた謎のベンチャー<a href="http://preferred.jp/">Preferred Infrastructure, Inc</a>を去りました．PFIの方々，本当に有り難うございました！<br />
+エントリを書けと色々な人に脅されているので，てきとうに書きます．</p>
+
+<!-- more -->
+
+
+<h2>環境</h2>
+
+<p>インターンで飛び込み，そのテンションのまま大学を辞めて入社．俺みたいな機械学習や情報検索の基礎すらなかった人間が，今では機械学習プロジェクトで開発をやっていたわけですから，岡野原さんを筆頭に本当濃い社員の人達には感謝しかありません．<br />
+学習の高速道路という言葉がありますが，間違いなく超高速，時には事故るんじゃないかという環境でした．右を見ても左を見ても怪物だらけであるこの魔窟で，エンジニアとして勤めることが出来たのは本当に良い経験でした．</p>
+
+<p>俺が入社した時は正社員は15人くらいだった気がしますが，今では既に26人で，もう30人を越えそうです．人やプロジェクトが増えた時，成長する速度を落とさずより攻めるにはどうすべきかという，そういう変化の中に入れたことも良かったと思います．</p>
+
+<p>Red Bull部，豆部，カタン部など，これらに参加出来なくなるのは若干悲しいですね…</p>
+
+<h2>やってたこと</h2>
+
+<p>俺は製品開発部にいたわけですが，今PFIが持っているプロジェクトSedue，Jubatus，Bazilに関わらせてもらいました．この辺，俺がやりやすいよう色々と調整をしてくれた久保田さんには本当に感謝しています．</p>
+
+<h3><a href="http://preferred.jp/product/sedue/abstract/">Sedue</a></h3>
+
+<p>検索エンジンであるSedueでは，設計からプロトタイピングを多くやらせてもらいました．といっても俺みたいな情報検索の新人がいきなり検索のコアを弄るというのは無理なので，新しいサブコンポーネント，プロキシサーバ，管理ツールなどなど，Sedueをより使いやすくするための開発をメインでやってました．<br />
+今でもインストールスクリプトにインストール先を指定するpオプションを付けたのはGood catchだったと自信を持って言えます ;)</p>
+
+<p>Sedueではオンプレミスのような製品の難しさと楽しさ，というのを学びました．俺の書いたコードが今でもお客さんの所で元気に走り続けているというのは嬉しいことです．</p>
+
+<h3><a href="http://jubat.us/">Jubatus</a></h3>
+
+<p>Jubatusでは開発そのものにはあんま関わって無くて，OSSとしてどうするかとか，クライアントの整備とか周辺でごそごそしてました(とくにスクリプティング言語書ける人が壊滅的にいなかった)．jubatus-python-clientの手書きmsgpack-rpcに見かねて，msgpack-rpc-pythonを実装したのも今では良い思い出です．</p>
+
+<p>JubatusはNTTと共同開発しているもののOSSなので，皆さん興味がある人はどんどんコミットすると良いと思います．なんだかんだで開発者だと気づかないことってたくさんあるので，他の方からのフィードバックがあるとより洗練されます．C++ですけどね！ハハハ！</p>
+
+<h3>Bazil</h3>
+
+<p>Bazilに関しては初期の段階からリーンスタートアップ的に開発しようとメンバが集まり，合宿やったりお客さんから話を聴いたりしてプロジェクトを回していました．<br />
+また，会社で初めてのプロジェクト制という試みもあり，かなりアクティブに動いていた気がします．最初はメインが3人(PSS，製品開発，R&amp;D)という小さかったBazilプロジェクトですが，pivotを重ねて，今ではPFIの3つのプロジェクトの一つにまで成長しました．</p>
+
+<p>BazilはSedueともJubatusとも違う感じで展開しようということで，コアの機械学習サーバ以外にも色々と開発してます．サーバのAPIどうしようかとか，ここはどうやって可視化しようかとか，部門を越えてワイワイやってるのは楽しかったですね．<br />
+最初から関わっていたこともあり，今離れるのが残念というのが正直な所です．ただちゃんと引き継ぎもしたので，今後Bazilがどうなるのか，外野からですが注目し続けます！</p>
+
+<h2>次どうすんの？</h2>
+
+<p>「あいつは一体何Dataに行くんだ？」とずっと皆さんもやもやしていたと思いますが，<a href="http://www.treasure-data.com/">Treasure Data</a>という謎のスタートアップに11月，つまり今日からjoinします．ここもPFIに負けず劣らず怪物うごめく場所なのでかなり楽しみで，そういう人たちが俺を選んでくれたというのは本当に有り難く，ガンガン突っ走りたいなと思います．「TDのDはD言語のD」と呼ばれる日も近い(嘘です)．<br />
+Treasure Data本体はアメリカにあるんですが，活動は今までと同じ東京(南大沢ではない)で変わらんので，皆さんこれからもガンガン絡んでやってください．</p>
+
+<p>自分でも予想外に早かったなと思います．しかし，自分を試せる面白いフィールドがあり，そのチャンスが目の前に来てしまったのだから仕方がありません．チャンスはとりあえず掴む，というスタイルで今までやってきたので，これもそういうことなんだと思ってます :)</p>
+
+<p>PFIのrepeatedlyあらためTDのrepeatedlyとして，これからも皆さん宜しくお願いします．</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Masahiro Nakagawa</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-01T00:00:00+09:00" pubdate data-updated="true">Nov 1<span>st</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2012/11/change-the-game/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2012/11/change-the-game/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/ja/2012/10/fluent-plugin-mongo-spec/" title="Previous Post: Mongoプラグインの仕様">&laquo; Mongoプラグインの仕様</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/ja/2012/11/change-the-game/">Change The Game</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2012/10/fluent-plugin-mongo-spec/">Mongoプラグインの仕様</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/10/dconf-2013-on-kickstarter/">DConf 2013 on kickstarter!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/05/released-denv/">Released denv</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/04/lt-at-fluentd-casual-talks/">LT at Fluentd Casual Talks</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/repeatedly">@repeatedly</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'repeatedly',
+            count: 4,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("repeatedly", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/repeatedly" class="twitter-follow-button" data-show-count="false">Follow @repeatedly</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Masahiro Nakagawa -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'repeatedly';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://repeatedly.github.com/ja/2012/11/change-the-game/';
+        var disqus_url = 'http://repeatedly.github.com/ja/2012/11/change-the-game/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
