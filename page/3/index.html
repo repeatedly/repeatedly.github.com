@@ -5,12 +5,21 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Collect invalid documents for bulk-insert in mongo-ruby-driver - Go ahead!</title>
+  <title>Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Mongo gem 1.6.0 includes my pull request(and HISTORY). Background Now, a service consists of many systems in production.
-As a result, some systems &hellip;">
+  <meta name="description" content="Source package is here. The main feature is MessagePack RPC Server support.
+Example is below: 1
+2
+3
+4
+5
+6
+7
+8
+9
+import msgpackrpc class SumServer: &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +28,7 @@ As a result, some systems &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver">
+  <link rel="canonical" href="http://repeatedly.github.com/page/3">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -59,8 +68,10 @@ As a result, some systems &hellip;">
 
   
 <ul class="main-navigation">
-  <li><a href="/ja/archives">Archives</a></li>
-  <li><a href="/">English</a></li>
+  <li><a href="/">Home</a></li>
+  <li><a href="/works">Works</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/ja">Japanese</a></li>
 </ul>
 
   
@@ -68,12 +79,15 @@ As a result, some systems &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div>
-<article class="hentry" role="article">
+      <div class="blog-index">
   
+  
+  
+    <article>
+      
   <header>
     
-      <h1 class="entry-title">Collect invalid documents for bulk-insert in mongo-ruby-driver</h1>
+      <h1 class="entry-title"><a href="/2012/01/released-msgpack-rpc-python-0.2.0/">Released MessagePack RPC Python 0.2.0</a></h1>
     
     
       <p class="meta">
@@ -89,126 +103,79 @@ As a result, some systems &hellip;">
   
 
 
-<time datetime="2012-02-29T11:49:00+09:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
+<time datetime="2012-01-10T08:48:00+09:00" pubdate data-updated="true">Jan 10<span>th</span>, 2012</time>
         
-         | <a href="#disqus_thread">Comments</a>
+         | <a href="/2012/01/released-msgpack-rpc-python-0.2.0/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Mongo gem 1.6.0 includes <a href="https://github.com/mongodb/mongo-ruby-driver/pull/82">my pull request</a>(and <a href="https://github.com/mongodb/mongo-ruby-driver/commit/a4343e53feb582103366bb9c02628a4c6b29fcbd">HISTORY</a>).</p>
+  <div class="entry-content"><p>Source package is <a href="http://pypi.python.org/pypi/msgpack-rpc-python/0.2.0">here</a>.</p>
 
-<h2>Background</h2>
-
-<p>Now, a service consists of many systems in production.
-As a result, some systems insert broken or invalid data to MongoDB.</p>
-
-<p>Here is problem.</p>
-
-<p>mongo-ruby-driver&#8217;s bulk-insert is dead or alive.
-If inserting docs has one invalid docuemnt, then insert operation failed.
-In addition, we can&#8217;t find invalid documents.</p>
-
-<p>This behavior is not usable.
-We want to handle invalid documents,
-e.g. output to local file, ignoring documents and etc.</p>
-
-<p>My pull request resolves this problem.</p>
-
-<h2>Usage</h2>
-
-<p>I introduced <code>:collect_on_error</code> to <em>insert</em> options.</p>
-
-<p><em>insert</em> without <code>:collect_on_error</code>:</p>
+<p>The main feature is MessagePack RPC Server support.<br />
+Example is below:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># docs is [{}, {}, ...]</span>
-</span><span class='line'><span class="n">result</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">docs</span><span class="p">)</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">msgpackrpc</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">SumServer</span><span class="p">:</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">server</span> <span class="o">=</span> <span class="n">msgpackrpc</span><span class="o">.</span><span class="n">Server</span><span class="p">(</span><span class="n">SumServer</span><span class="p">())</span>
+</span><span class='line'><span class="n">server</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">msgpackrpc</span><span class="o">.</span><span class="n">Address</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">))</span>
+</span><span class='line'><span class="n">server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><em>result</em> is an array of inserted document.</p>
-
-<p><em>insert</em> with <code>:collect_on_error</code>:</p>
+<p>You can use Client to access this server:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">result</span><span class="p">,</span> <span class="n">invalid_docs</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">docs</span><span class="p">,</span> <span class="ss">:collect_on_error</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">)</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">client</span> <span class="o">=</span> <span class="n">msgpackrpc</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">msgpackrpc</span><span class="o">.</span><span class="n">Address</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">))</span>
+</span><span class='line'><span class="n">client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s">&quot;sum&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c"># =&gt; 3</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><em>result</em> is same as insert without <code>:collect_on_error</code>.
-<em>invalid_docs</em> is an array of invalid document which removed ObjectId field.
-We can handle <em>invalid_docs</em> manually.
-For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4656aa3948fce280158f718356f00764ea558ef9#L2R103">fluent-plugin-mongo</a>.</p>
+<h2>Other improvements</h2>
 
-<p>Enjoy MongoDB with Ruby!</p>
+<ul>
+<li>Support Python 3 (tested with Python 3.2.2)</li>
+<li>Add notify request to Client</li>
+<li>Add (un)pack_encoding option for MessagePack (de)serializer</li>
+</ul>
+
+
+<h2>TODO</h2>
+
+<p>Current implementaion lacks some features compared to Ruby implementaion.
+I will add new features, e.g. advanced return, async return, etc.
+In addition, I will refactor the internal architecture.</p>
 </div>
-
-
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">Masahiro Nakagawa</span></span>
-
-      
-
-
-
-
-
-
-
-
   
 
 
-<time datetime="2012-02-29T11:49:00+09:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
-      
-
-<span class="categories">
+    </article>
   
-    <a class='category' href='/categories/ruby/'>Ruby</a>, <a class='category' href='/categories/mongodb/'>mongodb</a>
-  
-</span>
-
-
-    </p>
+  <div class="pagination">
     
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/" >Tweet</a>
-  
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
+    <a href="/archives">Archives</a>
     
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/2012/02/released-fluent-logger-d/" title="Previous Post: Released fluent-logger-d">&laquo; Released fluent-logger-d</a>
-      
-      
-        <a class="basic-alignment right" href="/2012/03/download-script-written-in-d/" title="next Post: Download script written in D">Download script written in D &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a class="next" href="/page/2/">Newer &rarr;</a>
+    
+  </div>
 </div>
-  </section>
-
-</div>
-
 <aside class="sidebar">
   
     <section>
@@ -241,7 +208,7 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
 <section>
   <h1>Github Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
+    <li class="loading">Status updating&#8230;</li>
   </ul>
   
   <a href="https://github.com/repeatedly">@repeatedly</a> on Github
@@ -271,7 +238,7 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating...</li>
+    <li class="loading">Status updating&#8230;</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -291,7 +258,6 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
   
 </aside>
 
-
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -306,10 +272,7 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
       var disqus_shortname = 'repeatedly';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/';
-        var disqus_url = 'http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

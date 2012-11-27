@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2012-11-03T16:54:04+09:00</updated>
+  <updated>2012-11-27T14:59:17+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,35 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Inside Impala Coordinator at HSCR #13]]></title>
+    <link href="http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-number-13/"/>
+    <updated>2012-11-27T14:30:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-number-13</id>
+    <content type="html"><![CDATA[<p>Yesterday, I talked about Impala Coordinator, which is scheduler layer of query execution.</p>
+
+<p>My presentation document is <a href="https://gist.github.com/4147497">here</a>!</p>
+
+<p>And <a href="http://twitter.com/oza_x86">@oza_x86</a> also talked about Impala Internal, but he focused on Query Execution Engine.
+The rest important component is only Query Planner.
+I hope someone presents Query Planner Internal at next event :)</p>
+
+<p><a href="http://twitter.com/GedowFather">@GedowFather</a> presented <a href="http://www.slideshare.net/GedowFather/cloudera-impala">Impala testing and operations on production</a>(ja).
+This presentation shared the knowledge and application consideration.
+I think this presentation is testbed for Impala introduction.</p>
+
+<p>Thanks to Hadoop User Group Japan for the good event!</p>
+
+<h2>Links</h2>
+
+<ul>
+<li><a href="http://hadoop-scr13th.eventbrite.com/">Event page</a> (ja)</li>
+<li><a href="http://togetter.com/li/413784">Togetter</a> (ja)</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Change The Game]]></title>

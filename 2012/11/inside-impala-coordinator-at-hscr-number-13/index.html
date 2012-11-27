@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Collect invalid documents for bulk-insert in mongo-ruby-driver - Go ahead!</title>
+  <title>Inside Impala Coordinator at HSCR #13 - Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Mongo gem 1.6.0 includes my pull request(and HISTORY). Background Now, a service consists of many systems in production.
-As a result, some systems &hellip;">
+  <meta name="description" content="Yesterday, I talked about Impala Coordinator, which is scheduler layer of query execution. My presentation document is here! And @oza_x86 also talked &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ As a result, some systems &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver">
+  <link rel="canonical" href="http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-number-13">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -73,7 +72,7 @@ As a result, some systems &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Collect invalid documents for bulk-insert in mongo-ruby-driver</h1>
+      <h1 class="entry-title">Inside Impala Coordinator at HSCR #13</h1>
     
     
       <p class="meta">
@@ -89,7 +88,7 @@ As a result, some systems &hellip;">
   
 
 
-<time datetime="2012-02-29T11:49:00+09:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
+<time datetime="2012-11-27T14:30:00+09:00" pubdate data-updated="true">Nov 27<span>th</span>, 2012</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -98,53 +97,27 @@ As a result, some systems &hellip;">
   </header>
 
 
-<div class="entry-content"><p>Mongo gem 1.6.0 includes <a href="https://github.com/mongodb/mongo-ruby-driver/pull/82">my pull request</a>(and <a href="https://github.com/mongodb/mongo-ruby-driver/commit/a4343e53feb582103366bb9c02628a4c6b29fcbd">HISTORY</a>).</p>
+<div class="entry-content"><p>Yesterday, I talked about Impala Coordinator, which is scheduler layer of query execution.</p>
 
-<h2>Background</h2>
+<p>My presentation document is <a href="https://gist.github.com/4147497">here</a>!</p>
 
-<p>Now, a service consists of many systems in production.
-As a result, some systems insert broken or invalid data to MongoDB.</p>
+<p>And <a href="http://twitter.com/oza_x86">@oza_x86</a> also talked about Impala Internal, but he focused on Query Execution Engine.
+The rest important component is only Query Planner.
+I hope someone presents Query Planner Internal at next event :)</p>
 
-<p>Here is problem.</p>
+<p><a href="http://twitter.com/GedowFather">@GedowFather</a> presented <a href="http://www.slideshare.net/GedowFather/cloudera-impala">Impala testing and operations on production</a>(ja).
+This presentation shared the knowledge and application consideration.
+I think this presentation is testbed for Impala introduction.</p>
 
-<p>mongo-ruby-driver&#8217;s bulk-insert is dead or alive.
-If inserting docs has one invalid docuemnt, then insert operation failed.
-In addition, we can&#8217;t find invalid documents.</p>
+<p>Thanks to Hadoop User Group Japan for the good event!</p>
 
-<p>This behavior is not usable.
-We want to handle invalid documents,
-e.g. output to local file, ignoring documents and etc.</p>
+<h2>Links</h2>
 
-<p>My pull request resolves this problem.</p>
+<ul>
+<li><a href="http://hadoop-scr13th.eventbrite.com/">Event page</a> (ja)</li>
+<li><a href="http://togetter.com/li/413784">Togetter</a> (ja)</li>
+</ul>
 
-<h2>Usage</h2>
-
-<p>I introduced <code>:collect_on_error</code> to <em>insert</em> options.</p>
-
-<p><em>insert</em> without <code>:collect_on_error</code>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># docs is [{}, {}, ...]</span>
-</span><span class='line'><span class="n">result</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">docs</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><em>result</em> is an array of inserted document.</p>
-
-<p><em>insert</em> with <code>:collect_on_error</code>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">result</span><span class="p">,</span> <span class="n">invalid_docs</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">docs</span><span class="p">,</span> <span class="ss">:collect_on_error</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><em>result</em> is same as insert without <code>:collect_on_error</code>.
-<em>invalid_docs</em> is an array of invalid document which removed ObjectId field.
-We can handle <em>invalid_docs</em> manually.
-For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4656aa3948fce280158f718356f00764ea558ef9#L2R103">fluent-plugin-mongo</a>.</p>
-
-<p>Enjoy MongoDB with Ruby!</p>
 </div>
 
 
@@ -167,12 +140,12 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
   
 
 
-<time datetime="2012-02-29T11:49:00+09:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
+<time datetime="2012-11-27T14:30:00+09:00" pubdate data-updated="true">Nov 27<span>th</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/categories/ruby/'>Ruby</a>, <a class='category' href='/categories/mongodb/'>mongodb</a>
+    <a class='category' href='/categories/impala/'>impala</a>
   
 </span>
 
@@ -181,7 +154,7 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-number-13/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-number-13/" >Tweet</a>
   
   
   
@@ -192,10 +165,8 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/2012/02/released-fluent-logger-d/" title="Previous Post: Released fluent-logger-d">&laquo; Released fluent-logger-d</a>
+        <a class="basic-alignment left" href="/ja/2012/11/change-the-game/" title="Previous Post: Change The Game">&laquo; Change The Game</a>
       
-      
-        <a class="basic-alignment right" href="/2012/03/download-script-written-in-d/" title="next Post: Download script written in D">Download script written in D &raquo;</a>
       
     </p>
   </footer>
@@ -307,8 +278,8 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/';
-        var disqus_url = 'http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/';
+        var disqus_identifier = 'http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-number-13/';
+        var disqus_url = 'http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-number-13/';
         var disqus_script = 'embed.js';
       
     (function () {
