@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2012-11-27T14:59:17+09:00</updated>
+  <updated>2012-11-27T15:12:44+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -14,10 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Inside Impala Coordinator at HSCR #13]]></title>
-    <link href="http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-number-13/"/>
+    <title type="html"><![CDATA[Inside Impala Coordinator at HSCR 13th]]></title>
+    <link href="http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-13th/"/>
     <updated>2012-11-27T14:30:00+09:00</updated>
-    <id>http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-number-13</id>
+    <id>http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-13th</id>
     <content type="html"><![CDATA[<p>Yesterday, I talked about Impala Coordinator, which is scheduler layer of query execution.</p>
 
 <p>My presentation document is <a href="https://gist.github.com/4147497">here</a>!</p>
@@ -39,6 +39,16 @@ I think this presentation is testbed for Impala introduction.</p>
 <li><a href="http://togetter.com/li/413784">Togetter</a> (ja)</li>
 </ul>
 
+
+<!-- more -->
+
+
+<p>P.S.</p>
+
+<p>Currently, Impala doesn&#8217;t have a mascot or logo. @GedowFather produced the following image.
+I think this image is good candidate ;)</p>
+
+<p><img src="http://blog.father.gedow.net/wp-content/uploads/2012/11/ImpalaQL.png" alt="ImpalaQL" /></p>
 ]]></content>
   </entry>
   
