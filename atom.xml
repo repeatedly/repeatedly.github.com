@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2012-11-27T20:32:12+09:00</updated>
+  <updated>2012-12-04T23:14:04+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,37 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[siphash-d]]></title>
+    <link href="http://repeatedly.github.com/2012/12/siphash-d/"/>
+    <updated>2012-12-04T22:57:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/12/siphash-d</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/siphash-d">siphash-d</a> is the D implementation of <a href="https://131002.net/siphash/">SipHash</a>.</p>
+
+<p>The latest CRuby uses SipHash to prevent <a href="http://www.ruby-lang.org/en/news/2012/11/09/ruby19-hashdos-cve-2012-5371/">Hash-flooding DoS attack</a>. From now on, SipHash like algorithm will be important for robust application. So I implemented SipHash for D.</p>
+
+<p>Current version provides only siphash24 function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">import</span> <span class="n">siphash</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">ubyte</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span> <span class="n">k</span> <span class="p">=</span> <span class="k">cast</span><span class="p">(</span><span class="kt">ubyte</span><span class="p">[])</span><span class="s">&quot;To be|not to be!&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="kt">ubyte</span><span class="p">[]</span> <span class="n">msg</span> <span class="p">=</span> <span class="k">cast</span><span class="p">(</span><span class="kt">ubyte</span><span class="p">[])</span><span class="s">&quot;that is the question.&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="k">auto</span> <span class="n">hashed</span> <span class="p">=</span> <span class="n">siphash24</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">msg</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I plan to add std.digest like struct and other APIs if needed.</p>
+
+<p>siphash-d has already listed in the official site.
+Thanks to JP Aumasson!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Inside Impala Coordinator at HSCR 13th]]></title>

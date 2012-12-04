@@ -9,7 +9,7 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Yesterday, I talked about Impala Coordinator, which is scheduler layer of query execution. My presentation document is here! And @oza_x86 also talked &hellip;">
+  <meta name="description" content="siphash-d is the D implementation of SipHash. The latest CRuby uses SipHash to prevent Hash-flooding DoS attack. From now on, SipHash like algorithm &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +71,66 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/12/siphash-d/">siphash-d</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-04T22:57:00+09:00" pubdate data-updated="true">Dec 4<span>th</span>, 2012</time>
+        
+         | <a href="/2012/12/siphash-d/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/repeatedly/siphash-d">siphash-d</a> is the D implementation of <a href="https://131002.net/siphash/">SipHash</a>.</p>
+
+<p>The latest CRuby uses SipHash to prevent <a href="http://www.ruby-lang.org/en/news/2012/11/09/ruby19-hashdos-cve-2012-5371/">Hash-flooding DoS attack</a>. From now on, SipHash like algorithm will be important for robust application. So I implemented SipHash for D.</p>
+
+<p>Current version provides only siphash24 function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">import</span> <span class="n">siphash</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">ubyte</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span> <span class="n">k</span> <span class="p">=</span> <span class="k">cast</span><span class="p">(</span><span class="kt">ubyte</span><span class="p">[])</span><span class="s">&quot;To be|not to be!&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="kt">ubyte</span><span class="p">[]</span> <span class="n">msg</span> <span class="p">=</span> <span class="k">cast</span><span class="p">(</span><span class="kt">ubyte</span><span class="p">[])</span><span class="s">&quot;that is the question.&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="k">auto</span> <span class="n">hashed</span> <span class="p">=</span> <span class="n">siphash24</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">msg</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I plan to add std.digest like struct and other APIs if needed.</p>
+
+<p>siphash-d has already listed in the official site.
+Thanks to JP Aumasson!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -267,143 +327,6 @@ See <a href="https://github.com/repeatedly/denv/blob/master/README.md">README</a
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/03/download-script-written-in-d/">Download script written in D</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-20T15:02:00+09:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
-        
-         | <a href="/2012/03/download-script-written-in-d/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Tested under dmd 2.058.</p>
-
-<div><script src='https://gist.github.com/2114104.js?file='></script>
-<noscript><pre><code>// Written in the D programming language.
-
-/**
- * High peformance downloader
- *
- * Implemented according to &lt;a href=&quot;http://yusukebe.com/archives/20120229/072808.html&quot;&gt;this implementation&lt;/a&gt;.
- *
- * Example:
- * -----
- * dmd -L-lcurl -run downloader.d
- * -----
- */
-
-import core.atomic : atomicOp;
-
-import std.array       : join;
-import std.conv        : to;
-import std.getopt      : getopt;
-import std.file        : exists, mkdir;
-import std.json        : parseJSON, toJSON;
-import std.path        : buildPath, setExtension;
-import std.parallelism : parallel;
-import std.md5         : getDigestString;
-import std.net.curl    : get, download;
-import std.regex       : match;
-import std.string      : toLower;
-import std.stdio       : writeln;
-import std.uri         : encode;
-
-@trusted
-string buildQuery(in string[string] params)
-{
-    string[] queries;
-
-    foreach (k, v; params)
-        queries ~= encode(k) ~ &quot;=&quot; ~ encode(v);
-
-    return queries.join(&quot;&amp;&quot;);
-}
-
-void main(string[] args)
-{
-    immutable AppURI = &quot;http://api.bing.net/json.aspx&quot;;
-    immutable AppId  = &quot;Your AppId&quot;;
-    string storeDir  = &quot;./op_images&quot;;
-    string query     = &quot;おっぱい&quot;;
-    size_t page      = 0;
-
-    getopt(args,
-           &quot;query&quot;, &amp;query,
-           &quot;dir&quot;,   &amp;storeDir,
-           &quot;page&quot;,  &amp;page);
-
-    if (!storeDir.exists)
-        mkdir(storeDir);
-
-    writeln(&quot;Configuration: query = &quot;, query, &quot;, dir = &quot;, storeDir, &quot;, offset = &quot;, page);
-
-    for (shared(size_t) downloadCount; true; page++) {
-        immutable uri = AppURI ~ '?' ~ buildQuery([&quot;AppId&quot;:        AppId,
-                                                   &quot;Version&quot;:      &quot;2.2&quot;,
-                                                   &quot;Market&quot;:       &quot;ja-JP&quot;,
-                                                   &quot;Sources&quot;:      &quot;Image&quot;,
-                                                   &quot;Image.Count&quot;:  &quot;50&quot;,
-                                                   &quot;Image.Offset&quot;: to!string(page * 50),
-                                                   &quot;Adult&quot;:        &quot;off&quot;, 
-                                                   &quot;Query&quot;:        query]);
-        auto response = get(uri);
-        auto result   = parseJSON(response).object[&quot;SearchResponse&quot;];
-        if (&quot;Errors&quot; in result.object) {
-            writeln(&quot;Error: reason = &quot;, toJSON(&amp;result.object[&quot;Errors&quot;]));
-            break;
-        }
-
-        foreach (ref entry; parallel(result.object[&quot;Image&quot;].object[&quot;Results&quot;].array)) {
-            immutable downloadUri = entry.object[&quot;MediaUrl&quot;].str;
-            if (!downloadUri.match(&quot;.jpe?g$&quot;))
-                continue;
-
-            immutable path = buildPath(storeDir, downloadUri.getDigestString().toLower.setExtension(&quot;jpg&quot;));
-            if (path.exists)
-                continue;
-
-            download(downloadUri, path);
-
-            atomicOp!&quot;+=&quot;(downloadCount, 1);
-            writeln(downloadCount, &quot; : downloaded... &quot;, downloadUri);
-        }
-    }
-
-    writeln(&quot;done!&quot;);
-}</code></pre></noscript></div>
-
-
-<p>This code consists of many D features for scripting :)</p>
-
-<p>Enjoy!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/2/">&larr; Older</a>
@@ -419,6 +342,10 @@ void main(string[] args)
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/12/siphash-d/">siphash-d</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/11/inside-impala-coordinator-at-hscr-13th/">Inside Impala Coordinator at HSCR 13th</a>
       </li>
     
@@ -432,10 +359,6 @@ void main(string[] args)
     
       <li class="post">
         <a href="/2012/10/dconf-2013-on-kickstarter/">DConf 2013 on kickstarter!</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/05/released-denv/">Released denv</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: D | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/d/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2012-11-27T20:32:12+09:00</updated>
+  <updated>2012-12-04T23:14:04+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,32 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[siphash-d]]></title>
+    <link href="http://repeatedly.github.com/2012/12/siphash-d/"/>
+    <updated>2012-12-04T22:57:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/12/siphash-d</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/siphash-d">siphash-d</a> is the D implementation of <a href="https://131002.net/siphash/">SipHash</a>.</p>
+
+<p>The latest CRuby uses SipHash to prevent <a href="http://www.ruby-lang.org/en/news/2012/11/09/ruby19-hashdos-cve-2012-5371/">Hash-flooding DoS attack</a>. From now on, SipHash like algorithm will be important for robust application. So I implemented SipHash for D.</p>
+
+<p>Current version provides only siphash24 function:</p>
+
+<p>```d
+import siphash;</p>
+
+<p>ubyte[16] k = cast(ubyte[])"To be|not to be!";
+ubyte[] msg = cast(ubyte[])"that is the question.";
+auto hashed = siphash24(k, msg);
+```</p>
+
+<p>I plan to add std.digest like struct and other APIs if needed.</p>
+
+<p>siphash-d has already listed in the official site.
+Thanks to JP Aumasson!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[DConf 2013 on kickstarter!]]></title>
