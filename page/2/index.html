@@ -9,7 +9,8 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Tested under dmd 2.058. // Written in the D programming language. /** * High peformance downloader * * Implemented according to &lt;a href=&quot;http &hellip;">
+  <meta name="description" content="Fluentd Casual Talks will be held in Japan. I will talk about &#8220;The Melancholy of Plugin Developer&#8221; in LT section. See you at the event!
+">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +72,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/04/lt-at-fluentd-casual-talks/">LT at Fluentd Casual Talks</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-12T20:18:00+09:00" pubdate data-updated="true">Apr 12<span>th</span>, 2012</time>
+        
+         | <a href="/2012/04/lt-at-fluentd-casual-talks/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://atnd.org/events/27808">Fluentd Casual Talks</a> will be held in Japan.</p>
+
+<p>I will talk about &#8220;The Melancholy of Plugin Developer&#8221; in LT section.</p>
+
+<p>See you at the event!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -411,179 +454,6 @@ Because current D community doesn&#8217;t face to the production.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/01/yaml-engine-mismatched-problem-in-rubygems/">YAML engine mismatched problem in RubyGems</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-18T02:55:00+09:00" pubdate data-updated="true">Jan 18<span>th</span>, 2012</time>
-        
-         | <a href="/2012/01/yaml-engine-mismatched-problem-in-rubygems/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>Overview</h1>
-
-<p>I hit this problem at fluent-plugin-mongo 0.6.0.
-Some user failed fluent-plugin-mongo 0.6.0 installation with following message.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># fluent-gem install fluent-plugin-mongo
-</span><span class='line'>ERROR:  While executing gem ... (NoMethodError)
-</span><span class='line'>    undefined method `call' for nil:NilClass</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In short, you should use the range form, e.g.:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span><span class="o">.</span><span class="n">add_dependency</span> <span class="s2">&quot;mongo&quot;</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;&gt;= 1.5.2&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;= 1.5.2&quot;</span><span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>for an exact match dependency for old or <strong>Syck</strong> environment when building a gem.</p>
-
-<h1>Detail</h1>
-
-<p><strong>YAML</strong> has &#8216;=&#8217; keyword for default key.</p>
-
-<p><strong>RubyGems</strong> uses &#8216;=&#8217; for an exact match dependency.
-Current Ruby&#8217;s <strong>YAML</strong> engine is <strong>Psych</strong>. <strong>Psych</strong> treat unquoted &#8216;=&#8217; correctly.</p>
-
-<p>For example, if you add an exact match dependency to the gem:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span><span class="o">.</span><span class="n">add_dependency</span> <span class="s2">&quot;mongo&quot;</span><span class="p">,</span> <span class="s2">&quot;= 1.5.2&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>then <strong>Psych</strong> generates following metadata:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="p-Indicator">-</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Dependency</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mongo</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">requirement</span><span class="p-Indicator">:</span> <span class="nl">&amp;id002</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Requirement</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">none</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">requirements</span><span class="p-Indicator">:</span>
-</span><span class='line'>    <span class="p-Indicator">-</span> <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">=</span>
-</span><span class='line'>      <span class="p-Indicator">-</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Version</span>
-</span><span class='line'>        <span class="l-Scalar-Plain">version</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1.5.2</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">:runtime</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">prerelease</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">version_requirements</span><span class="p-Indicator">:</span> <span class="nv">*id002</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Problem is here. See line <em>6</em>.</p>
-
-<p>Old Ruby&#8217;s <strong>YAML</strong> engine is <strong>Syck</strong>. <strong>Syck</strong> can&#8217;t treat unquoted &#8216;=&#8217; correctly.
-In <strong>Psych</strong>, the result of loading this metadata is correct:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;= 1.5.2&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>but, <strong>Syck</strong> parses unquoted &#8216;=&#8217; as a <strong>YAML</strong>&#8217;s default key by mistake.
-So loaded result is broken:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;#&lt;Syck::DefaultKey:0x0000010380cc40&gt; 1.5.2&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>RubyGems</strong> don&#8217;t know <code>#&lt;Syck::DefaultKey:0x0000010380cc40></code> operation.
-In the result, the gem installation failed in <strong>Syck</strong> environement.</p>
-
-<h1>Solution</h1>
-
-<h2>Use the range form for an exact match dependency</h2>
-
-<p><strong>Psych</strong> and <strong>Syck</strong> treat &#8216;&lt;=&#8217; / &#8216;>=&#8217; correctly,
-so we can use following form to avoid this problem.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span><span class="o">.</span><span class="n">add_dependency</span> <span class="s2">&quot;mongo&quot;</span><span class="p">,</span> <span class="o">[</span><span class="s2">&quot;&gt;= 1.5.2&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;= 1.5.2&quot;</span><span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This is an ad-hoc approach, but works fine :)<br />
-I strongly recommend this approach.</p>
-
-<h2>Update <strong>RubyGems</strong> for user</h2>
-
-<p>Latest <strong>RubyGems</strong> fixed this problem. See <a href="https://github.com/ruby/ruby/blob/trunk/lib/rubygems/requirement.rb#L164">repository</a></p>
-
-<h2>Build a gem using <strong>Syck</strong></h2>
-
-<p>Using <strong>Syck</strong>, generated metadata is below:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="p-Indicator">-</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Dependency</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mongo</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">requirement</span><span class="p-Indicator">:</span> <span class="nl">&amp;id002</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Requirement</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">none</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">requirements</span><span class="p-Indicator">:</span>
-</span><span class='line'>    <span class="p-Indicator">-</span> <span class="p-Indicator">-</span> <span class="s">&quot;=&quot;</span>
-</span><span class='line'>      <span class="p-Indicator">-</span> <span class="kt">!ruby</span><span class="l-Scalar-Plain">/object:Gem::Version</span>
-</span><span class='line'>        <span class="l-Scalar-Plain">version</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1.5.2</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">:runtime</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">prerelease</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">version_requirements</span><span class="p-Indicator">:</span> <span class="nv">*id002</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Syck</strong> treat &#8216;&#8221;=&#8221;&#8217; as a string, not default key. So we can use &#8216;=&#8217; for an exact match dependency.</p>
-
-<p>If you use <strong>Bundler</strong>, then put <code>YAML::ENGINE.yamler = "syck"</code> on top of gemspec to enable Syck engine.
-But some environment doesn&#8217;t have Syck engine, so this approch doesn&#8217;t work in such environment&#8230;</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/3/">&larr; Older</a>
@@ -601,6 +471,10 @@ But some environment doesn&#8217;t have Syck engine, so this approch doesn&#8217
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/12/published-introduction-to-tornado-in-japan/">Published &#8216;Introduction to Tornado&#8217; in Japan</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/12/siphash-d/">siphash-d</a>
       </li>
     
@@ -614,10 +488,6 @@ But some environment doesn&#8217;t have Syck engine, so this approch doesn&#8217
     
       <li class="post">
         <a href="/ja/2012/10/fluent-plugin-mongo-spec/">Mongoプラグインの仕様</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/10/dconf-2013-on-kickstarter/">DConf 2013 on kickstarter!</a>
       </li>
     
   </ul>

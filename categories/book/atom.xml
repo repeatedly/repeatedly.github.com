@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: book | Go ahead!]]></title>
+  <link href="http://repeatedly.github.com/categories/book/atom.xml" rel="self"/>
+  <link href="http://repeatedly.github.com/"/>
+  <updated>2012-12-25T04:22:39+09:00</updated>
+  <id>http://repeatedly.github.com/</id>
+  <author>
+    <name><![CDATA[Masahiro Nakagawa]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Published 'Introduction to Tornado' in Japan]]></title>
+    <link href="http://repeatedly.github.com/2012/12/published-introduction-to-tornado-in-japan/"/>
+    <updated>2012-12-25T03:59:00+09:00</updated>
+    <id>http://repeatedly.github.com/2012/12/published-introduction-to-tornado-in-japan</id>
+    <content type="html"><![CDATA[<p>In the last week, O'Reilly Japan published <a href="http://www.oreilly.co.jp/books/9784873115764/">"概説Tornado"</a>.
+This is the Japanese translation of <a href="http://shop.oreilly.com/product/0636920021292.do">"Introduction to Tornado"</a>.</p>
+
+<p>I joined the team as a translation supervisor.
+Thanks to team members and original authors for the good work.</p>
+
+<p><a href="http://www.tornadoweb.org/">Tornado</a> is a great product in Python.
+I use Tornado for the production proxy server and MessagePack RPC backend.
+Tornado has clear API, clean code and good performance.
+I think Tornado is good for learning Python and event driven programming.</p>
+
+<p>I hope this book helps your Tornado experience.</p>
+]]></content>
+  </entry>
+  
+</feed>
