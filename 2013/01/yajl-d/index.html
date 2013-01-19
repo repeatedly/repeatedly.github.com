@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: mongodb - Go ahead!</title>
+  <title>yajl-d - Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Category: mongodb">
+  <meta name="description" content="yajl-d is the D binding for YAJL. YAJL provides the stream JSON parsing and some extra features, e.g. allow comments. yajl-d also provides the JSON &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.comcategories/mongodb">
+  <link rel="canonical" href="http://repeatedly.github.com/2013/01/yajl-d">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -70,64 +70,138 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: mongodb</h1>
+    
+      <h1 class="entry-title">yajl-d</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-20T05:27:00+09:00" pubdate data-updated="true">Jan 20<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p><a href="https://github.com/repeatedly/yajl-d">yajl-d</a> is the D binding for <a href="http://lloyd.github.com/yajl/">YAJL</a>.</p>
 
-  
-  <h2>2012</h2>
+<p>YAJL provides the stream JSON parsing and some extra features, e.g. allow comments.</p>
 
-<article>
-  
-<h1><a href="/ja/2012/10/fluent-plugin-mongo-spec/">Mongoプラグインの仕様</a></h1>
-<time datetime="2012-10-31T03:30:00+09:00" pubdate><span class='month'>Oct</span> <span class='day'>31</span> <span class='year'>2012</span></time>
+<p>yajl-d also provides the JSON encoding and stream decoding.
+yajl-d is 2 - 3 times faster than std.json (try simple benchmark in example directory).</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/categories/fluentd/'>fluentd</a>, <a class='category' href='/categories/mongodb/'>mongodb</a></span>
-</footer>
+<p>Following code is basic form:</p>
 
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/">Collect invalid documents for bulk-insert in mongo-ruby-driver</a></h1>
-<time datetime="2012-02-29T11:49:00+09:00" pubdate><span class='month'>Feb</span> <span class='day'>29</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/categories/ruby/'>Ruby</a>, <a class='category' href='/categories/mongodb/'>mongodb</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/2012/01/released-fluent-plugin-mongo-0.6.0/">Released fluent-plugin-mongo 0.6.0</a></h1>
-<time datetime="2012-01-16T09:18:00+09:00" pubdate><span class='month'>Jan</span> <span class='day'>16</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/categories/fluentd/'>fluentd</a>, <a class='category' href='/categories/mongodb/'>mongodb</a></span>
-</footer>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">import</span> <span class="n">yajl</span><span class="p">.</span><span class="n">yajl</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// yajl-d can serialize / deserialize D object.</span>
+</span><span class='line'><span class="k">struct</span> <span class="n">Hoge</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="kt">ulong</span> <span class="n">id</span><span class="p">;</span>
+</span><span class='line'>    <span class="nb">string</span> <span class="n">word</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">bool</span> <span class="n">yes</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// {&quot;id&quot;:100,&quot;word&quot;:&quot;hey!&quot;,&quot;yes&quot;:true}</span>
+</span><span class='line'><span class="n">Hoge</span> <span class="n">hoge1</span> <span class="p">=</span> <span class="n">Hoge</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="s">&quot;hey!&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</span><span class='line'><span class="n">Hoge</span> <span class="n">hoge2</span> <span class="p">=</span> <span class="n">decode</span><span class="p">!</span><span class="n">Hoge</span><span class="p">(</span><span class="n">encode</span><span class="p">(</span><span class="n">hoge1</span><span class="p">));</span>
+</span><span class='line'><span class="k">assert</span><span class="p">(</span><span class="n">hoge1</span> <span class="p">==</span> <span class="n">hoge2</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-</article>
+<p><code>encode</code> and <code>decode</code> are the wrapper of <code>Encoder</code> and <code>Decoder</code>. If you want to know more details of <code>Encoder</code> and <code>Decoder</code>. See README and the DDoc.</p>
 
+<p>yajl-d has already listed in the official site.
+Thanks to Lloyd!</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Masahiro Nakagawa</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-20T05:27:00+09:00" pubdate data-updated="true">Jan 20<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/d/'>D</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/2013/01/yajl-d/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/2013/01/yajl-d/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/12/published-introduction-to-tornado-in-japan/" title="Previous Post: Published 'Introduction to Tornado' in Japan">&laquo; Published 'Introduction to Tornado' in Japan</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -228,7 +302,10 @@
       var disqus_shortname = 'repeatedly';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://repeatedly.github.com/2013/01/yajl-d/';
+        var disqus_url = 'http://repeatedly.github.com/2013/01/yajl-d/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

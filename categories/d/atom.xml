@@ -4,7 +4,7 @@
   <title><![CDATA[Category: D | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/d/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2012-12-25T04:22:39+09:00</updated>
+  <updated>2013-01-20T05:45:02+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,47 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[yajl-d]]></title>
+    <link href="http://repeatedly.github.com/2013/01/yajl-d/"/>
+    <updated>2013-01-20T05:27:00+09:00</updated>
+    <id>http://repeatedly.github.com/2013/01/yajl-d</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/yajl-d">yajl-d</a> is the D binding for <a href="http://lloyd.github.com/yajl/">YAJL</a>.</p>
+
+<p>YAJL provides the stream JSON parsing and some extra features, e.g. allow comments.</p>
+
+<p>yajl-d also provides the JSON encoding and stream decoding.
+yajl-d is 2 - 3 times faster than std.json (try simple benchmark in example directory).</p>
+
+<p>Following code is basic form:</p>
+
+<p>```d
+import yajl.yajl;</p>
+
+<p>// yajl-d can serialize / deserialize D object.
+struct Hoge
+{</p>
+
+<pre><code>ulong id;
+string word;
+bool yes; 
+</code></pre>
+
+<p>}</p>
+
+<p>// {"id":100,"word":"hey!","yes":true}
+Hoge hoge1 = Hoge(100, "hey!", true);
+Hoge hoge2 = decode!Hoge(encode(hoge1));
+assert(hoge1 == hoge2);
+```</p>
+
+<p><code>encode</code> and <code>decode</code> are the wrapper of <code>Encoder</code> and <code>Decoder</code>. If you want to know more details of <code>Encoder</code> and <code>Decoder</code>. See README and the DDoc.</p>
+
+<p>yajl-d has already listed in the official site.
+Thanks to Lloyd!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[siphash-d]]></title>
@@ -176,23 +217,6 @@ void main(string[] args)
 <p>This code consists of many D features for scripting :)</p>
 
 <p>Enjoy!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Released fluent-logger-d]]></title>
-    <link href="http://repeatedly.github.com/2012/02/released-fluent-logger-d/"/>
-    <updated>2012-02-21T21:16:00+09:00</updated>
-    <id>http://repeatedly.github.com/2012/02/released-fluent-logger-d</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/fluent/fluent-logger-d">fluent-logger-d</a>.</p>
-
-<p>This client library has some TODOs, but works fine.
-I tested posting 5,000,000 messages with 5 threads, no problem.</p>
-
-<p>In fact, D community now doesn't want such library.
-Because current D community doesn't face to the production.</p>
-
-<p>I hope this library with <a href="http://fluentd.org/">Fluentd</a> helps your system design in the future.</p>
 ]]></content>
   </entry>
   
