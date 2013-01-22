@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-01-20T05:45:02+09:00</updated>
+  <updated>2013-01-22T18:20:19+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Hadoop Conference Japan 2013 Winter]]></title>
+    <link href="http://repeatedly.github.com/2013/01/hadoop-conference-japan-2013-winter/"/>
+    <updated>2013-01-22T18:09:00+09:00</updated>
+    <id>http://repeatedly.github.com/2013/01/hadoop-conference-japan-2013-winter</id>
+    <content type="html"><![CDATA[<p>We are Hive Logo Lovers!</p>
+
+<p><img src="http://repeatedly.github.com/images/hive_in_hcj13w.jpg" title="&#34;Original Hive T shirt&#34;" alt="&#34;Original Hive T shirt&#34;"></p>
+
+<p>Event Link: <a href="http://hcj2013w.eventbrite.com/">Hadoop Conference Japan 2013 Winter</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[yajl-d]]></title>
