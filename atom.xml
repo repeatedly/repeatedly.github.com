@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-01-22T18:20:19+09:00</updated>
+  <updated>2013-02-10T05:09:17+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,44 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[LTSV for D]]></title>
+    <link href="http://repeatedly.github.com/2013/02/ltsv-for-d/"/>
+    <updated>2013-02-10T04:10:00+09:00</updated>
+    <id>http://repeatedly.github.com/2013/02/ltsv-for-d</id>
+    <content type="html"><![CDATA[<p>In this week, Shinji Tanaka announced <a href="ltsv.org">Labeled Tab-separated Values (LTSV)</a>.
+LTSV is the flexible and robust row oriented format.</p>
+
+<p>I just implemented ltsv-d for D programming language.</p>
+
+<p><a href="http://github.com/repeatedly/ltsv-d">LTSV for D</a></p>
+
+<p>ltsv-d provides <code>fromLTSV</code> and <code>toLTSV</code> functions.</p>
+
+<p><code>fromLTSV</code> for parsing:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">auto</span> <span class="n">apacheLog</span> <span class="p">=</span> <span class="s">&quot;host:127.0.0.1\tident:-\tuser:foo\ttime:[10/Oct/2000:13:55:36 -0700]\treq:GET /apache.gif HTTP/1.0\tstatus:200\tsize:777\treferer:http://www.example.com/start.html\tua:Mozilla/4.08 [en] (Win98; I ;Nav)&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="k">auto</span> <span class="n">record</span> <span class="p">=</span> <span class="n">fromLTSV</span><span class="p">(</span><span class="n">apacheLog</span><span class="p">);</span>
+</span><span class='line'><span class="n">writeln</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s">&quot;host&quot;</span><span class="p">]);</span> <span class="c1">// &quot;127.0.0.1&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>toLTSV</code> for dumping:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">auto</span> <span class="n">line</span> <span class="p">=</span> <span class="p">[</span><span class="s">&quot;foo&quot;</span><span class="p">:</span><span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="s">&quot;hoge&quot;</span><span class="p">:</span><span class="s">&quot;fuga&quot;</span><span class="p">,</span> <span class="s">&quot;piyo&quot;</span><span class="p">:</span><span class="s">&quot;puyo&quot;</span><span class="p">].</span><span class="n">toLTSV</span><span class="p">();</span>
+</span><span class='line'><span class="n">writeln</span><span class="p">(</span><span class="n">line</span><span class="p">);</span> <span class="c1">// &quot;foo:bar\thoge:fuga\tpiyo:puyo&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Enjoy LTSV!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hadoop Conference Japan 2013 Winter]]></title>

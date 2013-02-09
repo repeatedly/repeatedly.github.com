@@ -9,8 +9,8 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="We are Hive Logo Lovers! Event Link: Hadoop Conference Japan 2013 Winter
-">
+  <meta name="description" content="In this week, Shinji Tanaka announced Labeled Tab-separated Values (LTSV).
+LTSV is the flexible and robust row oriented format. I just implemented &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -72,6 +72,73 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/02/ltsv-for-d/">LTSV for D</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-10T04:10:00+09:00" pubdate data-updated="true">Feb 10<span>th</span>, 2013</time>
+        
+         | <a href="/2013/02/ltsv-for-d/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In this week, Shinji Tanaka announced <a href="ltsv.org">Labeled Tab-separated Values (LTSV)</a>.
+LTSV is the flexible and robust row oriented format.</p>
+
+<p>I just implemented ltsv-d for D programming language.</p>
+
+<p><a href="http://github.com/repeatedly/ltsv-d">LTSV for D</a></p>
+
+<p>ltsv-d provides <code>fromLTSV</code> and <code>toLTSV</code> functions.</p>
+
+<p><code>fromLTSV</code> for parsing:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">auto</span> <span class="n">apacheLog</span> <span class="p">=</span> <span class="s">&quot;host:127.0.0.1\tident:-\tuser:foo\ttime:[10/Oct/2000:13:55:36 -0700]\treq:GET /apache.gif HTTP/1.0\tstatus:200\tsize:777\treferer:http://www.example.com/start.html\tua:Mozilla/4.08 [en] (Win98; I ;Nav)&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="k">auto</span> <span class="n">record</span> <span class="p">=</span> <span class="n">fromLTSV</span><span class="p">(</span><span class="n">apacheLog</span><span class="p">);</span>
+</span><span class='line'><span class="n">writeln</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s">&quot;host&quot;</span><span class="p">]);</span> <span class="c1">// &quot;127.0.0.1&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>toLTSV</code> for dumping:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">auto</span> <span class="n">line</span> <span class="p">=</span> <span class="p">[</span><span class="s">&quot;foo&quot;</span><span class="p">:</span><span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="s">&quot;hoge&quot;</span><span class="p">:</span><span class="s">&quot;fuga&quot;</span><span class="p">,</span> <span class="s">&quot;piyo&quot;</span><span class="p">:</span><span class="s">&quot;puyo&quot;</span><span class="p">].</span><span class="n">toLTSV</span><span class="p">();</span>
+</span><span class='line'><span class="n">writeln</span><span class="p">(</span><span class="n">line</span><span class="p">);</span> <span class="c1">// &quot;foo:bar\thoge:fuga\tpiyo:puyo&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Enjoy LTSV!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -305,69 +372,6 @@ Thanks to JP Aumasson!</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/11/inside-impala-coordinator-at-hscr-13th/">Inside Impala Coordinator at HSCR 13th</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-27T14:30:00+09:00" pubdate data-updated="true">Nov 27<span>th</span>, 2012</time>
-        
-         | <a href="/2012/11/inside-impala-coordinator-at-hscr-13th/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Yesterday, I talked about Impala Coordinator, which is scheduler layer of query execution.</p>
-
-<p>My presentation document is <a href="https://gist.github.com/4147497">here</a>!</p>
-
-<p>And <a href="http://twitter.com/oza_x86">@oza_x86</a> also talked about Impala Internal, but he focused on Query Execution Engine.
-The rest important component is only Query Planner.
-I hope someone presents Query Planner Internal at next event :)</p>
-
-<p><a href="http://twitter.com/GedowFather">@GedowFather</a> presented <a href="http://www.slideshare.net/GedowFather/cloudera-impala">Impala testing and operations on production</a>(ja).
-This presentation shared the knowledge and application consideration.
-I think this presentation is testbed for Impala introduction.</p>
-
-<p>Thanks to Hadoop User Group Japan for the good event!</p>
-
-<h2>Links</h2>
-
-<ul>
-<li><a href="http://hadoop-scr13th.eventbrite.com/">Event page</a> (ja)</li>
-<li><a href="http://togetter.com/li/413784">Togetter</a> (ja)</li>
-</ul>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/11/inside-impala-coordinator-at-hscr-13th/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/2/">&larr; Older</a>
@@ -383,6 +387,10 @@ I think this presentation is testbed for Impala introduction.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/02/ltsv-for-d/">LTSV for D</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/hadoop-conference-japan-2013-winter/">Hadoop Conference Japan 2013 Winter</a>
       </li>
     
@@ -396,10 +404,6 @@ I think this presentation is testbed for Impala introduction.</p>
     
       <li class="post">
         <a href="/2012/12/siphash-d/">siphash-d</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/11/inside-impala-coordinator-at-hscr-13th/">Inside Impala Coordinator at HSCR 13th</a>
       </li>
     
   </ul>

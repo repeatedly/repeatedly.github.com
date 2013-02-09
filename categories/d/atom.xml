@@ -4,7 +4,7 @@
   <title><![CDATA[Category: D | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/d/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-01-22T18:20:19+09:00</updated>
+  <updated>2013-02-10T05:09:17+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[LTSV for D]]></title>
+    <link href="http://repeatedly.github.com/2013/02/ltsv-for-d/"/>
+    <updated>2013-02-10T04:10:00+09:00</updated>
+    <id>http://repeatedly.github.com/2013/02/ltsv-for-d</id>
+    <content type="html"><![CDATA[<p>In this week, Shinji Tanaka announced <a href="ltsv.org">Labeled Tab-separated Values (LTSV)</a>.
+LTSV is the flexible and robust row oriented format.</p>
+
+<p>I just implemented ltsv-d for D programming language.</p>
+
+<p><a href="http://github.com/repeatedly/ltsv-d">LTSV for D</a></p>
+
+<p>ltsv-d provides <code>fromLTSV</code> and <code>toLTSV</code> functions.</p>
+
+<p><code>fromLTSV</code> for parsing:</p>
+
+<p><code>d
+auto apacheLog = "host:127.0.0.1\tident:-\tuser:foo\ttime:[10/Oct/2000:13:55:36 -0700]\treq:GET /apache.gif HTTP/1.0\tstatus:200\tsize:777\treferer:http://www.example.com/start.html\tua:Mozilla/4.08 [en] (Win98; I ;Nav)";
+auto record = fromLTSV(apacheLog);
+writeln(record["host"]); // "127.0.0.1"
+</code></p>
+
+<p><code>toLTSV</code> for dumping:</p>
+
+<p><code>d
+auto line = ["foo":"bar", "hoge":"fuga", "piyo":"puyo"].toLTSV();
+writeln(line); // "foo:bar\thoge:fuga\tpiyo:puyo"
+</code></p>
+
+<p>Enjoy LTSV!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[yajl-d]]></title>
@@ -109,114 +142,6 @@ See <a href="https://github.com/repeatedly/denv/blob/master/README.md">README</a
 <li><a href="https://github.com/repeatedly/denv">denv for contest programming</a> (in Japanese)</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Download script written in D]]></title>
-    <link href="http://repeatedly.github.com/2012/03/download-script-written-in-d/"/>
-    <updated>2012-03-20T15:02:00+09:00</updated>
-    <id>http://repeatedly.github.com/2012/03/download-script-written-in-d</id>
-    <content type="html"><![CDATA[<p>Tested under dmd 2.058.</p>
-
-<p><div><script src='https://gist.github.com/2114104.js?file='></script>
-<noscript><pre><code>// Written in the D programming language.
-
-/**
- * High peformance downloader
- *
- * Implemented according to &lt;a href=&quot;http://yusukebe.com/archives/20120229/072808.html&quot;&gt;this implementation&lt;/a&gt;.
- *
- * Example:
- * -----
- * dmd -L-lcurl -run downloader.d
- * -----
- */
-
-import core.atomic : atomicOp;
-
-import std.array       : join;
-import std.conv        : to;
-import std.getopt      : getopt;
-import std.file        : exists, mkdir;
-import std.json        : parseJSON, toJSON;
-import std.path        : buildPath, setExtension;
-import std.parallelism : parallel;
-import std.md5         : getDigestString;
-import std.net.curl    : get, download;
-import std.regex       : match;
-import std.string      : toLower;
-import std.stdio       : writeln;
-import std.uri         : encode;
-
-@trusted
-string buildQuery(in string[string] params)
-{
-    string[] queries;
-
-    foreach (k, v; params)
-        queries ~= encode(k) ~ &quot;=&quot; ~ encode(v);
-
-    return queries.join(&quot;&amp;&quot;);
-}
-
-void main(string[] args)
-{
-    immutable AppURI = &quot;http://api.bing.net/json.aspx&quot;;
-    immutable AppId  = &quot;Your AppId&quot;;
-    string storeDir  = &quot;./op_images&quot;;
-    string query     = &quot;おっぱい&quot;;
-    size_t page      = 0;
-
-    getopt(args,
-           &quot;query&quot;, &amp;query,
-           &quot;dir&quot;,   &amp;storeDir,
-           &quot;page&quot;,  &amp;page);
-
-    if (!storeDir.exists)
-        mkdir(storeDir);
-
-    writeln(&quot;Configuration: query = &quot;, query, &quot;, dir = &quot;, storeDir, &quot;, offset = &quot;, page);
-
-    for (shared(size_t) downloadCount; true; page++) {
-        immutable uri = AppURI ~ '?' ~ buildQuery([&quot;AppId&quot;:        AppId,
-                                                   &quot;Version&quot;:      &quot;2.2&quot;,
-                                                   &quot;Market&quot;:       &quot;ja-JP&quot;,
-                                                   &quot;Sources&quot;:      &quot;Image&quot;,
-                                                   &quot;Image.Count&quot;:  &quot;50&quot;,
-                                                   &quot;Image.Offset&quot;: to!string(page * 50),
-                                                   &quot;Adult&quot;:        &quot;off&quot;, 
-                                                   &quot;Query&quot;:        query]);
-        auto response = get(uri);
-        auto result   = parseJSON(response).object[&quot;SearchResponse&quot;];
-        if (&quot;Errors&quot; in result.object) {
-            writeln(&quot;Error: reason = &quot;, toJSON(&amp;result.object[&quot;Errors&quot;]));
-            break;
-        }
-
-        foreach (ref entry; parallel(result.object[&quot;Image&quot;].object[&quot;Results&quot;].array)) {
-            immutable downloadUri = entry.object[&quot;MediaUrl&quot;].str;
-            if (!downloadUri.match(&quot;.jpe?g$&quot;))
-                continue;
-
-            immutable path = buildPath(storeDir, downloadUri.getDigestString().toLower.setExtension(&quot;jpg&quot;));
-            if (path.exists)
-                continue;
-
-            download(downloadUri, path);
-
-            atomicOp!&quot;+=&quot;(downloadCount, 1);
-            writeln(downloadCount, &quot; : downloaded... &quot;, downloadUri);
-        }
-    }
-
-    writeln(&quot;done!&quot;);
-}</code></pre></noscript></div>
-</p>
-
-<p>This code consists of many D features for scripting :)</p>
-
-<p>Enjoy!</p>
 ]]></content>
   </entry>
   

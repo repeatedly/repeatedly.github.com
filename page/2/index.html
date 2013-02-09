@@ -9,8 +9,7 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Walter launched &#8220;The D Programming Language Conference 2013&#8221; on kickstarter in the last week.
-I have already pledged, and total pledged &hellip;">
+  <meta name="description" content="Yesterday, I talked about Impala Coordinator, which is scheduler layer of query execution. My presentation document is here! And @oza_x86 also talked &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -72,6 +71,69 @@ I have already pledged, and total pledged &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/11/inside-impala-coordinator-at-hscr-13th/">Inside Impala Coordinator at HSCR 13th</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-27T14:30:00+09:00" pubdate data-updated="true">Nov 27<span>th</span>, 2012</time>
+        
+         | <a href="/2012/11/inside-impala-coordinator-at-hscr-13th/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Yesterday, I talked about Impala Coordinator, which is scheduler layer of query execution.</p>
+
+<p>My presentation document is <a href="https://gist.github.com/4147497">here</a>!</p>
+
+<p>And <a href="http://twitter.com/oza_x86">@oza_x86</a> also talked about Impala Internal, but he focused on Query Execution Engine.
+The rest important component is only Query Planner.
+I hope someone presents Query Planner Internal at next event :)</p>
+
+<p><a href="http://twitter.com/GedowFather">@GedowFather</a> presented <a href="http://www.slideshare.net/GedowFather/cloudera-impala">Impala testing and operations on production</a>(ja).
+This presentation shared the knowledge and application consideration.
+I think this presentation is testbed for Impala introduction.</p>
+
+<p>Thanks to Hadoop User Group Japan for the good event!</p>
+
+<h2>Links</h2>
+
+<ul>
+<li><a href="http://hadoop-scr13th.eventbrite.com/">Event page</a> (ja)</li>
+<li><a href="http://togetter.com/li/413784">Togetter</a> (ja)</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/11/inside-impala-coordinator-at-hscr-13th/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -342,90 +404,6 @@ void main(string[] args)
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/">Collect invalid documents for bulk-insert in mongo-ruby-driver</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-29T11:49:00+09:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
-        
-         | <a href="/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Mongo gem 1.6.0 includes <a href="https://github.com/mongodb/mongo-ruby-driver/pull/82">my pull request</a>(and <a href="https://github.com/mongodb/mongo-ruby-driver/commit/a4343e53feb582103366bb9c02628a4c6b29fcbd">HISTORY</a>).</p>
-
-<h2>Background</h2>
-
-<p>Now, a service consists of many systems in production.
-As a result, some systems insert broken or invalid data to MongoDB.</p>
-
-<p>Here is problem.</p>
-
-<p>mongo-ruby-driver&#8217;s bulk-insert is dead or alive.
-If inserting docs has one invalid docuemnt, then insert operation failed.
-In addition, we can&#8217;t find invalid documents.</p>
-
-<p>This behavior is not usable.
-We want to handle invalid documents,
-e.g. output to local file, ignoring documents and etc.</p>
-
-<p>My pull request resolves this problem.</p>
-
-<h2>Usage</h2>
-
-<p>I introduced <code>:collect_on_error</code> to <em>insert</em> options.</p>
-
-<p><em>insert</em> without <code>:collect_on_error</code>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># docs is [{}, {}, ...]</span>
-</span><span class='line'><span class="n">result</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">docs</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><em>result</em> is an array of inserted document.</p>
-
-<p><em>insert</em> with <code>:collect_on_error</code>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">result</span><span class="p">,</span> <span class="n">invalid_docs</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">docs</span><span class="p">,</span> <span class="ss">:collect_on_error</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><em>result</em> is same as insert without <code>:collect_on_error</code>.
-<em>invalid_docs</em> is an array of invalid document which removed ObjectId field.
-We can handle <em>invalid_docs</em> manually.
-For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4656aa3948fce280158f718356f00764ea558ef9#L2R103">fluent-plugin-mongo</a>.</p>
-
-<p>Enjoy MongoDB with Ruby!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/3/">&larr; Older</a>
@@ -443,6 +421,10 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/02/ltsv-for-d/">LTSV for D</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/hadoop-conference-japan-2013-winter/">Hadoop Conference Japan 2013 Winter</a>
       </li>
     
@@ -456,10 +438,6 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
     
       <li class="post">
         <a href="/2012/12/siphash-d/">siphash-d</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/11/inside-impala-coordinator-at-hscr-13th/">Inside Impala Coordinator at HSCR 13th</a>
       </li>
     
   </ul>
