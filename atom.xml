@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-03-11T13:51:23+09:00</updated>
+  <updated>2013-03-11T13:53:57+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -18,7 +18,7 @@
     <link href="http://repeatedly.github.com/2013/03/the-basics-of-fluentd/"/>
     <updated>2013-03-09T13:54:00+09:00</updated>
     <id>http://repeatedly.github.com/2013/03/the-basics-of-fluentd</id>
-    <content type="html"><![CDATA[<p>On Mar. 7th, Fluentd meetup in Fukuoka is held at OnRAMP.</p>
+    <content type="html"><![CDATA[<p>On Mar. 7th, Fluentd meetup in Fukuoka was held at OnRAMP.</p>
 
 <p><a href="http://www.zusaar.com/event/501053">Fluentd meetup in Fukuoka</a> (in japanese)</p>
 
