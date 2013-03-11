@@ -9,17 +9,7 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Source package is here. The main feature is MessagePack RPC Server support.
-Example is below: 1
-2
-3
-4
-5
-6
-7
-8
-9
-import msgpackrpc class SumServer: &hellip;">
+  <meta name="description" content="Gem page is here. This version requires mongo gem version 1.5.2 for Replica Set. New features Replica Set support You can use mongo_replset for &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +71,194 @@ import msgpackrpc class SumServer: &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/01/released-fluent-plugin-mongo-0.6.0/">Released fluent-plugin-mongo 0.6.0</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-16T09:18:00+09:00" pubdate data-updated="true">Jan 16<span>th</span>, 2012</time>
+        
+         | <a href="/2012/01/released-fluent-plugin-mongo-0.6.0/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Gem page is <a href="https://rubygems.org/gems/fluent-plugin-mongo">here</a>.</p>
+
+<p>This version requires mongo gem version 1.5.2 for Replica Set.</p>
+
+<h2>New features</h2>
+
+<h3>Replica Set support</h3>
+
+<p>You can use <em>mongo_replset</em> for connecting to Replica Set cluster.</p>
+
+<p>Example configuration is below:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="nt">&lt;match</span> <span class="s">mongo.**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> mongo_replset
+</span><span class='line'>  <span class="nb">database</span> fluent
+</span><span class='line'>  <span class="nb">collection</span> logs
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># each node separated by &#39;,&#39;</span>
+</span><span class='line'>  <span class="nb">nodes</span> localhost:27017,localhost:27018,localhost:27019
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># num_retries is threshold at failover, default is 60.</span>
+</span><span class='line'>  <span class="c"># If retry count reached this threshold, mongo plugin raises an exception.</span>
+</span><span class='line'>  <span class="err">num_</span><span class="nb">retries</span> <span class="m">30</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># following optional parameters passed to ReplSetConnection of mongo-ruby-driver.</span>
+</span><span class='line'>  <span class="c"># See mongo-ruby-driver docs for more detail.</span>
+</span><span class='line'>  <span class="c">#name replset_name</span>
+</span><span class='line'>  <span class="c">#read secondary</span>
+</span><span class='line'>  <span class="c">#refresh_mode sync</span>
+</span><span class='line'>  <span class="c">#refresh_interval 60</span>
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Handling invalid records</h3>
+
+<p>Fluentd is an event collector, so Mongo plugin should handle an invalid record as a BSON.</p>
+
+<p>Mongo plugin approach marshals an invalid record when mongo-ruby-driver detects such record.
+And Mongo plugin inserts marshaled record as a broken data to same collection.</p>
+
+<p>If passed following invalid record:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="o">:</span> <span class="s2">&quot;invalid value&quot;</span><span class="p">,</span> <span class="s2">&quot;key2&quot;</span><span class="o">:</span> <span class="s2">&quot;valid value&quot;</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="o">:</span> <span class="nx">ISODate</span><span class="p">(</span><span class="s2">&quot;2012-01-15T21:09:53Z&quot;</span><span class="p">)}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>then Mongo plugin converts this record to following format:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span><span class="s2">&quot;__broken_data&quot;</span><span class="o">:</span> <span class="nx">Marshal</span><span class="p">.</span><span class="nx">dump</span> <span class="nx">result</span> <span class="nx">of</span> <span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="o">:</span> <span class="s2">&quot;invalid value&quot;</span><span class="p">,</span> <span class="s2">&quot;key2&quot;</span><span class="o">:</span> <span class="s2">&quot;valid value&quot;</span><span class="p">},</span> <span class="s2">&quot;time&quot;</span><span class="o">:</span> <span class="nx">ISODate</span><span class="p">(</span><span class="s2">&quot;2012-01-15T21:09:53Z&quot;</span><span class="p">)}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the result, we can rescue and analyze a broken data later.</p>
+
+<h4>NOTE</h4>
+
+<p>Mongo-ruby-driver cannot detect an invalid attribute,
+so Mongo plugin marshals all attributes excluding Fluentd keys(&#8220;tag_key&#8221; and &#8220;time_key&#8221;).</p>
+
+<h4>Ignore an invalid record</h4>
+
+<p>If you want to ignore an invalid record, set <em>ignore_invalid_document</em> parameter in match.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="nt">&lt;match</span> <span class="s">forward.*</span><span class="nt">&gt;</span>
+</span><span class='line'>  ...
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># ignore invalid documents at write operation</span>
+</span><span class='line'>  <span class="err">ignore_invalid_</span><span class="nb">document</span> true
+</span><span class='line'>
+</span><span class='line'>  ...
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Tag mapped mode in <em>mongo</em> type</h3>
+
+<p>0.6.0 merges <em>mongo_tag_collection</em> type into <em>mongo</em> type.
+You can use <em>tag_mapped</em> parameter in <em>mongo</em> type for enabling tag mapped mode.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="nt">&lt;match</span> <span class="s">forward.*</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> mongo
+</span><span class='line'>  <span class="nb">database</span> fluent
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># You use &#39;tag_mapped&#39;, then tag mapped mode enabled.</span>
+</span><span class='line'>  <span class="err">tag_</span><span class="nb">mapped</span>
+</span><span class='line'>
+</span><span class='line'>  # If tag is <span class="s2">&quot;forward.foo.bar&quot;</span>, then prefix <span class="s2">&quot;forward.&quot;</span> is removed.
+</span><span class='line'>  <span class="c"># Collection name to insert is &quot;foo.bar&quot;.</span>
+</span><span class='line'>  <span class="err">remove_tag_</span><span class="nb">prefix</span> forward.
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># This configuration is used if tag not found. Default is &#39;untagged&#39;.</span>
+</span><span class='line'>  <span class="nb">collection</span> misc
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># Other configurations here</span>
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>TODO</h2>
+
+<ul>
+<li>Support multi-process processing using DetachMultiProcessMixin</li>
+<li>Support authentication if needed</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -183,6 +361,10 @@ In addition, I will refactor the internal architecture.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/03/the-basics-of-fluentd/">The basics of Fluentd</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/02/ltsv-for-d/">LTSV for D</a>
       </li>
     
@@ -196,10 +378,6 @@ In addition, I will refactor the internal architecture.</p>
     
       <li class="post">
         <a href="/2012/12/published-introduction-to-tornado-in-japan/">Published &#8216;Introduction to Tornado&#8217; in Japan</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/siphash-d/">siphash-d</a>
       </li>
     
   </ul>

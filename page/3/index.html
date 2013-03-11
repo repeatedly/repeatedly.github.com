@@ -9,8 +9,7 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Mongo gem 1.6.0 includes my pull request(and HISTORY). Background Now, a service consists of many systems in production.
-As a result, some systems &hellip;">
+  <meta name="description" content="Tested under dmd 2.058. // Written in the D programming language. /** * High peformance downloader * * Implemented according to &lt;a href=&quot;http &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -72,6 +71,143 @@ As a result, some systems &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/03/download-script-written-in-d/">Download script written in D</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-20T15:02:00+09:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
+        
+         | <a href="/2012/03/download-script-written-in-d/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Tested under dmd 2.058.</p>
+
+<div><script src='https://gist.github.com/2114104.js?file='></script>
+<noscript><pre><code>// Written in the D programming language.
+
+/**
+ * High peformance downloader
+ *
+ * Implemented according to &lt;a href=&quot;http://yusukebe.com/archives/20120229/072808.html&quot;&gt;this implementation&lt;/a&gt;.
+ *
+ * Example:
+ * -----
+ * dmd -L-lcurl -run downloader.d
+ * -----
+ */
+
+import core.atomic : atomicOp;
+
+import std.array       : join;
+import std.conv        : to;
+import std.getopt      : getopt;
+import std.file        : exists, mkdir;
+import std.json        : parseJSON, toJSON;
+import std.path        : buildPath, setExtension;
+import std.parallelism : parallel;
+import std.md5         : getDigestString;
+import std.net.curl    : get, download;
+import std.regex       : match;
+import std.string      : toLower;
+import std.stdio       : writeln;
+import std.uri         : encode;
+
+@trusted
+string buildQuery(in string[string] params)
+{
+    string[] queries;
+
+    foreach (k, v; params)
+        queries ~= encode(k) ~ &quot;=&quot; ~ encode(v);
+
+    return queries.join(&quot;&amp;&quot;);
+}
+
+void main(string[] args)
+{
+    immutable AppURI = &quot;http://api.bing.net/json.aspx&quot;;
+    immutable AppId  = &quot;Your AppId&quot;;
+    string storeDir  = &quot;./op_images&quot;;
+    string query     = &quot;おっぱい&quot;;
+    size_t page      = 0;
+
+    getopt(args,
+           &quot;query&quot;, &amp;query,
+           &quot;dir&quot;,   &amp;storeDir,
+           &quot;page&quot;,  &amp;page);
+
+    if (!storeDir.exists)
+        mkdir(storeDir);
+
+    writeln(&quot;Configuration: query = &quot;, query, &quot;, dir = &quot;, storeDir, &quot;, offset = &quot;, page);
+
+    for (shared(size_t) downloadCount; true; page++) {
+        immutable uri = AppURI ~ '?' ~ buildQuery([&quot;AppId&quot;:        AppId,
+                                                   &quot;Version&quot;:      &quot;2.2&quot;,
+                                                   &quot;Market&quot;:       &quot;ja-JP&quot;,
+                                                   &quot;Sources&quot;:      &quot;Image&quot;,
+                                                   &quot;Image.Count&quot;:  &quot;50&quot;,
+                                                   &quot;Image.Offset&quot;: to!string(page * 50),
+                                                   &quot;Adult&quot;:        &quot;off&quot;, 
+                                                   &quot;Query&quot;:        query]);
+        auto response = get(uri);
+        auto result   = parseJSON(response).object[&quot;SearchResponse&quot;];
+        if (&quot;Errors&quot; in result.object) {
+            writeln(&quot;Error: reason = &quot;, toJSON(&amp;result.object[&quot;Errors&quot;]));
+            break;
+        }
+
+        foreach (ref entry; parallel(result.object[&quot;Image&quot;].object[&quot;Results&quot;].array)) {
+            immutable downloadUri = entry.object[&quot;MediaUrl&quot;].str;
+            if (!downloadUri.match(&quot;.jpe?g$&quot;))
+                continue;
+
+            immutable path = buildPath(storeDir, downloadUri.getDigestString().toLower.setExtension(&quot;jpg&quot;));
+            if (path.exists)
+                continue;
+
+            download(downloadUri, path);
+
+            atomicOp!&quot;+=&quot;(downloadCount, 1);
+            writeln(downloadCount, &quot; : downloaded... &quot;, downloadUri);
+        }
+    }
+
+    writeln(&quot;done!&quot;);
+}</code></pre></noscript></div>
+
+
+<p>This code consists of many D features for scripting :)</p>
+
+<p>Enjoy!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -448,194 +584,6 @@ But some environment doesn&#8217;t have Syck engine, so this approch doesn&#8217
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/01/released-fluent-plugin-mongo-0.6.0/">Released fluent-plugin-mongo 0.6.0</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-16T09:18:00+09:00" pubdate data-updated="true">Jan 16<span>th</span>, 2012</time>
-        
-         | <a href="/2012/01/released-fluent-plugin-mongo-0.6.0/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Gem page is <a href="https://rubygems.org/gems/fluent-plugin-mongo">here</a>.</p>
-
-<p>This version requires mongo gem version 1.5.2 for Replica Set.</p>
-
-<h2>New features</h2>
-
-<h3>Replica Set support</h3>
-
-<p>You can use <em>mongo_replset</em> for connecting to Replica Set cluster.</p>
-
-<p>Example configuration is below:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="nt">&lt;match</span> <span class="s">mongo.**</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> mongo_replset
-</span><span class='line'>  <span class="nb">database</span> fluent
-</span><span class='line'>  <span class="nb">collection</span> logs
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># each node separated by &#39;,&#39;</span>
-</span><span class='line'>  <span class="nb">nodes</span> localhost:27017,localhost:27018,localhost:27019
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># num_retries is threshold at failover, default is 60.</span>
-</span><span class='line'>  <span class="c"># If retry count reached this threshold, mongo plugin raises an exception.</span>
-</span><span class='line'>  <span class="err">num_</span><span class="nb">retries</span> <span class="m">30</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># following optional parameters passed to ReplSetConnection of mongo-ruby-driver.</span>
-</span><span class='line'>  <span class="c"># See mongo-ruby-driver docs for more detail.</span>
-</span><span class='line'>  <span class="c">#name replset_name</span>
-</span><span class='line'>  <span class="c">#read secondary</span>
-</span><span class='line'>  <span class="c">#refresh_mode sync</span>
-</span><span class='line'>  <span class="c">#refresh_interval 60</span>
-</span><span class='line'><span class="nt">&lt;/match&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Handling invalid records</h3>
-
-<p>Fluentd is an event collector, so Mongo plugin should handle an invalid record as a BSON.</p>
-
-<p>Mongo plugin approach marshals an invalid record when mongo-ruby-driver detects such record.
-And Mongo plugin inserts marshaled record as a broken data to same collection.</p>
-
-<p>If passed following invalid record:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="o">:</span> <span class="s2">&quot;invalid value&quot;</span><span class="p">,</span> <span class="s2">&quot;key2&quot;</span><span class="o">:</span> <span class="s2">&quot;valid value&quot;</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="o">:</span> <span class="nx">ISODate</span><span class="p">(</span><span class="s2">&quot;2012-01-15T21:09:53Z&quot;</span><span class="p">)}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>then Mongo plugin converts this record to following format:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span><span class="s2">&quot;__broken_data&quot;</span><span class="o">:</span> <span class="nx">Marshal</span><span class="p">.</span><span class="nx">dump</span> <span class="nx">result</span> <span class="nx">of</span> <span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="o">:</span> <span class="s2">&quot;invalid value&quot;</span><span class="p">,</span> <span class="s2">&quot;key2&quot;</span><span class="o">:</span> <span class="s2">&quot;valid value&quot;</span><span class="p">},</span> <span class="s2">&quot;time&quot;</span><span class="o">:</span> <span class="nx">ISODate</span><span class="p">(</span><span class="s2">&quot;2012-01-15T21:09:53Z&quot;</span><span class="p">)}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In the result, we can rescue and analyze a broken data later.</p>
-
-<h4>NOTE</h4>
-
-<p>Mongo-ruby-driver cannot detect an invalid attribute,
-so Mongo plugin marshals all attributes excluding Fluentd keys(&#8220;tag_key&#8221; and &#8220;time_key&#8221;).</p>
-
-<h4>Ignore an invalid record</h4>
-
-<p>If you want to ignore an invalid record, set <em>ignore_invalid_document</em> parameter in match.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="nt">&lt;match</span> <span class="s">forward.*</span><span class="nt">&gt;</span>
-</span><span class='line'>  ...
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># ignore invalid documents at write operation</span>
-</span><span class='line'>  <span class="err">ignore_invalid_</span><span class="nb">document</span> true
-</span><span class='line'>
-</span><span class='line'>  ...
-</span><span class='line'><span class="nt">&lt;/match&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Tag mapped mode in <em>mongo</em> type</h3>
-
-<p>0.6.0 merges <em>mongo_tag_collection</em> type into <em>mongo</em> type.
-You can use <em>tag_mapped</em> parameter in <em>mongo</em> type for enabling tag mapped mode.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="nt">&lt;match</span> <span class="s">forward.*</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> mongo
-</span><span class='line'>  <span class="nb">database</span> fluent
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># You use &#39;tag_mapped&#39;, then tag mapped mode enabled.</span>
-</span><span class='line'>  <span class="err">tag_</span><span class="nb">mapped</span>
-</span><span class='line'>
-</span><span class='line'>  # If tag is <span class="s2">&quot;forward.foo.bar&quot;</span>, then prefix <span class="s2">&quot;forward.&quot;</span> is removed.
-</span><span class='line'>  <span class="c"># Collection name to insert is &quot;foo.bar&quot;.</span>
-</span><span class='line'>  <span class="err">remove_tag_</span><span class="nb">prefix</span> forward.
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># This configuration is used if tag not found. Default is &#39;untagged&#39;.</span>
-</span><span class='line'>  <span class="nb">collection</span> misc
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># Other configurations here</span>
-</span><span class='line'><span class="nt">&lt;/match&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>TODO</h2>
-
-<ul>
-<li>Support multi-process processing using DetachMultiProcessMixin</li>
-<li>Support authentication if needed</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/4/">&larr; Older</a>
@@ -653,6 +601,10 @@ You can use <em>tag_mapped</em> parameter in <em>mongo</em> type for enabling ta
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/03/the-basics-of-fluentd/">The basics of Fluentd</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/02/ltsv-for-d/">LTSV for D</a>
       </li>
     
@@ -666,10 +618,6 @@ You can use <em>tag_mapped</em> parameter in <em>mongo</em> type for enabling ta
     
       <li class="post">
         <a href="/2012/12/published-introduction-to-tornado-in-japan/">Published &#8216;Introduction to Tornado&#8217; in Japan</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/siphash-d/">siphash-d</a>
       </li>
     
   </ul>

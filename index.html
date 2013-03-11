@@ -9,8 +9,7 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="In this week, Shinji Tanaka announced Labeled Tab-separated Values (LTSV).
-LTSV is the flexible and robust row oriented format. I just implemented &hellip;">
+  <meta name="description" content="On Mar. 7th, Fluentd meetup in Fukuoka is held at OnRAMP. Fluentd meetup in Fukuoka (in japanese) In this event, I presented The basics of Fluentd. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -72,6 +71,59 @@ LTSV is the flexible and robust row oriented format. I just implemented &hellip;
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/03/the-basics-of-fluentd/">The basics of Fluentd</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-09T13:54:00+09:00" pubdate data-updated="true">Mar 9<span>th</span>, 2013</time>
+        
+         | <a href="/2013/03/the-basics-of-fluentd/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>On Mar. 7th, Fluentd meetup in Fukuoka is held at OnRAMP.</p>
+
+<p><a href="http://www.zusaar.com/event/501053">Fluentd meetup in Fukuoka</a> (in japanese)</p>
+
+<p>In this event, I presented <strong>The basics of Fluentd</strong>.
+The purpose of presentation shares Fluentd concept and basic features. I hope this presentation helps your understading of Fluentd.</p>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/17001359?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/treasure-data/the-basics-of-fluentd" title="The basics of fluentd" target="_blank">The basics of fluentd</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
+
+<p>Thanks to matsuzaki-san and hashimoto-san for meetup setup and
+thank you everyone for your participation!</p>
+
+<p>I had a great time at Fukuoka :)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -312,66 +364,6 @@ I think Tornado is good for learning Python and event driven programming.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/12/siphash-d/">siphash-d</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-04T22:57:00+09:00" pubdate data-updated="true">Dec 4<span>th</span>, 2012</time>
-        
-         | <a href="/2012/12/siphash-d/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="https://github.com/repeatedly/siphash-d">siphash-d</a> is the D implementation of <a href="https://131002.net/siphash/">SipHash</a>.</p>
-
-<p>The latest CRuby uses SipHash to prevent <a href="http://www.ruby-lang.org/en/news/2012/11/09/ruby19-hashdos-cve-2012-5371/">Hash-flooding DoS attack</a>. From now on, SipHash like algorithm will be important for robust application. So I implemented SipHash for D.</p>
-
-<p>Current version provides only siphash24 function:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">import</span> <span class="n">siphash</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">ubyte</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span> <span class="n">k</span> <span class="p">=</span> <span class="k">cast</span><span class="p">(</span><span class="kt">ubyte</span><span class="p">[])</span><span class="s">&quot;To be|not to be!&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="kt">ubyte</span><span class="p">[]</span> <span class="n">msg</span> <span class="p">=</span> <span class="k">cast</span><span class="p">(</span><span class="kt">ubyte</span><span class="p">[])</span><span class="s">&quot;that is the question.&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="k">auto</span> <span class="n">hashed</span> <span class="p">=</span> <span class="n">siphash24</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">msg</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I plan to add std.digest like struct and other APIs if needed.</p>
-
-<p>siphash-d has already listed in the official site.
-Thanks to JP Aumasson!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/2/">&larr; Older</a>
@@ -387,6 +379,10 @@ Thanks to JP Aumasson!</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/03/the-basics-of-fluentd/">The basics of Fluentd</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/02/ltsv-for-d/">LTSV for D</a>
       </li>
     
@@ -400,10 +396,6 @@ Thanks to JP Aumasson!</p>
     
       <li class="post">
         <a href="/2012/12/published-introduction-to-tornado-in-japan/">Published &#8216;Introduction to Tornado&#8217; in Japan</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/siphash-d/">siphash-d</a>
       </li>
     
   </ul>

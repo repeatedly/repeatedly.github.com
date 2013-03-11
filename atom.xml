@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-02-10T05:10:41+09:00</updated>
+  <updated>2013-03-11T13:51:23+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,30 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[The basics of Fluentd]]></title>
+    <link href="http://repeatedly.github.com/2013/03/the-basics-of-fluentd/"/>
+    <updated>2013-03-09T13:54:00+09:00</updated>
+    <id>http://repeatedly.github.com/2013/03/the-basics-of-fluentd</id>
+    <content type="html"><![CDATA[<p>On Mar. 7th, Fluentd meetup in Fukuoka is held at OnRAMP.</p>
+
+<p><a href="http://www.zusaar.com/event/501053">Fluentd meetup in Fukuoka</a> (in japanese)</p>
+
+<p>In this event, I presented <strong>The basics of Fluentd</strong>.
+The purpose of presentation shares Fluentd concept and basic features. I hope this presentation helps your understading of Fluentd.</p>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/17001359?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/treasure-data/the-basics-of-fluentd" title="The basics of fluentd" target="_blank">The basics of fluentd</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
+
+<p>Thanks to matsuzaki-san and hashimoto-san for meetup setup and
+thank you everyone for your participation!</p>
+
+<p>I had a great time at Fukuoka :)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[LTSV for D]]></title>
