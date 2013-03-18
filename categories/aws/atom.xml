@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Fluentd | Go ahead!]]></title>
-  <link href="http://repeatedly.github.com/categories/fluentd/atom.xml" rel="self"/>
+  <title><![CDATA[Category: AWS | Go ahead!]]></title>
+  <link href="http://repeatedly.github.com/categories/aws/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
   <updated>2013-03-18T17:56:26+09:00</updated>
   <id>http://repeatedly.github.com/</id>
@@ -62,79 +62,6 @@ AWS上で展開しているTreasure Dataサービスの仕組みについてつ�
 AWSのMilesにも「Fluentd is good!!」と言われ，向こうでも徐々にFluentdが広まってきていると感じている今日この頃．このままTreasure Dataも伸びていきたい所です．</p>
 
 <p>各セッションの感想は他の人が書いてくれるはず．ということで，皆さんお疲れ様でした！またどこかでお会いしましょう :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[LT at Fluentd Casual Talks]]></title>
-    <link href="http://repeatedly.github.com/2012/04/lt-at-fluentd-casual-talks/"/>
-    <updated>2012-04-12T20:18:00+09:00</updated>
-    <id>http://repeatedly.github.com/2012/04/lt-at-fluentd-casual-talks</id>
-    <content type="html"><![CDATA[<p><a href="http://atnd.org/events/27808">Fluentd Casual Talks</a> will be held in Japan.</p>
-
-<p>I will talk about "The Melancholy of Plugin Developer" in LT section.</p>
-
-<p>See you at the event!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Released fluent-logger-d]]></title>
-    <link href="http://repeatedly.github.com/2012/02/released-fluent-logger-d/"/>
-    <updated>2012-02-21T21:16:00+09:00</updated>
-    <id>http://repeatedly.github.com/2012/02/released-fluent-logger-d</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/fluent/fluent-logger-d">fluent-logger-d</a>.</p>
-
-<p>This client library has some TODOs, but works fine.
-I tested posting 5,000,000 messages with 5 threads, no problem.</p>
-
-<p>In fact, D community now doesn't want such library.
-Because current D community doesn't face to the production.</p>
-
-<p>I hope this library with <a href="http://fluentd.org/">Fluentd</a> helps your system design in the future.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Fluentd meetup in Japan]]></title>
-    <link href="http://repeatedly.github.com/2012/02/fluentd-meetup-in-japan/"/>
-    <updated>2012-02-06T01:07:00+09:00</updated>
-    <id>http://repeatedly.github.com/2012/02/fluentd-meetup-in-japan</id>
-    <content type="html"><![CDATA[<p><a href="http://www.zusaar.com/event/193104">Fluentd meetup in Japan</a> was held on Feb 4th.</p>
-
-<p>This meetup included more than 120 over hackers. It has been really exciting and I had a great time. Thanks to Fluentd developers and users!</p>
-
-<h2>My presentation</h2>
-
-<p>I talked about "Dive into Fluent plugin". The purpose of this presentaion shares know-how of Fluentd plugin. I hope this presentation helps your developing of Fluend plugin.</p>
-
-<p>I didn't talk about some un-documented features, e.g. EventStream families, ObjectBufferedOutput, the details of DetachMultiProcessMixin and etc. Let's dive into Fluentd source code if you know these features.</p>
-
-<p>Enjoy Fluentd and plugins :)</p>
-
-<ul>
-<li>Slideshare(en)</li>
-</ul>
-
-
-<div style = "width:425px" id = "__ss_11411503"> <strong style = "display:block;margin:12px 0 4px"><a href = "http://www.slideshare.net/repeatedly/fluentd-meetup-dive-into-fluent-plugin" title = "Fluentd meetup dive into fluent plugin" target = "_blank">Fluentd meetup dive into fluent plugin</a></strong> <iframe src = "http://www.slideshare.net/slideshow/embed_code/11411503" width = "425" height = "355" frameborder = "0" marginwidth = "0" marginheight = "0" scrolling = "no"></iframe> <div style = "padding:5px 0 12px"> View more <a href = "http://www.slideshare.net/" target = "_blank">presentations</a> from <a href = "http://www.slideshare.net/repeatedly" target = "_blank">N Masahiro</a> </div> </div>
-
-
-<ul>
-<li>Ustream(ja)</li>
-</ul>
-
-
-<iframe src = "http://www.ustream.tv/embed/recorded/20207654" width = "608" height = "368" scrolling = "no" frameborder = "0" style = "border: 0px none transparent;"></iframe>
-
-
-<p>Sorry, the first few minutes is lost.</p>
-
-<ul>
-<li><a href="http://togetter.com/li/252178">Togetter</a>(ja)</li>
-<li><a href="http://www.flickr.com/photos/koyhoge/sets/72157629164501855">flickr photos by koyhoge</a></li>
-</ul>
-
 ]]></content>
   </entry>
   
