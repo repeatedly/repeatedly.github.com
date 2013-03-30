@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-03-30T11:35:25+09:00</updated>
+  <updated>2013-03-30T11:42:49+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -61,7 +61,7 @@
 <li>再送は基本Spoutが判断．まぁこれは分からなくもない</li>
 </ul>
 </li>
-<li><p>0.8からのTridentはBatchをガリガリ使っていると聞いてるけど，通常の利用だとあまりない？1タプルでトポロジー内forwardしまくるのは結構パフォーマンス的に厳しそう</p></li>
+<li><p>0.8からのTridentはBatchをガリガリ使っていると聞いてるけど，通常の利用だとあまりない？ 1 Tupleでトポロジー内forwardしまくるのは結構パフォーマンス的に厳しそう</p></li>
 <li><p>トランザクションはSpout / Boltの両方が頑張る．この辺は今時のストリーミング処理系と同じ．コアで担保は難しい</p></li>
 <li><p>各ワーカーのコアのメソッドはシングルスレッドで呼ばれるようなので，この辺で重い処理すると多分詰まる．at-least-onceっぽいので，多分これが連鎖するとデータ重複する．</p></li>
 <li><p>multilangはHadoop Streamingと同じ</p></li>
