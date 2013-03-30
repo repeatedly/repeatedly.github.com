@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-03-18T17:56:26+09:00</updated>
+  <updated>2013-03-30T11:35:25+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,66 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Stormをはじめよう]]></title>
+    <link href="http://repeatedly.github.com/ja/2013/03/getting-started-with-storm/"/>
+    <updated>2013-03-30T10:54:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2013/03/getting-started-with-storm</id>
+    <content type="html"><![CDATA[<p>O&#8217;Reillyの方から<a href="http://www.oreilly.co.jp/books/9784873116013/">Stormをはじめよう</a>を献本して頂いて読んだのでレビュー！</p>
+
+<h2>感想</h2>
+
+<p>最近増えてきている100ページくらいの本なので，さっくり読めました．</p>
+
+<p>簡単にまとめると &#8221;<strong>英語は読みたくないので情報が古くてもStormの概要を日本語で読みたい</strong>&#8221; という方向けの本．</p>
+
+<p>大きな理由は以下:</p>
+
+<ul>
+<li>Stormの対象バージョンが0.7.1と古い．俺でもTridentというのが0.8から入っているのを知っているので，その辺の目玉機能は書かれていない</li>
+<li>多分原著の方も少し書き方が雑．なんの説明もなく実装のクラス名を使って説明している所とかあるので「？」となる所がある
+
+<ul>
+<li>サンプルコードも少し雑で，使ってない変数があったり説明と実装があってなかったりもたまにある</li>
+</ul>
+</li>
+<li>翻訳が少し微妙．Cursorが&#8221;カーサー&#8221;だったり，原著の方の構成の不味さもあるのか，日本語的に理解しにくい文がちょくちょく混じっている (監訳はいない？)</li>
+</ul>
+
+
+<p>メッセージングの信頼性に関しては，Storm本家のWikiの方が詳しく書かれていたりするので，本当に「Stormってどういう構成でどういう感じに機能追加するんだろう？ユースケースとかは？」みたいなのを日本語で読みたい場合には，とっかかりにもなるし，これで十分な感じ．</p>
+
+<p>英語が読める人は，本家のWikiとか漁った方が情報も新しく結構細かに書かれているため，そちらの方が正確かもしれない．</p>
+
+<h2>正誤表</h2>
+
+<p>読んでて気になった所はgistにまとめておきました</p>
+
+<p><a href="https://gist.github.com/repeatedly/5274873">Stormをはじめようのerrata</a></p>
+
+<h2>Stormについてのてきとうな所感</h2>
+
+<ul>
+<li><p>NimbusはImpalaのstatestoreみたいな感じで，最初はいるけど落ちても致命的ではない</p></li>
+<li><p>Tupleは基本単体で送られて，それぞれにトポロジーのack tracker(Acker)がついてトラッキングされる</p>
+
+<ul>
+<li>tupleが増えるとAckerも増え，数が増えると結構重そうに見えるけど，そこんところどうなのか</li>
+<li>再送は基本Spoutが判断．まぁこれは分からなくもない</li>
+</ul>
+</li>
+<li><p>0.8からのTridentはBatchをガリガリ使っていると聞いてるけど，通常の利用だとあまりない？1タプルでトポロジー内forwardしまくるのは結構パフォーマンス的に厳しそう</p></li>
+<li><p>トランザクションはSpout / Boltの両方が頑張る．この辺は今時のストリーミング処理系と同じ．コアで担保は難しい</p></li>
+<li><p>各ワーカーのコアのメソッドはシングルスレッドで呼ばれるようなので，この辺で重い処理すると多分詰まる．at-least-onceっぽいので，多分これが連鎖するとデータ重複する．</p></li>
+<li><p>multilangはHadoop Streamingと同じ</p></li>
+<li><p>ZooKeeperに依存しているので，そこがまた面倒くさそう</p></li>
+</ul>
+
+
+<p>とりあえずこんな感じ．0.8や0.9でもっと改善されているかもしれないので，その辺は必要があれば追う．</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[AWSを使ったデータ解析PaaSの裏側]]></title>
@@ -1348,63 +1408,6 @@ You can use <em>tag_mapped</em> parameter in <em>mongo</em> type for enabling ta
 <li>Support authentication if needed</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Released MessagePack RPC Python 0.2.0]]></title>
-    <link href="http://repeatedly.github.com/2012/01/released-msgpack-rpc-python-0.2.0/"/>
-    <updated>2012-01-10T08:48:00+09:00</updated>
-    <id>http://repeatedly.github.com/2012/01/released-msgpack-rpc-python-0.2.0</id>
-    <content type="html"><![CDATA[<p>Source package is <a href="http://pypi.python.org/pypi/msgpack-rpc-python/0.2.0">here</a>.</p>
-
-<p>The main feature is MessagePack RPC Server support.<br />
-Example is below:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">msgpackrpc</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">SumServer</span><span class="p">:</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">server</span> <span class="o">=</span> <span class="n">msgpackrpc</span><span class="o">.</span><span class="n">Server</span><span class="p">(</span><span class="n">SumServer</span><span class="p">())</span>
-</span><span class='line'><span class="n">server</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">msgpackrpc</span><span class="o">.</span><span class="n">Address</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">))</span>
-</span><span class='line'><span class="n">server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can use Client to access this server:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">client</span> <span class="o">=</span> <span class="n">msgpackrpc</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">msgpackrpc</span><span class="o">.</span><span class="n">Address</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">))</span>
-</span><span class='line'><span class="n">client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s">&quot;sum&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c"># =&gt; 3</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Other improvements</h2>
-
-<ul>
-<li>Support Python 3 (tested with Python 3.2.2)</li>
-<li>Add notify request to Client</li>
-<li>Add (un)pack_encoding option for MessagePack (de)serializer</li>
-</ul>
-
-
-<h2>TODO</h2>
-
-<p>Current implementaion lacks some features compared to Ruby implementaion.
-I will add new features, e.g. advanced return, async return, etc.
-In addition, I will refactor the internal architecture.</p>
 ]]></content>
   </entry>
   

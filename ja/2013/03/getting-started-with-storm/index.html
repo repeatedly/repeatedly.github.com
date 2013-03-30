@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>yajl-d - Go ahead!</title>
+  <title>Stormをはじめよう - Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="yajl-d is the D binding for YAJL. YAJL provides the stream JSON parsing and some extra features, e.g. allow comments. yajl-d also provides the JSON &hellip;">
+  <meta name="description" content="O&#8217;Reillyの方からStormをはじめようを献本して頂いて読んだのでレビュー！ 感想 最近増えてきている100ページくらいの本なので，さっくり読めました． 簡単にまとめると &#8221;英語は読みたくないので情報が古くてもStormの概要を日本語で読みたい&#8221; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.com/2013/01/yajl-d">
+  <link rel="canonical" href="http://repeatedly.github.com/ja/2013/03/getting-started-with-storm">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -58,10 +58,8 @@
 
   
 <ul class="main-navigation">
-  <li><a href="/">Home</a></li>
-  <li><a href="/works">Works</a></li>
-  <li><a href="/archives">Archives</a></li>
-  <li><a href="/ja">Japanese</a></li>
+  <li><a href="/ja/archives">Archives</a></li>
+  <li><a href="/">English</a></li>
 </ul>
 
   
@@ -74,7 +72,7 @@
   
   <header>
     
-      <h1 class="entry-title">yajl-d</h1>
+      <h1 class="entry-title">Stormをはじめよう</h1>
     
     
       <p class="meta">
@@ -90,7 +88,7 @@
   
 
 
-<time datetime="2013-01-20T05:27:00+09:00" pubdate data-updated="true">Jan 20<span>th</span>, 2013</time>
+<time datetime="2013-03-30T10:54:00+09:00" pubdate data-updated="true">Mar 30<span>th</span>, 2013</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -99,50 +97,58 @@
   </header>
 
 
-<div class="entry-content"><p><a href="https://github.com/repeatedly/yajl-d">yajl-d</a> is the D binding for <a href="http://lloyd.github.com/yajl/">YAJL</a>.</p>
+<div class="entry-content"><p>O&#8217;Reillyの方から<a href="http://www.oreilly.co.jp/books/9784873116013/">Stormをはじめよう</a>を献本して頂いて読んだのでレビュー！</p>
 
-<p>YAJL provides the stream JSON parsing and some extra features, e.g. allow comments.</p>
+<h2>感想</h2>
 
-<p>yajl-d also provides the JSON encoding and stream decoding.
-yajl-d is 2 - 3 times faster than std.json (try simple benchmark in example directory).</p>
+<p>最近増えてきている100ページくらいの本なので，さっくり読めました．</p>
 
-<p>Following code is basic form:</p>
+<p>簡単にまとめると &#8221;<strong>英語は読みたくないので情報が古くてもStormの概要を日本語で読みたい</strong>&#8221; という方向けの本．</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">import</span> <span class="n">yajl</span><span class="p">.</span><span class="n">yajl</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// yajl-d can serialize / deserialize D object.</span>
-</span><span class='line'><span class="k">struct</span> <span class="n">Hoge</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="kt">ulong</span> <span class="n">id</span><span class="p">;</span>
-</span><span class='line'>    <span class="nb">string</span> <span class="n">word</span><span class="p">;</span>
-</span><span class='line'>    <span class="kt">bool</span> <span class="n">yes</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// {&quot;id&quot;:100,&quot;word&quot;:&quot;hey!&quot;,&quot;yes&quot;:true}</span>
-</span><span class='line'><span class="n">Hoge</span> <span class="n">hoge1</span> <span class="p">=</span> <span class="n">Hoge</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="s">&quot;hey!&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-</span><span class='line'><span class="n">Hoge</span> <span class="n">hoge2</span> <span class="p">=</span> <span class="n">decode</span><span class="p">!</span><span class="n">Hoge</span><span class="p">(</span><span class="n">encode</span><span class="p">(</span><span class="n">hoge1</span><span class="p">));</span>
-</span><span class='line'><span class="k">assert</span><span class="p">(</span><span class="n">hoge1</span> <span class="p">==</span> <span class="n">hoge2</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>大きな理由は以下:</p>
+
+<ul>
+<li>Stormの対象バージョンが0.7.1と古い．俺でもTridentというのが0.8から入っているのを知っているので，その辺の目玉機能は書かれていない</li>
+<li>多分原著の方も少し書き方が雑．なんの説明もなく実装のクラス名を使って説明している所とかあるので「？」となる所がある
+
+<ul>
+<li>サンプルコードも少し雑で，使ってない変数があったり説明と実装があってなかったりもたまにある</li>
+</ul>
+</li>
+<li>翻訳が少し微妙．Cursorが&#8221;カーサー&#8221;だったり，原著の方の構成の不味さもあるのか，日本語的に理解しにくい文がちょくちょく混じっている (監訳はいない？)</li>
+</ul>
 
 
-<p><code>encode</code> and <code>decode</code> are the wrapper of <code>Encoder</code> and <code>Decoder</code>. If you want to know more details of <code>Encoder</code> and <code>Decoder</code>. See README and the DDoc.</p>
+<p>メッセージングの信頼性に関しては，Storm本家のWikiの方が詳しく書かれていたりするので，本当に「Stormってどういう構成でどういう感じに機能追加するんだろう？ユースケースとかは？」みたいなのを日本語で読みたい場合には，とっかかりにもなるし，これで十分な感じ．</p>
 
-<p>yajl-d has already listed in the official site.
-Thanks to Lloyd!</p>
+<p>英語が読める人は，本家のWikiとか漁った方が情報も新しく結構細かに書かれているため，そちらの方が正確かもしれない．</p>
+
+<h2>正誤表</h2>
+
+<p>読んでて気になった所はgistにまとめておきました</p>
+
+<p><a href="https://gist.github.com/repeatedly/5274873">Stormをはじめようのerrata</a></p>
+
+<h2>Stormについてのてきとうな所感</h2>
+
+<ul>
+<li><p>NimbusはImpalaのstatestoreみたいな感じで，最初はいるけど落ちても致命的ではない</p></li>
+<li><p>Tupleは基本単体で送られて，それぞれにトポロジーのack tracker(Acker)がついてトラッキングされる</p>
+
+<ul>
+<li>tupleが増えるとAckerも増え，数が増えると結構重そうに見えるけど，そこんところどうなのか</li>
+<li>再送は基本Spoutが判断．まぁこれは分からなくもない</li>
+</ul>
+</li>
+<li><p>0.8からのTridentはBatchをガリガリ使っていると聞いてるけど，通常の利用だとあまりない？1タプルでトポロジー内forwardしまくるのは結構パフォーマンス的に厳しそう</p></li>
+<li><p>トランザクションはSpout / Boltの両方が頑張る．この辺は今時のストリーミング処理系と同じ．コアで担保は難しい</p></li>
+<li><p>各ワーカーのコアのメソッドはシングルスレッドで呼ばれるようなので，この辺で重い処理すると多分詰まる．at-least-onceっぽいので，多分これが連鎖するとデータ重複する．</p></li>
+<li><p>multilangはHadoop Streamingと同じ</p></li>
+<li><p>ZooKeeperに依存しているので，そこがまた面倒くさそう</p></li>
+</ul>
+
+
+<p>とりあえずこんな感じ．0.8や0.9でもっと改善されているかもしれないので，その辺は必要があれば追う．</p>
 </div>
 
 
@@ -165,12 +171,12 @@ Thanks to Lloyd!</p>
   
 
 
-<time datetime="2013-01-20T05:27:00+09:00" pubdate data-updated="true">Jan 20<span>th</span>, 2013</time>
+<time datetime="2013-03-30T10:54:00+09:00" pubdate data-updated="true">Mar 30<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/categories/d/'>D</a>
+    <a class='category' href='/categories/review/'>Review</a>, <a class='category' href='/categories/storm/'>Storm</a>
   
 </span>
 
@@ -179,7 +185,7 @@ Thanks to Lloyd!</p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/2013/01/yajl-d/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/2013/01/yajl-d/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2013/03/getting-started-with-storm/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2013/03/getting-started-with-storm/" >Tweet</a>
   
   
   
@@ -190,10 +196,8 @@ Thanks to Lloyd!</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/2012/12/published-introduction-to-tornado-in-japan/" title="Previous Post: Published 'Introduction to Tornado' in Japan">&laquo; Published 'Introduction to Tornado' in Japan</a>
+        <a class="basic-alignment left" href="/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2/" title="Previous Post: AWSを使ったデータ解析PaaSの裏側">&laquo; AWSを使ったデータ解析PaaSの裏側</a>
       
-      
-        <a class="basic-alignment right" href="/2013/01/hadoop-conference-japan-2013-winter/" title="next Post: Hadoop Conference Japan 2013 Winter">Hadoop Conference Japan 2013 Winter &raquo;</a>
       
     </p>
   </footer>
@@ -305,8 +309,8 @@ Thanks to Lloyd!</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://repeatedly.github.com/2013/01/yajl-d/';
-        var disqus_url = 'http://repeatedly.github.com/2013/01/yajl-d/';
+        var disqus_identifier = 'http://repeatedly.github.com/ja/2013/03/getting-started-with-storm/';
+        var disqus_url = 'http://repeatedly.github.com/ja/2013/03/getting-started-with-storm/';
         var disqus_script = 'embed.js';
       
     (function () {
