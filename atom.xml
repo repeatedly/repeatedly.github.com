@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-04-17T01:48:57-07:00</updated>
+  <updated>2013-04-17T01:50:29-07:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -223,7 +223,7 @@ It enables Kibana to search stored events in ElasticSearch.</p>
 
 <h2>Conclusion</h2>
 
-<p>This article introduces Fluent and Kibana (with ElasticSearch) combination to search events.
+<p>This article introduced Fluent and Kibana (with ElasticSearch) combination to search events.
 Above example is no tuning. If you use these components in production, then
 maybe need to modify some configurations (e.g. JVM, ElasticSearch, Fluentd buffer and etc).</p>
 
