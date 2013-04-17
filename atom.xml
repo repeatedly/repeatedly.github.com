@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-04-17T01:50:29-07:00</updated>
+  <updated>2013-04-17T01:59:44-07:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Search logs using Fluentd and Kibana]]></title>
+    <title type="html"><![CDATA[Search event logs using Fluentd and Kibana]]></title>
     <link href="http://repeatedly.github.com/2013/04/search-logs-using-fluentd-and-kibana/"/>
     <updated>2013-04-17T00:12:00-07:00</updated>
     <id>http://repeatedly.github.com/2013/04/search-logs-using-fluentd-and-kibana</id>
