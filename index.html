@@ -104,7 +104,7 @@ So if you want to search stored &hellip;">
 
 
   <div class="entry-content"><p><a href="http://fluentd.org/">Fluentd</a> is a flexible and robust event log collector, but Fluentd doesn&#8217;t provide own datastore and Web UI.
-So if you want to search stored events, then you can use Kibana and ElasticSearch :)</p>
+So if you want to search stored event logs, then you can use Kibana and ElasticSearch :)</p>
 
 <p><a href="http://www.elasticsearch.org/">ElasticSearch</a> is a easy to use Search Engine and <a href="http://kibana.org/">Kibana</a> is a great Web UI for ElasticSearch with <a href="http://logstash.net/">LogStash</a> format.</p>
 
@@ -248,7 +248,7 @@ Kibana is a Sinatra web application.</p>
 
 
 <p>fluent-plugin-elasticsearch provides <code>logstash_format</code> option.
-It enables Kibana to search stored events in ElasticSearch.</p>
+It enables Kibana to search stored event logs in ElasticSearch.</p>
 
 <p>Start Fluentd:</p>
 
@@ -287,7 +287,7 @@ It enables Kibana to search stored events in ElasticSearch.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>Store and Search events</h2>
+<h2>Store and Search event logs</h2>
 
 <p>Send some events to Fluentd.</p>
 
@@ -302,13 +302,13 @@ It enables Kibana to search stored events in ElasticSearch.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>After Fluentd flushed received events to ElasticSearch, you can search stored events via Kibana!</p>
+<p>After Fluentd flushed received events to ElasticSearch, you can search stored event logs via Kibana!</p>
 
 <p><img src="/images/kibana_and_fluentd.png" title="&#34;Kibana and Fluentd&#34;" alt="&#34;Kibana and Fluentd&#34;"></p>
 
 <h2>Conclusion</h2>
 
-<p>This article introduced Fluent and Kibana (with ElasticSearch) combination to search events.
+<p>This article introduced Fluent and Kibana (with ElasticSearch) combination to search event logs.
 Above example is no tuning. If you use these components in production, then
 maybe need to modify some configurations (e.g. JVM, ElasticSearch, Fluentd buffer and etc).</p>
 
