@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Go ahead!</title>
+  <title>Search logs using Fluentd and Kibana - Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
@@ -19,7 +19,7 @@ So if you want to search stored &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.com">
+  <link rel="canonical" href="http://repeatedly.github.com/2013/04/search-logs-using-fluentd-and-kibana">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -70,15 +70,12 @@ So if you want to search stored &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/2013/04/search-logs-using-fluentd-and-kibana/">Search logs using Fluentd and Kibana</a></h1>
+      <h1 class="entry-title">Search logs using Fluentd and Kibana</h1>
     
     
       <p class="meta">
@@ -96,14 +93,14 @@ So if you want to search stored &hellip;">
 
 <time datetime="2013-04-17T00:12:00-07:00" pubdate data-updated="true">Apr 17<span>th</span>, 2013</time>
         
-         | <a href="/2013/04/search-logs-using-fluentd-and-kibana/#disqus_thread">Comments</a>
+         | <a href="#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><a href="http://fluentd.org/">Fluentd</a> is a flexible and robust event log collector, but Fluentd doesn&#8217;t provide own datastore and Web UI.
+<div class="entry-content"><p><a href="http://fluentd.org/">Fluentd</a> is a flexible and robust event log collector, but Fluentd doesn&#8217;t provide own datastore and Web UI.
 So if you want to search stored events, then you can use Kibana and ElasticSearch :)</p>
 
 <p><a href="http://www.elasticsearch.org/">ElasticSearch</a> is a easy to use Search Engine and <a href="http://kibana.org/">Kibana</a> is a great Web UI for ElasticSearch with <a href="http://logstash.net/">LogStash</a> format.</p>
@@ -314,75 +311,16 @@ maybe need to modify some configurations (e.g. JVM, ElasticSearch, Fluentd buffe
 
 <p>But these components are easy to setup and work fine. So you can try this framework soon :)</p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/03/the-basics-of-fluentd/">The basics of Fluentd</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">Masahiro Nakagawa</span></span>
 
-<time datetime="2013-03-09T13:54:00-08:00" pubdate data-updated="true">Mar 9<span>th</span>, 2013</time>
-        
-         | <a href="/2013/03/the-basics-of-fluentd/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>On Mar. 7th, Fluentd meetup in Fukuoka was held at OnRAMP.</p>
-
-<p><a href="http://www.zusaar.com/event/501053">Fluentd meetup in Fukuoka</a> (in japanese)</p>
-
-<p>In this event, I presented <strong>The basics of Fluentd</strong>.
-The purpose of presentation shares Fluentd concept and basic features. I hope this presentation helps your understading of Fluentd.</p>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/17001359?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/treasure-data/the-basics-of-fluentd" title="The basics of fluentd" target="_blank">The basics of fluentd</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
-
-<p>Thanks to matsuzaki-san and hashimoto-san for meetup setup and
-thank you everyone for your participation!</p>
-
-<p>I had a great time at Fukuoka :)</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/02/ltsv-for-d/">LTSV for D</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -394,183 +332,46 @@ thank you everyone for your participation!</p>
   
 
 
-<time datetime="2013-02-10T04:10:00-08:00" pubdate data-updated="true">Feb 10<span>th</span>, 2013</time>
-        
-         | <a href="/2013/02/ltsv-for-d/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In this week, Shinji Tanaka announced <a href="http://ltsv.org/">Labeled Tab-separated Values (LTSV)</a>.
-LTSV is the flexible and robust row oriented format.</p>
-
-<p>I just implemented ltsv-d for D programming language.</p>
-
-<p><a href="http://github.com/repeatedly/ltsv-d">LTSV for D</a></p>
-
-<p>ltsv-d provides <code>fromLTSV</code> and <code>toLTSV</code> functions.</p>
-
-<p><code>fromLTSV</code> for parsing:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">auto</span> <span class="n">apacheLog</span> <span class="p">=</span> <span class="s">&quot;host:127.0.0.1\tident:-\tuser:foo\ttime:[10/Oct/2000:13:55:36 -0700]\treq:GET /apache.gif HTTP/1.0\tstatus:200\tsize:777\treferer:http://www.example.com/start.html\tua:Mozilla/4.08 [en] (Win98; I ;Nav)&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="k">auto</span> <span class="n">record</span> <span class="p">=</span> <span class="n">fromLTSV</span><span class="p">(</span><span class="n">apacheLog</span><span class="p">);</span>
-</span><span class='line'><span class="n">writeln</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s">&quot;host&quot;</span><span class="p">]);</span> <span class="c1">// &quot;127.0.0.1&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>toLTSV</code> for dumping:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">auto</span> <span class="n">line</span> <span class="p">=</span> <span class="p">[</span><span class="s">&quot;foo&quot;</span><span class="p">:</span><span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="s">&quot;hoge&quot;</span><span class="p">:</span><span class="s">&quot;fuga&quot;</span><span class="p">,</span> <span class="s">&quot;piyo&quot;</span><span class="p">:</span><span class="s">&quot;puyo&quot;</span><span class="p">].</span><span class="n">toLTSV</span><span class="p">();</span>
-</span><span class='line'><span class="n">writeln</span><span class="p">(</span><span class="n">line</span><span class="p">);</span> <span class="c1">// &quot;foo:bar\thoge:fuga\tpiyo:puyo&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Enjoy LTSV!</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+<time datetime="2013-04-17T00:12:00-07:00" pubdate data-updated="true">Apr 17<span>th</span>, 2013</time>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/01/hadoop-conference-japan-2013-winter/">Hadoop Conference Japan 2013 Winter</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/categories/fluentd/'>fluentd</a>
+  
+</span>
 
 
-<time datetime="2013-01-22T18:09:00-08:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2013</time>
-        
-         | <a href="/2013/01/hadoop-conference-japan-2013-winter/#disqus_thread">Comments</a>
-        
-      </p>
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>We are Hive Logo Lovers!</p>
-
-<p><img src="/images/hive_in_hcj13w.jpg" title="&#34;Original Hive T shirt&#34;" alt="&#34;Original Hive T shirt&#34;"></p>
-
-<p>Event Link: <a href="http://hcj2013w.eventbrite.com/">Hadoop Conference Japan 2013 Winter</a></p>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/2013/04/search-logs-using-fluentd-and-kibana/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/2013/04/search-logs-using-fluentd-and-kibana/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
 </div>
-  
-  
 
-
-    </article>
-  
-  
-    <article>
+    
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/01/yajl-d/">yajl-d</a></h1>
-    
-    
-      <p class="meta">
-        
+        <a class="basic-alignment left" href="/ja/2013/03/getting-started-with-storm/" title="Previous Post: Stormをはじめよう">&laquo; Stormをはじめよう</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-20T05:27:00-08:00" pubdate data-updated="true">Jan 20<span>th</span>, 2013</time>
-        
-         | <a href="/2013/01/yajl-d/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="https://github.com/repeatedly/yajl-d">yajl-d</a> is the D binding for <a href="http://lloyd.github.com/yajl/">YAJL</a>.</p>
-
-<p>YAJL provides the stream JSON parsing and some extra features, e.g. allow comments.</p>
-
-<p>yajl-d also provides the JSON encoding and stream decoding.
-yajl-d is 2 - 3 times faster than std.json (try simple benchmark in example directory).</p>
-
-<p>Following code is basic form:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">import</span> <span class="n">yajl</span><span class="p">.</span><span class="n">yajl</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// yajl-d can serialize / deserialize D object.</span>
-</span><span class='line'><span class="k">struct</span> <span class="n">Hoge</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="kt">ulong</span> <span class="n">id</span><span class="p">;</span>
-</span><span class='line'>    <span class="nb">string</span> <span class="n">word</span><span class="p">;</span>
-</span><span class='line'>    <span class="kt">bool</span> <span class="n">yes</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// {&quot;id&quot;:100,&quot;word&quot;:&quot;hey!&quot;,&quot;yes&quot;:true}</span>
-</span><span class='line'><span class="n">Hoge</span> <span class="n">hoge1</span> <span class="p">=</span> <span class="n">Hoge</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="s">&quot;hey!&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-</span><span class='line'><span class="n">Hoge</span> <span class="n">hoge2</span> <span class="p">=</span> <span class="n">decode</span><span class="p">!</span><span class="n">Hoge</span><span class="p">(</span><span class="n">encode</span><span class="p">(</span><span class="n">hoge1</span><span class="p">));</span>
-</span><span class='line'><span class="k">assert</span><span class="p">(</span><span class="n">hoge1</span> <span class="p">==</span> <span class="n">hoge2</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>encode</code> and <code>decode</code> are the wrapper of <code>Encoder</code> and <code>Decoder</code>. If you want to know more details of <code>Encoder</code> and <code>Decoder</code>. See README and the DDoc.</p>
-
-<p>yajl-d has already listed in the official site.
-Thanks to Lloyd!</p>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-  
-  
+  </section>
 
-
-    </article>
-  
-  <div class="pagination">
-    
-      <a class="prev" href="/page/2/">&larr; Older</a>
-    
-    <a href="/archives">Archives</a>
-    
-  </div>
 </div>
+
 <aside class="sidebar">
   
     <section>
@@ -603,7 +404,7 @@ Thanks to Lloyd!</p>
 <section>
   <h1>Github Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/repeatedly">@repeatedly</a> on Github
@@ -633,7 +434,7 @@ Thanks to Lloyd!</p>
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -653,6 +454,7 @@ Thanks to Lloyd!</p>
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -667,7 +469,10 @@ Thanks to Lloyd!</p>
       var disqus_shortname = 'repeatedly';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://repeatedly.github.com/2013/04/search-logs-using-fluentd-and-kibana/';
+        var disqus_url = 'http://repeatedly.github.com/2013/04/search-logs-using-fluentd-and-kibana/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

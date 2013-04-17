@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-03-30T11:42:49+09:00</updated>
+  <updated>2013-04-17T01:19:56-07:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -14,9 +14,227 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Search logs using Fluentd and Kibana]]></title>
+    <link href="http://repeatedly.github.com/2013/04/search-logs-using-fluentd-and-kibana/"/>
+    <updated>2013-04-17T00:12:00-07:00</updated>
+    <id>http://repeatedly.github.com/2013/04/search-logs-using-fluentd-and-kibana</id>
+    <content type="html"><![CDATA[<p><a href="http://fluentd.org/">Fluentd</a> is a flexible and robust event log collector, but Fluentd doesn&#8217;t provide own datastore and Web UI.
+So if you want to search stored events, then you can use Kibana and ElasticSearch :)</p>
+
+<p><a href="http://www.elasticsearch.org/">ElasticSearch</a> is a easy to use Search Engine and <a href="http://kibana.org/">Kibana</a> is a great Web UI for ElasticSearch with <a href="http://logstash.net/">LogStash</a> format.</p>
+
+<h2>Setup</h2>
+
+<h3>Pre requirements</h3>
+
+<ul>
+<li>Java for ElasticSearch</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% java -version
+</span><span class='line'>java version <span class="s2">&quot;1.6.0_45&quot;</span>
+</span><span class='line'>Java<span class="o">(</span>TM<span class="o">)</span> SE Runtime Environment <span class="o">(</span>build 1.6.0_45-b06-451-11M4406<span class="o">)</span>
+</span><span class='line'>Java HotSpot<span class="o">(</span>TM<span class="o">)</span> 64-Bit Server VM <span class="o">(</span>build 20.45-b01-451, mixed mode<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Ruby for Fluentd and Kibana</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% ruby --version
+</span><span class='line'>ruby 1.9.3p385 <span class="o">(</span>2013-02-06 revision 39114<span class="o">)</span> <span class="o">[</span>x86_64-darwin12.2.1<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I tested on Mac OSX Mountain Lion.</p>
+
+<h3>ElasticSearch</h3>
+
+<p>Downlod and extract package:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% curl -O https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.0.RC2.tar.gz
+</span><span class='line'>% tar zxvf elasticsearch-0.90.0.RC2.tar.gz
+</span><span class='line'>% <span class="nb">cd </span>elasticsearch-0.90.0.RC2/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Start ElasticSearch:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% ./bin/elasticsearch -f
+</span><span class='line'><span class="o">[</span>2013-04-16 23:55:46,212<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> <span class="o">{</span> 0.90.0.RC2<span class="o">}[</span>9307<span class="o">]</span>: initializing ...
+</span><span class='line'><span class="o">[</span>2013-04-16 23:55:46,217<span class="o">][</span>INFO <span class="o">][</span>plugins                  <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> loaded <span class="o">[]</span>, sites <span class="o">[]</span>
+</span><span class='line'><span class="o">[</span>2013-04-16 23:55:47,742<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> <span class="o">{</span> 0.90.0.RC2<span class="o">}[</span>9307<span class="o">]</span>: initialized
+</span><span class='line'><span class="o">[</span>2013-04-16 23:55:47,742<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> <span class="o">{</span> 0.90.0.RC2<span class="o">}[</span>9307<span class="o">]</span>: starting ...
+</span><span class='line'><span class="o">[</span>2013-04-16 23:55:47,810<span class="o">][</span>INFO <span class="o">][</span>transport                <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> bound_address <span class="o">{</span> inet<span class="o">[</span>/0:0:0:0:0:0:0:0%0:9300<span class="o">]}</span>, publish_address <span class="o">{</span> inet<span class="o">[</span>/192.168.1.51:9300<span class="o">]}</span>
+</span><span class='line'><span class="o">[</span>2013-04-16 23:55:50,853<span class="o">][</span>INFO <span class="o">][</span>cluster.service          <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> new_master <span class="o">[</span>Redeemer<span class="o">][</span>YTfatlm2SyC4CsCsmnXX2A<span class="o">][</span>inet<span class="o">[</span>/192.168.1.51:9300<span class="o">]]</span>, reason: zen-disco-join <span class="o">(</span>elected_as_master<span class="o">)</span>
+</span><span class='line'><span class="o">[</span>2013-04-16 23:55:50,888<span class="o">][</span>INFO <span class="o">][</span>discovery                <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> elasticsearch/YTfatlm2SyC4CsCsmnXX2A
+</span><span class='line'><span class="o">[</span>2013-04-16 23:55:50,898<span class="o">][</span>INFO <span class="o">][</span>http                     <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> bound_address <span class="o">{</span> inet<span class="o">[</span>/0:0:0:0:0:0:0:0%0:9200<span class="o">]}</span>, publish_address <span class="o">{</span> inet<span class="o">[</span>/192.168.1.51:9200<span class="o">]}</span>
+</span><span class='line'><span class="o">[</span>2013-04-16 23:55:50,898<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> <span class="o">{</span> 0.90.0.RC2<span class="o">}[</span>9307<span class="o">]</span>: started
+</span><span class='line'><span class="o">[</span>2013-04-16 23:55:50,928<span class="o">][</span>INFO <span class="o">][</span>gateway                  <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> recovered <span class="o">[</span>0<span class="o">]</span> indices into cluster_state
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Kibana</h3>
+
+<p>Download via <a href="http://kibana.org/intro.html">webpage</a> or clone repository from github.
+Kibana is a Sinatra web application.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% git clone git://github.com/rashidkpc/Kibana.git
+</span><span class='line'>% <span class="nb">cd </span>Kibana
+</span><span class='line'>% bundle install --path vendor/bundle <span class="c"># install dependent libraries</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Start Kibana:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% bundle <span class="nb">exec </span>ruby kibana.rb
+</span><span class='line'> <span class="o">==</span>  Sinatra/1.4.2 has taken the stage on 5601 <span class="k">for </span>development with backup from <span class="nv">Thin</span>
+</span><span class='line'> <span class="o">=</span>&gt;  Thin web server <span class="o">(</span>v1.5.1 codename Straight Razor<span class="o">)</span>
+</span><span class='line'> <span class="o">=</span>&gt;  Maximum connections <span class="nb">set </span>to <span class="nv">1024</span>
+</span><span class='line'> <span class="o">=</span>&gt;  Listening on 127.0.0.1:5601, CTRL+C to stop
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you want to change Kibana configuration, please edit <code>KibanaConfig.rb</code>.</p>
+
+<h3>Fluentd</h3>
+
+<p>Install Fluentd and ElasticSearch plugin:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% gem install fluentd fluent-plugin-elasticsearch
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>fluentd configuration is below:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="c"># es.conf</span>
+</span><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> forward
+</span><span class='line'><span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;match</span> <span class="s">es.**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> elasticsearch
+</span><span class='line'>  <span class="err">logstash_</span><span class="nb">format</span> true
+</span><span class='line'>  <span class="err">flush_</span><span class="nb">interval</span> <span class="m">10</span>s # for testing
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>fluent-plugin-elasticsearch provides <code>logstash_format</code> option.
+It enables Kibana to search stored events in ElasticSearch.</p>
+
+<p>Start Fluentd:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% fluentd -c es.conf
+</span><span class='line'>2013-04-17 00:03:51 -0700 <span class="o">[</span>info<span class="o">]</span>: starting fluentd-0.10.33
+</span><span class='line'>2013-04-17 00:03:51 -0700 <span class="o">[</span>info<span class="o">]</span>: reading config file <span class="nv">path</span> <span class="o">=</span> <span class="s2">&quot;es.conf&quot;</span>
+</span><span class='line'>2013-04-17 00:03:51 -0700 <span class="o">[</span>info<span class="o">]</span>: using configuration file: &lt;ROOT&gt;
+</span><span class='line'>  &lt;<span class="nb">source</span>&gt;
+</span><span class='line'>    <span class="nb">type </span>forward
+</span><span class='line'>  &lt;/source&gt;
+</span><span class='line'>  &lt;match es.**&gt;
+</span><span class='line'>    <span class="nb">type </span>elasticsearch
+</span><span class='line'>    logstash_format <span class="nb">true</span>
+</span><span class='line'><span class="nb">    </span>flush_interval 10s
+</span><span class='line'>  &lt;/match&gt;
+</span><span class='line'>&lt;/ROOT&gt;
+</span><span class='line'>2013-04-17 00:03:51 -0700 <span class="o">[</span>info<span class="o">]</span>: adding <span class="nb">source type</span> <span class="o">=</span> <span class="s2">&quot;forward&quot;</span>
+</span><span class='line'>2013-04-17 00:03:51 -0700 <span class="o">[</span>info<span class="o">]</span>: adding match <span class="nv">pattern</span> <span class="o">=</span> <span class="s2">&quot;es.**&quot;</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;elasticsearch&quot;</span>
+</span><span class='line'>2013-04-17 00:03:51 -0700 <span class="o">[</span>info<span class="o">]</span>: listening fluent socket on 0.0.0.0:24224
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Store and Search events</h2>
+
+<p>Send some events to Fluentd.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{ &quot;message&quot;:&quot;Hello!&quot;}&#39;</span> | fluent-cat es.event
+</span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{ &quot;message&quot;:&quot;D&quot;}&#39;</span> | fluent-cat es.event
+</span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{ &quot;message&quot;:&quot;Ruby&quot;}&#39;</span> | fluent-cat es.event
+</span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{ &quot;message&quot;:&quot;Elastic!!&quot;}&#39;</span> | fluent-cat es.event <span class="o">}</span> <span class="o">}</span> <span class="o">}</span> <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After Fluentd flushed received events to ElasticSearch, you can search stored events via Kibana!</p>
+
+<p><img src="http://repeatedly.github.com/images/kibana_and_fluentd.png" title="&#34;Kibana and Fluentd&#34;" alt="&#34;Kibana and Fluentd&#34;"></p>
+
+<h2>Conclusion</h2>
+
+<p>This article introduces Fluent and Kibana (with ElasticSearch) combination to search events.
+Above example is no tuning. If you want to use these components in production, then
+maybe need to modify some configurations (e.g. JVM, ElasticSearch, Fluentd buffer and etc).</p>
+
+<p>But these components are easy to setup and work fine. So you can try this framework soon :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Stormをはじめよう]]></title>
     <link href="http://repeatedly.github.com/ja/2013/03/getting-started-with-storm/"/>
-    <updated>2013-03-30T10:54:00+09:00</updated>
+    <updated>2013-03-30T10:54:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2013/03/getting-started-with-storm</id>
     <content type="html"><![CDATA[<p>O&#8217;Reillyの方から<a href="http://www.oreilly.co.jp/books/9784873116013/">Stormをはじめよう</a>を献本して頂いて読んだのでレビュー！</p>
 
@@ -76,7 +294,7 @@
   <entry>
     <title type="html"><![CDATA[AWSを使ったデータ解析PaaSの裏側]]></title>
     <link href="http://repeatedly.github.com/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2/"/>
-    <updated>2013-03-18T16:11:00+09:00</updated>
+    <updated>2013-03-18T16:11:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2</id>
     <content type="html"><![CDATA[<p><a href="http://jaws-ug.jp/jawsdays2013/">JAWS DAYS 2013</a>というイベントがあって，2日目に<a href="http://jaws-ug.jp/jawsdays2013/speaker.html#DEV-01">Treasure Dataとして発表</a>してきました．実は1日目には弊社CTOが<a href="http://jaws-ug.jp/jawsdays2013/speaker.html#PD-02">パネルディスカッションに登壇</a>したりしてました．</p>
 
@@ -128,7 +346,7 @@ AWSのMilesにも「Fluentd is good!!」と言われ，向こうでも徐々にF
   <entry>
     <title type="html"><![CDATA[The basics of Fluentd]]></title>
     <link href="http://repeatedly.github.com/2013/03/the-basics-of-fluentd/"/>
-    <updated>2013-03-09T13:54:00+09:00</updated>
+    <updated>2013-03-09T13:54:00-08:00</updated>
     <id>http://repeatedly.github.com/2013/03/the-basics-of-fluentd</id>
     <content type="html"><![CDATA[<p>On Mar. 7th, Fluentd meetup in Fukuoka was held at OnRAMP.</p>
 
@@ -152,7 +370,7 @@ thank you everyone for your participation!</p>
   <entry>
     <title type="html"><![CDATA[LTSV for D]]></title>
     <link href="http://repeatedly.github.com/2013/02/ltsv-for-d/"/>
-    <updated>2013-02-10T04:10:00+09:00</updated>
+    <updated>2013-02-10T04:10:00-08:00</updated>
     <id>http://repeatedly.github.com/2013/02/ltsv-for-d</id>
     <content type="html"><![CDATA[<p>In this week, Shinji Tanaka announced <a href="http://ltsv.org/">Labeled Tab-separated Values (LTSV)</a>.
 LTSV is the flexible and robust row oriented format.</p>
@@ -190,7 +408,7 @@ LTSV is the flexible and robust row oriented format.</p>
   <entry>
     <title type="html"><![CDATA[Hadoop Conference Japan 2013 Winter]]></title>
     <link href="http://repeatedly.github.com/2013/01/hadoop-conference-japan-2013-winter/"/>
-    <updated>2013-01-22T18:09:00+09:00</updated>
+    <updated>2013-01-22T18:09:00-08:00</updated>
     <id>http://repeatedly.github.com/2013/01/hadoop-conference-japan-2013-winter</id>
     <content type="html"><![CDATA[<p>We are Hive Logo Lovers!</p>
 
@@ -203,7 +421,7 @@ LTSV is the flexible and robust row oriented format.</p>
   <entry>
     <title type="html"><![CDATA[yajl-d]]></title>
     <link href="http://repeatedly.github.com/2013/01/yajl-d/"/>
-    <updated>2013-01-20T05:27:00+09:00</updated>
+    <updated>2013-01-20T05:27:00-08:00</updated>
     <id>http://repeatedly.github.com/2013/01/yajl-d</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/yajl-d">yajl-d</a> is the D binding for <a href="http://lloyd.github.com/yajl/">YAJL</a>.</p>
 
@@ -255,7 +473,7 @@ Thanks to Lloyd!</p>
   <entry>
     <title type="html"><![CDATA[Published 'Introduction to Tornado' in Japan]]></title>
     <link href="http://repeatedly.github.com/2012/12/published-introduction-to-tornado-in-japan/"/>
-    <updated>2012-12-25T03:59:00+09:00</updated>
+    <updated>2012-12-25T03:59:00-08:00</updated>
     <id>http://repeatedly.github.com/2012/12/published-introduction-to-tornado-in-japan</id>
     <content type="html"><![CDATA[<p>In the last week, O&#8217;Reilly Japan published <a href="http://www.oreilly.co.jp/books/9784873115764/">&#8220;概説Tornado&#8221;</a>.
 This is the Japanese translation of <a href="http://shop.oreilly.com/product/0636920021292.do">&#8220;Introduction to Tornado&#8221;</a>.</p>
@@ -275,7 +493,7 @@ I think Tornado is good for learning Python and event driven programming.</p>
   <entry>
     <title type="html"><![CDATA[siphash-d]]></title>
     <link href="http://repeatedly.github.com/2012/12/siphash-d/"/>
-    <updated>2012-12-04T22:57:00+09:00</updated>
+    <updated>2012-12-04T22:57:00-08:00</updated>
     <id>http://repeatedly.github.com/2012/12/siphash-d</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/siphash-d">siphash-d</a> is the D implementation of <a href="https://131002.net/siphash/">SipHash</a>.</p>
 
@@ -306,7 +524,7 @@ Thanks to JP Aumasson!</p>
   <entry>
     <title type="html"><![CDATA[Inside Impala Coordinator at HSCR 13th]]></title>
     <link href="http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-13th/"/>
-    <updated>2012-11-27T14:30:00+09:00</updated>
+    <updated>2012-11-27T14:30:00-08:00</updated>
     <id>http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-13th</id>
     <content type="html"><![CDATA[<p>Yesterday, I talked about Impala Coordinator, which is scheduler layer of query execution.</p>
 
@@ -345,7 +563,7 @@ I think this image is good candidate ;)</p>
   <entry>
     <title type="html"><![CDATA[Change The Game]]></title>
     <link href="http://repeatedly.github.com/ja/2012/11/change-the-game/"/>
-    <updated>2012-11-01T00:00:00+09:00</updated>
+    <updated>2012-11-01T00:00:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2012/11/change-the-game</id>
     <content type="html"><![CDATA[<p>知ってる人はもう知っているとは思いますが，10月をもって1年と10ヶ月勤めた謎のベンチャー<a href="http://preferred.jp/">Preferred Infrastructure, Inc</a>を去りました．PFIの方々，本当に有り難うございました！<br />
 エントリを書けと色々な人に脅されているので，てきとうに書きます．</p>
@@ -401,7 +619,7 @@ Treasure Data本体はアメリカにあるんですが，活動は今までと�
   <entry>
     <title type="html"><![CDATA[Mongoプラグインの仕様]]></title>
     <link href="http://repeatedly.github.com/ja/2012/10/fluent-plugin-mongo-spec/"/>
-    <updated>2012-10-31T03:30:00+09:00</updated>
+    <updated>2012-10-31T03:30:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2012/10/fluent-plugin-mongo-spec</id>
     <content type="html"><![CDATA[<p>分散パフォーマンステスト関係を書こうと思っていたんですが，よくよく考えたらMongoプラグインについて日本語でまともな記事を書いたことなかったので書きます．</p>
 
@@ -843,7 +1061,7 @@ td-agentには既に同梱されているため，td-agentを利用している�
   <entry>
     <title type="html"><![CDATA[DConf 2013 on kickstarter!]]></title>
     <link href="http://repeatedly.github.com/2012/10/dconf-2013-on-kickstarter/"/>
-    <updated>2012-10-29T08:30:00+09:00</updated>
+    <updated>2012-10-29T08:30:00-07:00</updated>
     <id>http://repeatedly.github.com/2012/10/dconf-2013-on-kickstarter</id>
     <content type="html"><![CDATA[<p>Walter launched <a href="http://www.kickstarter.com/projects/2083649206/the-d-programming-language-conference-2013-0">&#8220;The D Programming Language Conference 2013&#8221; on kickstarter</a> in the last week.
 I have already pledged, and total pledged now passed the 50% :)</p>
@@ -857,7 +1075,7 @@ I have already pledged, and total pledged now passed the 50% :)</p>
   <entry>
     <title type="html"><![CDATA[Released denv]]></title>
     <link href="http://repeatedly.github.com/2012/05/released-denv/"/>
-    <updated>2012-05-14T06:47:00+09:00</updated>
+    <updated>2012-05-14T06:47:00-07:00</updated>
     <id>http://repeatedly.github.com/2012/05/released-denv</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/denv">denv</a> is a D version of rbenv.</p>
 
@@ -875,7 +1093,7 @@ See <a href="https://github.com/repeatedly/denv/blob/master/README.md">README</a
   <entry>
     <title type="html"><![CDATA[LT at Fluentd Casual Talks]]></title>
     <link href="http://repeatedly.github.com/2012/04/lt-at-fluentd-casual-talks/"/>
-    <updated>2012-04-12T20:18:00+09:00</updated>
+    <updated>2012-04-12T20:18:00-07:00</updated>
     <id>http://repeatedly.github.com/2012/04/lt-at-fluentd-casual-talks</id>
     <content type="html"><![CDATA[<p><a href="http://atnd.org/events/27808">Fluentd Casual Talks</a> will be held in Japan.</p>
 
@@ -888,7 +1106,7 @@ See <a href="https://github.com/repeatedly/denv/blob/master/README.md">README</a
   <entry>
     <title type="html"><![CDATA[Download script written in D]]></title>
     <link href="http://repeatedly.github.com/2012/03/download-script-written-in-d/"/>
-    <updated>2012-03-20T15:02:00+09:00</updated>
+    <updated>2012-03-20T15:02:00-07:00</updated>
     <id>http://repeatedly.github.com/2012/03/download-script-written-in-d</id>
     <content type="html"><![CDATA[<p>Tested under dmd 2.058.</p>
 
@@ -996,7 +1214,7 @@ void main(string[] args)
   <entry>
     <title type="html"><![CDATA[Collect invalid documents for bulk-insert in mongo-ruby-driver]]></title>
     <link href="http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/"/>
-    <updated>2012-02-29T11:49:00+09:00</updated>
+    <updated>2012-02-29T11:49:00-08:00</updated>
     <id>http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver</id>
     <content type="html"><![CDATA[<p>Mongo gem 1.6.0 includes <a href="https://github.com/mongodb/mongo-ruby-driver/pull/82">my pull request</a>(and <a href="https://github.com/mongodb/mongo-ruby-driver/commit/a4343e53feb582103366bb9c02628a4c6b29fcbd">HISTORY</a>).</p>
 
@@ -1051,7 +1269,7 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
   <entry>
     <title type="html"><![CDATA[Released fluent-logger-d]]></title>
     <link href="http://repeatedly.github.com/2012/02/released-fluent-logger-d/"/>
-    <updated>2012-02-21T21:16:00+09:00</updated>
+    <updated>2012-02-21T21:16:00-08:00</updated>
     <id>http://repeatedly.github.com/2012/02/released-fluent-logger-d</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/fluent/fluent-logger-d">fluent-logger-d</a>.</p>
 
@@ -1068,7 +1286,7 @@ Because current D community doesn&#8217;t face to the production.</p>
   <entry>
     <title type="html"><![CDATA[Fluentd meetup in Japan]]></title>
     <link href="http://repeatedly.github.com/2012/02/fluentd-meetup-in-japan/"/>
-    <updated>2012-02-06T01:07:00+09:00</updated>
+    <updated>2012-02-06T01:07:00-08:00</updated>
     <id>http://repeatedly.github.com/2012/02/fluentd-meetup-in-japan</id>
     <content type="html"><![CDATA[<p><a href="http://www.zusaar.com/event/193104">Fluentd meetup in Japan</a> was held on Feb 4th.</p>
 
@@ -1111,7 +1329,7 @@ Because current D community doesn&#8217;t face to the production.</p>
   <entry>
     <title type="html"><![CDATA[YAML engine mismatched problem in RubyGems]]></title>
     <link href="http://repeatedly.github.com/2012/01/yaml-engine-mismatched-problem-in-rubygems/"/>
-    <updated>2012-01-18T02:55:00+09:00</updated>
+    <updated>2012-01-18T02:55:00-08:00</updated>
     <id>http://repeatedly.github.com/2012/01/yaml-engine-mismatched-problem-in-rubygems</id>
     <content type="html"><![CDATA[<h1>Overview</h1>
 
@@ -1249,165 +1467,6 @@ I strongly recommend this approach.</p>
 
 <p>If you use <strong>Bundler</strong>, then put <code>YAML::ENGINE.yamler = "syck"</code> on top of gemspec to enable Syck engine.
 But some environment doesn&#8217;t have Syck engine, so this approch doesn&#8217;t work in such environment&#8230;</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Released fluent-plugin-mongo 0.6.0]]></title>
-    <link href="http://repeatedly.github.com/2012/01/released-fluent-plugin-mongo-0.6.0/"/>
-    <updated>2012-01-16T09:18:00+09:00</updated>
-    <id>http://repeatedly.github.com/2012/01/released-fluent-plugin-mongo-0.6.0</id>
-    <content type="html"><![CDATA[<p>Gem page is <a href="https://rubygems.org/gems/fluent-plugin-mongo">here</a>.</p>
-
-<p>This version requires mongo gem version 1.5.2 for Replica Set.</p>
-
-<h2>New features</h2>
-
-<h3>Replica Set support</h3>
-
-<p>You can use <em>mongo_replset</em> for connecting to Replica Set cluster.</p>
-
-<p>Example configuration is below:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="nt">&lt;match</span> <span class="s">mongo.**</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> mongo_replset
-</span><span class='line'>  <span class="nb">database</span> fluent
-</span><span class='line'>  <span class="nb">collection</span> logs
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># each node separated by &#39;,&#39;</span>
-</span><span class='line'>  <span class="nb">nodes</span> localhost:27017,localhost:27018,localhost:27019
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># num_retries is threshold at failover, default is 60.</span>
-</span><span class='line'>  <span class="c"># If retry count reached this threshold, mongo plugin raises an exception.</span>
-</span><span class='line'>  <span class="err">num_</span><span class="nb">retries</span> <span class="m">30</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># following optional parameters passed to ReplSetConnection of mongo-ruby-driver.</span>
-</span><span class='line'>  <span class="c"># See mongo-ruby-driver docs for more detail.</span>
-</span><span class='line'>  <span class="c">#name replset_name</span>
-</span><span class='line'>  <span class="c">#read secondary</span>
-</span><span class='line'>  <span class="c">#refresh_mode sync</span>
-</span><span class='line'>  <span class="c">#refresh_interval 60</span>
-</span><span class='line'><span class="nt">&lt;/match&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Handling invalid records</h3>
-
-<p>Fluentd is an event collector, so Mongo plugin should handle an invalid record as a BSON.</p>
-
-<p>Mongo plugin approach marshals an invalid record when mongo-ruby-driver detects such record.
-And Mongo plugin inserts marshaled record as a broken data to same collection.</p>
-
-<p>If passed following invalid record:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="o">:</span> <span class="s2">&quot;invalid value&quot;</span><span class="p">,</span> <span class="s2">&quot;key2&quot;</span><span class="o">:</span> <span class="s2">&quot;valid value&quot;</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="o">:</span> <span class="nx">ISODate</span><span class="p">(</span><span class="s2">&quot;2012-01-15T21:09:53Z&quot;</span><span class="p">)}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>then Mongo plugin converts this record to following format:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span><span class="s2">&quot;__broken_data&quot;</span><span class="o">:</span> <span class="nx">Marshal</span><span class="p">.</span><span class="nx">dump</span> <span class="nx">result</span> <span class="nx">of</span> <span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="o">:</span> <span class="s2">&quot;invalid value&quot;</span><span class="p">,</span> <span class="s2">&quot;key2&quot;</span><span class="o">:</span> <span class="s2">&quot;valid value&quot;</span><span class="p">},</span> <span class="s2">&quot;time&quot;</span><span class="o">:</span> <span class="nx">ISODate</span><span class="p">(</span><span class="s2">&quot;2012-01-15T21:09:53Z&quot;</span><span class="p">)}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In the result, we can rescue and analyze a broken data later.</p>
-
-<h4>NOTE</h4>
-
-<p>Mongo-ruby-driver cannot detect an invalid attribute,
-so Mongo plugin marshals all attributes excluding Fluentd keys(&#8220;tag_key&#8221; and &#8220;time_key&#8221;).</p>
-
-<h4>Ignore an invalid record</h4>
-
-<p>If you want to ignore an invalid record, set <em>ignore_invalid_document</em> parameter in match.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="nt">&lt;match</span> <span class="s">forward.*</span><span class="nt">&gt;</span>
-</span><span class='line'>  ...
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># ignore invalid documents at write operation</span>
-</span><span class='line'>  <span class="err">ignore_invalid_</span><span class="nb">document</span> true
-</span><span class='line'>
-</span><span class='line'>  ...
-</span><span class='line'><span class="nt">&lt;/match&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Tag mapped mode in <em>mongo</em> type</h3>
-
-<p>0.6.0 merges <em>mongo_tag_collection</em> type into <em>mongo</em> type.
-You can use <em>tag_mapped</em> parameter in <em>mongo</em> type for enabling tag mapped mode.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="nt">&lt;match</span> <span class="s">forward.*</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> mongo
-</span><span class='line'>  <span class="nb">database</span> fluent
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># You use &#39;tag_mapped&#39;, then tag mapped mode enabled.</span>
-</span><span class='line'>  <span class="err">tag_</span><span class="nb">mapped</span>
-</span><span class='line'>
-</span><span class='line'>  # If tag is <span class="s2">&quot;forward.foo.bar&quot;</span>, then prefix <span class="s2">&quot;forward.&quot;</span> is removed.
-</span><span class='line'>  <span class="c"># Collection name to insert is &quot;foo.bar&quot;.</span>
-</span><span class='line'>  <span class="err">remove_tag_</span><span class="nb">prefix</span> forward.
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># This configuration is used if tag not found. Default is &#39;untagged&#39;.</span>
-</span><span class='line'>  <span class="nb">collection</span> misc
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># Other configurations here</span>
-</span><span class='line'><span class="nt">&lt;/match&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>TODO</h2>
-
-<ul>
-<li>Support multi-process processing using DetachMultiProcessMixin</li>
-<li>Support authentication if needed</li>
-</ul>
-
 ]]></content>
   </entry>
   

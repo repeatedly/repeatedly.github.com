@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Fluentd | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/fluentd/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-03-30T11:42:49+09:00</updated>
+  <updated>2013-04-17T01:19:56-07:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[AWSを使ったデータ解析PaaSの裏側]]></title>
     <link href="http://repeatedly.github.com/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2/"/>
-    <updated>2013-03-18T16:11:00+09:00</updated>
+    <updated>2013-03-18T16:11:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2</id>
     <content type="html"><![CDATA[<p><a href="http://jaws-ug.jp/jawsdays2013/">JAWS DAYS 2013</a>というイベントがあって，2日目に<a href="http://jaws-ug.jp/jawsdays2013/speaker.html#DEV-01">Treasure Dataとして発表</a>してきました．実は1日目には弊社CTOが<a href="http://jaws-ug.jp/jawsdays2013/speaker.html#PD-02">パネルディスカッションに登壇</a>したりしてました．</p>
 
@@ -68,7 +68,7 @@ AWSのMilesにも「Fluentd is good!!」と言われ，向こうでも徐々にF
   <entry>
     <title type="html"><![CDATA[LT at Fluentd Casual Talks]]></title>
     <link href="http://repeatedly.github.com/2012/04/lt-at-fluentd-casual-talks/"/>
-    <updated>2012-04-12T20:18:00+09:00</updated>
+    <updated>2012-04-12T20:18:00-07:00</updated>
     <id>http://repeatedly.github.com/2012/04/lt-at-fluentd-casual-talks</id>
     <content type="html"><![CDATA[<p><a href="http://atnd.org/events/27808">Fluentd Casual Talks</a> will be held in Japan.</p>
 
@@ -81,7 +81,7 @@ AWSのMilesにも「Fluentd is good!!」と言われ，向こうでも徐々にF
   <entry>
     <title type="html"><![CDATA[Released fluent-logger-d]]></title>
     <link href="http://repeatedly.github.com/2012/02/released-fluent-logger-d/"/>
-    <updated>2012-02-21T21:16:00+09:00</updated>
+    <updated>2012-02-21T21:16:00-08:00</updated>
     <id>http://repeatedly.github.com/2012/02/released-fluent-logger-d</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/fluent/fluent-logger-d">fluent-logger-d</a>.</p>
 
@@ -98,7 +98,7 @@ Because current D community doesn't face to the production.</p>
   <entry>
     <title type="html"><![CDATA[Fluentd meetup in Japan]]></title>
     <link href="http://repeatedly.github.com/2012/02/fluentd-meetup-in-japan/"/>
-    <updated>2012-02-06T01:07:00+09:00</updated>
+    <updated>2012-02-06T01:07:00-08:00</updated>
     <id>http://repeatedly.github.com/2012/02/fluentd-meetup-in-japan</id>
     <content type="html"><![CDATA[<p><a href="http://www.zusaar.com/event/193104">Fluentd meetup in Japan</a> was held on Feb 4th.</p>
 
