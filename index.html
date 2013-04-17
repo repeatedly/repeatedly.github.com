@@ -215,7 +215,7 @@ Kibana is a Sinatra web application.</p>
 
 <h3>Fluentd</h3>
 
-<p>Install Fluentd and ElasticSearch plugin:</p>
+<p>Install Fluentd and <a href="https://github.com/uken/fluent-plugin-elasticsearch">ElasticSearch plugin</a>:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'>% gem install fluentd fluent-plugin-elasticsearch
@@ -298,7 +298,7 @@ It enables Kibana to search stored events in ElasticSearch.</p>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{ &quot;message&quot;:&quot;Hello!&quot;}&#39;</span> | fluent-cat es.event
 </span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{ &quot;message&quot;:&quot;D&quot;}&#39;</span> | fluent-cat es.event
 </span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{ &quot;message&quot;:&quot;Ruby&quot;}&#39;</span> | fluent-cat es.event
-</span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{ &quot;message&quot;:&quot;Elastic!!&quot;}&#39;</span> | fluent-cat es.event <span class="o">}</span> <span class="o">}</span> <span class="o">}</span> <span class="o">}</span>
+</span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{ &quot;message&quot;:&quot;Elastic!!&quot;}&#39;</span> | fluent-cat es.event
 </span></code></pre></td></tr></table></div></figure>
 
 
