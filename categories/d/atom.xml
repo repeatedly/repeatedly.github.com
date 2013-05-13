@@ -4,7 +4,7 @@
   <title><![CDATA[Category: D | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/d/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-05-13T02:49:41-07:00</updated>
+  <updated>2013-05-13T02:56:26-07:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -20,14 +20,16 @@
     <id>http://repeatedly.github.com/ja/2013/05/tdpl-japanese-edition</id>
     <content type="html"><![CDATA[<p><a href="http://forum.dlang.org/thread/ttyydpzuhtpgxagkynhq@forum.dlang.org">フォーラム</a>にポストしてブログで書くの忘れてました！</p>
 
-<p>Andreiが書いたD言語本，通称TDPLの日本語版が翔泳社さんから出版されました．俺と原さんが監訳者として参加してました．<br />
-翻訳された長尾さんの訳の質も高く，監訳のチェックは技術的なものに注力出来ました．</p>
+<p><img src="/images/tdpl_jp_edition.png" title="&#34;TDPL Japanese Edition&#34;" alt="&#34;TDPL Japanese Edition&#34;"></p>
 
 <ul>
 <li><a href="http://books.shoeisha.co.jp/book/b108222.html">プログラミング言語D</a></li>
 <li><a href="http://www.shoeisha.co.jp/book/errata/15615/list">正誤表</a> : 誤字や誤訳などあれば，こちらから報告してもらえると助かります</li>
 </ul>
 
+
+<p>Andreiが書いたD言語本，通称TDPLの日本語版が翔泳社さんから出版されました．俺と原さんが監訳者として参加してました．<br />
+翻訳された長尾さんの訳の質も高く，監訳のチェックは技術的なものに注力出来ました．</p>
 
 <p>最初に断っておくと，TDPLはD言語の本であって入門本ではありません．
 ある程度，他の言語を触っていてプログラミングに関して知っていることが前提になっています．</p>
