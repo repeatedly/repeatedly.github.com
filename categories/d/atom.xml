@@ -4,7 +4,7 @@
   <title><![CDATA[Category: D | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/d/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-05-03T13:12:09-07:00</updated>
+  <updated>2013-05-13T02:49:41-07:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,46 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[TDPL Japanese Edition]]></title>
+    <link href="http://repeatedly.github.com/ja/2013/05/tdpl-japanese-edition/"/>
+    <updated>2013-05-13T01:44:00-07:00</updated>
+    <id>http://repeatedly.github.com/ja/2013/05/tdpl-japanese-edition</id>
+    <content type="html"><![CDATA[<p><a href="http://forum.dlang.org/thread/ttyydpzuhtpgxagkynhq@forum.dlang.org">フォーラム</a>にポストしてブログで書くの忘れてました！</p>
+
+<p>Andreiが書いたD言語本，通称TDPLの日本語版が翔泳社さんから出版されました．俺と原さんが監訳者として参加してました．<br />
+翻訳された長尾さんの訳の質も高く，監訳のチェックは技術的なものに注力出来ました．</p>
+
+<ul>
+<li><a href="http://books.shoeisha.co.jp/book/b108222.html">プログラミング言語D</a></li>
+<li><a href="http://www.shoeisha.co.jp/book/errata/15615/list">正誤表</a> : 誤字や誤訳などあれば，こちらから報告してもらえると助かります</li>
+</ul>
+
+
+<p>最初に断っておくと，TDPLはD言語の本であって入門本ではありません．
+ある程度，他の言語を触っていてプログラミングに関して知っていることが前提になっています．</p>
+
+<p>その変わりと言っては何ですが，単なる文法の説明などにとどまらず「なぜD言語がこの機能を採用したのか」
+なども書かれている本になっています．そのため，それなりに読み応えのある本だと思います．<br />
+また，Andreiのノリ？が極力残るように勤めました．</p>
+
+<p>TDPL自体は2010年出版ですが，最新のバージョンである2.062までの変更はちゃんとフォローしています．
+モジュール名含めコードも一部新しくなってますし，新機能に関してはコラムなどで説明しています．<br />
+もし何か疑問などあれば，Twitterならば #dlang つけて呟くと，親切なD言語erが答えてくれると思います．</p>
+
+<p>この本が出版されたことで，一つ肩の荷が下りたかなという感じです．
+D言語を始める始めないに関わらず，どういう言語なのかを知って貰える一冊なのは確かです．</p>
+
+<p>Enjoy D！</p>
+
+<h2>P.S.</h2>
+
+<p>恒例のアレなリンクです．すでに1ヶ月経ってますが，こちらから買ってもらえると俺が喜びます :)</p>
+
+<p><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4798131105/repeatedly-22/ref=nosim/">Amazon</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[LTSV for D]]></title>
@@ -124,24 +164,6 @@ I have already pledged, and total pledged now passed the 50% :)</p>
 <p>Please pledge your support!</p>
 
 <p>Forum: <a href="http://forum.dlang.org/thread/k63vi8$1qp0$1@digitalmars.com">DConf 2013 on kickstarter.com: we're live!</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Released denv]]></title>
-    <link href="http://repeatedly.github.com/2012/05/released-denv/"/>
-    <updated>2012-05-14T06:47:00-07:00</updated>
-    <id>http://repeatedly.github.com/2012/05/released-denv</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/denv">denv</a> is a D version of rbenv.</p>
-
-<p>It enables you to manage multiple versions of D environment.<br />
-See <a href="https://github.com/repeatedly/denv/blob/master/README.md">README</a> for more details.</p>
-
-<ul>
-<li><a href="http://forum.dlang.org/thread/fqcnqqphbfymgymnwqjx@forum.dlang.org">Announce at digitalmars.D.announce</a></li>
-<li><a href="https://github.com/repeatedly/denv">denv for contest programming</a> (in Japanese)</li>
-</ul>
-
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-05-03T13:12:09-07:00</updated>
+  <updated>2013-05-13T02:49:41-07:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,46 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[TDPL Japanese Edition]]></title>
+    <link href="http://repeatedly.github.com/ja/2013/05/tdpl-japanese-edition/"/>
+    <updated>2013-05-13T01:44:00-07:00</updated>
+    <id>http://repeatedly.github.com/ja/2013/05/tdpl-japanese-edition</id>
+    <content type="html"><![CDATA[<p><a href="http://forum.dlang.org/thread/ttyydpzuhtpgxagkynhq@forum.dlang.org">フォーラム</a>にポストしてブログで書くの忘れてました！</p>
+
+<p>Andreiが書いたD言語本，通称TDPLの日本語版が翔泳社さんから出版されました．俺と原さんが監訳者として参加してました．<br />
+翻訳された長尾さんの訳の質も高く，監訳のチェックは技術的なものに注力出来ました．</p>
+
+<ul>
+<li><a href="http://books.shoeisha.co.jp/book/b108222.html">プログラミング言語D</a></li>
+<li><a href="http://www.shoeisha.co.jp/book/errata/15615/list">正誤表</a> : 誤字や誤訳などあれば，こちらから報告してもらえると助かります</li>
+</ul>
+
+
+<p>最初に断っておくと，TDPLはD言語の本であって入門本ではありません．
+ある程度，他の言語を触っていてプログラミングに関して知っていることが前提になっています．</p>
+
+<p>その変わりと言っては何ですが，単なる文法の説明などにとどまらず「なぜD言語がこの機能を採用したのか」
+なども書かれている本になっています．そのため，それなりに読み応えのある本だと思います．<br />
+また，Andreiのノリ？が極力残るように勤めました．</p>
+
+<p>TDPL自体は2010年出版ですが，最新のバージョンである2.062までの変更はちゃんとフォローしています．
+モジュール名含めコードも一部新しくなってますし，新機能に関してはコラムなどで説明しています．<br />
+もし何か疑問などあれば，Twitterならば #dlang つけて呟くと，親切なD言語erが答えてくれると思います．</p>
+
+<p>この本が出版されたことで，一つ肩の荷が下りたかなという感じです．
+D言語を始める始めないに関わらず，どういう言語なのかを知って貰える一冊なのは確かです．</p>
+
+<p>Enjoy D！</p>
+
+<h2>P.S.</h2>
+
+<p>恒例のアレなリンクです．すでに1ヶ月経ってますが，こちらから買ってもらえると俺が喜びます :)</p>
+
+<p><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4798131105/repeatedly-22/ref=nosim/">Amazon</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[D Conference 2013]]></title>
@@ -1293,49 +1333,6 @@ I tested posting 5,000,000 messages with 5 threads, no problem.</p>
 Because current D community doesn&#8217;t face to the production.</p>
 
 <p>I hope this library with <a href="http://fluentd.org/">Fluentd</a> helps your system design in the future.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Fluentd meetup in Japan]]></title>
-    <link href="http://repeatedly.github.com/2012/02/fluentd-meetup-in-japan/"/>
-    <updated>2012-02-06T01:07:00-08:00</updated>
-    <id>http://repeatedly.github.com/2012/02/fluentd-meetup-in-japan</id>
-    <content type="html"><![CDATA[<p><a href="http://www.zusaar.com/event/193104">Fluentd meetup in Japan</a> was held on Feb 4th.</p>
-
-<p>This meetup included more than 120 over hackers. It has been really exciting and I had a great time. Thanks to Fluentd developers and users!</p>
-
-<h2>My presentation</h2>
-
-<p>I talked about &#8220;Dive into Fluent plugin&#8221;. The purpose of this presentaion shares know-how of Fluentd plugin. I hope this presentation helps your developing of Fluend plugin.</p>
-
-<p>I didn&#8217;t talk about some un-documented features, e.g. EventStream families, ObjectBufferedOutput, the details of DetachMultiProcessMixin and etc. Let&#8217;s dive into Fluentd source code if you know these features.</p>
-
-<p>Enjoy Fluentd and plugins :)</p>
-
-<ul>
-<li>Slideshare(en)</li>
-</ul>
-
-
-<div style = "width:425px" id = "__ss_11411503"> <strong style = "display:block;margin:12px 0 4px"><a href = "http://www.slideshare.net/repeatedly/fluentd-meetup-dive-into-fluent-plugin" title = "Fluentd meetup dive into fluent plugin" target = "_blank">Fluentd meetup dive into fluent plugin</a></strong> <iframe src = "http://www.slideshare.net/slideshow/embed_code/11411503" width = "425" height = "355" frameborder = "0" marginwidth = "0" marginheight = "0" scrolling = "no"></iframe> <div style = "padding:5px 0 12px"> View more <a href = "http://www.slideshare.net/" target = "_blank">presentations</a> from <a href = "http://www.slideshare.net/repeatedly" target = "_blank">N Masahiro</a> </div> </div>
-
-
-<ul>
-<li>Ustream(ja)</li>
-</ul>
-
-
-<iframe src = "http://www.ustream.tv/embed/recorded/20207654" width = "608" height = "368" scrolling = "no" frameborder = "0" style = "border: 0px none transparent;"></iframe>
-
-
-<p>Sorry, the first few minutes is lost.</p>
-
-<ul>
-<li><a href="http://togetter.com/li/252178">Togetter</a>(ja)</li>
-<li><a href="http://www.flickr.com/photos/koyhoge/sets/72157629164501855">flickr photos by koyhoge</a></li>
-</ul>
-
 ]]></content>
   </entry>
   
