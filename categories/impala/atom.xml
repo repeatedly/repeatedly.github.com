@@ -4,7 +4,7 @@
   <title><![CDATA[Category: impala | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/impala/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-05-13T03:12:54-07:00</updated>
+  <updated>2013-07-20T19:54:52+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Inside Impala Coordinator at HSCR 13th]]></title>
     <link href="http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-13th/"/>
-    <updated>2012-11-27T14:30:00-08:00</updated>
+    <updated>2012-11-27T14:30:00+09:00</updated>
     <id>http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-13th</id>
     <content type="html"><![CDATA[<p>Yesterday, I talked about Impala Coordinator, which is scheduler layer of query execution.</p>
 

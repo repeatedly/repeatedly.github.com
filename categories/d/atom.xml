@@ -4,7 +4,7 @@
   <title><![CDATA[Category: D | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/d/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-05-13T03:12:54-07:00</updated>
+  <updated>2013-07-20T19:54:52+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[プログラミング言語D]]></title>
     <link href="http://repeatedly.github.com/ja/2013/05/tdpl-japanese-edition/"/>
-    <updated>2013-05-13T01:44:00-07:00</updated>
+    <updated>2013-05-13T01:44:00+09:00</updated>
     <id>http://repeatedly.github.com/ja/2013/05/tdpl-japanese-edition</id>
     <content type="html"><![CDATA[<p><a href="http://forum.dlang.org/thread/ttyydpzuhtpgxagkynhq@forum.dlang.org">フォーラム</a>にポストしてブログで書くの忘れてました！</p>
 
@@ -58,7 +58,7 @@ D言語を始める始めないに関わらず，どういう言語なのかを�
   <entry>
     <title type="html"><![CDATA[LTSV for D]]></title>
     <link href="http://repeatedly.github.com/2013/02/ltsv-for-d/"/>
-    <updated>2013-02-10T04:10:00-08:00</updated>
+    <updated>2013-02-10T04:10:00+09:00</updated>
     <id>http://repeatedly.github.com/2013/02/ltsv-for-d</id>
     <content type="html"><![CDATA[<p>In this week, Shinji Tanaka announced <a href="http://ltsv.org/">Labeled Tab-separated Values (LTSV)</a>.
 LTSV is the flexible and robust row oriented format.</p>
@@ -91,7 +91,7 @@ writeln(line); // "foo:bar\thoge:fuga\tpiyo:puyo"
   <entry>
     <title type="html"><![CDATA[yajl-d]]></title>
     <link href="http://repeatedly.github.com/2013/01/yajl-d/"/>
-    <updated>2013-01-20T05:27:00-08:00</updated>
+    <updated>2013-01-20T05:27:00+09:00</updated>
     <id>http://repeatedly.github.com/2013/01/yajl-d</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/yajl-d">yajl-d</a> is the D binding for <a href="http://lloyd.github.com/yajl/">YAJL</a>.</p>
 
@@ -132,7 +132,7 @@ Thanks to Lloyd!</p>
   <entry>
     <title type="html"><![CDATA[siphash-d]]></title>
     <link href="http://repeatedly.github.com/2012/12/siphash-d/"/>
-    <updated>2012-12-04T22:57:00-08:00</updated>
+    <updated>2012-12-04T22:57:00+09:00</updated>
     <id>http://repeatedly.github.com/2012/12/siphash-d</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/siphash-d">siphash-d</a> is the D implementation of <a href="https://131002.net/siphash/">SipHash</a>.</p>
 
@@ -158,7 +158,7 @@ Thanks to JP Aumasson!</p>
   <entry>
     <title type="html"><![CDATA[DConf 2013 on kickstarter!]]></title>
     <link href="http://repeatedly.github.com/2012/10/dconf-2013-on-kickstarter/"/>
-    <updated>2012-10-29T08:30:00-07:00</updated>
+    <updated>2012-10-29T08:30:00+09:00</updated>
     <id>http://repeatedly.github.com/2012/10/dconf-2013-on-kickstarter</id>
     <content type="html"><![CDATA[<p>Walter launched <a href="http://www.kickstarter.com/projects/2083649206/the-d-programming-language-conference-2013-0">"The D Programming Language Conference 2013" on kickstarter</a> in the last week.
 I have already pledged, and total pledged now passed the 50% :)</p>

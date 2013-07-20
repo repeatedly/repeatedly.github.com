@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-05-13T03:12:54-07:00</updated>
+  <updated>2013-07-20T19:54:52+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -14,9 +14,54 @@
 
   
   <entry>
+    <title type="html"><![CDATA[July Tech Festa 2013]]></title>
+    <link href="http://repeatedly.github.com/ja/2013/07/july-tech-festa-2013/"/>
+    <updated>2013-07-20T04:54:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2013/07/july-tech-festa-2013</id>
+    <content type="html"><![CDATA[<p><a href="http://www.techfesta.jp/">July Tech Festa 2013</a>というイベントが7月14日にAIITで行われ，基調講演として呼ばれたので，<a href="http://www.techfesta.jp/p/program-2.html#A01">Treasure Dataとして発表</a>してきました．
+<a href="http://www.techfesta.jp/2013/07/jtf2013_16.html">Best Speakerにも選んで頂き</a>，ありがとうございます．</p>
+
+<h3>Slideshare</h3>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/24213160?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/treasure-data/treasure-data-cloud-strategy" title="Treasure Data Cloud Strategy" target="_blank">Treasure Data Cloud Strategy</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
+
+<h3>Togetter</h3>
+
+<ul>
+<li><a href="http://togetter.com/li/533842">JTF全体</a></li>
+<li><a href="http://togetter.com/li/534105">自分の発表のみ</a></li>
+</ul>
+
+
+<p>CTOから無茶ぶりされて「まぁいいか」と承諾したら実は基調講演だったというオチでした．他の発表者の人達がChefやOpenStackなどのいわゆるクラウドやDevOpsプロダクトの中，サービスであるTreasure Dataに講演依頼が来たということは，そういうことなんだろうなと上記の構成になりました．</p>
+
+<p>Treasure Dataのサービスそのものやアーキテクチャに関しては，記事やイベントでぱらぱらと説明はしたものの，おそらくまとまった発表したのは今回が初めてだったんじゃないかなと思っています．こういう場を用意して頂いたJTFの方達には感謝です．</p>
+
+<p>Togetterにまとめられているのを見て貰えれば分かるのですが</p>
+
+<ul>
+<li>なぜクラウドでやっているのか</li>
+<li>システム構築で気をつけていること</li>
+<li>どう運用しているか</li>
+</ul>
+
+
+<p>の辺りを大まかに話しました．僕らはスタートアップということもあり速度がとても重要なので，自分達のビジョンを達成するためにどういう選択をしてきたかと，その考え方について一通り述べたつもりです．</p>
+
+<p>懇親会でも色々な方と話すことが出来て，運用で使っているツール周り話したり，実はFluentd使ってるんですよという人にも会えたり，Treasure Dataのようなサービス検討中なんです，などなど色々と楽しい時間を過ごせました．
+Fluentdなんかはプラグイン機構でガンガンインフラの人にもコード書いて問題を解決してもらおうというプロダクトだったりするので，今後もユーザが増えるといいなという思います．</p>
+
+<p>参加された方々，またスタッフの方々，お疲れ様でした！</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[プログラミング言語D]]></title>
     <link href="http://repeatedly.github.com/ja/2013/05/tdpl-japanese-edition/"/>
-    <updated>2013-05-13T01:44:00-07:00</updated>
+    <updated>2013-05-13T01:44:00+09:00</updated>
     <id>http://repeatedly.github.com/ja/2013/05/tdpl-japanese-edition</id>
     <content type="html"><![CDATA[<p><a href="http://forum.dlang.org/thread/ttyydpzuhtpgxagkynhq@forum.dlang.org">フォーラム</a>にポストしてブログで書くの忘れてました！</p>
 
@@ -58,7 +103,7 @@ D言語を始める始めないに関わらず，どういう言語なのかを�
   <entry>
     <title type="html"><![CDATA[D Conference 2013]]></title>
     <link href="http://repeatedly.github.com/2013/05/d-conference-2013/"/>
-    <updated>2013-05-03T13:00:00-07:00</updated>
+    <updated>2013-05-03T13:00:00+09:00</updated>
     <id>http://repeatedly.github.com/2013/05/d-conference-2013</id>
     <content type="html"><![CDATA[<p>Got Walter and Andrei autograph in our TDPL japanese edition :)</p>
 
@@ -71,7 +116,7 @@ D言語を始める始めないに関わらず，どういう言語なのかを�
   <entry>
     <title type="html"><![CDATA[Search event logs using Fluentd and Kibana]]></title>
     <link href="http://repeatedly.github.com/2013/04/search-logs-using-fluentd-and-kibana/"/>
-    <updated>2013-04-17T00:12:00-07:00</updated>
+    <updated>2013-04-17T00:12:00+09:00</updated>
     <id>http://repeatedly.github.com/2013/04/search-logs-using-fluentd-and-kibana</id>
     <content type="html"><![CDATA[<p><a href="http://fluentd.org/">Fluentd</a> is a flexible and robust event log collector, but Fluentd doesn&#8217;t provide own datastore and Web UI.
 So if you want to search the event logs collected by Fluentd, then you can use Kibana and ElasticSearch :)</p>
@@ -289,7 +334,7 @@ maybe need to modify some configurations (e.g. JVM, ElasticSearch, Fluentd buffe
   <entry>
     <title type="html"><![CDATA[Stormをはじめよう]]></title>
     <link href="http://repeatedly.github.com/ja/2013/03/getting-started-with-storm/"/>
-    <updated>2013-03-30T10:54:00-07:00</updated>
+    <updated>2013-03-30T10:54:00+09:00</updated>
     <id>http://repeatedly.github.com/ja/2013/03/getting-started-with-storm</id>
     <content type="html"><![CDATA[<p>O&#8217;Reillyの方から<a href="http://www.oreilly.co.jp/books/9784873116013/">Stormをはじめよう</a>を献本して頂いて読んだのでレビュー！</p>
 
@@ -349,7 +394,7 @@ maybe need to modify some configurations (e.g. JVM, ElasticSearch, Fluentd buffe
   <entry>
     <title type="html"><![CDATA[AWSを使ったデータ解析PaaSの裏側]]></title>
     <link href="http://repeatedly.github.com/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2/"/>
-    <updated>2013-03-18T16:11:00-07:00</updated>
+    <updated>2013-03-18T16:11:00+09:00</updated>
     <id>http://repeatedly.github.com/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2</id>
     <content type="html"><![CDATA[<p><a href="http://jaws-ug.jp/jawsdays2013/">JAWS DAYS 2013</a>というイベントがあって，2日目に<a href="http://jaws-ug.jp/jawsdays2013/speaker.html#DEV-01">Treasure Dataとして発表</a>してきました．実は1日目には弊社CTOが<a href="http://jaws-ug.jp/jawsdays2013/speaker.html#PD-02">パネルディスカッションに登壇</a>したりしてました．</p>
 
@@ -401,7 +446,7 @@ AWSのMilesにも「Fluentd is good!!」と言われ，向こうでも徐々にF
   <entry>
     <title type="html"><![CDATA[The basics of Fluentd]]></title>
     <link href="http://repeatedly.github.com/2013/03/the-basics-of-fluentd/"/>
-    <updated>2013-03-09T13:54:00-08:00</updated>
+    <updated>2013-03-09T13:54:00+09:00</updated>
     <id>http://repeatedly.github.com/2013/03/the-basics-of-fluentd</id>
     <content type="html"><![CDATA[<p>On Mar. 7th, Fluentd meetup in Fukuoka was held at OnRAMP.</p>
 
@@ -425,7 +470,7 @@ thank you everyone for your participation!</p>
   <entry>
     <title type="html"><![CDATA[LTSV for D]]></title>
     <link href="http://repeatedly.github.com/2013/02/ltsv-for-d/"/>
-    <updated>2013-02-10T04:10:00-08:00</updated>
+    <updated>2013-02-10T04:10:00+09:00</updated>
     <id>http://repeatedly.github.com/2013/02/ltsv-for-d</id>
     <content type="html"><![CDATA[<p>In this week, Shinji Tanaka announced <a href="http://ltsv.org/">Labeled Tab-separated Values (LTSV)</a>.
 LTSV is the flexible and robust row oriented format.</p>
@@ -463,7 +508,7 @@ LTSV is the flexible and robust row oriented format.</p>
   <entry>
     <title type="html"><![CDATA[Hadoop Conference Japan 2013 Winter]]></title>
     <link href="http://repeatedly.github.com/2013/01/hadoop-conference-japan-2013-winter/"/>
-    <updated>2013-01-22T18:09:00-08:00</updated>
+    <updated>2013-01-22T18:09:00+09:00</updated>
     <id>http://repeatedly.github.com/2013/01/hadoop-conference-japan-2013-winter</id>
     <content type="html"><![CDATA[<p>We are Hive Logo Lovers!</p>
 
@@ -476,7 +521,7 @@ LTSV is the flexible and robust row oriented format.</p>
   <entry>
     <title type="html"><![CDATA[yajl-d]]></title>
     <link href="http://repeatedly.github.com/2013/01/yajl-d/"/>
-    <updated>2013-01-20T05:27:00-08:00</updated>
+    <updated>2013-01-20T05:27:00+09:00</updated>
     <id>http://repeatedly.github.com/2013/01/yajl-d</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/yajl-d">yajl-d</a> is the D binding for <a href="http://lloyd.github.com/yajl/">YAJL</a>.</p>
 
@@ -528,7 +573,7 @@ Thanks to Lloyd!</p>
   <entry>
     <title type="html"><![CDATA[Published 'Introduction to Tornado' in Japan]]></title>
     <link href="http://repeatedly.github.com/2012/12/published-introduction-to-tornado-in-japan/"/>
-    <updated>2012-12-25T03:59:00-08:00</updated>
+    <updated>2012-12-25T03:59:00+09:00</updated>
     <id>http://repeatedly.github.com/2012/12/published-introduction-to-tornado-in-japan</id>
     <content type="html"><![CDATA[<p>In the last week, O&#8217;Reilly Japan published <a href="http://www.oreilly.co.jp/books/9784873115764/">&#8220;概説Tornado&#8221;</a>.
 This is the Japanese translation of <a href="http://shop.oreilly.com/product/0636920021292.do">&#8220;Introduction to Tornado&#8221;</a>.</p>
@@ -548,7 +593,7 @@ I think Tornado is good for learning Python and event driven programming.</p>
   <entry>
     <title type="html"><![CDATA[siphash-d]]></title>
     <link href="http://repeatedly.github.com/2012/12/siphash-d/"/>
-    <updated>2012-12-04T22:57:00-08:00</updated>
+    <updated>2012-12-04T22:57:00+09:00</updated>
     <id>http://repeatedly.github.com/2012/12/siphash-d</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/siphash-d">siphash-d</a> is the D implementation of <a href="https://131002.net/siphash/">SipHash</a>.</p>
 
@@ -579,7 +624,7 @@ Thanks to JP Aumasson!</p>
   <entry>
     <title type="html"><![CDATA[Inside Impala Coordinator at HSCR 13th]]></title>
     <link href="http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-13th/"/>
-    <updated>2012-11-27T14:30:00-08:00</updated>
+    <updated>2012-11-27T14:30:00+09:00</updated>
     <id>http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-13th</id>
     <content type="html"><![CDATA[<p>Yesterday, I talked about Impala Coordinator, which is scheduler layer of query execution.</p>
 
@@ -618,7 +663,7 @@ I think this image is good candidate ;)</p>
   <entry>
     <title type="html"><![CDATA[Change The Game]]></title>
     <link href="http://repeatedly.github.com/ja/2012/11/change-the-game/"/>
-    <updated>2012-11-01T00:00:00-07:00</updated>
+    <updated>2012-11-01T00:00:00+09:00</updated>
     <id>http://repeatedly.github.com/ja/2012/11/change-the-game</id>
     <content type="html"><![CDATA[<p>知ってる人はもう知っているとは思いますが，10月をもって1年と10ヶ月勤めた謎のベンチャー<a href="http://preferred.jp/">Preferred Infrastructure, Inc</a>を去りました．PFIの方々，本当に有り難うございました！<br />
 エントリを書けと色々な人に脅されているので，てきとうに書きます．</p>
@@ -674,7 +719,7 @@ Treasure Data本体はアメリカにあるんですが，活動は今までと�
   <entry>
     <title type="html"><![CDATA[Mongoプラグインの仕様]]></title>
     <link href="http://repeatedly.github.com/ja/2012/10/fluent-plugin-mongo-spec/"/>
-    <updated>2012-10-31T03:30:00-07:00</updated>
+    <updated>2012-10-31T03:30:00+09:00</updated>
     <id>http://repeatedly.github.com/ja/2012/10/fluent-plugin-mongo-spec</id>
     <content type="html"><![CDATA[<p>分散パフォーマンステスト関係を書こうと思っていたんですが，よくよく考えたらMongoプラグインについて日本語でまともな記事を書いたことなかったので書きます．</p>
 
@@ -1116,7 +1161,7 @@ td-agentには既に同梱されているため，td-agentを利用している�
   <entry>
     <title type="html"><![CDATA[DConf 2013 on kickstarter!]]></title>
     <link href="http://repeatedly.github.com/2012/10/dconf-2013-on-kickstarter/"/>
-    <updated>2012-10-29T08:30:00-07:00</updated>
+    <updated>2012-10-29T08:30:00+09:00</updated>
     <id>http://repeatedly.github.com/2012/10/dconf-2013-on-kickstarter</id>
     <content type="html"><![CDATA[<p>Walter launched <a href="http://www.kickstarter.com/projects/2083649206/the-d-programming-language-conference-2013-0">&#8220;The D Programming Language Conference 2013&#8221; on kickstarter</a> in the last week.
 I have already pledged, and total pledged now passed the 50% :)</p>
@@ -1130,7 +1175,7 @@ I have already pledged, and total pledged now passed the 50% :)</p>
   <entry>
     <title type="html"><![CDATA[Released denv]]></title>
     <link href="http://repeatedly.github.com/2012/05/released-denv/"/>
-    <updated>2012-05-14T06:47:00-07:00</updated>
+    <updated>2012-05-14T06:47:00+09:00</updated>
     <id>http://repeatedly.github.com/2012/05/released-denv</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/denv">denv</a> is a D version of rbenv.</p>
 
@@ -1148,7 +1193,7 @@ See <a href="https://github.com/repeatedly/denv/blob/master/README.md">README</a
   <entry>
     <title type="html"><![CDATA[LT at Fluentd Casual Talks]]></title>
     <link href="http://repeatedly.github.com/2012/04/lt-at-fluentd-casual-talks/"/>
-    <updated>2012-04-12T20:18:00-07:00</updated>
+    <updated>2012-04-12T20:18:00+09:00</updated>
     <id>http://repeatedly.github.com/2012/04/lt-at-fluentd-casual-talks</id>
     <content type="html"><![CDATA[<p><a href="http://atnd.org/events/27808">Fluentd Casual Talks</a> will be held in Japan.</p>
 
@@ -1161,7 +1206,7 @@ See <a href="https://github.com/repeatedly/denv/blob/master/README.md">README</a
   <entry>
     <title type="html"><![CDATA[Download script written in D]]></title>
     <link href="http://repeatedly.github.com/2012/03/download-script-written-in-d/"/>
-    <updated>2012-03-20T15:02:00-07:00</updated>
+    <updated>2012-03-20T15:02:00+09:00</updated>
     <id>http://repeatedly.github.com/2012/03/download-script-written-in-d</id>
     <content type="html"><![CDATA[<p>Tested under dmd 2.058.</p>
 
@@ -1269,7 +1314,7 @@ void main(string[] args)
   <entry>
     <title type="html"><![CDATA[Collect invalid documents for bulk-insert in mongo-ruby-driver]]></title>
     <link href="http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/"/>
-    <updated>2012-02-29T11:49:00-08:00</updated>
+    <updated>2012-02-29T11:49:00+09:00</updated>
     <id>http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver</id>
     <content type="html"><![CDATA[<p>Mongo gem 1.6.0 includes <a href="https://github.com/mongodb/mongo-ruby-driver/pull/82">my pull request</a>(and <a href="https://github.com/mongodb/mongo-ruby-driver/commit/a4343e53feb582103366bb9c02628a4c6b29fcbd">HISTORY</a>).</p>
 
@@ -1318,23 +1363,6 @@ We can handle <em>invalid_docs</em> manually.
 For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4656aa3948fce280158f718356f00764ea558ef9#L2R103">fluent-plugin-mongo</a>.</p>
 
 <p>Enjoy MongoDB with Ruby!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Released fluent-logger-d]]></title>
-    <link href="http://repeatedly.github.com/2012/02/released-fluent-logger-d/"/>
-    <updated>2012-02-21T21:16:00-08:00</updated>
-    <id>http://repeatedly.github.com/2012/02/released-fluent-logger-d</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/fluent/fluent-logger-d">fluent-logger-d</a>.</p>
-
-<p>This client library has some TODOs, but works fine.
-I tested posting 5,000,000 messages with 5 threads, no problem.</p>
-
-<p>In fact, D community now doesn&#8217;t want such library.
-Because current D community doesn&#8217;t face to the production.</p>
-
-<p>I hope this library with <a href="http://fluentd.org/">Fluentd</a> helps your system design in the future.</p>
 ]]></content>
   </entry>
   

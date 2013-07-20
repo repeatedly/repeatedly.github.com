@@ -4,7 +4,7 @@
   <title><![CDATA[Category: rubygems | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/rubygems/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-05-13T03:12:54-07:00</updated>
+  <updated>2013-07-20T19:54:52+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[YAML engine mismatched problem in RubyGems]]></title>
     <link href="http://repeatedly.github.com/2012/01/yaml-engine-mismatched-problem-in-rubygems/"/>
-    <updated>2012-01-18T02:55:00-08:00</updated>
+    <updated>2012-01-18T02:55:00+09:00</updated>
     <id>http://repeatedly.github.com/2012/01/yaml-engine-mismatched-problem-in-rubygems</id>
     <content type="html"><![CDATA[<h1>Overview</h1>
 
