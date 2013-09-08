@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-08-31T17:54:53+09:00</updated>
+  <updated>2013-09-08T11:43:07+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,97 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Librato Metrics introduction]]></title>
+    <link href="http://repeatedly.github.com/ja/2013/09/librato-metrics-introduction/"/>
+    <updated>2013-09-08T08:57:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2013/09/librato-metrics-introduction</id>
+    <content type="html"><![CDATA[<p><a href="https://metrics.librato.com/">Librato Metrics</a>をうちではモニタリングに使ってるんですが，日本で全くと言って良いほど記事を見ないので，紹介記事を書いてみる．</p>
+
+<h1>何が出来る？</h1>
+
+<p>おおまかに分けて以下のようなことが出来る．</p>
+
+<ul>
+<li>メトリックスを作れる</li>
+<li>メトリックスに対してアラートを設定出来る</li>
+<li>ダッシュボードでメトリックスの一覧が見れる</li>
+<li>JavaScript SDKを使って自分のサイトに埋め込むことが出来る</li>
+<li>APIが提供されていて，いくつかの言語のクライアントがある</li>
+</ul>
+
+
+<p>以下それぞれ簡単な説明．</p>
+
+<h2>メトリックス</h2>
+
+<p>LibratoにはMetricというのがあり，これが最小の単位．Metricに監視したいメトリックスの値を入れていき，他のMetricと混ぜたりすることでモニタリングを行います．</p>
+
+<p><img src="http://repeatedly.github.com/images/librato_metric_sample.png" title="&#34;Librato Metric sample&#34;" alt="&#34;Librato Metric sample&#34;"></p>
+
+<p>上の例のように，一つのMetricに複数の軸の値を入れることが出来ます．これはソースと呼ばれていて，保存する時にsourceを指定すれば良いです．指定しなかったら&#8221;unassigned&#8221;みたいなsourceにまとめられます．<br />
+後，右上にある時間を弄れば，そのレンジでグラフが表示されます．</p>
+
+<p>左の欄に色々とグラフの設定内容があるので，必要であれば弄ります．&#8221;How should we aggregate your data over time?&#8221;の欄が少し大事で「どういう風にメトリックスを見るか」を指定できます(<a href="http://dev.librato.com/v1/post/metrics#gauge_specific">ここ</a>の説明参照)．</p>
+
+<h3>Instrument</h3>
+
+<p>Metricをまとめるのに，Instrumentというのがあります．ここで複数のMetricを重ねることで，関連のありそうなMetric同士を俯瞰出来るようになります．</p>
+
+<p>単純なモニタリングだけだと，MetricとInstrumentが一対一になったりしてダッシュボードやJavaScript SDKでちょっと面倒だったりもします．</p>
+
+<h2>アラート</h2>
+
+<p><img src="http://repeatedly.github.com/images/librato_alert_sample.png" title="&#34;Librato Alert sample&#34;" alt="&#34;Librato Alert sample&#34;"></p>
+
+<p>上の画像の左のカラムが例で，Metricの中でスレッショルドベースで指定出来ます．どこに飛ばすか設定出来るので，うちでは重要なメトリックスに関してはHipChatやPagerDutyなどに飛ばしてます．</p>
+
+<p>複雑な条件設定や，Metricをまたいだアラートは出来ないので，そういうのが欲しい場合は自分達で頑張る必要があります．</p>
+
+<h2>ダッシュボード</h2>
+
+<p><img src="http://repeatedly.github.com/images/librato_dashboard_sample.png" title="&#34;Librato Dashboard Sample&#34;" alt="&#34;Librato Dashboard Sample&#34;"></p>
+
+<p>これがダッシュボードの例です．実際はMetricじゃなくてInstrumentを並べてるんですが，こんな感じで表示出来ます．<br />
+ダッシュボードはいくらでも作れるので，自分の見たい粒度で作って，必要なメトリックスを並べます．某社みたいに一つのダッシュボードに数千数万のメトリックスにならないよう気をつけましょう．</p>
+
+<h2>API</h2>
+
+<p><a href="http://dev.librato.com/v1/metrics">APIページ</a>にリストと説明が載ってます．いくつかの言語には<a href="https://github.com/librato">公式のクライアントライブラリ</a>があるので，使うと良いです．<br />
+ただ，Ruby版とか試してもInstrument APIがなかったりと，まだまだサポートAPIにばらつきが多い印象．アプリケーションからガチで使うなら，自分でいくつか実装する必要があります．APIはREST + JSONなので，実装はそんなに難しくないです．</p>
+
+<p><a href="http://dev.librato.com/v1/users">ユーザAPI</a>はまだβ機能なのか，使いたい場合はLibartoに連絡して，使えるようにしてもらう必要があるっぽいです．</p>
+
+<h3>JavaScript SDK</h3>
+
+<p><img src="http://repeatedly.github.com/images/librato_javascript_sdk_sample.png" title="&#34;Librato JavaScript SDK Sample&#34;" alt="&#34;Librato JavaScript SDK Sample&#34;"></p>
+
+<p>こんな感じになります．好きなページに貼り付けることが出来るし，グラフは自動で更新されます．
+どういうコードになるかは，<a href="http://blog.librato.com/posts/2012/10/embeddable-charts">Libratoの記事</a>を参照してください．</p>
+
+<h3>Fluentdの例</h3>
+
+<p>Fluentdには<a href="https://github.com/treasure-data/fluent-plugin-metricsense">fluent-plugin-metricsense</a>というプラグインがあって，これは保存先にLibrato Metricsが使えたりします．
+これはクライアント使ってないけど，<a href="https://github.com/treasure-data/fluent-plugin-metricsense/blob/master/lib/fluent/plugin/backends/librato_backend.rb">こんな感じで</a>，直接APIを呼ぶくらいなら簡単に実装できます．</p>
+
+<h1>その他</h1>
+
+<h2>料金</h2>
+
+<p><a href="https://metrics.librato.com/pricing">料金ページ</a>を見てください．基本的にはデータの流量(これはLibrato側での保存ベース)，メトリックスの数，ソースの数，が影響します．<br />
+簡単に言うと，どれだけの頻度でどれだけの数のメトリックスを作るか，です．</p>
+
+<h2>サポート</h2>
+
+<p>料金ページにも載ってますが，オンラインチャットとメールとコールがあります．うちではOlarkを使ってますが，最近のスタートアップではこの手のオンラインチャットでの対応というのが広まりつつあって良い感じ．<br />
+緊急を要したり深いディスカッションが必要であれば，コールすることになるかなと．うちでも少し困ったことがあったので，コールして直接要望出したり設計を相談したりしました．</p>
+
+<h1>まとめ</h1>
+
+<p>AnnotationとかCRRELATEとか紹介してないのもありますが，Libartoの基本的な所を書いた．自分達でモニタリング環境を構築出来るなら良いんですが，スタートアップとかだとそこにリソースを割くのが難しかったりするので，そういう所はLibratoとか検討してみてもいいんじゃないかと思います．</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ElasticSearch勉強会 第1回]]></title>
@@ -1221,114 +1312,6 @@ See <a href="https://github.com/repeatedly/denv/blob/master/README.md">README</a
 <p>I will talk about &#8220;The Melancholy of Plugin Developer&#8221; in LT section.</p>
 
 <p>See you at the event!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Download script written in D]]></title>
-    <link href="http://repeatedly.github.com/2012/03/download-script-written-in-d/"/>
-    <updated>2012-03-20T15:02:00+09:00</updated>
-    <id>http://repeatedly.github.com/2012/03/download-script-written-in-d</id>
-    <content type="html"><![CDATA[<p>Tested under dmd 2.058.</p>
-
-<div><script src='https://gist.github.com/2114104.js?file='></script>
-<noscript><pre><code>// Written in the D programming language.
-
-/**
- * High peformance downloader
- *
- * Implemented according to &lt;a href=&quot;http://yusukebe.com/archives/20120229/072808.html&quot;&gt;this implementation&lt;/a&gt;.
- *
- * Example:
- * -----
- * dmd -L-lcurl -run downloader.d
- * -----
- */
-
-import core.atomic : atomicOp;
-
-import std.array       : join;
-import std.conv        : to;
-import std.getopt      : getopt;
-import std.file        : exists, mkdir;
-import std.json        : parseJSON, toJSON;
-import std.path        : buildPath, setExtension;
-import std.parallelism : parallel;
-import std.md5         : getDigestString;
-import std.net.curl    : get, download;
-import std.regex       : match;
-import std.string      : toLower;
-import std.stdio       : writeln;
-import std.uri         : encode;
-
-@trusted
-string buildQuery(in string[string] params)
-{
-    string[] queries;
-
-    foreach (k, v; params)
-        queries ~= encode(k) ~ &quot;=&quot; ~ encode(v);
-
-    return queries.join(&quot;&amp;&quot;);
-}
-
-void main(string[] args)
-{
-    immutable AppURI = &quot;http://api.bing.net/json.aspx&quot;;
-    immutable AppId  = &quot;Your AppId&quot;;
-    string storeDir  = &quot;./op_images&quot;;
-    string query     = &quot;おっぱい&quot;;
-    size_t page      = 0;
-
-    getopt(args,
-           &quot;query&quot;, &amp;query,
-           &quot;dir&quot;,   &amp;storeDir,
-           &quot;page&quot;,  &amp;page);
-
-    if (!storeDir.exists)
-        mkdir(storeDir);
-
-    writeln(&quot;Configuration: query = &quot;, query, &quot;, dir = &quot;, storeDir, &quot;, offset = &quot;, page);
-
-    for (shared(size_t) downloadCount; true; page++) {
-        immutable uri = AppURI ~ '?' ~ buildQuery([&quot;AppId&quot;:        AppId,
-                                                   &quot;Version&quot;:      &quot;2.2&quot;,
-                                                   &quot;Market&quot;:       &quot;ja-JP&quot;,
-                                                   &quot;Sources&quot;:      &quot;Image&quot;,
-                                                   &quot;Image.Count&quot;:  &quot;50&quot;,
-                                                   &quot;Image.Offset&quot;: to!string(page * 50),
-                                                   &quot;Adult&quot;:        &quot;off&quot;, 
-                                                   &quot;Query&quot;:        query]);
-        auto response = get(uri);
-        auto result   = parseJSON(response).object[&quot;SearchResponse&quot;];
-        if (&quot;Errors&quot; in result.object) {
-            writeln(&quot;Error: reason = &quot;, toJSON(&amp;result.object[&quot;Errors&quot;]));
-            break;
-        }
-
-        foreach (ref entry; parallel(result.object[&quot;Image&quot;].object[&quot;Results&quot;].array)) {
-            immutable downloadUri = entry.object[&quot;MediaUrl&quot;].str;
-            if (!downloadUri.match(&quot;.jpe?g$&quot;))
-                continue;
-
-            immutable path = buildPath(storeDir, downloadUri.getDigestString().toLower.setExtension(&quot;jpg&quot;));
-            if (path.exists)
-                continue;
-
-            download(downloadUri, path);
-
-            atomicOp!&quot;+=&quot;(downloadCount, 1);
-            writeln(downloadCount, &quot; : downloaded... &quot;, downloadUri);
-        }
-    }
-
-    writeln(&quot;done!&quot;);
-}</code></pre></noscript></div>
-
-
-<p>This code consists of many D features for scripting :)</p>
-
-<p>Enjoy!</p>
 ]]></content>
   </entry>
   

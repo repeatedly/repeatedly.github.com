@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Librato Metrics introduction - Go ahead!</title>
+  <meta name="author" content="Masahiro Nakagawa">
+
+  
+  <meta name="description" content="Librato Metricsをうちではモニタリングに使ってるんですが，日本で全くと言って良いほど記事を見ないので，紹介記事を書いてみる． 何が出来る？ おおまかに分けて以下のようなことが出来る． メトリックスを作れる
+メトリックスに対してアラートを設定出来る &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://repeatedly.github.com/ja/2013/09/librato-metrics-introduction">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Go ahead!" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Go ahead!</a></h1>
+  
+    <h2>Memoization for Everything</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:repeatedly.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+
+
+  
+<ul class="main-navigation">
+  <li><a href="/ja/archives">Archives</a></li>
+  <li><a href="/">English</a></li>
+</ul>
+
+  
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Librato Metrics introduction</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-08T08:57:00+09:00" pubdate data-updated="true">Sep 8<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="https://metrics.librato.com/">Librato Metrics</a>をうちではモニタリングに使ってるんですが，日本で全くと言って良いほど記事を見ないので，紹介記事を書いてみる．</p>
+
+<h1>何が出来る？</h1>
+
+<p>おおまかに分けて以下のようなことが出来る．</p>
+
+<ul>
+<li>メトリックスを作れる</li>
+<li>メトリックスに対してアラートを設定出来る</li>
+<li>ダッシュボードでメトリックスの一覧が見れる</li>
+<li>JavaScript SDKを使って自分のサイトに埋め込むことが出来る</li>
+<li>APIが提供されていて，いくつかの言語のクライアントがある</li>
+</ul>
+
+
+<p>以下それぞれ簡単な説明．</p>
+
+<h2>メトリックス</h2>
+
+<p>LibratoにはMetricというのがあり，これが最小の単位．Metricに監視したいメトリックスの値を入れていき，他のMetricと混ぜたりすることでモニタリングを行います．</p>
+
+<p><img src="/images/librato_metric_sample.png" title="&#34;Librato Metric sample&#34;" alt="&#34;Librato Metric sample&#34;"></p>
+
+<p>上の例のように，一つのMetricに複数の軸の値を入れることが出来ます．これはソースと呼ばれていて，保存する時にsourceを指定すれば良いです．指定しなかったら&#8221;unassigned&#8221;みたいなsourceにまとめられます．<br />
+後，右上にある時間を弄れば，そのレンジでグラフが表示されます．</p>
+
+<p>左の欄に色々とグラフの設定内容があるので，必要であれば弄ります．&#8221;How should we aggregate your data over time?&#8221;の欄が少し大事で「どういう風にメトリックスを見るか」を指定できます(<a href="http://dev.librato.com/v1/post/metrics#gauge_specific">ここ</a>の説明参照)．</p>
+
+<h3>Instrument</h3>
+
+<p>Metricをまとめるのに，Instrumentというのがあります．ここで複数のMetricを重ねることで，関連のありそうなMetric同士を俯瞰出来るようになります．</p>
+
+<p>単純なモニタリングだけだと，MetricとInstrumentが一対一になったりしてダッシュボードやJavaScript SDKでちょっと面倒だったりもします．</p>
+
+<h2>アラート</h2>
+
+<p><img src="/images/librato_alert_sample.png" title="&#34;Librato Alert sample&#34;" alt="&#34;Librato Alert sample&#34;"></p>
+
+<p>上の画像の左のカラムが例で，Metricの中でスレッショルドベースで指定出来ます．どこに飛ばすか設定出来るので，うちでは重要なメトリックスに関してはHipChatやPagerDutyなどに飛ばしてます．</p>
+
+<p>複雑な条件設定や，Metricをまたいだアラートは出来ないので，そういうのが欲しい場合は自分達で頑張る必要があります．</p>
+
+<h2>ダッシュボード</h2>
+
+<p><img src="/images/librato_dashboard_sample.png" title="&#34;Librato Dashboard Sample&#34;" alt="&#34;Librato Dashboard Sample&#34;"></p>
+
+<p>これがダッシュボードの例です．実際はMetricじゃなくてInstrumentを並べてるんですが，こんな感じで表示出来ます．<br />
+ダッシュボードはいくらでも作れるので，自分の見たい粒度で作って，必要なメトリックスを並べます．某社みたいに一つのダッシュボードに数千数万のメトリックスにならないよう気をつけましょう．</p>
+
+<h2>API</h2>
+
+<p><a href="http://dev.librato.com/v1/metrics">APIページ</a>にリストと説明が載ってます．いくつかの言語には<a href="https://github.com/librato">公式のクライアントライブラリ</a>があるので，使うと良いです．<br />
+ただ，Ruby版とか試してもInstrument APIがなかったりと，まだまだサポートAPIにばらつきが多い印象．アプリケーションからガチで使うなら，自分でいくつか実装する必要があります．APIはREST + JSONなので，実装はそんなに難しくないです．</p>
+
+<p><a href="http://dev.librato.com/v1/users">ユーザAPI</a>はまだβ機能なのか，使いたい場合はLibartoに連絡して，使えるようにしてもらう必要があるっぽいです．</p>
+
+<h3>JavaScript SDK</h3>
+
+<p><img src="/images/librato_javascript_sdk_sample.png" title="&#34;Librato JavaScript SDK Sample&#34;" alt="&#34;Librato JavaScript SDK Sample&#34;"></p>
+
+<p>こんな感じになります．好きなページに貼り付けることが出来るし，グラフは自動で更新されます．
+どういうコードになるかは，<a href="http://blog.librato.com/posts/2012/10/embeddable-charts">Libratoの記事</a>を参照してください．</p>
+
+<h3>Fluentdの例</h3>
+
+<p>Fluentdには<a href="https://github.com/treasure-data/fluent-plugin-metricsense">fluent-plugin-metricsense</a>というプラグインがあって，これは保存先にLibrato Metricsが使えたりします．
+これはクライアント使ってないけど，<a href="https://github.com/treasure-data/fluent-plugin-metricsense/blob/master/lib/fluent/plugin/backends/librato_backend.rb">こんな感じで</a>，直接APIを呼ぶくらいなら簡単に実装できます．</p>
+
+<h1>その他</h1>
+
+<h2>料金</h2>
+
+<p><a href="https://metrics.librato.com/pricing">料金ページ</a>を見てください．基本的にはデータの流量(これはLibrato側での保存ベース)，メトリックスの数，ソースの数，が影響します．<br />
+簡単に言うと，どれだけの頻度でどれだけの数のメトリックスを作るか，です．</p>
+
+<h2>サポート</h2>
+
+<p>料金ページにも載ってますが，オンラインチャットとメールとコールがあります．うちではOlarkを使ってますが，最近のスタートアップではこの手のオンラインチャットでの対応というのが広まりつつあって良い感じ．<br />
+緊急を要したり深いディスカッションが必要であれば，コールすることになるかなと．うちでも少し困ったことがあったので，コールして直接要望出したり設計を相談したりしました．</p>
+
+<h1>まとめ</h1>
+
+<p>AnnotationとかCRRELATEとか紹介してないのもありますが，Libartoの基本的な所を書いた．自分達でモニタリング環境を構築出来るなら良いんですが，スタートアップとかだとそこにリソースを割くのが難しかったりするので，そういう所はLibratoとか検討してみてもいいんじゃないかと思います．</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Masahiro Nakagawa</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-08T08:57:00+09:00" pubdate data-updated="true">Sep 8<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/librato-metrics/'>Librato Metrics</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2013/09/librato-metrics-introduction/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2013/09/librato-metrics-introduction/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/ja/2013/08/elasticsearch-meetup-1st/" title="Previous Post: ElasticSearch勉強会 第1回">&laquo; ElasticSearch勉強会 第1回</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/ja/2013/09/librato-metrics-introduction/">Librato Metrics introduction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2013/08/elasticsearch-meetup-1st/">ElasticSearch勉強会 第1回</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2013/07/july-tech-festa-2013/">July Tech Festa 2013</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2013/05/tdpl-japanese-edition/">プログラミング言語D</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/05/d-conference-2013/">D Conference 2013</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/repeatedly">@repeatedly</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'repeatedly',
+            count: 4,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("repeatedly", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/repeatedly" class="twitter-follow-button" data-show-count="false">Follow @repeatedly</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Masahiro Nakagawa -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'repeatedly';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://repeatedly.github.com/ja/2013/09/librato-metrics-introduction/';
+        var disqus_url = 'http://repeatedly.github.com/ja/2013/09/librato-metrics-introduction/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
