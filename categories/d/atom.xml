@@ -4,7 +4,7 @@
   <title><![CDATA[Category: D | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/d/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-10-20T01:04:26+09:00</updated>
+  <updated>2013-10-20T07:34:11+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -86,9 +86,10 @@
 
 <h2>まとめ</h2>
 
-<p>記事で言及されている通り，言語，ライブラリ，開発環境，などなど昔に比べて成熟してきているのは確かですが，ご利用は計画的に，というが本当の所です．</p>
+<p>記事で言及されている通り，言語，ライブラリ，開発環境，などなど昔に比べて成熟してきているのは確かですが，ご利用は計画的に，というが本当の所です．<br />
+ポジション的にはHaskellやGoに近い所にいて，メジャーとは言い切れないがパワーユーザが使っていて，コミュニティが大きくなりつつあるという感じです．Facebookはこれからも利用箇所を増やすでしょうし，海外では他の事例もちょくちょく出てきそうです．日本は…よく分からんですｗ</p>
 
-<p>日本はアクティブなコミッタが3人いたりと，実はD言語をする環境としては恵まれていたりしてます．困ったら #dlang をつけてTwitterでつぶやくと，誰かが助けてくれるかもしれません．日本語情報については，<a href="https://twitter.com/repeatedly/status/391191903418322944">このtweet</a>を参考にしてください．</p>
+<p>とはいえ，日本はアクティブなコミッタが3人いたりと，実はD言語をする環境としては恵まれていたりしてます．困ったら #dlang をつけてTwitterでつぶやくと，誰かが助けてくれるかもしれません．日本語情報については，<a href="https://twitter.com/repeatedly/status/391191903418322944">このtweet</a>を参考にしてください．</p>
 ]]></content>
   </entry>
   
