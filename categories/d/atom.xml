@@ -4,7 +4,7 @@
   <title><![CDATA[Category: D | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/d/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-09-08T11:43:07+09:00</updated>
+  <updated>2013-10-20T00:57:05+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,85 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[D言語の現状]]></title>
+    <link href="http://repeatedly.github.com/ja/2013/10/d-status-2013/"/>
+    <updated>2013-10-20T00:43:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2013/10/d-status-2013</id>
+    <content type="html"><![CDATA[<p><a href="http://japan.internet.com/webtech/20131018/5.html">「FacebookがプロダクションでD言語の利用を始めた」ことに関する記事</a>が少し話題になってます．で，これだけだとD言語が他の言語のようにプロダクションreadyと勘違いする方もいるかもしれないので，今の現状について書いておきます．</p>
+
+<h2>この記事の一言まとめ</h2>
+
+<p>手軽にプロダクションで使えるわけではありません！</p>
+
+<p>詳細が知りたい方は以降をお読みください.</p>
+
+<!-- more -->
+
+
+<h2>今回の話</h2>
+
+<p>FacebookのAndreiはTDPLという本を出した，D言語界隈でも主要なコミッタです．その一方，C++界隈でも有名な人物で，そういう人物がついにC++をやめてプロダクションでD言語を使った，というのが一つの大きなニュースです．</p>
+
+<p>また，Facebookには<a href="http://qiita.com/yasei_no_otoko/items/17f672ec30393a2f928a">この記事</a>を書いたBenなど，D言語を使えるエンジニアが他にもいます．</p>
+
+<h2>プロダクションでつかえるのか？</h2>
+
+<p>簡単に言うと，「品質的には問題が無い，が今広まってる言語ほど楽ではない」です．JavaやRuby/Python/PHPなどWebで広く使われているような言語のように，たくさんのライブラリがある訳ではありません．</p>
+
+<p>Dubというパッケージマネージャが最近出てきましたが，<a href="http://japan.internet.com/webtech/20131018/5.html">登録されているライブラリ</a>はまだ多くなく，なければ自分で書く必要があります．また，ライブラリにバグがあっても他の誰かが報告してくれるほどコミュニティも大きくないので，その辺も気をつける必要があります．まぁ大抵github/bitbucketなので，今時のエンジニアは楽だとは思いますが…</p>
+
+<p>今プロダクションでD言語を使っている会社はFacebook以外にももちろんありますが(広告配信，ゲーム，社内システム，Webサーバなど)，そういう会社は大抵D言語でライブラリを書いてるような精通した人物が開発陣の中にいるのが現状です．まぁ，シェアのない言語ではよくある光景でと思います．</p>
+
+<p>プロダクション以外だと，研究とかでつかっている人は増えている感じがします．数値計算系，言語処理系，自然言語処理系，などなど書きやすさとパフォーマンスのバランスで選ばれているようです．</p>
+
+<h2>互換性</h2>
+
+<p>D言語を使ってない方からよく「D言語は互換性を維持しないからクソだ」という意見を聞くのですが，これにはいくつか理由があります．</p>
+
+<h3>シェアがない</h3>
+
+<p>当たり前ですが，シェアがない言語が律儀に互換性を維持してリリースすることのメリットはほぼありません．ライブラリも多くない言語では，互換性がなくなって困るライブラリはほとんどなく，ライブラリ開発者もほとんどが言語仕様の議論に参加しているので，基本問題は起きません．</p>
+
+<h3>コミュニティの方向性</h3>
+
+<p>上と関わりがありますが，今コミュニティとして，互換性よりも言語を良くしよう，という流れの方が強いです．</p>
+
+<ul>
+<li>この機能あった方がライブラリとかアプリが書きやすい</li>
+<li>新しい機能でよりよいAPIが出来たのでこっちに移行</li>
+<li>この機能は誰も使ってないから削除</li>
+<li>この機能使うとこういう危険なコードになるので削除</li>
+</ul>
+
+
+<p>みたいな．これは今後プロダクションでの利用が増え，「互換性は保った方がいいんじゃないか？」という開発者が増えれば，流れは変わると思います．この辺はPythonやScalaなど，今時の言語と同じような感じかなと． <br />
+今後に備えて，「bug fixリリースも考慮した開発フロー・バージョニングにした方がいいんじゃないか？」という提案はあがったりしてます．</p>
+
+<h3>開発の流れ</h3>
+
+<p>現状はD2しかメジャーバージョンがないんですが(D1のメンテナンスは終了)，これが開発版/安定版みたいになってます．昔と違って</p>
+
+<ul>
+<li>リグレッションがあったらリリースしない</li>
+<li>リリース前にβ版を公開してフィードバックを得る</li>
+<li>削除/変更するAPIは数ヶ月以上前から警告が出る</li>
+</ul>
+
+
+<p>などなど利用者がいきなり非互換にぶち当たるようなことが起きないように配慮はされてます．D言語はコンパイル時にシンボルやシグネチャをチェック出来る機構があり，ライブラリ開発者としても，多少の変更があってもそれで対応出来てます．<br />
+なので，互換性に関しては少し寛容なのかもしれません．</p>
+
+<p>「D2に入れるには大きすぎるかもしれない変更はD3で議論しよう」という流れになってるので，D2で今後パラダイムに関わるような大きな変更は起きないとは思います．</p>
+
+<h2>まとめ</h2>
+
+<p>記事で言及されている通り，言語，ライブラリ，開発環境，などなど昔に比べて成熟してきているのは確かですが，ご利用は計画的に，というが本当の所です．</p>
+
+<p>日本はアクティブなコミッタが3人いたりと，実はD言語をする環境としては恵まれていたりしてます．困ったら #dlang をつけてTwitterでつぶやくと，誰かが助けてくれるかもしれません．日本語情報については，<a href="https://twitter.com/repeatedly/status/391191903418322944">このtweet</a>を参考にしてください．</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[プログラミング言語D]]></title>
@@ -152,20 +231,6 @@ auto hashed = siphash24(k, msg);
 
 <p>siphash-d has already listed in the official site.
 Thanks to JP Aumasson!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[DConf 2013 on kickstarter!]]></title>
-    <link href="http://repeatedly.github.com/2012/10/dconf-2013-on-kickstarter/"/>
-    <updated>2012-10-29T08:30:00+09:00</updated>
-    <id>http://repeatedly.github.com/2012/10/dconf-2013-on-kickstarter</id>
-    <content type="html"><![CDATA[<p>Walter launched <a href="http://www.kickstarter.com/projects/2083649206/the-d-programming-language-conference-2013-0">"The D Programming Language Conference 2013" on kickstarter</a> in the last week.
-I have already pledged, and total pledged now passed the 50% :)</p>
-
-<p>Please pledge your support!</p>
-
-<p>Forum: <a href="http://forum.dlang.org/thread/k63vi8$1qp0$1@digitalmars.com">DConf 2013 on kickstarter.com: we're live!</a></p>
 ]]></content>
   </entry>
   
