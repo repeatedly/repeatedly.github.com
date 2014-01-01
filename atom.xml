@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2013-10-20T17:06:18+09:00</updated>
+  <updated>2014-01-02T07:18:02+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -14,9 +14,79 @@
 
   
   <entry>
+    <title type="html"><![CDATA[2013年の振り返り]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/01/2013-report/"/>
+    <updated>2014-01-01T00:00:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/01/2013-report</id>
+    <content type="html"><![CDATA[<p>転職したのもあり，色々と取り組むものが増えた年だった．</p>
+
+<h2>D言語</h2>
+
+<p>ちょっと割ける時間が減ったのもあり，全体的にD言語のコードを書く量は減ったかなと．
+自分が欲しかった小さなライブラリはいくつか書いたりしたけど，
+他にも書きたいのがあるので，2014年はガッツリ時間を取りたい．</p>
+
+<ul>
+<li><a href="http://repeatedly.github.io/2013/05/d-conference-2013/">D Conference 2013</a></li>
+<li><a href="http://repeatedly.github.io/ja/2013/05/tdpl-japanese-edition/">プログラミング言語D</a></li>
+</ul>
+
+
+<p>その変わり，D言語の日本語書籍の出版に携わったりと，その他の活動はちょくちょくやった．</p>
+
+<h2>Fluentd</h2>
+
+<p>会社の関係もあってメインメンテナ的な立場になった．
+Fluentdそのものの機能開発・メンテナンス含め，MLでの対応，イベントでの発表など色々やった．
+2014年は，Windows対応にv11，それにtd-agentのRubyのバージョンアップなど，色々と課題は見えてたり．</p>
+
+<p>MLに関しては，今かなり俺とkiyoto-sanの二人の独壇場な感じになっているので，
+もう少し他の方の協力も欲しいと思ってたりします(その方が盛り上がっているように見えて良い)．<br />
+特に日本は早期にヘビーユーザがついて色々と記事が増えたのもあり，他の国の人達より使いこなしているユーザが多いです．
+なので英語の練習も兼ねて，簡単な質問にでも答えてくれる人が増えるといいな，と思ってます．<br />
+日本の人はTwitterで質問し，海外の人はMLで質問する，というのがOSSやってて思う傾向ですね．</p>
+
+<p>あと，Treasure Dataでは<a href="http://www.treasuredata.com/en/careers/careers-posting-004.php">Fluentdの開発者を募集している</a>ので，興味のある人は応募してみるといいかもしれません！</p>
+
+<p>さらに，<a href="http://www.slideshare.net/treasure-data/treasure-agent-monitoring-service">年末発表したモニタリングシステム</a>のβユーザも随時募集しているので，
+興味のある人は <a href="https://twitter.com/repeatedly">@repeatedly</a> にでも連絡して貰えればと思います．</p>
+
+<h2>発表</h2>
+
+<ul>
+<li><a href="http://atnd.org/events/36713">Fluentd Casual Talks #2</a></li>
+<li><a href="http://www.zusaar.com/event/501053">Fluentd meetup in Fukuoka</a></li>
+<li><a href="http://repeatedly.github.io/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2/">AWSを使ったデータ解析PaaSの裏側</a></li>
+<li><a href="http://herokujp.doorkeeper.jp/events/3405">Heroku Meetup #8 TreasureData + Waza Report!!</a></li>
+<li><a href="http://www.zusaar.com/event/873003">Monitoring Casual Talks #4</a></li>
+<li><a href="http://repeatedly.github.io/ja/2013/07/july-tech-festa-2013/">July Tech Festa 2013</a></li>
+<li><a href="http://atnd.org/events/44556">DevOps向けFluentd勉強会 at IPROS</a></li>
+<li><a href="http://elasticsearch.doorkeeper.jp/events/6532">第2回elasticsearch勉強会</a></li>
+<li><a href="http://www.ipsj.or.jp/event/s-seminar/2013/Exciting_Coding/">Exciting Coding! 2013</a></li>
+</ul>
+
+
+<p>とりあえず覚えている分だけリンクを貼ってみた．会社に関しての大きめな発表が増えたなと．</p>
+
+<p>発表以外でも色々なイベントに参加して，FluentdやTDに関しての要望とかを聞いたりしていた．
+これらで得たフィードバックは，ちゃんと吟味して取り込んでいきたい．</p>
+
+<h2>まとめ</h2>
+
+<p>ざっと振り返ってみた．
+Fluentdに関しては，v10はもうコアでほぼやることがないので，次はv11が中心．
+中心とは言っても，安定版として正式にリリースするのは当分先になる．多分．</p>
+
+<p>2014年もOSS含め対外的な活動は積極的にしていきたいし，色々な人達と交流を増やして行きたい所．</p>
+
+<p>今後も宜しくお願いします :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[D言語の現状]]></title>
     <link href="http://repeatedly.github.com/ja/2013/10/d-status-2013/"/>
-    <updated>2013-10-20T00:43:00+09:00</updated>
+    <updated>2013-10-20T00:00:00+09:00</updated>
     <id>http://repeatedly.github.com/ja/2013/10/d-status-2013</id>
     <content type="html"><![CDATA[<p><a href="http://japan.internet.com/webtech/20131018/5.html">「FacebookがプロダクションでD言語の利用を始めた」ことに関する記事</a>が少し話題になってます．で，これだけだとD言語が他の言語のようにプロダクションreadyと勘違いする方もいるかもしれないので，今の現状について書いておきます．</p>
 
@@ -26,26 +96,23 @@
 
 <p>詳細が知りたい方は以降をお読みください.</p>
 
-<!-- more -->
-
-
 <h2>今回の話</h2>
 
 <p>FacebookのAndreiはTDPLという本を出した，D言語界隈でも主要なコミッタです．その一方，C++界隈でも有名な人物で，そういう人物がついにC++をやめてプロダクションでD言語を使った，というのが一つの大きなニュースです．</p>
 
-<p>また，Facebookには<a href="http://qiita.com/yasei_no_otoko/items/17f672ec30393a2f928a">この記事</a>を書いたBenなど，D言語を使えるエンジニアが他にもいます．</p>
+<p>また，Facebookには<a href="http://qiita.com/yasei_no_otoko/items/17f672ec30393a2f928a">この記事を書いたBen</a>など，D言語を使えるエンジニアが他にもいます．</p>
 
 <h2>プロダクションでつかえるのか？</h2>
 
 <p>簡単に言うと，「品質的には問題が無い，が今広まってる言語ほど楽ではない」です．JavaやRuby/Python/PHPなどWebで広く使われているような言語のように，たくさんのライブラリがある訳ではありません．</p>
 
-<p>Dubというパッケージマネージャが最近出てきましたが，<a href="http://japan.internet.com/webtech/20131018/5.html">登録されているライブラリ</a>はまだ多くなく，なければ自分で書く必要があります．また，ライブラリにバグがあっても他の誰かが報告してくれるほどコミュニティも大きくないので，その辺も気をつける必要があります．まぁ大抵github/bitbucketなので，今時のエンジニアには楽だとは思いますが…</p>
+<p>Dubというパッケージマネージャが最近出てきましたが，<a href="http://code.dlang.org/">登録されているライブラリ</a>はまだ多くなく，なければ自分で書く必要があります．また，ライブラリにバグがあっても他の誰かが報告してくれるほどコミュニティも大きくないので，その辺も気をつける必要があります．まぁ大抵github/bitbucketなので，今時のエンジニアには楽だとは思いますが…</p>
 
 <p>今プロダクションでD言語を使っている会社はFacebook以外にももちろんありますが(広告配信，ゲーム，社内システム，Webサーバなど)，そういう会社は大抵D言語でライブラリを書いてるような精通した人物が開発陣の中にいるのが現状です．まぁ，メジャーではない言語ではよくある光景だと思います．</p>
 
 <p>プロダクション以外だと，研究とかでつかっている人は増えている感じがします．数値計算系，言語処理系，自然言語処理系，などなど書きやすさとパフォーマンスのバランスで選ばれているようです．</p>
 
-<h2>互換性</h2>
+<h3>互換性</h3>
 
 <p>D言語を使ってない方からよく「D言語は互換性を維持しないからクソだ」という意見を聞くのですが，これにはいくつか理由があります．</p>
 
@@ -68,7 +135,7 @@
 <p>みたいな．これは今後プロダクションでの利用が増え，「互換性は保った方がいいんじゃないか？」という開発者が増えれば，流れは変わると思います．この辺はPythonやScalaなど，今時の言語と同じような感じかなと． <br />
 今後に備えて，「bug fixリリースも考慮した開発フロー・バージョニングにした方がいいんじゃないか？」という提案はあがったりしてます．</p>
 
-<h3>開発の流れ</h3>
+<h2>開発の流れ</h2>
 
 <p>現状はD2しかメジャーバージョンがないんですが(D1のメンテナンスは終了)，これが開発版/安定版みたいになってます．昔と違って</p>
 
@@ -86,12 +153,12 @@
 
 <h2>まとめ</h2>
 
-<p>記事で言及されている通り，言語，ライブラリ，開発環境，などなど昔に比べて成熟してきているのは確かですが，ご利用は計画的に，というが本当の所です．<br />
+<p>記事で言及されている通り，言語，ライブラリ，開発環境，などなど昔に比べて成熟してきているのは確かですが，ご利用は計画的に，というが本当の所です．
 ポジション的にはHaskellやGoに近い所にいて，メジャーとは言い切れないがパワーユーザが使っていて，コミュニティが大きくなりつつあるという感じです．Facebookはこれからも利用箇所を増やすでしょうし，海外では他の事例もちょくちょく出てきそうです．日本は…よく分からんですｗ</p>
 
 <p>とはいえ，日本はアクティブなコミッタが3人いたりと，実はD言語をする環境としては恵まれていたりしてます．困ったら #dlang をつけてTwitterでつぶやくと，誰かが助けてくれるかもしれません．日本語情報については，<a href="https://twitter.com/repeatedly/status/391191903418322944">このtweet</a>を参考にしてください．</p>
 
-<h2>追記</h2>
+<p>追記</p>
 
 <p>@yasei_no_otoko さんが<a href="http://qiita.com/yasei_no_otoko/items/65b6a7cae7a6588dc7f6">エディタ・IDEの現状について書いてくれました</a>．</p>
 ]]></content>
@@ -1365,24 +1432,6 @@ I have already pledged, and total pledged now passed the 50% :)</p>
 <p>Please pledge your support!</p>
 
 <p>Forum: <a href="http://forum.dlang.org/thread/k63vi8$1qp0$1@digitalmars.com">DConf 2013 on kickstarter.com: we&#8217;re live!</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Released denv]]></title>
-    <link href="http://repeatedly.github.com/2012/05/released-denv/"/>
-    <updated>2012-05-14T06:47:00+09:00</updated>
-    <id>http://repeatedly.github.com/2012/05/released-denv</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/denv">denv</a> is a D version of rbenv.</p>
-
-<p>It enables you to manage multiple versions of D environment.<br />
-See <a href="https://github.com/repeatedly/denv/blob/master/README.md">README</a> for more details.</p>
-
-<ul>
-<li><a href="http://forum.dlang.org/thread/fqcnqqphbfymgymnwqjx@forum.dlang.org">Announce at digitalmars.D.announce</a></li>
-<li><a href="https://github.com/repeatedly/denv">denv for contest programming</a> (in Japanese)</li>
-</ul>
-
 ]]></content>
   </entry>
   
