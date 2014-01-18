@@ -5,21 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Released MessagePack RPC Python 0.2.0 - Go ahead!</title>
+  <title>CROSS 2014 - Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Source package is here. The main feature is MessagePack RPC Server support.
-Example is below: 1
-2
-3
-4
-5
-6
-7
-8
-9
-import msgpackrpc class SumServer: &hellip;">
+  <meta name="description" content="CROSS 2014というイベントがあり，
+分散処理システムCROSSというセッションのオーナーをやってきた． 分散処理システムCROSS 元々はログ収集で1セッションどうか，という話だった．が，
+もうFluentdとかの話は色々な所でやってるし， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -28,7 +20,7 @@ import msgpackrpc class SumServer: &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.com/2012/01/released-msgpack-rpc-python-0.2.0">
+  <link rel="canonical" href="http://repeatedly.github.com/ja/2014/01/cross-2014">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -68,10 +60,8 @@ import msgpackrpc class SumServer: &hellip;">
 
   
 <ul class="main-navigation">
-  <li><a href="/">Home</a></li>
-  <li><a href="/works">Works</a></li>
-  <li><a href="/archives">Archives</a></li>
-  <li><a href="/ja">Japanese</a></li>
+  <li><a href="/ja/archives">Archives</a></li>
+  <li><a href="/">English</a></li>
 </ul>
 
   
@@ -84,7 +74,7 @@ import msgpackrpc class SumServer: &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Released MessagePack RPC Python 0.2.0</h1>
+      <h1 class="entry-title">CROSS 2014</h1>
     
     
       <p class="meta">
@@ -100,7 +90,7 @@ import msgpackrpc class SumServer: &hellip;">
   
 
 
-<time datetime="2012-01-10T08:48:00+09:00" pubdate data-updated="true">Jan 10<span>th</span>, 2012</time>
+<time datetime="2014-01-18T23:57:00+09:00" pubdate data-updated="true">Jan 18<span>th</span>, 2014</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -109,55 +99,67 @@ import msgpackrpc class SumServer: &hellip;">
   </header>
 
 
-<div class="entry-content"><p>Source package is <a href="http://pypi.python.org/pypi/msgpack-rpc-python/0.2.0">here</a>.</p>
+<div class="entry-content"><p><a href="http://www.cross-party.com/">CROSS 2014</a>というイベントがあり，
+<a href="http://www.cross-party.com/programs/distributed/">分散処理システムCROSS</a>というセッションのオーナーをやってきた．</p>
 
-<p>The main feature is MessagePack RPC Server support.<br />
-Example is below:</p>
+<h2>分散処理システムCROSS</h2>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">msgpackrpc</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">SumServer</span><span class="p">:</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">server</span> <span class="o">=</span> <span class="n">msgpackrpc</span><span class="o">.</span><span class="n">Server</span><span class="p">(</span><span class="n">SumServer</span><span class="p">())</span>
-</span><span class='line'><span class="n">server</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">msgpackrpc</span><span class="o">.</span><span class="n">Address</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">))</span>
-</span><span class='line'><span class="n">server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>元々はログ収集で1セッションどうか，という話だった．が，
+もうFluentdとかの話は色々な所でやってるし，ここで1時間やってもあんま成果はないだろうということでやめた．
+そもそも日本でFluentd以外のログ収集プロジェクトで深い話を出来る人は希で，探すのがつらい．<br /></p>
 
+<p>その変わり分散処理でも話が来ていたので，そっち側でどうにかやることにした．
+分散処理だとなんかアルゴリズムとかそっち系の色が強くなりそうなので，とりあえずシステムをつけた．</p>
 
-<p>You can use Client to access this server:</p>
+<h3>メンバ</h3>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">client</span> <span class="o">=</span> <span class="n">msgpackrpc</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">msgpackrpc</span><span class="o">.</span><span class="n">Address</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">))</span>
-</span><span class='line'><span class="n">client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s">&quot;sum&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c"># =&gt; 3</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Other improvements</h2>
+<p>@oza_x86，@kuenishi，@shot6の三人にお願いした．
+少し前にTwitterでつぶやいたけど，以下のような感じで選んだ．</p>
 
 <ul>
-<li>Support Python 3 (tested with Python 3.2.2)</li>
-<li>Add notify request to Client</li>
-<li>Add (un)pack_encoding option for MessagePack (de)serializer</li>
+<li>分散処理システムを研究・開発している人</li>
+<li>分散処理システムを開発・販売している人</li>
+<li>分散処理システムを運用・サービスとして展開している人</li>
+<li>分散処理システムの基盤を運用・基盤を提供している人</li>
 </ul>
 
 
-<h2>TODO</h2>
+<p>事前打ち合わせの飲み会をやったけど，自己紹介して結局はなんか適当に喋りましょうということに．</p>
 
-<p>Current implementaion lacks some features compared to Ruby implementaion.
-I will add new features, e.g. advanced return, async return, etc.
-In addition, I will refactor the internal architecture.</p>
+<h3>当日</h3>
+
+<p>セッションが始まる前に，Hadoopやデータベースとかの入門的な話には多分ならないし，
+他に面白そうなセッションがあるので〜，と誘導したにも関わらず，なんか結構人が入ってて驚いた！</p>
+
+<p>色々と予防線は張ったものの，個人的には1時間それなりに話題は出せたんじゃないかと思ってます．
+RaftやPaxosのような合意周り，Jepsenやその他の分散処理システムの検証ツール，
+その他Hadoopやその他のシステムの運用的な話，などなど．<br />
+分散処理システムにおけるモデルの検証とかはやはり鬼門なので，今後色々と勉強したい所．</p>
+
+<p>しかしモデレータというのは色々と疲れますね…</p>
+
+<h2>その他のセッション</h2>
+
+<h3>エンジニアの恋・愛・セックスのDevOps、ホントのところどうしたらいいの</h3>
+
+<p>間に合わなくて参加出来なかったが，かなり反響があったセッションっぽい．
+後で録画を見る．</p>
+
+<h3>ぶつかり稽古</h3>
+
+<p>セッションオーナーが登壇しないという酷いセッションだったｗ
+けど内容そのものは，他社のレビュースタイルとか色々と知れて面白かった．</p>
+
+<h3>アンカンファレンス</h3>
+
+<p>Fluentd v11の話で登録したけど，雨の予報でも出社しないと噂の某モリスさんが一人でセッションの時間全部使い切り，
+何も話せなかった．</p>
+
+<h2>まとめ</h2>
+
+<p>Tシャツや雑誌の新刊も貰えたし，何人かリアルで合えたしで，色々とドタバタしたけど楽しかったので良し．皆さんお疲れ様でした！</p>
+
+<p><img src="/images/cross_2014.jpg" title="&#34;CROSS 2014 photo&#34;" alt="&#34;CROSS 2014 photo&#34;"></p>
 </div>
 
 
@@ -180,21 +182,15 @@ In addition, I will refactor the internal architecture.</p>
   
 
 
-<time datetime="2012-01-10T08:48:00+09:00" pubdate data-updated="true">Jan 10<span>th</span>, 2012</time>
+<time datetime="2014-01-18T23:57:00+09:00" pubdate data-updated="true">Jan 18<span>th</span>, 2014</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/categories/msgpack/'>msgpack</a>, <a class='category' href='/categories/mspgack-rpc/'>mspgack-rpc</a>, <a class='category' href='/categories/python/'>python</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/2012/01/released-msgpack-rpc-python-0.2.0/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/2012/01/released-msgpack-rpc-python-0.2.0/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2014/01/cross-2014/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2014/01/cross-2014/" >Tweet</a>
   
   
   
@@ -205,8 +201,8 @@ In addition, I will refactor the internal architecture.</p>
     
     <p class="meta">
       
+        <a class="basic-alignment left" href="/ja/2014/01/2013-report/" title="Previous Post: 2013年の振り返り">&laquo; 2013年の振り返り</a>
       
-        <a class="basic-alignment right" href="/2012/01/released-fluent-plugin-mongo-0.6.0/" title="next Post: Released fluent-plugin-mongo 0.6.0">Released fluent-plugin-mongo 0.6.0 &raquo;</a>
       
     </p>
   </footer>
@@ -318,8 +314,8 @@ In addition, I will refactor the internal architecture.</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://repeatedly.github.com/2012/01/released-msgpack-rpc-python-0.2.0/';
-        var disqus_url = 'http://repeatedly.github.com/2012/01/released-msgpack-rpc-python-0.2.0/';
+        var disqus_identifier = 'http://repeatedly.github.com/ja/2014/01/cross-2014/';
+        var disqus_url = 'http://repeatedly.github.com/ja/2014/01/cross-2014/';
         var disqus_script = 'embed.js';
       
     (function () {

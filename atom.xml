@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-01-02T07:18:02+09:00</updated>
+  <updated>2014-01-19T00:36:07+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,75 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CROSS 2014]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/01/cross-2014/"/>
+    <updated>2014-01-18T23:57:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/01/cross-2014</id>
+    <content type="html"><![CDATA[<p><a href="http://www.cross-party.com/">CROSS 2014</a>というイベントがあり，
+<a href="http://www.cross-party.com/programs/distributed/">分散処理システムCROSS</a>というセッションのオーナーをやってきた．</p>
+
+<h2>分散処理システムCROSS</h2>
+
+<p>元々はログ収集で1セッションどうか，という話だった．が，
+もうFluentdとかの話は色々な所でやってるし，ここで1時間やってもあんま成果はないだろうということでやめた．
+そもそも日本でFluentd以外のログ収集プロジェクトで深い話を出来る人は希で，探すのがつらい．<br /></p>
+
+<p>その変わり分散処理でも話が来ていたので，そっち側でどうにかやることにした．
+分散処理だとなんかアルゴリズムとかそっち系の色が強くなりそうなので，とりあえずシステムをつけた．</p>
+
+<h3>メンバ</h3>
+
+<p>@oza_x86，@kuenishi，@shot6の三人にお願いした．
+少し前にTwitterでつぶやいたけど，以下のような感じで選んだ．</p>
+
+<ul>
+<li>分散処理システムを研究・開発している人</li>
+<li>分散処理システムを開発・販売している人</li>
+<li>分散処理システムを運用・サービスとして展開している人</li>
+<li>分散処理システムの基盤を運用・基盤を提供している人</li>
+</ul>
+
+
+<p>事前打ち合わせの飲み会をやったけど，自己紹介して結局はなんか適当に喋りましょうということに．</p>
+
+<h3>当日</h3>
+
+<p>セッションが始まる前に，Hadoopやデータベースとかの入門的な話には多分ならないし，
+他に面白そうなセッションがあるので〜，と誘導したにも関わらず，なんか結構人が入ってて驚いた！</p>
+
+<p>色々と予防線は張ったものの，個人的には1時間それなりに話題は出せたんじゃないかと思ってます．
+RaftやPaxosのような合意周り，Jepsenやその他の分散処理システムの検証ツール，
+その他Hadoopやその他のシステムの運用的な話，などなど．<br />
+分散処理システムにおけるモデルの検証とかはやはり鬼門なので，今後色々と勉強したい所．</p>
+
+<p>しかしモデレータというのは色々と疲れますね…</p>
+
+<h2>その他のセッション</h2>
+
+<h3>エンジニアの恋・愛・セックスのDevOps、ホントのところどうしたらいいの</h3>
+
+<p>間に合わなくて参加出来なかったが，かなり反響があったセッションっぽい．
+後で録画を見る．</p>
+
+<h3>ぶつかり稽古</h3>
+
+<p>セッションオーナーが登壇しないという酷いセッションだったｗ
+けど内容そのものは，他社のレビュースタイルとか色々と知れて面白かった．</p>
+
+<h3>アンカンファレンス</h3>
+
+<p>Fluentd v11の話で登録したけど，雨の予報でも出社しないと噂の某モリスさんが一人でセッションの時間全部使い切り，
+何も話せなかった．</p>
+
+<h2>まとめ</h2>
+
+<p>Tシャツや雑誌の新刊も貰えたし，何人かリアルで合えたしで，色々とドタバタしたけど楽しかったので良し．皆さんお疲れ様でした！</p>
+
+<p><img src="http://repeatedly.github.com/images/cross_2014.jpg" title="&#34;CROSS 2014 photo&#34;" alt="&#34;CROSS 2014 photo&#34;"></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[2013年の振り返り]]></title>
@@ -1418,20 +1487,6 @@ td-agentには既に同梱されているため，td-agentを利用している�
 <p>図を書く元気がなかったので文字が多くなりましたが，MongoDBをFluentdで使う時に利用出来るプラグインとその設定について書きました．MongoDBを使った事例に関してはスライドやブログが既にいくつかあるので，興味をある方は検索してみてください．</p>
 
 <p>また，使っていてなんか不具合があった場合にはissueやpull requestをして頂ければと思います．</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[DConf 2013 on kickstarter!]]></title>
-    <link href="http://repeatedly.github.com/2012/10/dconf-2013-on-kickstarter/"/>
-    <updated>2012-10-29T08:30:00+09:00</updated>
-    <id>http://repeatedly.github.com/2012/10/dconf-2013-on-kickstarter</id>
-    <content type="html"><![CDATA[<p>Walter launched <a href="http://www.kickstarter.com/projects/2083649206/the-d-programming-language-conference-2013-0">&#8220;The D Programming Language Conference 2013&#8221; on kickstarter</a> in the last week.
-I have already pledged, and total pledged now passed the 50% :)</p>
-
-<p>Please pledge your support!</p>
-
-<p>Forum: <a href="http://forum.dlang.org/thread/k63vi8$1qp0$1@digitalmars.com">DConf 2013 on kickstarter.com: we&#8217;re live!</a></p>
 ]]></content>
   </entry>
   
