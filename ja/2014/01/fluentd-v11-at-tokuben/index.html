@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>CROSS 2014 - Go ahead!</title>
+  <title>Fluentd v11 at Tokuben - Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="CROSS 2014というイベントがあり，
-分散処理システムCROSSというセッションのオーナーをやってきた． 分散処理システムCROSS 元々はログ収集で1セッションどうか，という話だった．が，
-もうFluentdとかの話は色々な所でやってるし， &hellip;">
+  <meta name="description" content="@特勉というイベントに呼ばれたので，Fluentd v11について発表してきました． Fluentd v11 at tokuben from Treasure Data, Inc. 今現在見えている機能群について一通りその背景とか，v10ではどうだったのかを絡めて話したので， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.com/ja/2014/01/cross-2014">
+  <link rel="canonical" href="http://repeatedly.github.com/ja/2014/01/fluentd-v11-at-tokuben">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -74,7 +72,7 @@
   
   <header>
     
-      <h1 class="entry-title">CROSS 2014</h1>
+      <h1 class="entry-title">Fluentd v11 at Tokuben</h1>
     
     
       <p class="meta">
@@ -90,7 +88,7 @@
   
 
 
-<time datetime="2014-01-18T23:57:00+09:00" pubdate data-updated="true">Jan 18<span>th</span>, 2014</time>
+<time datetime="2014-01-26T02:39:00+09:00" pubdate data-updated="true">Jan 26<span>th</span>, 2014</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -99,69 +97,26 @@
   </header>
 
 
-<div class="entry-content"><p><a href="http://www.cross-party.com/">CROSS 2014</a>というイベントがあり，
-<a href="http://www.cross-party.com/programs/distributed/">分散処理システムCROSS</a>というセッションのオーナーをやってきた．</p>
+<div class="entry-content"><p><a href="http://atnd.org/events/46924">@特勉</a>というイベントに呼ばれたので，Fluentd v11について発表してきました．</p>
 
-<h2>分散処理システムCROSS</h2>
-
-<p>元々はログ収集で1セッションどうか，という話だった．が，
-もうFluentdとかの話は色々な所でやってるし，ここで1時間やってもあんま成果はないだろうということでやめた．
-そもそも日本でFluentd以外のログ収集プロジェクトで深い話を出来る人は希で，探すのがつらい．<br /></p>
-
-<p>その変わり分散処理でも話が来ていたので，そっち側でどうにかやることにした．
-分散処理だとなんかアルゴリズムとかそっち系の色が強くなりそうなので，とりあえずシステムをつけた．</p>
-
-<h3>メンバ</h3>
-
-<p>@oza_x86，@kuenishi，@shot6の三人にお願いした．時間を作って頂いてありがとうございました！
-人選に関しては，少し前にTwitterでつぶやいたけど，以下のような感じで選んだ．</p>
-
-<ul>
-<li>分散処理システムを研究・開発している人</li>
-<li>分散処理システムを開発・販売している人</li>
-<li>分散処理システムを運用・サービスとして展開している人</li>
-<li>分散処理システムの基盤を運用・提供している人</li>
-</ul>
+<iframe src="http://www.slideshare.net/slideshow/embed_code/30427877?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
 
 
-<p>事前打ち合わせの飲み会をやったけど，自己紹介して結局はなんか適当に喋りましょうということに．</p>
+<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/treasure-data/fluentd-v11-at-tokuben" title="Fluentd v11 at tokuben" target="_blank">Fluentd v11 at tokuben</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
 
-<h3>当日</h3>
+<p>今現在見えている機能群について一通りその背景とか，v10ではどうだったのかを絡めて話したので，上のスライドだけ見ても少しわかりにくいかもしれません．新しい機能の確認みたいな感じで眺めて貰えると．</p>
 
-<p>セッションが始まる前に，Hadoopやデータベースとかの入門的な話には多分ならないし，
-他に面白そうなセッションがあるので〜，と誘導したにも関わらず，なんか結構人が入ってて驚いた！</p>
+<p>特勉は今回はログ・データ解析がテーマでしたが，色々とテーマを変えて定期的にやるようなので，随時チェックしておくと良いと思います．</p>
 
-<p>色々と予防線は張ったものの，個人的には1時間それなりに話題は出せたんじゃないかと思ってます．
-RaftやPaxosのような合意周り，Jepsenなどの分散処理システムの検証ツール，
-Hadoopやその他のシステムの運用的な話，などなど．<br />
-分散処理システムにおけるモデルの検証とかはやはり鬼門なので，今後色々と勉強したい所．</p>
+<h2>その後…</h2>
 
-<p>しかしモデレータというのは色々と疲れますね…</p>
+<p><a href="http://togetter.com/li/620329">Fluentd v11 なんてなかったんだ</a></p>
 
-<h2>その他のセッション</h2>
+<p>で，実はこの発表の次の日にTwitterで色々とやりとりがあり，上記のスライドに書かれているいくつかの機能は，v10に取り込まれる可能性が高いです．というか，v11そのものが消える可能性は普通にあります．</p>
 
-<h3>エンジニアの恋・愛・セックスのDevOps、ホントのところどうしたらいいの</h3>
+<p>Fluentdそのものの改善では色々と考えていることはあるので，定期的にチェックして頂けると！後「v10でこういうところが使いにくい」とかあると，開発陣にフィードバックして貰えると助かります．</p>
 
-<p>間に合わなくて参加出来なかったが，かなり反響があったセッションっぽい．
-後で録画を見る．</p>
-
-<h3>ぶつかり稽古</h3>
-
-<p>セッションオーナーが登壇しないという酷いセッションだったｗ
-けど内容そのものは，他社のレビュースタイルとか色々と知れて面白かった．</p>
-
-<h3>アンカンファレンス</h3>
-
-<p>Fluentd v11の話で登録したけど，雨の予報でも出社しないと噂の某モリスさんが一人でセッションの時間全部使い切り，
-何も話せなかった．</p>
-
-<h2>まとめ</h2>
-
-<p>去年と違ってRed Bullガールがいないのが残念だった！来年は期待したい．</p>
-
-<p>全体としては，Tシャツや雑誌の新刊も貰えたし，何人かリアルで合えたしで，色々とドタバタしたけど楽しかったので良し．皆さんお疲れ様でした！</p>
-
-<p><img src="/images/cross_2014.jpg" title="&#34;CROSS 2014 photo&#34;" alt="&#34;CROSS 2014 photo&#34;"></p>
+<p>それでは！</p>
 </div>
 
 
@@ -184,7 +139,7 @@ Hadoopやその他のシステムの運用的な話，などなど．<br />
   
 
 
-<time datetime="2014-01-18T23:57:00+09:00" pubdate data-updated="true">Jan 18<span>th</span>, 2014</time>
+<time datetime="2014-01-26T02:39:00+09:00" pubdate data-updated="true">Jan 26<span>th</span>, 2014</time>
       
 
 
@@ -192,7 +147,7 @@ Hadoopやその他のシステムの運用的な話，などなど．<br />
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2014/01/cross-2014/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2014/01/cross-2014/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2014/01/fluentd-v11-at-tokuben/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2014/01/fluentd-v11-at-tokuben/" >Tweet</a>
   
   
   
@@ -203,10 +158,8 @@ Hadoopやその他のシステムの運用的な話，などなど．<br />
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/ja/2014/01/2013-report/" title="Previous Post: 2013年の振り返り">&laquo; 2013年の振り返り</a>
+        <a class="basic-alignment left" href="/ja/2014/01/cross-2014/" title="Previous Post: CROSS 2014">&laquo; CROSS 2014</a>
       
-      
-        <a class="basic-alignment right" href="/ja/2014/01/fluentd-v11-at-tokuben/" title="next Post: Fluentd v11 at Tokuben">Fluentd v11 at Tokuben &raquo;</a>
       
     </p>
   </footer>
@@ -318,8 +271,8 @@ Hadoopやその他のシステムの運用的な話，などなど．<br />
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://repeatedly.github.com/ja/2014/01/cross-2014/';
-        var disqus_url = 'http://repeatedly.github.com/ja/2014/01/cross-2014/';
+        var disqus_identifier = 'http://repeatedly.github.com/ja/2014/01/fluentd-v11-at-tokuben/';
+        var disqus_url = 'http://repeatedly.github.com/ja/2014/01/fluentd-v11-at-tokuben/';
         var disqus_script = 'embed.js';
       
     (function () {
