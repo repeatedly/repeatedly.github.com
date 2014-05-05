@@ -93,10 +93,6 @@
         <lastmod>2013-03-30T11:41:46+09:00</lastmod>
     </url>
     <url>
-        <loc>http://repeatedly.github.com/2013/04/search-logs-using-fluentd-and-kibana/</loc>
-        <lastmod>2013-04-18T08:18:49+09:00</lastmod>
-    </url>
-    <url>
         <loc>http://repeatedly.github.com/2013/05/d-conference-2013/</loc>
         <lastmod>2013-05-04T05:11:04+09:00</lastmod>
     </url>
@@ -130,23 +126,63 @@
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/01/fluentd-v11-at-tokuben/</loc>
-        <lastmod>2014-01-26T02:56:04+09:00</lastmod>
+        <lastmod>2014-05-06T02:56:11+09:00</lastmod>
+    </url>
+    <url>
+        <loc>http://repeatedly.github.com/2014/02/new-log-level-parameter/</loc>
+        <lastmod>2014-05-06T02:56:11+09:00</lastmod>
+    </url>
+    <url>
+        <loc>http://repeatedly.github.com/ja/2014/02/presto-scr-1/</loc>
+        <lastmod>2014-05-06T02:56:11+09:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://repeatedly.github.com/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic/
+        </loc>
+        <lastmod>2014-05-06T02:56:11+09:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://repeatedly.github.com/2014/02/analyze-event-logs-using-fluentd-and-elasticsearch/
+        </loc>
+        <lastmod>2014-05-06T02:56:11+09:00</lastmod>
+    </url>
+    <url>
+        <loc>http://repeatedly.github.com/ja/2014/02/developer-summit-2014/</loc>
+        <lastmod>2014-05-06T02:56:11+09:00</lastmod>
+    </url>
+    <url>
+        <loc>http://repeatedly.github.com/ja/2014/02/the-thoughts-of-sensu/</loc>
+        <lastmod>2014-05-06T02:56:11+09:00</lastmod>
+    </url>
+    <url>
+        <loc>http://repeatedly.github.com/ja/2014/03/about-fluentd-v11/</loc>
+        <lastmod>2014-05-06T02:56:11+09:00</lastmod>
+    </url>
+    <url>
+        <loc>http://repeatedly.github.com/ja/2014/03/sapporo-2014-winter/</loc>
+        <lastmod>2014-05-06T02:56:11+09:00</lastmod>
+    </url>
+    <url>
+        <loc>http://repeatedly.github.com/2014/05/the-status-of-coolio/</loc>
+        <lastmod>2014-05-06T03:01:59+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/archives/</loc>
-        <lastmod>2014-01-26T02:56:04+09:00</lastmod>
+        <lastmod>2014-05-06T03:01:59+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/</loc>
-        <lastmod>2014-01-26T02:56:04+09:00</lastmod>
+        <lastmod>2014-05-06T03:01:59+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/archives/</loc>
-        <lastmod>2014-01-26T02:56:04+09:00</lastmod>
+        <lastmod>2014-05-06T03:01:59+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/</loc>
-        <lastmod>2014-01-26T02:56:04+09:00</lastmod>
+        <lastmod>2014-05-06T03:01:59+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/works/</loc>

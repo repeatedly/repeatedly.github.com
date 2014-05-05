@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Presto | Go ahead!]]></title>
+  <link href="http://repeatedly.github.com/categories/presto/atom.xml" rel="self"/>
+  <link href="http://repeatedly.github.com/"/>
+  <updated>2014-05-06T03:02:47+09:00</updated>
+  <id>http://repeatedly.github.com/</id>
+  <author>
+    <name><![CDATA[Masahiro Nakagawa]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Prestoソースコードリーディング #1]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/02/presto-scr-1/"/>
+    <updated>2014-02-11T02:39:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/02/presto-scr-1</id>
+    <content type="html"><![CDATA[<p><a href="http://atnd.org/events/47149">Presto ソースコードリーディング #1のATND</a></p>
+
+<p>@tagomorisさんに場所を確保してもらって，LINEで第一回をやりました．</p>
+
+<h2>開催の流れ</h2>
+
+<p>CROSS辺りでPrestoのソースコードリーディングしたいね，という話が出て，
+じゃあ俺が立てるので場所はLINE辺りで〜というその場のノリで決まった．</p>
+
+<p>どうせ10人前後だろうということでかなり適当な感じで募集とかやってたんだけど，
+応募人数が40人越え，当日参加が25人前後くらいだったので，予想より多かったかなという感じ．</p>
+
+<h2>やったこと</h2>
+
+<h3>全体の概要</h3>
+
+<p>俺が軽めにやりました．Prestoの生まれた背景とか，依存している主要なライブラリ，
+@frsyukiのスライドを拝借しての主要なクラス群の紹介，現在サポートしている型，
+Slice使ってのデータの持ち方とか．後，最近の変更周りも少し紹介した</p>
+
+<h3>HTTPレイヤー</h3>
+
+<p>@tagomorisさんが担当で，クライアントが最初に到達するHTTP APIの <code>/v1/execution</code> や <code>/v1/statement</code> 周りの
+処理の話．ソースコード的にはpresto-server．この辺もairliftにがっつり依存しているので，
+パフォーマンスが気になるなど真面目に読みたい人はairliftも読みましょう．</p>
+
+<h3>Execution</h3>
+
+<p><a href="https://gist.github.com/oza/8912147">当日のgist</a></p>
+
+<p>@oza_x86が担当．Coordinator内部でPlanやStageが出来るまでの流れ，
+Workerで処理がどう進むかとかその辺の話．SplitsやそれぞれのRunnerの処理，
+時間が掛かっているタスクの優先度下げるとか，工夫がいくつか見て取れた感じ．</p>
+
+<h2>感想</h2>
+
+<p>適当にやったわりにはそれなりに上手く進んで良かった．</p>
+
+<p>第二回は，shot6さん，ashigeruさん，feeblefakieさん辺りが担当になってくれるかも？
+という感じです．またソース読みつつあーだこーだ言い合いましょう．</p>
+]]></content>
+  </entry>
+  
+</feed>

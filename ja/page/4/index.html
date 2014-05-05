@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Go ahead!</title>
+  <meta name="author" content="Masahiro Nakagawa">
+
+  
+  <meta name="description" content="JAWS DAYS 2013というイベントがあって，2日目にTreasure Dataとして発表してきました．実は1日目には弊社CTOがパネルディスカッションに登壇したりしてました． Slideshare The architecture of data analytics PaaS on AWS &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://repeatedly.github.com/ja/page/4">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Go ahead!" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Go ahead!</a></h1>
+  
+    <h2>Memoization for Everything</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:repeatedly.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+
+
+  
+<ul class="main-navigation">
+  <li><a href="/ja/archives">Archives</a></li>
+  <li><a href="/">English</a></li>
+</ul>
+
+  
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2/">AWSを使ったデータ解析PaaSの裏側</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-18T16:11:00+09:00" pubdate data-updated="true">Mar 18<span>th</span>, 2013</time>
+        
+         | <a href="/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://jaws-ug.jp/jawsdays2013/">JAWS DAYS 2013</a>というイベントがあって，2日目に<a href="http://jaws-ug.jp/jawsdays2013/speaker.html#DEV-01">Treasure Dataとして発表</a>してきました．実は1日目には弊社CTOが<a href="http://jaws-ug.jp/jawsdays2013/speaker.html#PD-02">パネルディスカッションに登壇</a>したりしてました．</p>
+
+<ul>
+<li>Slideshare</li>
+</ul>
+
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/17252380?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/treasure-data/the-architecture-ofdataanalyticspaasonaws" title="The architecture of data analytics PaaS on AWS" target="_blank">The architecture of data analytics PaaS on AWS</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
+
+<ul>
+<li>Ustream</li>
+</ul>
+
+
+<iframe width="480" height="302" src="http://www.ustream.tv/embed/recorded/30009634?v=3&amp;wmode=direct" scrolling="no" frameborder="0" style="border: 0px none transparent;">    </iframe>
+
+
+<br /><a href="http://www.ustream.tv/" style="padding: 2px 0px 4px; width: 400px; background: #ffffff; display: block; color: #000000; font-weight: normal; font-size: 10px; text-decoration: underline; text-align: center;" target="_blank">Video streaming by Ustream</a>
+
+
+<p>最初はfrsyukiが登壇予定に上がっていたんだけど，今彼はアメリカということで代打で役割が回ってきた，というのが発表の経緯．</p>
+
+<p>なんかラベルが&#8221;Dev&#8221;と&#8221;Ops&#8221;という超大雑把なくくりで「AWSで&#8221;Dev&#8221;って何発表すれば…」という状態だったので，
+AWS上で展開しているTreasure Dataサービスの仕組みについてつらつらと話しました．</p>
+
+<p>AWSべったりな感じではなくて</p>
+
+<ul>
+<li>Treasure Dataのサービス内容と目的</li>
+<li>どうAWSのプロダクトを使っているのか</li>
+<li>なぜこのAWSのサービスを使わないのか</li>
+</ul>
+
+
+<p>というのを大まかに話しました．仕組みの部分はどちらかというと一般的な設計の話になったかなという感じです．<br />
+会場だったトラックBの席はほぼ満席で，発表の後の質疑応答も時間いっぱい掛かったので，個人的にはかなり嬉しい結果でした．</p>
+
+<p>発表の後の時間や懇親会などで，すでにTreasure Dataを使っている人や，Fluentdを導入している人達とも交流出来，楽しい時間を過ごせました．これから導入しようかな，と考えている人もおられたので，何か問題があれば是非相談して頂ければなぁという感じです．<br />
+AWSのMilesにも「Fluentd is good!!」と言われ，向こうでも徐々にFluentdが広まってきていると感じている今日この頃．このままTreasure Dataも伸びていきたい所です．</p>
+
+<p>各セッションの感想は他の人が書いてくれるはず．ということで，皆さんお疲れ様でした！またどこかでお会いしましょう :)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2012/11/change-the-game/">Change The Game</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-01T00:00:00+09:00" pubdate data-updated="true">Nov 1<span>st</span>, 2012</time>
+        
+         | <a href="/ja/2012/11/change-the-game/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>知ってる人はもう知っているとは思いますが，10月をもって1年と10ヶ月勤めた謎のベンチャー<a href="http://preferred.jp/">Preferred Infrastructure, Inc</a>を去りました．PFIの方々，本当に有り難うございました！<br />
+エントリを書けと色々な人に脅されているので，てきとうに書きます．</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/ja/2012/11/change-the-game/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2012/10/fluent-plugin-mongo-spec/">Mongoプラグインの仕様</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-31T03:30:00+09:00" pubdate data-updated="true">Oct 31<span>st</span>, 2012</time>
+        
+         | <a href="/ja/2012/10/fluent-plugin-mongo-spec/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>分散パフォーマンステスト関係を書こうと思っていたんですが，よくよく考えたらMongoプラグインについて日本語でまともな記事を書いたことなかったので書きます．</p>
+
+<p>このエントリは<a href="http://www.zusaar.com/event/415005">ウィークリーFluentdユースケースエントリリレー</a>の参加エントリです．</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/ja/2012/10/fluent-plugin-mongo-spec/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/archives">Archives</a>
+    
+    <a class="next" href="/ja/page/3/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/05/the-status-of-coolio/">The status of Cool.io</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2014/03/sapporo-2014-winter/">札幌 2014 冬</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2014/03/about-fluentd-v11/">そろそろFluentd v11についてひとこと言っておくか</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2014/02/the-thoughts-of-sensu/">Sensu雑感</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2014/02/developer-summit-2014/">Developer Summit 2014</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/repeatedly">@repeatedly</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'repeatedly',
+            count: 4,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("repeatedly", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/repeatedly" class="twitter-follow-button" data-show-count="false">Follow @repeatedly</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Masahiro Nakagawa -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'repeatedly';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -9,7 +9,8 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="8/29日に行われたElasticSearch勉強会 第1回に参加してました．ElasticSearchは前々から興味はあったけど，仕事とかで使うこともないのでずっと放置という状態だった． 主催者の方のブログに各発表スライドへのリンクとかあるので，興味がある方はそちらを参照． &hellip;">
+  <meta name="description" content="Presto ソースコードリーディング #1のATND @tagomorisさんに場所を確保してもらって，LINEで第一回をやりました． 開催の流れ CROSS辺りでPrestoのソースコードリーディングしたいね，という話が出て，
+じゃあ俺が立てるので場所はLINE辺りで〜 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -75,7 +76,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/ja/2013/08/elasticsearch-meetup-1st/">ElasticSearch勉強会 第1回</a></h1>
+      <h1 class="entry-title"><a href="/ja/2014/02/presto-scr-1/">Prestoソースコードリーディング #1</a></h1>
     
     
       <p class="meta">
@@ -91,262 +92,55 @@
   
 
 
-<time datetime="2013-08-31T17:21:00+09:00" pubdate data-updated="true">Aug 31<span>st</span>, 2013</time>
+<time datetime="2014-02-11T02:39:00+09:00" pubdate data-updated="true">Feb 11<span>th</span>, 2014</time>
         
-         | <a href="/ja/2013/08/elasticsearch-meetup-1st/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>8/29日に行われた<a href="http://atnd.org/event/E0018616">ElasticSearch勉強会 第1回</a>に参加してました．ElasticSearchは前々から興味はあったけど，仕事とかで使うこともないのでずっと放置という状態だった． <br />
-<a href="http://blog.johtani.info/blog/2013/08/30/hold-first-elasticsearch-meetup-in-japan/">主催者の方のブログ</a>に各発表スライドへのリンクとかあるので，興味がある方はそちらを参照．</p>
-
-<p>発表を聞いて思ったのは，Solrよりも後発なのもあり，運用とかエコシステムの構築に関して，かなり頑張っているなという印象．REST APIでの簡単な操作はもちろんのこと，運用で使えるexplainやelasticsearch-headなど，色々とやりやすそう． <br />
-懸念点であるパフォーマンスに関しても，最後のニコ動を使った発表を見るに，かなり改善されて来ているようだ．</p>
-
-<p>インデックスのsharding周りが少し気になっていて，文書IDをユーザが指定できるらしいので，その時のshardの割り当てとかどうやってんのかな，と． <br />
-shardの数は途中で変更出来ないらしく，増やしたい時は別のクラスタを使ってjoinみたいなことするようなんだけど，それはそれで重そう．ここはjohtaniさんが調べてくれるらしいので，それを待ちたい所．</p>
-
-<p>次会はCookpadの人がFluentd + ElasticSearch + Kibana3の事例とか話してくれるようなので，次のイベントが楽しみな所．
-最近<a href="http://www.elasticsearch.org/overview/kibana/">Kibanaのページ</a>にもFluentdが載ったりしたので，今後も踏まえて実運用の話とか気になってます．</p>
-
-<p>皆さん，お疲れ様でした！</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2013/07/july-tech-festa-2013/">July Tech Festa 2013</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-20T04:54:00+09:00" pubdate data-updated="true">Jul 20<span>th</span>, 2013</time>
-        
-         | <a href="/ja/2013/07/july-tech-festa-2013/#disqus_thread">Comments</a>
+         | <a href="/ja/2014/02/presto-scr-1/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><a href="http://www.techfesta.jp/">July Tech Festa 2013</a>というイベントが7月14日にAIITで行われ，基調講演として呼ばれたので，<a href="http://www.techfesta.jp/p/program-2.html#A01">Treasure Dataとして発表</a>してきました．
-<a href="http://www.techfesta.jp/2013/07/jtf2013_16.html">Best Speakerにも選んで頂き</a>，ありがとうございます．</p>
+  <div class="entry-content"><p><a href="http://atnd.org/events/47149">Presto ソースコードリーディング #1のATND</a></p>
 
-<h3>Slideshare</h3>
+<p>@tagomorisさんに場所を確保してもらって，LINEで第一回をやりました．</p>
 
-<iframe src="http://www.slideshare.net/slideshow/embed_code/24213160?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
+<h2>開催の流れ</h2>
 
+<p>CROSS辺りでPrestoのソースコードリーディングしたいね，という話が出て，
+じゃあ俺が立てるので場所はLINE辺りで〜というその場のノリで決まった．</p>
 
-<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/treasure-data/treasure-data-cloud-strategy" title="Treasure Data Cloud Strategy" target="_blank">Treasure Data Cloud Strategy</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
+<p>どうせ10人前後だろうということでかなり適当な感じで募集とかやってたんだけど，
+応募人数が40人越え，当日参加が25人前後くらいだったので，予想より多かったかなという感じ．</p>
 
-<h3>Togetter</h3>
+<h2>やったこと</h2>
 
-<ul>
-<li><a href="http://togetter.com/li/533842">JTF全体</a></li>
-<li><a href="http://togetter.com/li/534105">自分の発表のみ</a></li>
-</ul>
+<h3>全体の概要</h3>
 
+<p>俺が軽めにやりました．Prestoの生まれた背景とか，依存している主要なライブラリ，
+@frsyukiのスライドを拝借しての主要なクラス群の紹介，現在サポートしている型，
+Slice使ってのデータの持ち方とか．後，最近の変更周りも少し紹介した</p>
 
-<p>CTOから無茶ぶりされて「まぁいいか」と承諾したら実は基調講演だったというオチでした．他の発表者の人達がChefやOpenStackなどのいわゆるクラウドやDevOpsプロダクトの中，サービスであるTreasure Dataに講演依頼が来たということは，そういうことなんだろうなと上記の構成になりました．</p>
+<h3>HTTPレイヤー</h3>
 
-<p>Treasure Dataのサービスそのものやアーキテクチャに関しては，記事やイベントでぱらぱらと説明はしたものの，おそらくまとまった発表したのは今回が初めてだったんじゃないかなと思っています．こういう場を用意して頂いたJTFの方達には感謝です．</p>
+<p>@tagomorisさんが担当で，クライアントが最初に到達するHTTP APIの <code>/v1/execution</code> や <code>/v1/statement</code> 周りの
+処理の話．ソースコード的にはpresto-server．この辺もairliftにがっつり依存しているので，
+パフォーマンスが気になるなど真面目に読みたい人はairliftも読みましょう．</p>
 
-<p>Togetterにまとめられているのを見て貰えれば分かるのですが</p>
+<h3>Execution</h3>
 
-<ul>
-<li>なぜクラウドでやっているのか</li>
-<li>システム構築で気をつけていること</li>
-<li>どう運用しているか</li>
-</ul>
+<p><a href="https://gist.github.com/oza/8912147">当日のgist</a></p>
 
-
-<p>の辺りを大まかに話しました．僕らはスタートアップということもあり速度がとても重要なので，自分達のビジョンを達成するためにどういう選択をしてきたかと，その考え方について一通り述べたつもりです．</p>
-
-<p>懇親会でも色々な方と話すことが出来て，運用で使っているツール周り話したり，実はFluentd使ってるんですよという人にも会えたり，Treasure Dataのようなサービス検討中なんです，などなど色々と楽しい時間を過ごせました．
-Fluentdなんかはプラグイン機構でガンガンインフラの人にもコード書いて問題を解決してもらおうというプロダクトだったりするので，今後もユーザが増えるといいなという思います．</p>
-
-<p>参加された方々，またスタッフの方々，お疲れ様でした！</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2013/05/tdpl-japanese-edition/">プログラミング言語D</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-13T01:44:00+09:00" pubdate data-updated="true">May 13<span>th</span>, 2013</time>
-        
-         | <a href="/ja/2013/05/tdpl-japanese-edition/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://forum.dlang.org/thread/ttyydpzuhtpgxagkynhq@forum.dlang.org">フォーラム</a>にポストしてブログで書くの忘れてました！</p>
-
-<p><img src="/images/tdpl_jp_edition.png" title="&#34;TDPL Japanese Edition&#34;" alt="&#34;TDPL Japanese Edition&#34;"></p>
-
-<ul>
-<li><a href="http://books.shoeisha.co.jp/book/b108222.html">プログラミング言語D</a></li>
-<li><a href="http://www.shoeisha.co.jp/book/qa/15615/list">正誤表</a> : 誤字や誤訳などあれば，こちらから報告してもらえると助かります</li>
-</ul>
-
-
-<p>Andreiが書いたD言語本，通称<a href="http://erdani.com/index.php/books/tdpl/">TDPL</a>の日本語版が翔泳社さんから出版されました．俺と原さんが監訳者として参加してました．<br />
-翻訳された長尾さんの訳の質も高く，監訳のチェックは技術的なものに注力出来ました．</p>
-
-<p>最初に断っておくと，TDPLはD言語の本であって入門本ではありません．
-ある程度，他の言語を触っていてプログラミングに関して知っていることが前提になっています．</p>
-
-<p>その変わりと言っては何ですが，単なる文法の説明などにとどまらず「なぜD言語がこの機能を採用したのか」
-なども書かれている本になっています．そのため，それなりに読み応えのある本だと思います．<br />
-また，Andreiのノリ？が極力残るように勤めました．</p>
-
-<p>TDPL自体は2010年出版ですが，最新のバージョンである2.062までの変更はちゃんとフォローしています．
-モジュール名含めコードも一部新しくなってますし，新機能に関してはコラムなどで説明しています．<br />
-もし何か疑問などあれば，Twitterならば #dlang つけて呟くと，親切なD言語erが答えてくれると思います．</p>
-
-<p>この本が出版されたことで，一つ肩の荷が下りたかなという感じです．
-D言語を始める始めないに関わらず，どういう言語なのかを知って貰える一冊なのは確かです．</p>
-
-<p>Enjoy D！</p>
-
-<h2>P.S.</h2>
-
-<p>恒例のアレなリンクです．すでに1ヶ月経ってますが，こちらから買ってもらえると俺が喜びます :)</p>
-
-<p><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4798131105/repeatedly-22/ref=nosim/">Amazon</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2013/03/getting-started-with-storm/">Stormをはじめよう</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-30T10:54:00+09:00" pubdate data-updated="true">Mar 30<span>th</span>, 2013</time>
-        
-         | <a href="/ja/2013/03/getting-started-with-storm/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>O&#8217;Reillyの方から<a href="http://www.oreilly.co.jp/books/9784873116013/">Stormをはじめよう</a>を献本して頂いて読んだのでレビュー！</p>
+<p>@oza_x86が担当．Coordinator内部でPlanやStageが出来るまでの流れ，
+Workerで処理がどう進むかとかその辺の話．SplitsやそれぞれのRunnerの処理，
+時間が掛かっているタスクの優先度下げるとか，工夫がいくつか見て取れた感じ．</p>
 
 <h2>感想</h2>
 
-<p>最近増えてきている100ページくらいの本なので，さっくり読めました．</p>
+<p>適当にやったわりにはそれなりに上手く進んで良かった．</p>
 
-<p>簡単にまとめると &#8221;<strong>英語は読みたくないので情報が古くてもStormの概要を日本語で読みたい</strong>&#8221; という方向けの本．</p>
-
-<p>大きな理由は以下:</p>
-
-<ul>
-<li>Stormの対象バージョンが0.7.1と古い．俺でもTridentというのが0.8から入っているのを知っているので，その辺の目玉機能は書かれていない</li>
-<li>多分原著の方も少し書き方が雑．なんの説明もなく実装のクラス名を使って説明している所とかあるので「？」となる所がある
-
-<ul>
-<li>サンプルコードも少し雑で，使ってない変数があったり説明と実装があってなかったりもたまにある</li>
-</ul>
-</li>
-<li>翻訳が少し微妙．Cursorが&#8221;カーサー&#8221;だったり，原著の方の構成の不味さもあるのか，日本語的に理解しにくい文がちょくちょく混じっている (監訳はいない？)</li>
-</ul>
-
-
-<p>メッセージングの信頼性に関しては，Storm本家のWikiの方が詳しく書かれていたりするので，本当に「Stormってどういう構成でどういう感じに機能追加するんだろう？ユースケースとかは？」みたいなのを日本語で読みたい場合には，とっかかりにもなるし，これで十分な感じ．</p>
-
-<p>英語が読める人は，本家のWikiとか漁った方が情報も新しく結構細かに書かれているため，そちらの方が正確かもしれない．</p>
-
-<h2>正誤表</h2>
-
-<p>読んでて気になった所はgistにまとめておきました</p>
-
-<p><a href="https://gist.github.com/repeatedly/5274873">Stormをはじめようのerrata</a></p>
-
-<h2>Stormについてのてきとうな所感</h2>
-
-<ul>
-<li><p>NimbusはImpalaのstatestoreみたいな感じで，最初はいるけど落ちても致命的ではない</p></li>
-<li><p>Tupleは基本単体で送られて，それぞれにトポロジーのack tracker(Acker)がついてトラッキングされる</p>
-
-<ul>
-<li>tupleが増えるとAckerも増え，数が増えると結構重そうに見えるけど，そこんところどうなのか</li>
-<li>再送は基本Spoutが判断．まぁこれは分からなくもない</li>
-</ul>
-</li>
-<li><p>0.8からのTridentはBatchをガリガリ使っていると聞いてるけど，通常の利用だとあまりない？ 1 Tupleでトポロジー内forwardしまくるのは結構パフォーマンス的に厳しそう</p></li>
-<li><p>トランザクションはSpout / Boltの両方が頑張る．この辺は今時のストリーミング処理系と同じ．コアで担保は難しい</p></li>
-<li><p>各ワーカーのコアのメソッドはシングルスレッドで呼ばれるようなので，この辺で重い処理すると多分詰まる．at-least-onceっぽいので，多分これが連鎖するとデータ重複する．</p></li>
-<li><p>multilangはHadoop Streamingと同じ</p></li>
-<li><p>ZooKeeperに依存しているので，そこがまた面倒くさそう</p></li>
-</ul>
-
-
-<p>とりあえずこんな感じ．0.8や0.9でもっと改善されているかもしれないので，その辺は必要があれば追う．</p>
+<p>第二回は，shot6さん，ashigeruさん，feeblefakieさん辺りが担当になってくれるかも？
+という感じです．またソース読みつつあーだこーだ言い合いましょう．</p>
 </div>
   
   
@@ -359,7 +153,7 @@ D言語を始める始めないに関わらず，どういう言語なのかを�
       
   <header>
     
-      <h1 class="entry-title"><a href="/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2/">AWSを使ったデータ解析PaaSの裏側</a></h1>
+      <h1 class="entry-title"><a href="/ja/2014/01/fluentd-v11-at-tokuben/">Fluentd v11 at Tokuben</a></h1>
     
     
       <p class="meta">
@@ -375,59 +169,344 @@ D言語を始める始めないに関わらず，どういう言語なのかを�
   
 
 
-<time datetime="2013-03-18T16:11:00+09:00" pubdate data-updated="true">Mar 18<span>th</span>, 2013</time>
+<time datetime="2014-01-26T02:39:00+09:00" pubdate data-updated="true">Jan 26<span>th</span>, 2014</time>
         
-         | <a href="/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2/#disqus_thread">Comments</a>
+         | <a href="/ja/2014/01/fluentd-v11-at-tokuben/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><a href="http://jaws-ug.jp/jawsdays2013/">JAWS DAYS 2013</a>というイベントがあって，2日目に<a href="http://jaws-ug.jp/jawsdays2013/speaker.html#DEV-01">Treasure Dataとして発表</a>してきました．実は1日目には弊社CTOが<a href="http://jaws-ug.jp/jawsdays2013/speaker.html#PD-02">パネルディスカッションに登壇</a>したりしてました．</p>
+  <div class="entry-content"><p><a href="http://atnd.org/events/46924">@特勉</a>というイベントに呼ばれたので，Fluentd v11について発表してきました．</p>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/30427877?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/treasure-data/fluentd-v11-at-tokuben" title="Fluentd v11 at tokuben" target="_blank">Fluentd v11 at tokuben</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
+
+<p>今現在見えている機能群について一通りその背景とか，v10ではどうだったのかを絡めて話したので，上のスライドだけ見ても少しわかりにくいかもしれません．新しい機能の確認みたいな感じで眺めて貰えると．</p>
+
+<p>特勉は今回はログ・データ解析がテーマでしたが，色々とテーマを変えて定期的にやるようなので，随時チェックしておくと良いと思います．</p>
+
+<h2>その後…</h2>
+
+<p><a href="http://togetter.com/li/620329">Fluentd v11 なんてなかったんだ</a></p>
+
+<p>で，実はこの発表の次の日にTwitterで色々とやりとりがあり，上記のスライドに書かれているいくつかの機能は，v10に取り込まれる可能性が高いです．というか，v11そのものが消える可能性は普通にあります．</p>
+
+<p>Fluentdそのものの改善では色々と考えていることはあるので，定期的にチェックして頂けると！後「v10でこういうところが使いにくい」とかあると，開発陣にフィードバックして貰えると助かります．</p>
+
+<p>それでは！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2014/01/cross-2014/">CROSS 2014</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-18T23:57:00+09:00" pubdate data-updated="true">Jan 18<span>th</span>, 2014</time>
+        
+         | <a href="/ja/2014/01/cross-2014/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.cross-party.com/">CROSS 2014</a>というイベントがあり，
+<a href="http://www.cross-party.com/programs/distributed/">分散処理システムCROSS</a>というセッションのオーナーをやってきた．</p>
+
+<h2>分散処理システムCROSS</h2>
+
+<p>元々はログ収集で1セッションどうか，という話だった．が，
+もうFluentdとかの話は色々な所でやってるし，ここで1時間やってもあんま成果はないだろうということでやめた．
+そもそも日本でFluentd以外のログ収集プロジェクトで深い話を出来る人は希で，探すのがつらい．<br /></p>
+
+<p>その変わり分散処理でも話が来ていたので，そっち側でどうにかやることにした．
+分散処理だとなんかアルゴリズムとかそっち系の色が強くなりそうなので，とりあえずシステムをつけた．</p>
+
+<h3>メンバ</h3>
+
+<p>@oza_x86，@kuenishi，@shot6の三人にお願いした．時間を作って頂いてありがとうございました！
+人選に関しては，少し前にTwitterでつぶやいたけど，以下のような感じで選んだ．</p>
 
 <ul>
-<li>Slideshare</li>
+<li>分散処理システムを研究・開発している人</li>
+<li>分散処理システムを開発・販売している人</li>
+<li>分散処理システムを運用・サービスとして展開している人</li>
+<li>分散処理システムの基盤を運用・提供している人</li>
 </ul>
 
 
-<iframe src="http://www.slideshare.net/slideshow/embed_code/17252380?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
+<p>事前打ち合わせの飲み会をやったけど，自己紹介して結局はなんか適当に喋りましょうということに．</p>
+
+<h3>当日</h3>
+
+<p>セッションが始まる前に，Hadoopやデータベースとかの入門的な話には多分ならないし，
+他に面白そうなセッションがあるので〜，と誘導したにも関わらず，なんか結構人が入ってて驚いた！</p>
+
+<p>色々と予防線は張ったものの，個人的には1時間それなりに話題は出せたんじゃないかと思ってます．
+RaftやPaxosのような合意周り，Jepsenなどの分散処理システムの検証ツール，
+Hadoopやその他のシステムの運用的な話，などなど．<br />
+分散処理システムにおけるモデルの検証とかはやはり鬼門なので，今後色々と勉強したい所．</p>
+
+<p>しかしモデレータというのは色々と疲れますね…</p>
+
+<h2>その他のセッション</h2>
+
+<h3>エンジニアの恋・愛・セックスのDevOps、ホントのところどうしたらいいの</h3>
+
+<p>間に合わなくて参加出来なかったが，かなり反響があったセッションっぽい．
+後で録画を見る．</p>
+
+<h3>ぶつかり稽古</h3>
+
+<p>セッションオーナーが登壇しないという酷いセッションだったｗ
+けど内容そのものは，他社のレビュースタイルとか色々と知れて面白かった．</p>
+
+<h3>アンカンファレンス</h3>
+
+<p>Fluentd v11の話で登録したけど，雨の予報でも出社しないと噂の某モリスさんが一人でセッションの時間全部使い切り，
+何も話せなかった．</p>
+
+<h2>まとめ</h2>
+
+<p>去年と違ってRed Bullガールがいないのが残念だった！来年は期待したい．</p>
+
+<p>全体としては，Tシャツや雑誌の新刊も貰えたし，何人かリアルで合えたしで，色々とドタバタしたけど楽しかったので良し．皆さんお疲れ様でした！</p>
+
+<p><img src="/images/cross_2014.jpg" title="&#34;CROSS 2014 photo&#34;" alt="&#34;CROSS 2014 photo&#34;"></p>
+</div>
+  
+  
 
 
-<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/treasure-data/the-architecture-ofdataanalyticspaasonaws" title="The architecture of data analytics PaaS on AWS" target="_blank">The architecture of data analytics PaaS on AWS</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2014/01/2013-report/">2013年の振り返り</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-01T00:00:00+09:00" pubdate data-updated="true">Jan 1<span>st</span>, 2014</time>
+        
+         | <a href="/ja/2014/01/2013-report/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>転職したのもあり，色々と取り組むものが増えた年だった．</p>
+
+<h2>D言語</h2>
+
+<p>ちょっと割ける時間が減ったのもあり，全体的にD言語のコードを書く量は減ったかなと．
+自分が欲しかった小さなライブラリはいくつか書いたりしたけど，
+他にも書きたいのがあるので，2014年はガッツリ時間を取りたい．</p>
 
 <ul>
-<li>Ustream</li>
+<li><a href="http://repeatedly.github.io/2013/05/d-conference-2013/">D Conference 2013</a></li>
+<li><a href="http://repeatedly.github.io/ja/2013/05/tdpl-japanese-edition/">プログラミング言語D</a></li>
 </ul>
 
 
-<iframe width="480" height="302" src="http://www.ustream.tv/embed/recorded/30009634?v=3&amp;wmode=direct" scrolling="no" frameborder="0" style="border: 0px none transparent;">    </iframe>
+<p>その変わり，D言語の日本語書籍の出版に携わったりと，その他の活動はちょくちょくやった．</p>
 
+<h2>Fluentd</h2>
 
-<br /><a href="http://www.ustream.tv/" style="padding: 2px 0px 4px; width: 400px; background: #ffffff; display: block; color: #000000; font-weight: normal; font-size: 10px; text-decoration: underline; text-align: center;" target="_blank">Video streaming by Ustream</a>
+<p>会社の関係もあってメインメンテナ的な立場になった．
+Fluentdそのものの機能開発・メンテナンス含め，MLでの対応，イベントでの発表など色々やった．
+2014年は，Windows対応にv11，それにtd-agentのRubyのバージョンアップなど，色々と課題は見えてたり．</p>
 
+<p>MLに関しては，今かなり俺とkiyoto-sanの二人の独壇場な感じになっているので，
+もう少し他の方の協力も欲しいと思ってたりします(その方が盛り上がっているように見えて良い)．<br />
+特に日本は早期にヘビーユーザがついて色々と記事が増えたのもあり，他の国の人達より使いこなしているユーザが多いです．
+なので英語の練習も兼ねて，簡単な質問にでも答えてくれる人が増えるといいな，と思ってます．<br />
+日本の人はTwitterで質問し，海外の人はMLで質問する，というのがOSSやってて思う傾向ですね．</p>
 
-<p>最初はfrsyukiが登壇予定に上がっていたんだけど，今彼はアメリカということで代打で役割が回ってきた，というのが発表の経緯．</p>
+<p>あと，Treasure Dataでは<a href="http://www.treasuredata.com/en/careers/careers-posting-004.php">Fluentdの開発者を募集している</a>ので，興味のある人は応募してみるといいかもしれません！</p>
 
-<p>なんかラベルが&#8221;Dev&#8221;と&#8221;Ops&#8221;という超大雑把なくくりで「AWSで&#8221;Dev&#8221;って何発表すれば…」という状態だったので，
-AWS上で展開しているTreasure Dataサービスの仕組みについてつらつらと話しました．</p>
+<p>さらに，<a href="http://www.slideshare.net/treasure-data/treasure-agent-monitoring-service">年末発表したモニタリングシステム</a>のβユーザも随時募集しているので，
+興味のある人は <a href="https://twitter.com/repeatedly">@repeatedly</a> にでも連絡して貰えればと思います．</p>
 
-<p>AWSべったりな感じではなくて</p>
+<h2>発表</h2>
 
 <ul>
-<li>Treasure Dataのサービス内容と目的</li>
-<li>どうAWSのプロダクトを使っているのか</li>
-<li>なぜこのAWSのサービスを使わないのか</li>
+<li><a href="http://atnd.org/events/36713">Fluentd Casual Talks #2</a></li>
+<li><a href="http://www.zusaar.com/event/501053">Fluentd meetup in Fukuoka</a></li>
+<li><a href="http://repeatedly.github.io/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2/">AWSを使ったデータ解析PaaSの裏側</a></li>
+<li><a href="http://herokujp.doorkeeper.jp/events/3405">Heroku Meetup #8 TreasureData + Waza Report!!</a></li>
+<li><a href="http://www.zusaar.com/event/873003">Monitoring Casual Talks #4</a></li>
+<li><a href="http://repeatedly.github.io/ja/2013/07/july-tech-festa-2013/">July Tech Festa 2013</a></li>
+<li><a href="http://atnd.org/events/44556">DevOps向けFluentd勉強会 at IPROS</a></li>
+<li><a href="http://elasticsearch.doorkeeper.jp/events/6532">第2回elasticsearch勉強会</a></li>
+<li><a href="http://www.ipsj.or.jp/event/s-seminar/2013/Exciting_Coding/">Exciting Coding! 2013</a></li>
 </ul>
 
 
-<p>というのを大まかに話しました．仕組みの部分はどちらかというと一般的な設計の話になったかなという感じです．<br />
-会場だったトラックBの席はほぼ満席で，発表の後の質疑応答も時間いっぱい掛かったので，個人的にはかなり嬉しい結果でした．</p>
+<p>とりあえず覚えている分だけリンクを貼ってみた．会社に関しての大きめな発表が増えたなと．</p>
 
-<p>発表の後の時間や懇親会などで，すでにTreasure Dataを使っている人や，Fluentdを導入している人達とも交流出来，楽しい時間を過ごせました．これから導入しようかな，と考えている人もおられたので，何か問題があれば是非相談して頂ければなぁという感じです．<br />
-AWSのMilesにも「Fluentd is good!!」と言われ，向こうでも徐々にFluentdが広まってきていると感じている今日この頃．このままTreasure Dataも伸びていきたい所です．</p>
+<p>発表以外でも色々なイベントに参加して，FluentdやTDに関しての要望とかを聞いたりしていた．
+これらで得たフィードバックは，ちゃんと吟味して取り込んでいきたい．</p>
 
-<p>各セッションの感想は他の人が書いてくれるはず．ということで，皆さんお疲れ様でした！またどこかでお会いしましょう :)</p>
+<h2>まとめ</h2>
+
+<p>ざっと振り返ってみた．
+Fluentdに関しては，v10はもうコアでほぼやることがないので，次はv11が中心．
+中心とは言っても，安定版として正式にリリースするのは当分先になる．多分．</p>
+
+<p>2014年もOSS含め対外的な活動は積極的にしていきたいし，色々な人達と交流を増やして行きたい所．</p>
+
+<p>今後も宜しくお願いします :)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2013/10/d-status-2013/">D言語の現状</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-20T00:00:00+09:00" pubdate data-updated="true">Oct 20<span>th</span>, 2013</time>
+        
+         | <a href="/ja/2013/10/d-status-2013/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://japan.internet.com/webtech/20131018/5.html">「FacebookがプロダクションでD言語の利用を始めた」ことに関する記事</a>が少し話題になってます．で，これだけだとD言語が他の言語のようにプロダクションreadyと勘違いする方もいるかもしれないので，今の現状について書いておきます．</p>
+
+<h2>この記事の一言まとめ</h2>
+
+<p>手軽にプロダクションで使えるわけではありません！</p>
+
+<p>詳細が知りたい方は以降をお読みください.</p>
+
+<h2>今回の話</h2>
+
+<p>FacebookのAndreiはTDPLという本を出した，D言語界隈でも主要なコミッタです．その一方，C++界隈でも有名な人物で，そういう人物がついにC++をやめてプロダクションでD言語を使った，というのが一つの大きなニュースです．</p>
+
+<p>また，Facebookには<a href="http://qiita.com/yasei_no_otoko/items/17f672ec30393a2f928a">この記事を書いたBen</a>など，D言語を使えるエンジニアが他にもいます．</p>
+
+<h2>プロダクションでつかえるのか？</h2>
+
+<p>簡単に言うと，「品質的には問題が無い，が今広まってる言語ほど楽ではない」です．JavaやRuby/Python/PHPなどWebで広く使われているような言語のように，たくさんのライブラリがある訳ではありません．</p>
+
+<p>Dubというパッケージマネージャが最近出てきましたが，<a href="http://code.dlang.org/">登録されているライブラリ</a>はまだ多くなく，なければ自分で書く必要があります．また，ライブラリにバグがあっても他の誰かが報告してくれるほどコミュニティも大きくないので，その辺も気をつける必要があります．まぁ大抵github/bitbucketなので，今時のエンジニアには楽だとは思いますが…</p>
+
+<p>今プロダクションでD言語を使っている会社はFacebook以外にももちろんありますが(広告配信，ゲーム，社内システム，Webサーバなど)，そういう会社は大抵D言語でライブラリを書いてるような精通した人物が開発陣の中にいるのが現状です．まぁ，メジャーではない言語ではよくある光景だと思います．</p>
+
+<p>プロダクション以外だと，研究とかでつかっている人は増えている感じがします．数値計算系，言語処理系，自然言語処理系，などなど書きやすさとパフォーマンスのバランスで選ばれているようです．</p>
+
+<h3>互換性</h3>
+
+<p>D言語を使ってない方からよく「D言語は互換性を維持しないからクソだ」という意見を聞くのですが，これにはいくつか理由があります．</p>
+
+<h3>シェアがない</h3>
+
+<p>当たり前ですが，シェアがない言語が律儀に互換性を維持してリリースすることのメリットはほぼありません．ライブラリも多くない言語では，互換性がなくなって困るライブラリはほとんどなく，ライブラリ開発者もほとんどが言語仕様の議論に参加しているので，基本問題は起きません．</p>
+
+<h3>コミュニティの方向性</h3>
+
+<p>上と関わりがありますが，今コミュニティとして，互換性よりも言語を良くしよう，という流れの方が強いです．</p>
+
+<ul>
+<li>この機能あった方がライブラリとかアプリが書きやすい</li>
+<li>新しい機能でよりよいAPIが出来たのでこっちに移行</li>
+<li>この機能は誰も使ってないから削除</li>
+<li>この機能使うとこういう危険なコードになるので削除</li>
+</ul>
+
+
+<p>みたいな．これは今後プロダクションでの利用が増え，「互換性は保った方がいいんじゃないか？」という開発者が増えれば，流れは変わると思います．この辺はPythonやScalaなど，今時の言語と同じような感じかなと． <br />
+今後に備えて，「bug fixリリースも考慮した開発フロー・バージョニングにした方がいいんじゃないか？」という提案はあがったりしてます．</p>
+
+<h2>開発の流れ</h2>
+
+<p>現状はD2しかメジャーバージョンがないんですが(D1のメンテナンスは終了)，これが開発版/安定版みたいになってます．昔と違って</p>
+
+<ul>
+<li>リグレッションがあったらリリースしない</li>
+<li>リリース前にβ版を公開してフィードバックを得る</li>
+<li>削除/変更するAPIは数ヶ月以上前から警告が出る</li>
+</ul>
+
+
+<p>などなど利用者がいきなり非互換にぶち当たるようなことが起きないように配慮はされてます．D言語はコンパイル時にシンボルやシグネチャをチェック出来る機構があり，ライブラリ開発者としても，多少の変更があってもそれで対応出来てます．<br />
+なので，互換性に関しては少し寛容なのかもしれません．</p>
+
+<p>「D2に入れるには大きすぎるかもしれない変更はD3で議論しよう」という流れになってるので，D2で今後パラダイムに関わるような大きな変更は起きないとは思います．</p>
+
+<h2>まとめ</h2>
+
+<p>記事で言及されている通り，言語，ライブラリ，開発環境，などなど昔に比べて成熟してきているのは確かですが，ご利用は計画的に，というが本当の所です．
+ポジション的にはHaskellやGoに近い所にいて，メジャーとは言い切れないがパワーユーザが使っていて，コミュニティが大きくなりつつあるという感じです．Facebookはこれからも利用箇所を増やすでしょうし，海外では他の事例もちょくちょく出てきそうです．日本は…よく分からんですｗ</p>
+
+<p>とはいえ，日本はアクティブなコミッタが3人いたりと，実はD言語をする環境としては恵まれていたりしてます．困ったら #dlang をつけてTwitterでつぶやくと，誰かが助けてくれるかもしれません．日本語情報については，<a href="https://twitter.com/repeatedly/status/391191903418322944">このtweet</a>を参考にしてください．</p>
+
+<p>追記</p>
+
+<p>@yasei_no_otoko さんが<a href="http://qiita.com/yasei_no_otoko/items/65b6a7cae7a6588dc7f6">エディタ・IDEの現状について書いてくれました</a>．</p>
 </div>
   
   
@@ -452,23 +531,23 @@ AWSのMilesにも「Fluentd is good!!」と言われ，向こうでも徐々にF
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/ja/2014/01/fluentd-v11-at-tokuben/">Fluentd v11 at Tokuben</a>
+        <a href="/2014/05/the-status-of-coolio/">The status of Cool.io</a>
       </li>
     
       <li class="post">
-        <a href="/ja/2014/01/cross-2014/">CROSS 2014</a>
+        <a href="/ja/2014/03/sapporo-2014-winter/">札幌 2014 冬</a>
       </li>
     
       <li class="post">
-        <a href="/ja/2014/01/2013-report/">2013年の振り返り</a>
+        <a href="/ja/2014/03/about-fluentd-v11/">そろそろFluentd v11についてひとこと言っておくか</a>
       </li>
     
       <li class="post">
-        <a href="/ja/2013/10/d-status-2013/">D言語の現状</a>
+        <a href="/ja/2014/02/the-thoughts-of-sensu/">Sensu雑感</a>
       </li>
     
       <li class="post">
-        <a href="/ja/2013/09/librato-metrics-introduction/">Librato Metrics introduction</a>
+        <a href="/ja/2014/02/developer-summit-2014/">Developer Summit 2014</a>
       </li>
     
   </ul>

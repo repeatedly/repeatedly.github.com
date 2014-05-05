@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-01-26T02:56:26+09:00</updated>
+  <updated>2014-05-06T03:02:47+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,692 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[The status of Cool.io]]></title>
+    <link href="http://repeatedly.github.com/2014/05/the-status-of-coolio/"/>
+    <updated>2014-05-06T02:55:00+09:00</updated>
+    <id>http://repeatedly.github.com/2014/05/the-status-of-coolio</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/tarcieri/cool.io">Cool.io</a> was revived after I became a maintainer. This article describes the current stauts and future work of Cool.io.</p>
+
+<p>Cool.io is a core of <a href="http://fluentd.org/">Fluentd</a> so I am focusing Fluentd related features.</p>
+
+<h2>Windows support</h2>
+
+<p>Cool.io is the one of blocker for Fluentd Windows support. Since version 1.2, Cool.io works on Windows and I release mingw based cross-compiling gem for Windows environment.</p>
+
+<p>You can now use Cool.io via <code>gem install cool.io</code> on Windows and we started to implement <a href="https://github.com/fluent/fluentd/tree/windows">Windows support of Fluentd</a>.</p>
+
+<h3>The limitation on Windows</h3>
+
+<p>Cool.io uses <code>select</code> on Windows, not IOCP. In this result, the performance isn&#8217;t better than other environments.
+This limitation is of little concern in Fluentd forward use-case.</p>
+
+<h2>JRuby support</h2>
+
+<p>Fluentd works on CRuby and Rubinius. If support JRuby, Fluentd will work on almost popular Ruby environemnts.</p>
+
+<p>Since May 2014, <a href="https://github.com/taichi">@taichi</a> started to implement <a href="https://github.com/tarcieri/cool.io/issues/32">JRuby support</a>. @taichi has experience with Java and evented IO frameworks so he is a good person for this task ;)</p>
+
+<h2>Remove Ruby 1.8 support</h2>
+
+<p>Ruby 1.8 is dead language so Cool.io removes 1.8 support since version 1.2.</p>
+
+<h2>Remove HttpClient</h2>
+
+<p>AFAIK, there is no HttpClient users including Fluentd. This class depends on Ragel to parse HTTP. It increases the maintenance cost and hard to support on cross platform.</p>
+
+<p>So HttpClient will not be maintained in the future.</p>
+
+<h2>Conclusion</h2>
+
+<p>Cool.io isn&#8217;t dead and Cool.io is still improved. We are now working on more better environment support and fixing the bugs.</p>
+
+<p>If you have a bug of Cool.io, then please file it on github :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[札幌 2014 冬]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/03/sapporo-2014-winter/"/>
+    <updated>2014-03-22T15:41:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/03/sapporo-2014-winter</id>
+    <content type="html"><![CDATA[<p>二つのイベントに参加するため，札幌に行ってました．</p>
+
+<h2><a href="http://www.hicta.or.jp/index_oshirase_detail.php?id=624">技術セミナー２０１４～ビッグデータ時代のＩＴシーズ～</a></h2>
+
+<p>北海道IT推進協会さまのイベントで，ビッグデータとかデータ解析周りについてクラウド要素も含めて，ビジネス的な話をしてきました．
+参加者に経営者の方も多い感じだったので，なるべく技術的な用語は使わないよう心がけて講演．</p>
+
+<p>いつもとは違う雰囲気の中での講演で，こういうのも勉強になって良いかなと．</p>
+
+<h2><a href="http://connpass.com/event/5222/">AWS勉強会 in 北海道札幌！</a></h2>
+
+<p>メインは上のイベントだったのだけど，それだけで北海道を去るのも勿体ないなぁと他のイベントを探していたら</p>
+
+<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p>話す側でお願いしますw <a href="https://twitter.com/repeatedly">@repeatedly</a> あれ，よく見たらクラスメソッドさんの勉強会が次の日にある．これに参加しようかな？ &gt; &quot;AWS勉強会 in 北海道札幌！（懇親会有）&quot; <a href="http://t.co/doSVv4FPb8">http://t.co/doSVv4FPb8</a></p>&mdash; よこたさとし (@sato_shi) <a href="https://twitter.com/sato_shi/statuses/441211073375371264">March 5, 2014</a></blockquote>
+
+
+<script async src="http://repeatedly.github.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p>とのreplyをもらったので，飛び入りでFluentdについて発表してきました．</p>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/32700881?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/treasure-data/fluentd-and-aws-at-classmethod" title="Fluentd and AWS at classmethod" target="_blank">Fluentd and AWS at classmethod</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
+
+<p>Fluentd利用者も少なかったので，基本的な動作原理や，Fluentdが有用なユースケース，
+AWSなイベントなのでAWS関係のプラグインの紹介などなど，一通りやった．</p>
+
+<p>懇親会で色々と話を聞いたけど，まだ地方？だとそもそもデータを集めてなかったり，
+データ解析に関しての需要が出てきておらず，Fluentdなどを使う段階になってないとのこと．
+そもそもIT化出来てない会社とかもあるのでまずはそこから，とも<br />
+東京とかだとこの辺の動きが活発だけど，中央以外ではまた違った形で活動しないと，
+「便利なソフトウェアがある！」とかで広めることは出来ないなぁと実感．<br /></p>
+
+<p>色々と考えないと行けないことが増えた感じで，この辺の話を聞けたのは良かった．</p>
+
+<h2>まとめ</h2>
+
+<p><img src="http://repeatedly.github.com/images/kinki_sushi.jpg" title="&#34;Kinki no Sushi&#34;" alt="&#34;Kinki no Sushi&#34;"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[そろそろFluentd v11についてひとこと言っておくか]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/03/about-fluentd-v11/"/>
+    <updated>2014-03-05T19:40:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/03/about-fluentd-v11</id>
+    <content type="html"><![CDATA[<p>リリースは永遠にされません！</p>
+
+<p>日本では色々なところでv11の噂がまことしやかに囁かれていますが，
+俺がメインメンテナである限りv11がリリースされることはないので，諦めてv0.10.xを使ってください！</p>
+
+<p>以下まじめな話になります．</p>
+
+<h2>v11が生まれた背景と現状</h2>
+
+<p>v11が生まれたのは1年以上前です．背景には，v10と呼ばれる今のバージョンがプロトタイプを兼ねたリリースであり，
+「利用者のフィードバックを取り込んで，ダメな所をガッツリ書き換えて互換性を壊してメジャーバージョンアップや！」という流れがありました．</p>
+
+<p>しかし，v10は十分に柔軟でかつパフォーマンスも発揮しており，コミッタ陣はそれほどモチベーションがあったわけではありません．
+また，プラグインによって解決出来た問題も多く，v11が生まれた時ほどユーザから「v11が欲しい！」という要望は聞かれなくなりました．</p>
+
+<p>当たり前ですが，ユーザからの声がなければ「あれ，じゃあこの機能あんまり必要ないんじゃね？」ということになって削られるのはよくあることで，
+v11もそんな感じで開発リソースはあまり割かれなくなって行きました．<br />
+もともと空いた時間に@frsyuki，@tagomoris，@sonotsの人達がたまにコミットしていたくらいなので，直近では機能追加のコミットはほぼありません．</p>
+
+<h2>Fluentdのユーザ拡大</h2>
+
+<p>v11で互換性を壊しても大丈夫だろう，とコミッタ陣が思っていたものの一つに，当時Fluentdのプラグインの大半をコミッタの関係者が書いていた，
+というのがあります．<br />
+そのため，互換性を壊しても必要そうなプラグインの書き換えはすぐに終わるし，
+「えいや！」と同時にバージョン上げれば被害は少ないだろうという感じです．</p>
+
+<p>しかし，v10は思っていたよりも早くユーザが増え，今ではさきがけとなったWeb/アドテク業界のみならず，大小問わず様々な企業，
+IoTな分野など，世界的にも使われるようになってきました．<br />
+また，それにともないプラグイン数も200を越え，当初の目論見が難しくなっているのが現状です．</p>
+
+<h2>開発方針の変更とv1案</h2>
+
+<p>俺がFluentdのメインメンテナとなったのも関わってるんですが，「v11のリリースをどうするか？」という問題もハンドリングするようになりました．</br />
+個人的には「v11の機能群は有用だけど，互換性を壊してリリースするほどのものではないなぁ」というのがv11を見た結論であり，
+その辺やりとりしたのが以下のtogetter．</p>
+
+<p><a href="http://togetter.com/li/620329">Fluentd v11 なんてなかったんだ</a></p>
+
+<p>上のまとめにあるように，色々と話した結果，v11が持っているいくつかの機能をv10にマージし，
+それらが終わったらv1としてリリースしようというのが，現在の開発の方向性です．<br />
+段階的な変化になりますが，基本的には互換性が保たれるようにAPIを変えていくので，
+既存ユーザはそのまま使えますし，バージョンアップにともなって徐々に有用な機能が使えるようになります．<br /></p>
+
+<p>以下のissueで必要そうな機能リストと，進捗を管理してます．</p>
+
+<p><a href="https://github.com/fluent/fluentd/issues/251">Plan for v1 release</a></p>
+
+<p>v1というバージョンに関しては，今のFluentdのgemのバージョンがv0.10.xで，v0.11.xのことをv11と呼んでいて非常に紛らわしく，
+新しく入ってくるユーザとかを考えるとそろそろまじめにバージョニングした方が良いだろうという考えです．<br />
+v1だと安定版のイメージが強いですし，実際の所v0.10.xはv1でもおかしくない機能セットはすでに持っています．</p>
+
+<h2>まとめ</h2>
+
+<p>ということで，色々と今までの流れを書きましたが，皆さんFluentdを今後とも宜しくお願いします :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Sensu雑感]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/02/the-thoughts-of-sensu/"/>
+    <updated>2014-02-25T02:15:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/02/the-thoughts-of-sensu</id>
+    <content type="html"><![CDATA[<p><a href="http://sensuapp.org/">Sensu</a></p>
+
+<p>最近人気が出てきているようなので試して見た．
+仕組みに関しては本家のドキュメントとかスライドとか見ると大体分かる．</p>
+
+<p>雑感:</p>
+
+<ul>
+<li>server, client, api, dashboardに分かれているのは良い
+
+<ul>
+<li>実装はRubyでシンプルに書かれているように見える．多分弄るのは簡単</li>
+</ul>
+</li>
+<li>RabbitMQとRedisが必要なのが試すのに結構つらい．chefとかpuppetを使うと良いらしい？
+
+<ul>
+<li>なんかテストモードがあるなら知りたい</li>
+<li>ドキュメントは最低限はある．Advancedなことしようとするとgithubとか先人を頼ることになる</li>
+</ul>
+</li>
+<li>設定がJSONなのはいいけど，ログすらJSONなのは徹底している</li>
+<li>RabbitMQにはクライアントから登録しにいくようで，勝手に監視対象が増えるのは楽
+
+<ul>
+<li>マスターからのpullは限界があるので，この仕組みはモニタリングでは筋が良さそう</li>
+</ul>
+</li>
+<li>プラグインは簡単に書けるが，現状失敗したら諦める前提らしい
+
+<ul>
+<li>まじめにハンドリングするなら，他のと連携する必要がある</li>
+</ul>
+</li>
+<li>apiが気がつけば落ちてる時があって，原因がよく分からない</li>
+<li>Fluentdのハンドラがコミュニティプラグインになかったので<a href="https://github.com/sensu/sensu-community-plugins/blob/master/handlers/notification/fluentd.rb">書いた</a></li>
+</ul>
+
+
+<p>「FluentdかSensuかどっちかに寄せたい」みたいな記事を誰かが書いてた記憶があるけど，何となく分かる．
+Fluentdのプラグイン機構でSensuのクライアント周りの機構はよりロバストに実装出来る．<br />
+コアの機能は結構シンプルなので，visualizationまで考えるとどうしたもんかという感じ．</p>
+
+<p>Sensuはモニタリングのためのフレームワークなのでその辺の機能が中心に開発されてるけど，
+そこの尖った部分が必要でなければ，RabbitMQとかと相まって結構大がかりにも見える．<br />
+Nagiosとかは使ったことはないので，その辺と違ってどこまでメリットがあるのかはよく分かってないけど，
+新しく作るシステムで一からモニタリングシステムを構築するなら十分有り．</p>
+
+<p>仕組み的には柔軟でAPIとかで管理も楽に出来るようになってるので，今後ユーザは増えそうな気もしている．
+しかしRabbitMQとRedisの二つ必要なのどうにかならないものか…</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Developer Summit 2014]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/02/developer-summit-2014/"/>
+    <updated>2014-02-16T19:53:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/02/developer-summit-2014</id>
+    <content type="html"><![CDATA[<p><a href="http://event.shoeisha.jp/devsumi/20140213/">Developers Summit 2014：開発者のためのITカンファレンス</a></p>
+
+<p>セッション登壇も兼ねて，初めてデブサミに参加してきました．</p>
+
+<h2>1日目</h2>
+
+<p><a href="http://event.shoeisha.jp/devsumi/20140213/session/394/">OSSコミッタ大集合</a></p>
+
+<p>これに登壇してました．登壇といっても，それぞれのプロジェクトの人がわいわいと自分の関わってるプロジェクトについて
+交互に話すというもので，FluentdとD言語の時に壇上にあがってあれやこれや話しました．<br />
+まぁFluentdに関しては登壇して何も喋らずに降りましたが…prz</p>
+
+<p>セッションに関係ないですが登壇者控え室，和室でネットワークも電源もありで環境良すぎて超快適だった．雅叙園良いですね．</p>
+
+<h2>2日目</h2>
+
+<p>「Webの現在過去未来」のセッションなど気になるのがあったのですが，雪が降りすぎていたので参加しませんでした！</p>
+
+<p>それとは別に，渋谷でRubyコミッタ3人との飲み会があり，鍋をつつきつつ色々と話をした．
+その結果，Focuslightのメンテナが正式に決まり，FluentdにはLinux kernel &amp; Rubyコミッタであるkosakiさんがjoin．良い鍋でした．</p>
+
+<blockquote class = "twitter-tweet" lang = "en"><p><a href = "https://twitter.com/sora_h">@sora_h</a> and <a href = "https://twitter.com/sonots">@sonots</a> are now focuslight committer! This is great step for growing <a href = "https://twitter.com/search?q = %23Fluentd&amp;src = hash">#Fluentd</a> visualization environment :)</p>&mdash; Mr. Fiber (@repeatedly) <a href = "https://twitter.com/repeatedly/statuses/434379434435436545">February 14, 2014</a></blockquote>
+
+
+<script async src = "http://repeatedly.github.com//platform.twitter.com/widgets.js" charset = "utf-8"></script>
+
+
+
+
+<blockquote class = "twitter-tweet" lang = "en"><p><a href = "https://twitter.com/kosaki55tea">@kosaki55tea</a> is now Fluentd committer! We can improve Fluentd more quickly :) <a href = "https://twitter.com/search?q = %23fluentd&amp;src = hash">#fluentd</a></p>&mdash; Mr. Fiber (@repeatedly) <a href = "https://twitter.com/repeatedly/statuses/434395924224167936">February 14, 2014</a></blockquote>
+
+
+<script async src = "http://repeatedly.github.com//platform.twitter.com/widgets.js" charset = "utf-8"></script>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Analyze event logs using Fluentd and Elasticsearch]]></title>
+    <link href="http://repeatedly.github.com/2014/02/analyze-event-logs-using-fluentd-and-elasticsearch/"/>
+    <updated>2014-02-12T17:25:00+09:00</updated>
+    <id>http://repeatedly.github.com/2014/02/analyze-event-logs-using-fluentd-and-elasticsearch</id>
+    <content type="html"><![CDATA[<p><a href="http://fluentd.org/">Fluentd</a> is a flexible and robust event log collector, but Fluentd doesn&#8217;t have own data-store and Web UI.
+If you want to analyze the event logs collected by Fluentd, then you can use <a href="http://www.elasticsearch.org/">Elasticsearch</a> and <a href="http://www.elasticsearch.org/overview/kibana/">Kibana</a> :)</p>
+
+<p>Elasticsearch is an easy to use Distributed Search Engine and Kibana is an awesome Web front-end for Elasticsearch.</p>
+
+<h2>Setup</h2>
+
+<p>I tested on Mac OS X.</p>
+
+<h3>Pre requirements</h3>
+
+<ul>
+<li>Java for Elasticsearch</li>
+</ul>
+
+
+<p>Use Mac OS X&#8217;s Java.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% java -version
+</span><span class='line'>java version <span class="s2">&quot;1.6.0_51&quot;</span>
+</span><span class='line'>Java<span class="o">(</span>TM<span class="o">)</span> SE Runtime Environment <span class="o">(</span>build 1.6.0_51-b11-457-11M4509<span class="o">)</span>
+</span><span class='line'>Java HotSpot<span class="o">(</span>TM<span class="o">)</span> 64-Bit Server VM <span class="o">(</span>build 20.51-b01-457, mixed mode<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Ruby for Fluentd</li>
+</ul>
+
+
+<p>In this article, I use my rbenv&#8217;s Ruby and Fluentd gem directly.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% ruby --version
+</span><span class='line'>ruby 1.9.3p484 <span class="o">(</span>2013-11-22 revision 43786<span class="o">)</span> <span class="o">[</span>x86_64-darwin12.4.0<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that Fluentd doesn&#8217;t work on Ruby 1.8.</p>
+
+<h4>Treasure Agent (td-agent)</h4>
+
+<p>Treasure Agent, as known as <code>td-agent</code>, is a stable distribution which consists of Fluentd, popular plugins and own Ruby processor.
+Many users use <code>td-agent</code> instead of Fluentd gem. See <a href="http://docs.fluentd.org/articles/faq#treasure-agenttd-agnt">this FAQ</a>.</p>
+
+<h3>Elasticsearch</h3>
+
+<p>Downlod and extract the latest package.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% curl -O https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.11.tar.gz
+</span><span class='line'>% tar zxvf elasticsearch-0.90.11.tar.gz
+</span><span class='line'>% <span class="nb">cd </span>elasticsearch-0.90.11/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I use version v0.90.11 but <a href="http://www.elasticsearch.org/blog/0-90-11-1-0-0-rc2-released/">v1.0 will be released</a> soon!</p>
+
+<p>Start Elasticsearch:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% ./bin/elasticsearch -f
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:32,645<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> version<span class="o">[</span>0.90.11<span class="o">]</span>, pid<span class="o">[</span>79737<span class="o">]</span>, build<span class="o">[</span>11da1ba/2014-02-03T15:27:39Z<span class="o">]</span>
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:32,646<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> initializing ...
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:32,651<span class="o">][</span>INFO <span class="o">][</span>plugins                  <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> loaded <span class="o">[]</span>, sites <span class="o">[]</span>
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:34,319<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> initialized
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:34,320<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> starting ...
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:34,395<span class="o">][</span>INFO <span class="o">][</span>transport                <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> bound_address <span class="o">{</span> inet<span class="o">[</span>/0:0:0:0:0:0:0:0%0:9300<span class="o">]}</span>, publish_address <span class="o">{</span> inet<span class="o">[</span>/192.168.1.112:9300<span class="o">]}</span>
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:37,448<span class="o">][</span>INFO <span class="o">][</span>cluster.service          <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> new_master <span class="o">[</span>Powerhouse<span class="o">][</span>tL1IC8xHSCudeVsFt4JFsQ<span class="o">][</span>inet<span class="o">[</span>/192.168.1.112:9300<span class="o">]]</span>, reason: zen-disco-join <span class="o">(</span>elected_as_master<span class="o">)</span>
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:37,481<span class="o">][</span>INFO <span class="o">][</span>discovery                <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> elasticsearch/tL1IC8xHSCudeVsFt4JFsQ
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:37,492<span class="o">][</span>INFO <span class="o">][</span>http                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> bound_address <span class="o">{</span> inet<span class="o">[</span>/0:0:0:0:0:0:0:0%0:9200<span class="o">]}</span>, publish_address <span class="o">{</span> inet<span class="o">[</span>/192.168.1.112:9200<span class="o">]}</span>
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:37,493<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> started
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:37,505<span class="o">][</span>INFO <span class="o">][</span>gateway                  <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> recovered <span class="o">[</span>0<span class="o">]</span> indices into cluster_state
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Kibana</h3>
+
+<p>Latest Kibana, called Kibana 3, consists of only HTML and JavaScript,
+so setup is very easy:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% curl -O https://download.elasticsearch.org/kibana/kibana/kibana-3.0.0milestone5.tar.gz
+</span><span class='line'>% tar zxvf kibana-3.0.0milestone5.tar.gz
+</span><span class='line'>% <span class="nb">cd </span>kibana-3.0.0milestone5/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Open index.html in the kibana directory:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% open index.html
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you want to change Kibana configuration, please edit <code>config.js</code>, e.g. change elasticsearch URL.</p>
+
+<h3>Fluentd</h3>
+
+<p>Install Fluentd gem and <a href="https://github.com/uken/fluent-plugin-elasticsearch">Elasticsearch plugin</a>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% gem install fluentd fluent-plugin-elasticsearch
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Fluentd configuration is below:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="c"># es.conf</span>
+</span><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> forward
+</span><span class='line'><span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;match</span> <span class="s">es.**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> elasticsearch
+</span><span class='line'>  <span class="err">logstash_</span><span class="nb">format</span> true
+</span><span class='line'>  <span class="err">flush_</span><span class="nb">interval</span> <span class="m">5</span>s # <span class="m">5</span>s for testing. <span class="k">On</span> production environment, <span class="m">60</span>s or higher is better
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>fluent-plugin-elasticsearch provides <code>logstash_format</code> option.
+It enables Kibana to analyze the event logs with day based indexes.</p>
+
+<p>Start Fluentd:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% fluentd -c es.conf
+</span><span class='line'>2014-02-12 18:43:31 +0900 <span class="o">[</span>info<span class="o">]</span>: starting fluentd-0.10.43
+</span><span class='line'>2014-02-12 18:43:31 +0900 <span class="o">[</span>info<span class="o">]</span>: reading config file <span class="nv">path</span> <span class="o">=</span> <span class="s2">&quot;es.conf&quot;</span>
+</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: gem <span class="s1">&#39;fluent-plugin-elasticsearch&#39;</span> version <span class="s1">&#39;0.2.0&#39;</span>
+</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: gem <span class="s1">&#39;fluentd&#39;</span> version <span class="s1">&#39;0.10.43&#39;</span>
+</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: using configuration file: &lt;ROOT&gt;
+</span><span class='line'>  &lt;<span class="nb">source</span>&gt;
+</span><span class='line'>    <span class="nb">type </span>forward
+</span><span class='line'>  &lt;/source&gt;
+</span><span class='line'>  &lt;match es.**&gt;
+</span><span class='line'>    <span class="nb">type </span>elasticsearch
+</span><span class='line'>    logstash_format <span class="nb">true</span>
+</span><span class='line'><span class="nb">    </span>flush_interval 5s
+</span><span class='line'>  &lt;/match&gt;
+</span><span class='line'>&lt;/ROOT&gt;
+</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: adding <span class="nb">source type</span> <span class="o">=</span> <span class="s2">&quot;forward&quot;</span>
+</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: adding match <span class="nv">pattern</span> <span class="o">=</span> <span class="s2">&quot;es.**&quot;</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;elasticsearch&quot;</span>
+</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: listening fluent socket on 0.0.0.0:24224
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Analyze event logs</h2>
+
+<p>Send some events to Fluentd. <code>fluent-cat</code> is an utility command to send json text to Fluentd&#8217;s <code>in_forward</code> plugin.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{&quot;message&quot;:&quot;D&quot;}&#39;</span> | fluent-cat es.event <span class="c"># es.event is a tag. es.event matches es.** of &lt;match&gt;</span>
+</span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{&quot;message&quot;:&quot;Ruby&quot;}&#39;</span> | fluent-cat es.event
+</span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{&quot;message&quot;:&quot;Elasticsearch&quot;}&#39;</span> | fluent-cat es.event
+</span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{&quot;message&quot;:&quot;msgpack&quot;}&#39;</span> | fluent-cat es.event
+</span><span class='line'>% ...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After Fluentd flushed received events to Elasticsearch, you can analyze the event logs via Kibana!
+Following image is one panel example:</p>
+
+<p><img src="http://repeatedly.github.com/images/fluentd_kibana_elasticsearch.png" title="&#34;Fluentd, Elasticsearch and Kibana&#34;" alt="&#34;Fluentd, Elasticsearch and Kibana&#34;"></p>
+
+<p>Kibana has some built-in panels, so you can create own dashboard easily. See <a href="http://demo.kibana.org/#/dashboard">Kibana demo</a></p>
+
+<h2>Advanced tips</h2>
+
+<p>If your service has a high traffic, then fluent-plugin-elasticsearch sometimes get stucked.
+In this case, built-in <a href="http://docs.fluentd.org/articles/out_roundrobin">out_roundrobin plugin</a> is useful.
+You can distribute a write request to elasticsearch nodes for load balancing.</p>
+
+<p>Of course, putting Queue with multiple fluentd nodes is an another approach.</p>
+
+<h2>Conclusion</h2>
+
+<p>This article introduced Fluentd, Elasticsearch and Kibana combination to analyze the event logs.
+These components are easy to setup and work fine, so you can try this framework soon!
+I heard many companies have already tried / deployed this setup on production :)</p>
+
+<p>Enjoy Fluentd and Elasticsearch!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[高トラフィックでのFluentdからElasticsearchへの書き込み問題への対策]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic/"/>
+    <updated>2014-02-11T18:39:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic</id>
+    <content type="html"><![CDATA[<p><a href="http://blog.kakipo.com/trouble-with-fluentd-and-elasticsearch/">Fluentd -> Elasticsearch 大量データ転送でトラブル</a></p>
+
+<p>上の記事にあるように，Elasticsearchに大量のデータを一気に流し込むと色々と問題が起きます．
+元々検索エンジンはスケールさせるのが難しく，よく当たる問題だと思います．</p>
+
+<p>また，Fluentdとかだとガンガンログを流し込むことも多く，この辺で詰まる云々はたまに聞きます．</p>
+
+<p><a href="http://elasticsearch.doorkeeper.jp/events/7491">第3回elasticsearch勉強会</a></p>
+
+<p>で，Elasticsearch勉強会にFlorianという本家のエンジニアが来ていたので，
+懇親会でこの辺どうすればいいのか聞いてみました．
+実際Elasticsearchユーザの中でもちょくちょく問題になるらしく，
+大きくわけて二つの方法(またはこの組み合わせ)で回避しているようです．</p>
+
+<h2>書き込み先のノードを増やす</h2>
+
+<p>1ノードへの書き込みで詰まるなら，もっとノードを増やせば良いというアプローチ．
+今のfluent-plugin-elasticsearchにはラウンドロビンの機能はないんですが，
+out_roundrobinとかと組み合わせてやれば，書き込みを複数台に散らせることは出来そうです．</p>
+
+<h2>前段にキューを置く</h2>
+
+<p>書き込みをするノードの前にキューを置いて，そこでバッファリングしておくという方法．
+Fluentdの場合はバッファがキューになっているので，そこのフラッシュ間隔を長めに調整するとか，
+キュー系のプラグインがいくつかあるので，それを間に挟むという感じになるのかなと．<br />
+ただ，キューから値をポップする間隔が短いと結局詰まるので，この辺は少し工夫が必要そうです．</p>
+
+<h2>まとめ</h2>
+
+<p>Elasticsearchを真面目に運用したことがないので，どっちが現実的なのかよく分からないのが正直な所．
+この辺は高トラフィック環境で使っている人の話を聞きたい所です．</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Prestoソースコードリーディング #1]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/02/presto-scr-1/"/>
+    <updated>2014-02-11T02:39:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/02/presto-scr-1</id>
+    <content type="html"><![CDATA[<p><a href="http://atnd.org/events/47149">Presto ソースコードリーディング #1のATND</a></p>
+
+<p>@tagomorisさんに場所を確保してもらって，LINEで第一回をやりました．</p>
+
+<h2>開催の流れ</h2>
+
+<p>CROSS辺りでPrestoのソースコードリーディングしたいね，という話が出て，
+じゃあ俺が立てるので場所はLINE辺りで〜というその場のノリで決まった．</p>
+
+<p>どうせ10人前後だろうということでかなり適当な感じで募集とかやってたんだけど，
+応募人数が40人越え，当日参加が25人前後くらいだったので，予想より多かったかなという感じ．</p>
+
+<h2>やったこと</h2>
+
+<h3>全体の概要</h3>
+
+<p>俺が軽めにやりました．Prestoの生まれた背景とか，依存している主要なライブラリ，
+@frsyukiのスライドを拝借しての主要なクラス群の紹介，現在サポートしている型，
+Slice使ってのデータの持ち方とか．後，最近の変更周りも少し紹介した</p>
+
+<h3>HTTPレイヤー</h3>
+
+<p>@tagomorisさんが担当で，クライアントが最初に到達するHTTP APIの <code>/v1/execution</code> や <code>/v1/statement</code> 周りの
+処理の話．ソースコード的にはpresto-server．この辺もairliftにがっつり依存しているので，
+パフォーマンスが気になるなど真面目に読みたい人はairliftも読みましょう．</p>
+
+<h3>Execution</h3>
+
+<p><a href="https://gist.github.com/oza/8912147">当日のgist</a></p>
+
+<p>@oza_x86が担当．Coordinator内部でPlanやStageが出来るまでの流れ，
+Workerで処理がどう進むかとかその辺の話．SplitsやそれぞれのRunnerの処理，
+時間が掛かっているタスクの優先度下げるとか，工夫がいくつか見て取れた感じ．</p>
+
+<h2>感想</h2>
+
+<p>適当にやったわりにはそれなりに上手く進んで良かった．</p>
+
+<p>第二回は，shot6さん，ashigeruさん，feeblefakieさん辺りが担当になってくれるかも？
+という感じです．またソース読みつつあーだこーだ言い合いましょう．</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[New log_level parameter]]></title>
+    <link href="http://repeatedly.github.com/2014/02/new-log-level-parameter/"/>
+    <updated>2014-02-05T05:22:00+09:00</updated>
+    <id>http://repeatedly.github.com/2014/02/new-log-level-parameter</id>
+    <content type="html"><![CDATA[<p>In this week, <a href="https://groups.google.com/forum/#!topic/fluentd/ukJ999bDwxY">Fluentd v0.10.43 has been released</a>.
+Since this version, Fluentd introduced <code>log_level</code> parameter in Input / Output plugin.
+It enables you can set different log level separated from global log level, e.g. <code>-v</code>, <code>-q</code> command line option.</p>
+
+<p>This article shows &#8220;How to support <code>log_level</code> option in your plugin.&#8221;</p>
+
+<h2>log_level option use cases</h2>
+
+<h3>Disable in_tail warning</h3>
+
+<p><code>in_tail</code> prints &#8220;pattern no match&#8221; warning when receives invalid log. It is useful information for almost users, but some users want to ignore this log for other important plugin warning.</p>
+
+<p>In this case, you can set &#8220;log_level error&#8221; in <code>in_tail</code> configuration to disable &#8220;pattern no match&#8221;.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> tail
+</span><span class='line'>  ...
+</span><span class='line'>  <span class="err">log_</span><span class="nb">level</span> <span class="k">error</span>
+</span><span class='line'><span class="nt">&lt;/source&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Debugging</h3>
+
+<p>Without <code>log_level</code>, we get many verbose logs using <code>-vv</code> command line option for one plugin. With <code>log_level</code>, you can set verbose configuration in only one plugin.</p>
+
+<p>It is useful for debugging a plugin on acutual environment.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;match</span> <span class="s">foo.**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> unstable_plugin
+</span><span class='line'>  ...
+</span><span class='line'>  <span class="err">log_</span><span class="nb">level</span> trace
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Support log_level option in your plugin</h2>
+
+<p>This section is for plugin developers.</p>
+
+<p>First of all, Fluentd provides <code>$log</code> object as heretofore. So all plugin should work without changing on Fluentd v0.10.43 or later.</p>
+
+<p>To suppot <code>log_level</code> is very easy. Replace <code>$log</code> with <code>log</code>. Following example is fluent-plugin-td&#8217;s diff:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gd">-        $log.debug &quot;checking whether table &#39;#{key}&#39; exists on Treasure Data&quot;</span>
+</span><span class='line'><span class="gi">+        log.debug &quot;checking whether table &#39;#{key}&#39; exists on Treasure Data&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Support older Fluentd versions</h3>
+
+<p>After replaced <code>$log</code> with <code>log</code>, your plugin only works on Fluentd v0.10.43 or later. If you want to support older Fluentd versions, you can use following code in your plugin.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">Fluent</span>
+</span><span class='line'>  <span class="k">module</span> <span class="nn">FooPluginOutput</span> <span class="o">&lt;</span> <span class="no">Output</span>
+</span><span class='line'>    <span class="c1"># Define `log` method for v0.10.42 or earlier</span>
+</span><span class='line'>    <span class="k">unless</span> <span class="nb">method_defined?</span><span class="p">(</span><span class="ss">:log</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">define_method</span><span class="p">(</span><span class="ss">:log</span><span class="p">)</span> <span class="p">{</span> <span class="vg">$log</span> <span class="p">}</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This code defines <code>log</code> method using <code>$log</code> when <code>log</code> method is not defined, so <code>log.error</code> is same as <code>$log.error</code> on older Fluentd.</p>
+
+<p>fluent-plugin-td uses <a href="https://github.com/treasure-data/fluent-plugin-td/blob/1ae62326802ff998a38bbf040ddf0f4b236430ee/lib/fluent/plugin/out_tdlog.rb#L63">same approach</a>.</p>
+
+<h2>Conculusion</h2>
+
+<p><code>log_level</code> feature is very useful for Fluentd users. So if you have a time, please apply above changes and release new version plugin ;)</p>
+
+<p>I will release new version of several plugins soon, S3, TD, Mongo and etc.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Fluentd v11 at Tokuben]]></title>
@@ -476,224 +1162,6 @@ D言語を始める始めないに関わらず，どういう言語なのかを�
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Search event logs using Fluentd and Kibana]]></title>
-    <link href="http://repeatedly.github.com/2013/04/search-logs-using-fluentd-and-kibana/"/>
-    <updated>2013-04-17T00:12:00+09:00</updated>
-    <id>http://repeatedly.github.com/2013/04/search-logs-using-fluentd-and-kibana</id>
-    <content type="html"><![CDATA[<p><a href="http://fluentd.org/">Fluentd</a> is a flexible and robust event log collector, but Fluentd doesn&#8217;t provide own datastore and Web UI.
-So if you want to search the event logs collected by Fluentd, then you can use Kibana and ElasticSearch :)</p>
-
-<p><a href="http://www.elasticsearch.org/">ElasticSearch</a> is a easy to use Search Engine and <a href="http://kibana.org/">Kibana</a> is a great Web UI for ElasticSearch with <a href="http://logstash.net/">LogStash</a> format.</p>
-
-<h2>Setup</h2>
-
-<h3>Pre requirements</h3>
-
-<ul>
-<li>Java for ElasticSearch</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% java -version
-</span><span class='line'>java version <span class="s2">&quot;1.6.0_45&quot;</span>
-</span><span class='line'>Java<span class="o">(</span>TM<span class="o">)</span> SE Runtime Environment <span class="o">(</span>build 1.6.0_45-b06-451-11M4406<span class="o">)</span>
-</span><span class='line'>Java HotSpot<span class="o">(</span>TM<span class="o">)</span> 64-Bit Server VM <span class="o">(</span>build 20.45-b01-451, mixed mode<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Ruby for Fluentd and Kibana</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% ruby --version
-</span><span class='line'>ruby 1.9.3p385 <span class="o">(</span>2013-02-06 revision 39114<span class="o">)</span> <span class="o">[</span>x86_64-darwin12.2.1<span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I tested on Mac OSX Mountain Lion.</p>
-
-<h3>ElasticSearch</h3>
-
-<p>Downlod and extract package:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% curl -O https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.0.RC2.tar.gz
-</span><span class='line'>% tar zxvf elasticsearch-0.90.0.RC2.tar.gz
-</span><span class='line'>% <span class="nb">cd </span>elasticsearch-0.90.0.RC2/
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Start ElasticSearch:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% ./bin/elasticsearch -f
-</span><span class='line'><span class="o">[</span>2013-04-16 23:55:46,212<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> <span class="o">{</span> 0.90.0.RC2<span class="o">}[</span>9307<span class="o">]</span>: initializing ...
-</span><span class='line'><span class="o">[</span>2013-04-16 23:55:46,217<span class="o">][</span>INFO <span class="o">][</span>plugins                  <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> loaded <span class="o">[]</span>, sites <span class="o">[]</span>
-</span><span class='line'><span class="o">[</span>2013-04-16 23:55:47,742<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> <span class="o">{</span> 0.90.0.RC2<span class="o">}[</span>9307<span class="o">]</span>: initialized
-</span><span class='line'><span class="o">[</span>2013-04-16 23:55:47,742<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> <span class="o">{</span> 0.90.0.RC2<span class="o">}[</span>9307<span class="o">]</span>: starting ...
-</span><span class='line'><span class="o">[</span>2013-04-16 23:55:47,810<span class="o">][</span>INFO <span class="o">][</span>transport                <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> bound_address <span class="o">{</span> inet<span class="o">[</span>/0:0:0:0:0:0:0:0%0:9300<span class="o">]}</span>, publish_address <span class="o">{</span> inet<span class="o">[</span>/192.168.1.51:9300<span class="o">]}</span>
-</span><span class='line'><span class="o">[</span>2013-04-16 23:55:50,853<span class="o">][</span>INFO <span class="o">][</span>cluster.service          <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> new_master <span class="o">[</span>Redeemer<span class="o">][</span>YTfatlm2SyC4CsCsmnXX2A<span class="o">][</span>inet<span class="o">[</span>/192.168.1.51:9300<span class="o">]]</span>, reason: zen-disco-join <span class="o">(</span>elected_as_master<span class="o">)</span>
-</span><span class='line'><span class="o">[</span>2013-04-16 23:55:50,888<span class="o">][</span>INFO <span class="o">][</span>discovery                <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> elasticsearch/YTfatlm2SyC4CsCsmnXX2A
-</span><span class='line'><span class="o">[</span>2013-04-16 23:55:50,898<span class="o">][</span>INFO <span class="o">][</span>http                     <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> bound_address <span class="o">{</span> inet<span class="o">[</span>/0:0:0:0:0:0:0:0%0:9200<span class="o">]}</span>, publish_address <span class="o">{</span> inet<span class="o">[</span>/192.168.1.51:9200<span class="o">]}</span>
-</span><span class='line'><span class="o">[</span>2013-04-16 23:55:50,898<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> <span class="o">{</span> 0.90.0.RC2<span class="o">}[</span>9307<span class="o">]</span>: started
-</span><span class='line'><span class="o">[</span>2013-04-16 23:55:50,928<span class="o">][</span>INFO <span class="o">][</span>gateway                  <span class="o">]</span> <span class="o">[</span>Redeemer<span class="o">]</span> recovered <span class="o">[</span>0<span class="o">]</span> indices into cluster_state
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Kibana</h3>
-
-<p>Download via <a href="http://kibana.org/intro.html">webpage</a> or clone repository from github.
-Kibana is a Sinatra application.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% git clone git://github.com/rashidkpc/Kibana.git
-</span><span class='line'>% <span class="nb">cd </span>Kibana
-</span><span class='line'>% bundle install --path vendor/bundle <span class="c"># &quot;gem install bundle&quot; is needed if you don&#39;t install bundle</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Start Kibana:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% bundle <span class="nb">exec </span>ruby kibana.rb
-</span><span class='line'> <span class="o">==</span>  Sinatra/1.4.2 has taken the stage on 5601 <span class="k">for </span>development with backup from <span class="nv">Thin</span>
-</span><span class='line'> <span class="o">=</span>&gt;  Thin web server <span class="o">(</span>v1.5.1 codename Straight Razor<span class="o">)</span>
-</span><span class='line'> <span class="o">=</span>&gt;  Maximum connections <span class="nb">set </span>to <span class="nv">1024</span>
-</span><span class='line'> <span class="o">=</span>&gt;  Listening on 127.0.0.1:5601, CTRL+C to stop
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can change Kibana configuration via <code>KibanaConfig.rb</code>.</p>
-
-<h3>Fluentd</h3>
-
-<p>Install Fluentd and <a href="https://github.com/uken/fluent-plugin-elasticsearch">ElasticSearch plugin</a>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% gem install fluentd fluent-plugin-elasticsearch
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Fluentd configuration is below:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="c"># es.conf</span>
-</span><span class='line'><span class="nt">&lt;source&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> forward
-</span><span class='line'><span class="nt">&lt;/source&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;match</span> <span class="s">es.**</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> elasticsearch
-</span><span class='line'>  <span class="err">logstash_</span><span class="nb">format</span> true
-</span><span class='line'>  <span class="err">flush_</span><span class="nb">interval</span> <span class="m">10</span>s # for testing
-</span><span class='line'><span class="nt">&lt;/match&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>fluent-plugin-elasticsearch provides <code>logstash_format</code> option.
-It enables Kibana to search stored event logs in ElasticSearch.</p>
-
-<p>Start Fluentd:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% fluentd -c es.conf
-</span><span class='line'>2013-04-17 00:03:51 -0700 <span class="o">[</span>info<span class="o">]</span>: starting fluentd-0.10.33
-</span><span class='line'>2013-04-17 00:03:51 -0700 <span class="o">[</span>info<span class="o">]</span>: reading config file <span class="nv">path</span> <span class="o">=</span> <span class="s2">&quot;es.conf&quot;</span>
-</span><span class='line'>2013-04-17 00:03:51 -0700 <span class="o">[</span>info<span class="o">]</span>: using configuration file: &lt;ROOT&gt;
-</span><span class='line'>  &lt;<span class="nb">source</span>&gt;
-</span><span class='line'>    <span class="nb">type </span>forward
-</span><span class='line'>  &lt;/source&gt;
-</span><span class='line'>  &lt;match es.**&gt;
-</span><span class='line'>    <span class="nb">type </span>elasticsearch
-</span><span class='line'>    logstash_format <span class="nb">true</span>
-</span><span class='line'><span class="nb">    </span>flush_interval 10s
-</span><span class='line'>  &lt;/match&gt;
-</span><span class='line'>&lt;/ROOT&gt;
-</span><span class='line'>2013-04-17 00:03:51 -0700 <span class="o">[</span>info<span class="o">]</span>: adding <span class="nb">source type</span> <span class="o">=</span> <span class="s2">&quot;forward&quot;</span>
-</span><span class='line'>2013-04-17 00:03:51 -0700 <span class="o">[</span>info<span class="o">]</span>: adding match <span class="nv">pattern</span> <span class="o">=</span> <span class="s2">&quot;es.**&quot;</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;elasticsearch&quot;</span>
-</span><span class='line'>2013-04-17 00:03:51 -0700 <span class="o">[</span>info<span class="o">]</span>: listening fluent socket on 0.0.0.0:24224
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Store and Search event logs</h2>
-
-<p>Send some events to Fluentd.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{&quot;message&quot;:&quot;Hello!&quot;}&#39;</span> | fluent-cat es.event
-</span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{&quot;message&quot;:&quot;D&quot;}&#39;</span> | fluent-cat es.event
-</span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{&quot;message&quot;:&quot;Ruby&quot;}&#39;</span> | fluent-cat es.event
-</span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{&quot;message&quot;:&quot;Elastic!!&quot;}&#39;</span> | fluent-cat es.event
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>After Fluentd flushed received events to ElasticSearch, you can search the stored event logs via Kibana!</p>
-
-<p><img src="http://repeatedly.github.com/images/kibana_and_fluentd.png" title="&#34;Kibana and Fluentd&#34;" alt="&#34;Kibana and Fluentd&#34;"></p>
-
-<h2>Conclusion</h2>
-
-<p>This article introduced Fluent and Kibana (with ElasticSearch) combination to search event logs.
-Above example is no tuning. If you use these components in production, then
-maybe need to modify some configurations (e.g. JVM, ElasticSearch, Fluentd buffer and etc).</p>
-
-<p>But these components are easy to setup and work fine. So you can try this framework soon :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[Stormをはじめよう]]></title>
     <link href="http://repeatedly.github.com/ja/2013/03/getting-started-with-storm/"/>
     <updated>2013-03-30T10:54:00+09:00</updated>
@@ -802,279 +1270,6 @@ AWS上で展開しているTreasure Dataサービスの仕組みについてつ�
 AWSのMilesにも「Fluentd is good!!」と言われ，向こうでも徐々にFluentdが広まってきていると感じている今日この頃．このままTreasure Dataも伸びていきたい所です．</p>
 
 <p>各セッションの感想は他の人が書いてくれるはず．ということで，皆さんお疲れ様でした！またどこかでお会いしましょう :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[The basics of Fluentd]]></title>
-    <link href="http://repeatedly.github.com/2013/03/the-basics-of-fluentd/"/>
-    <updated>2013-03-09T13:54:00+09:00</updated>
-    <id>http://repeatedly.github.com/2013/03/the-basics-of-fluentd</id>
-    <content type="html"><![CDATA[<p>On Mar. 7th, Fluentd meetup in Fukuoka was held at OnRAMP.</p>
-
-<p><a href="http://www.zusaar.com/event/501053">Fluentd meetup in Fukuoka</a> (in japanese)</p>
-
-<p>In this event, I presented <strong>The basics of Fluentd</strong>.
-The purpose of presentation shares Fluentd concept and basic features. I hope this presentation helps your understading of Fluentd.</p>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/17001359?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/treasure-data/the-basics-of-fluentd" title="The basics of fluentd" target="_blank">The basics of fluentd</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
-
-<p>Thanks to matsuzaki-san and hashimoto-san for meetup setup and
-thank you everyone for your participation!</p>
-
-<p>I had a great time at Fukuoka :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[LTSV for D]]></title>
-    <link href="http://repeatedly.github.com/2013/02/ltsv-for-d/"/>
-    <updated>2013-02-10T04:10:00+09:00</updated>
-    <id>http://repeatedly.github.com/2013/02/ltsv-for-d</id>
-    <content type="html"><![CDATA[<p>In this week, Shinji Tanaka announced <a href="http://ltsv.org/">Labeled Tab-separated Values (LTSV)</a>.
-LTSV is the flexible and robust row oriented format.</p>
-
-<p>I just implemented ltsv-d for D programming language.</p>
-
-<p><a href="http://github.com/repeatedly/ltsv-d">LTSV for D</a></p>
-
-<p>ltsv-d provides <code>fromLTSV</code> and <code>toLTSV</code> functions.</p>
-
-<p><code>fromLTSV</code> for parsing:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">auto</span> <span class="n">apacheLog</span> <span class="p">=</span> <span class="s">&quot;host:127.0.0.1\tident:-\tuser:foo\ttime:[10/Oct/2000:13:55:36 -0700]\treq:GET /apache.gif HTTP/1.0\tstatus:200\tsize:777\treferer:http://www.example.com/start.html\tua:Mozilla/4.08 [en] (Win98; I ;Nav)&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="k">auto</span> <span class="n">record</span> <span class="p">=</span> <span class="n">fromLTSV</span><span class="p">(</span><span class="n">apacheLog</span><span class="p">);</span>
-</span><span class='line'><span class="n">writeln</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s">&quot;host&quot;</span><span class="p">]);</span> <span class="c1">// &quot;127.0.0.1&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>toLTSV</code> for dumping:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">auto</span> <span class="n">line</span> <span class="p">=</span> <span class="p">[</span><span class="s">&quot;foo&quot;</span><span class="p">:</span><span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="s">&quot;hoge&quot;</span><span class="p">:</span><span class="s">&quot;fuga&quot;</span><span class="p">,</span> <span class="s">&quot;piyo&quot;</span><span class="p">:</span><span class="s">&quot;puyo&quot;</span><span class="p">].</span><span class="n">toLTSV</span><span class="p">();</span>
-</span><span class='line'><span class="n">writeln</span><span class="p">(</span><span class="n">line</span><span class="p">);</span> <span class="c1">// &quot;foo:bar\thoge:fuga\tpiyo:puyo&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Enjoy LTSV!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hadoop Conference Japan 2013 Winter]]></title>
-    <link href="http://repeatedly.github.com/2013/01/hadoop-conference-japan-2013-winter/"/>
-    <updated>2013-01-22T18:09:00+09:00</updated>
-    <id>http://repeatedly.github.com/2013/01/hadoop-conference-japan-2013-winter</id>
-    <content type="html"><![CDATA[<p>We are Hive Logo Lovers!</p>
-
-<p><img src="http://repeatedly.github.com/images/hive_in_hcj13w.jpg" title="&#34;Original Hive T shirt&#34;" alt="&#34;Original Hive T shirt&#34;"></p>
-
-<p>Event Link: <a href="http://hcj2013w.eventbrite.com/">Hadoop Conference Japan 2013 Winter</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[yajl-d]]></title>
-    <link href="http://repeatedly.github.com/2013/01/yajl-d/"/>
-    <updated>2013-01-20T05:27:00+09:00</updated>
-    <id>http://repeatedly.github.com/2013/01/yajl-d</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/yajl-d">yajl-d</a> is the D binding for <a href="http://lloyd.github.com/yajl/">YAJL</a>.</p>
-
-<p>YAJL provides the stream JSON parsing and some extra features, e.g. allow comments.</p>
-
-<p>yajl-d also provides the JSON encoding and stream decoding.
-yajl-d is 2 - 3 times faster than std.json (try simple benchmark in example directory).</p>
-
-<p>Following code is basic form:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">import</span> <span class="n">yajl</span><span class="p">.</span><span class="n">yajl</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// yajl-d can serialize / deserialize D object.</span>
-</span><span class='line'><span class="k">struct</span> <span class="n">Hoge</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="kt">ulong</span> <span class="n">id</span><span class="p">;</span>
-</span><span class='line'>    <span class="nb">string</span> <span class="n">word</span><span class="p">;</span>
-</span><span class='line'>    <span class="kt">bool</span> <span class="n">yes</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// {&quot;id&quot;:100,&quot;word&quot;:&quot;hey!&quot;,&quot;yes&quot;:true}</span>
-</span><span class='line'><span class="n">Hoge</span> <span class="n">hoge1</span> <span class="p">=</span> <span class="n">Hoge</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="s">&quot;hey!&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-</span><span class='line'><span class="n">Hoge</span> <span class="n">hoge2</span> <span class="p">=</span> <span class="n">decode</span><span class="p">!</span><span class="n">Hoge</span><span class="p">(</span><span class="n">encode</span><span class="p">(</span><span class="n">hoge1</span><span class="p">));</span>
-</span><span class='line'><span class="k">assert</span><span class="p">(</span><span class="n">hoge1</span> <span class="p">==</span> <span class="n">hoge2</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>encode</code> and <code>decode</code> are the wrapper of <code>Encoder</code> and <code>Decoder</code>. If you want to know more details of <code>Encoder</code> and <code>Decoder</code>. See README and the DDoc.</p>
-
-<p>yajl-d has already listed in the official site.
-Thanks to Lloyd!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Published 'Introduction to Tornado' in Japan]]></title>
-    <link href="http://repeatedly.github.com/2012/12/published-introduction-to-tornado-in-japan/"/>
-    <updated>2012-12-25T03:59:00+09:00</updated>
-    <id>http://repeatedly.github.com/2012/12/published-introduction-to-tornado-in-japan</id>
-    <content type="html"><![CDATA[<p>In the last week, O&#8217;Reilly Japan published <a href="http://www.oreilly.co.jp/books/9784873115764/">&#8220;概説Tornado&#8221;</a>.
-This is the Japanese translation of <a href="http://shop.oreilly.com/product/0636920021292.do">&#8220;Introduction to Tornado&#8221;</a>.</p>
-
-<p>I joined the team as a translation supervisor.
-Thanks to team members and original authors for the good work.</p>
-
-<p><a href="http://www.tornadoweb.org/">Tornado</a> is a great product in Python.
-I use Tornado for the production proxy server and MessagePack RPC backend.
-Tornado has clear API, clean code and good performance.
-I think Tornado is good for learning Python and event driven programming.</p>
-
-<p>I hope this book helps your Tornado experience.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[siphash-d]]></title>
-    <link href="http://repeatedly.github.com/2012/12/siphash-d/"/>
-    <updated>2012-12-04T22:57:00+09:00</updated>
-    <id>http://repeatedly.github.com/2012/12/siphash-d</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/siphash-d">siphash-d</a> is the D implementation of <a href="https://131002.net/siphash/">SipHash</a>.</p>
-
-<p>The latest CRuby uses SipHash to prevent <a href="http://www.ruby-lang.org/en/news/2012/11/09/ruby19-hashdos-cve-2012-5371/">Hash-flooding DoS attack</a>. From now on, SipHash like algorithm will be important for robust application. So I implemented SipHash for D.</p>
-
-<p>Current version provides only siphash24 function:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">import</span> <span class="n">siphash</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">ubyte</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span> <span class="n">k</span> <span class="p">=</span> <span class="k">cast</span><span class="p">(</span><span class="kt">ubyte</span><span class="p">[])</span><span class="s">&quot;To be|not to be!&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="kt">ubyte</span><span class="p">[]</span> <span class="n">msg</span> <span class="p">=</span> <span class="k">cast</span><span class="p">(</span><span class="kt">ubyte</span><span class="p">[])</span><span class="s">&quot;that is the question.&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="k">auto</span> <span class="n">hashed</span> <span class="p">=</span> <span class="n">siphash24</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">msg</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I plan to add std.digest like struct and other APIs if needed.</p>
-
-<p>siphash-d has already listed in the official site.
-Thanks to JP Aumasson!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Inside Impala Coordinator at HSCR 13th]]></title>
-    <link href="http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-13th/"/>
-    <updated>2012-11-27T14:30:00+09:00</updated>
-    <id>http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-13th</id>
-    <content type="html"><![CDATA[<p>Yesterday, I talked about Impala Coordinator, which is scheduler layer of query execution.</p>
-
-<p>My presentation document is <a href="https://gist.github.com/4147497">here</a>!</p>
-
-<p>And <a href="http://twitter.com/oza_x86">@oza_x86</a> also talked about Impala Internal, but he focused on Query Execution Engine.
-The rest important component is only Query Planner.
-I hope someone presents Query Planner Internal at next event :)</p>
-
-<p><a href="http://twitter.com/GedowFather">@GedowFather</a> presented <a href="http://www.slideshare.net/GedowFather/cloudera-impala">Impala testing and operations on production</a>(ja).
-This presentation shared the knowledge and application consideration.
-I think this presentation is testbed for Impala introduction.</p>
-
-<p>Thanks to Hadoop User Group Japan for the good event!</p>
-
-<h2>Links</h2>
-
-<ul>
-<li><a href="http://hadoop-scr13th.eventbrite.com/">Event page</a> (ja)</li>
-<li><a href="http://togetter.com/li/413784">Togetter</a> (ja)</li>
-</ul>
-
-
-<!-- more -->
-
-
-<p>P.S.</p>
-
-<p>Currently, Impala doesn&#8217;t have a mascot or logo. @GedowFather produced the following image.
-I think this image is good candidate ;)</p>
-
-<p><img src="http://blog.father.gedow.net/wp-content/uploads/2012/11/ImpalaQL.png" alt="ImpalaQL" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Change The Game]]></title>
-    <link href="http://repeatedly.github.com/ja/2012/11/change-the-game/"/>
-    <updated>2012-11-01T00:00:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2012/11/change-the-game</id>
-    <content type="html"><![CDATA[<p>知ってる人はもう知っているとは思いますが，10月をもって1年と10ヶ月勤めた謎のベンチャー<a href="http://preferred.jp/">Preferred Infrastructure, Inc</a>を去りました．PFIの方々，本当に有り難うございました！<br />
-エントリを書けと色々な人に脅されているので，てきとうに書きます．</p>
-
-<!-- more -->
-
-
-<h2>環境</h2>
-
-<p>インターンで飛び込み，そのテンションのまま大学を辞めて入社．俺みたいな機械学習や情報検索の基礎すらなかった人間が，今では機械学習プロジェクトで開発をやっていたわけですから，岡野原さんを筆頭に本当濃い社員の人達には感謝しかありません．<br />
-学習の高速道路という言葉がありますが，間違いなく超高速，時には事故るんじゃないかという環境でした．右を見ても左を見ても怪物だらけであるこの魔窟で，エンジニアとして勤めることが出来たのは本当に良い経験でした．</p>
-
-<p>俺が入社した時は正社員は15人くらいだった気がしますが，今では既に26人で，もう30人を越えそうです．人やプロジェクトが増えた時，成長する速度を落とさずより攻めるにはどうすべきかという，そういう変化の中に入れたことも良かったと思います．</p>
-
-<p>Red Bull部，豆部，カタン部など，これらに参加出来なくなるのは若干悲しいですね…</p>
-
-<h2>やってたこと</h2>
-
-<p>俺は製品開発部にいたわけですが，今PFIが持っているプロジェクトSedue，Jubatus，Bazilに関わらせてもらいました．この辺，俺がやりやすいよう色々と調整をしてくれた久保田さんには本当に感謝しています．</p>
-
-<h3><a href="http://preferred.jp/product/sedue/abstract/">Sedue</a></h3>
-
-<p>検索エンジンであるSedueでは，設計からプロトタイピングを多くやらせてもらいました．といっても俺みたいな情報検索の新人がいきなり検索のコアを弄るというのは無理なので，新しいサブコンポーネント，プロキシサーバ，管理ツールなどなど，Sedueをより使いやすくするための開発をメインでやってました．<br />
-今でもインストールスクリプトにインストール先を指定するpオプションを付けたのはGood catchだったと自信を持って言えます ;)</p>
-
-<p>Sedueではオンプレミスのような製品の難しさと楽しさ，というのを学びました．俺の書いたコードが今でもお客さんの所で元気に走り続けているというのは嬉しいことです．</p>
-
-<h3><a href="http://jubat.us/">Jubatus</a></h3>
-
-<p>Jubatusでは開発そのものにはあんま関わって無くて，OSSとしてどうするかとか，クライアントの整備とか周辺でごそごそしてました(とくにスクリプティング言語書ける人が壊滅的にいなかった)．jubatus-python-clientの手書きmsgpack-rpcに見かねて，msgpack-rpc-pythonを実装したのも今では良い思い出です．</p>
-
-<p>JubatusはNTTと共同開発しているもののOSSなので，皆さん興味がある人はどんどんコミットすると良いと思います．なんだかんだで開発者だと気づかないことってたくさんあるので，他の方からのフィードバックがあるとより洗練されます．C++ですけどね！ハハハ！</p>
-
-<h3>Bazil</h3>
-
-<p>Bazilに関しては初期の段階からリーンスタートアップ的に開発しようとメンバが集まり，合宿やったりお客さんから話を聴いたりしてプロジェクトを回していました．<br />
-また，会社で初めてのプロジェクト制という試みもあり，かなりアクティブに動いていた気がします．最初はメインが3人(PSS，製品開発，R&amp;D)という小さかったBazilプロジェクトですが，pivotを重ねて，今ではPFIの3つのプロジェクトの一つにまで成長しました．</p>
-
-<p>BazilはSedueともJubatusとも違う感じで展開しようということで，コアの機械学習サーバ以外にも色々と開発してます．サーバのAPIどうしようかとか，ここはどうやって可視化しようかとか，部門を越えてワイワイやってるのは楽しかったですね．<br />
-最初から関わっていたこともあり，今離れるのが残念というのが正直な所です．ただちゃんと引き継ぎもしたので，今後Bazilがどうなるのか，外野からですが注目し続けます！</p>
-
-<h2>次どうすんの？</h2>
-
-<p>「あいつは一体何Dataに行くんだ？」とずっと皆さんもやもやしていたと思いますが，<a href="http://www.treasure-data.com/">Treasure Data</a>という謎のスタートアップに11月，つまり今日からjoinします．ここもPFIに負けず劣らず怪物うごめく場所なのでかなり楽しみで，そういう人たちが俺を選んでくれたというのは本当に有り難く，ガンガン突っ走りたいなと思います．「TDのDはD言語のD」と呼ばれる日も近い(嘘です)．<br />
-Treasure Data本体はアメリカにあるんですが，活動は今までと同じ東京(南大沢ではない)で変わらんので，皆さんこれからもガンガン絡んでやってください．</p>
-
-<p>自分でも予想外に早かったなと思います．しかし，自分を試せる面白いフィールドがあり，そのチャンスが目の前に来てしまったのだから仕方がありません．チャンスはとりあえず掴む，というスタイルで今までやってきたので，これもそういうことなんだと思ってます :)</p>
-
-<p>PFIのrepeatedlyあらためTDのrepeatedlyとして，これからも皆さん宜しくお願いします．</p>
 ]]></content>
   </entry>
   

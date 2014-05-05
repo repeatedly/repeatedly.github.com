@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Fluentd | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/fluentd/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-01-26T02:56:26+09:00</updated>
+  <updated>2014-05-06T03:02:47+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,107 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[そろそろFluentd v11についてひとこと言っておくか]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/03/about-fluentd-v11/"/>
+    <updated>2014-03-05T19:40:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/03/about-fluentd-v11</id>
+    <content type="html"><![CDATA[<p>リリースは永遠にされません！</p>
+
+<p>日本では色々なところでv11の噂がまことしやかに囁かれていますが，
+俺がメインメンテナである限りv11がリリースされることはないので，諦めてv0.10.xを使ってください！</p>
+
+<p>以下まじめな話になります．</p>
+
+<h2>v11が生まれた背景と現状</h2>
+
+<p>v11が生まれたのは1年以上前です．背景には，v10と呼ばれる今のバージョンがプロトタイプを兼ねたリリースであり，
+「利用者のフィードバックを取り込んで，ダメな所をガッツリ書き換えて互換性を壊してメジャーバージョンアップや！」という流れがありました．</p>
+
+<p>しかし，v10は十分に柔軟でかつパフォーマンスも発揮しており，コミッタ陣はそれほどモチベーションがあったわけではありません．
+また，プラグインによって解決出来た問題も多く，v11が生まれた時ほどユーザから「v11が欲しい！」という要望は聞かれなくなりました．</p>
+
+<p>当たり前ですが，ユーザからの声がなければ「あれ，じゃあこの機能あんまり必要ないんじゃね？」ということになって削られるのはよくあることで，
+v11もそんな感じで開発リソースはあまり割かれなくなって行きました．<br />
+もともと空いた時間に@frsyuki，@tagomoris，@sonotsの人達がたまにコミットしていたくらいなので，直近では機能追加のコミットはほぼありません．</p>
+
+<h2>Fluentdのユーザ拡大</h2>
+
+<p>v11で互換性を壊しても大丈夫だろう，とコミッタ陣が思っていたものの一つに，当時Fluentdのプラグインの大半をコミッタの関係者が書いていた，
+というのがあります．<br />
+そのため，互換性を壊しても必要そうなプラグインの書き換えはすぐに終わるし，
+「えいや！」と同時にバージョン上げれば被害は少ないだろうという感じです．</p>
+
+<p>しかし，v10は思っていたよりも早くユーザが増え，今ではさきがけとなったWeb/アドテク業界のみならず，大小問わず様々な企業，
+IoTな分野など，世界的にも使われるようになってきました．<br />
+また，それにともないプラグイン数も200を越え，当初の目論見が難しくなっているのが現状です．</p>
+
+<h2>開発方針の変更とv1案</h2>
+
+<p>俺がFluentdのメインメンテナとなったのも関わってるんですが，「v11のリリースをどうするか？」という問題もハンドリングするようになりました．</br />
+個人的には「v11の機能群は有用だけど，互換性を壊してリリースするほどのものではないなぁ」というのがv11を見た結論であり，
+その辺やりとりしたのが以下のtogetter．</p>
+
+<p><a href="http://togetter.com/li/620329">Fluentd v11 なんてなかったんだ</a></p>
+
+<p>上のまとめにあるように，色々と話した結果，v11が持っているいくつかの機能をv10にマージし，
+それらが終わったらv1としてリリースしようというのが，現在の開発の方向性です．<br />
+段階的な変化になりますが，基本的には互換性が保たれるようにAPIを変えていくので，
+既存ユーザはそのまま使えますし，バージョンアップにともなって徐々に有用な機能が使えるようになります．<br /></p>
+
+<p>以下のissueで必要そうな機能リストと，進捗を管理してます．</p>
+
+<p><a href="https://github.com/fluent/fluentd/issues/251">Plan for v1 release</a></p>
+
+<p>v1というバージョンに関しては，今のFluentdのgemのバージョンがv0.10.xで，v0.11.xのことをv11と呼んでいて非常に紛らわしく，
+新しく入ってくるユーザとかを考えるとそろそろまじめにバージョニングした方が良いだろうという考えです．<br />
+v1だと安定版のイメージが強いですし，実際の所v0.10.xはv1でもおかしくない機能セットはすでに持っています．</p>
+
+<h2>まとめ</h2>
+
+<p>ということで，色々と今までの流れを書きましたが，皆さんFluentdを今後とも宜しくお願いします :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[高トラフィックでのFluentdからElasticsearchへの書き込み問題への対策]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic/"/>
+    <updated>2014-02-11T18:39:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic</id>
+    <content type="html"><![CDATA[<p><a href="http://blog.kakipo.com/trouble-with-fluentd-and-elasticsearch/">Fluentd -> Elasticsearch 大量データ転送でトラブル</a></p>
+
+<p>上の記事にあるように，Elasticsearchに大量のデータを一気に流し込むと色々と問題が起きます．
+元々検索エンジンはスケールさせるのが難しく，よく当たる問題だと思います．</p>
+
+<p>また，Fluentdとかだとガンガンログを流し込むことも多く，この辺で詰まる云々はたまに聞きます．</p>
+
+<p><a href="http://elasticsearch.doorkeeper.jp/events/7491">第3回elasticsearch勉強会</a></p>
+
+<p>で，Elasticsearch勉強会にFlorianという本家のエンジニアが来ていたので，
+懇親会でこの辺どうすればいいのか聞いてみました．
+実際Elasticsearchユーザの中でもちょくちょく問題になるらしく，
+大きくわけて二つの方法(またはこの組み合わせ)で回避しているようです．</p>
+
+<h2>書き込み先のノードを増やす</h2>
+
+<p>1ノードへの書き込みで詰まるなら，もっとノードを増やせば良いというアプローチ．
+今のfluent-plugin-elasticsearchにはラウンドロビンの機能はないんですが，
+out_roundrobinとかと組み合わせてやれば，書き込みを複数台に散らせることは出来そうです．</p>
+
+<h2>前段にキューを置く</h2>
+
+<p>書き込みをするノードの前にキューを置いて，そこでバッファリングしておくという方法．
+Fluentdの場合はバッファがキューになっているので，そこのフラッシュ間隔を長めに調整するとか，
+キュー系のプラグインがいくつかあるので，それを間に挟むという感じになるのかなと．<br />
+ただ，キューから値をポップする間隔が短いと結局詰まるので，この辺は少し工夫が必要そうです．</p>
+
+<h2>まとめ</h2>
+
+<p>Elasticsearchを真面目に運用したことがないので，どっちが現実的なのかよく分からないのが正直な所．
+この辺は高トラフィック環境で使っている人の話を聞きたい所です．</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[July Tech Festa 2013]]></title>
@@ -120,66 +221,6 @@ AWSのMilesにも「Fluentd is good!!」と言われ，向こうでも徐々にF
 <p>I will talk about "The Melancholy of Plugin Developer" in LT section.</p>
 
 <p>See you at the event!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Released fluent-logger-d]]></title>
-    <link href="http://repeatedly.github.com/2012/02/released-fluent-logger-d/"/>
-    <updated>2012-02-21T21:16:00+09:00</updated>
-    <id>http://repeatedly.github.com/2012/02/released-fluent-logger-d</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/fluent/fluent-logger-d">fluent-logger-d</a>.</p>
-
-<p>This client library has some TODOs, but works fine.
-I tested posting 5,000,000 messages with 5 threads, no problem.</p>
-
-<p>In fact, D community now doesn't want such library.
-Because current D community doesn't face to the production.</p>
-
-<p>I hope this library with <a href="http://fluentd.org/">Fluentd</a> helps your system design in the future.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Fluentd meetup in Japan]]></title>
-    <link href="http://repeatedly.github.com/2012/02/fluentd-meetup-in-japan/"/>
-    <updated>2012-02-06T01:07:00+09:00</updated>
-    <id>http://repeatedly.github.com/2012/02/fluentd-meetup-in-japan</id>
-    <content type="html"><![CDATA[<p><a href="http://www.zusaar.com/event/193104">Fluentd meetup in Japan</a> was held on Feb 4th.</p>
-
-<p>This meetup included more than 120 over hackers. It has been really exciting and I had a great time. Thanks to Fluentd developers and users!</p>
-
-<h2>My presentation</h2>
-
-<p>I talked about "Dive into Fluent plugin". The purpose of this presentaion shares know-how of Fluentd plugin. I hope this presentation helps your developing of Fluend plugin.</p>
-
-<p>I didn't talk about some un-documented features, e.g. EventStream families, ObjectBufferedOutput, the details of DetachMultiProcessMixin and etc. Let's dive into Fluentd source code if you know these features.</p>
-
-<p>Enjoy Fluentd and plugins :)</p>
-
-<ul>
-<li>Slideshare(en)</li>
-</ul>
-
-
-<div style = "width:425px" id = "__ss_11411503"> <strong style = "display:block;margin:12px 0 4px"><a href = "http://www.slideshare.net/repeatedly/fluentd-meetup-dive-into-fluent-plugin" title = "Fluentd meetup dive into fluent plugin" target = "_blank">Fluentd meetup dive into fluent plugin</a></strong> <iframe src = "http://www.slideshare.net/slideshow/embed_code/11411503" width = "425" height = "355" frameborder = "0" marginwidth = "0" marginheight = "0" scrolling = "no"></iframe> <div style = "padding:5px 0 12px"> View more <a href = "http://www.slideshare.net/" target = "_blank">presentations</a> from <a href = "http://www.slideshare.net/repeatedly" target = "_blank">N Masahiro</a> </div> </div>
-
-
-<ul>
-<li>Ustream(ja)</li>
-</ul>
-
-
-<iframe src = "http://www.ustream.tv/embed/recorded/20207654" width = "608" height = "368" scrolling = "no" frameborder = "0" style = "border: 0px none transparent;"></iframe>
-
-
-<p>Sorry, the first few minutes is lost.</p>
-
-<ul>
-<li><a href="http://togetter.com/li/252178">Togetter</a>(ja)</li>
-<li><a href="http://www.flickr.com/photos/koyhoge/sets/72157629164501855">flickr photos by koyhoge</a></li>
-</ul>
-
 ]]></content>
   </entry>
   

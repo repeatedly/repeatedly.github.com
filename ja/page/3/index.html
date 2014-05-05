@@ -9,8 +9,8 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="知ってる人はもう知っているとは思いますが，10月をもって1年と10ヶ月勤めた謎のベンチャーPreferred Infrastructure, Incを去りました．PFIの方々，本当に有り難うございました！
-エントリを書けと色々な人に脅されているので，てきとうに書きます． ">
+  <meta name="description" content="Librato Metricsをうちではモニタリングに使ってるんですが，日本で全くと言って良いほど記事を見ないので，紹介記事を書いてみる． 何が出来る？ おおまかに分けて以下のようなことが出来る． メトリックスを作れる
+メトリックスに対してアラートを設定出来る &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,7 +76,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/ja/2012/11/change-the-game/">Change The Game</a></h1>
+      <h1 class="entry-title"><a href="/ja/2013/09/librato-metrics-introduction/">Librato Metrics introduction</a></h1>
     
     
       <p class="meta">
@@ -92,24 +92,100 @@
   
 
 
-<time datetime="2012-11-01T00:00:00+09:00" pubdate data-updated="true">Nov 1<span>st</span>, 2012</time>
+<time datetime="2013-09-08T08:57:00+09:00" pubdate data-updated="true">Sep 8<span>th</span>, 2013</time>
         
-         | <a href="/ja/2012/11/change-the-game/#disqus_thread">Comments</a>
+         | <a href="/ja/2013/09/librato-metrics-introduction/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>知ってる人はもう知っているとは思いますが，10月をもって1年と10ヶ月勤めた謎のベンチャー<a href="http://preferred.jp/">Preferred Infrastructure, Inc</a>を去りました．PFIの方々，本当に有り難うございました！<br />
-エントリを書けと色々な人に脅されているので，てきとうに書きます．</p>
+  <div class="entry-content"><p><a href="https://metrics.librato.com/">Librato Metrics</a>をうちではモニタリングに使ってるんですが，日本で全くと言って良いほど記事を見ないので，紹介記事を書いてみる．</p>
 
+<h1>何が出来る？</h1>
+
+<p>おおまかに分けて以下のようなことが出来る．</p>
+
+<ul>
+<li>メトリックスを作れる</li>
+<li>メトリックスに対してアラートを設定出来る</li>
+<li>ダッシュボードでメトリックスの一覧が見れる</li>
+<li>JavaScript SDKを使って自分のサイトに埋め込むことが出来る</li>
+<li>APIが提供されていて，いくつかの言語のクライアントがある</li>
+</ul>
+
+
+<p>以下それぞれ簡単な説明．</p>
+
+<h2>メトリックス</h2>
+
+<p>LibratoにはMetricというのがあり，これが最小の単位．Metricに監視したいメトリックスの値を入れていき，他のMetricと混ぜたりすることでモニタリングを行います．</p>
+
+<p><img src="/images/librato_metric_sample.png" title="&#34;Librato Metric sample&#34;" alt="&#34;Librato Metric sample&#34;"></p>
+
+<p>上の例のように，一つのMetricに複数の軸の値を入れることが出来ます．これはソースと呼ばれていて，保存する時にsourceを指定すれば良いです．指定しなかったら&#8221;unassigned&#8221;みたいなsourceにまとめられます．<br />
+後，右上にある時間を弄れば，そのレンジでグラフが表示されます．</p>
+
+<p>左の欄に色々とグラフの設定内容があるので，必要であれば弄ります．&#8221;How should we aggregate your data over time?&#8221;の欄が少し大事で「どういう風にメトリックスを見るか」を指定できます(<a href="http://dev.librato.com/v1/post/metrics#gauge_specific">ここ</a>の説明参照)．</p>
+
+<h3>Instrument</h3>
+
+<p>Metricをまとめるのに，Instrumentというのがあります．ここで複数のMetricを重ねることで，関連のありそうなMetric同士を俯瞰出来るようになります．</p>
+
+<p>単純なモニタリングだけだと，MetricとInstrumentが一対一になったりしてダッシュボードやJavaScript SDKでちょっと面倒だったりもします．</p>
+
+<h2>アラート</h2>
+
+<p><img src="/images/librato_alert_sample.png" title="&#34;Librato Alert sample&#34;" alt="&#34;Librato Alert sample&#34;"></p>
+
+<p>上の画像の左のカラムが例で，Metricの中でスレッショルドベースで指定出来ます．どこに飛ばすか設定出来るので，うちでは重要なメトリックスに関してはHipChatやPagerDutyなどに飛ばしてます．</p>
+
+<p>複雑な条件設定や，Metricをまたいだアラートは出来ないので，そういうのが欲しい場合は自分達で頑張る必要があります．</p>
+
+<h2>ダッシュボード</h2>
+
+<p><img src="/images/librato_dashboard_sample.png" title="&#34;Librato Dashboard Sample&#34;" alt="&#34;Librato Dashboard Sample&#34;"></p>
+
+<p>これがダッシュボードの例です．実際はMetricじゃなくてInstrumentを並べてるんですが，こんな感じで表示出来ます．<br />
+ダッシュボードはいくらでも作れるので，自分の見たい粒度で作って，必要なメトリックスを並べます．某社みたいに一つのダッシュボードに数千数万のメトリックスにならないよう気をつけましょう．</p>
+
+<h2>API</h2>
+
+<p><a href="http://dev.librato.com/v1/metrics">APIページ</a>にリストと説明が載ってます．いくつかの言語には<a href="https://github.com/librato">公式のクライアントライブラリ</a>があるので，使うと良いです．<br />
+ただ，Ruby版とか試してもInstrument APIがなかったりと，まだまだサポートAPIにばらつきが多い印象．アプリケーションからガチで使うなら，自分でいくつか実装する必要があります．APIはREST + JSONなので，実装はそんなに難しくないです．</p>
+
+<p><a href="http://dev.librato.com/v1/users">ユーザAPI</a>はまだβ機能なのか，使いたい場合はLibartoに連絡して，使えるようにしてもらう必要があるっぽいです．</p>
+
+<h3>JavaScript SDK</h3>
+
+<p><img src="/images/librato_javascript_sdk_sample.png" title="&#34;Librato JavaScript SDK Sample&#34;" alt="&#34;Librato JavaScript SDK Sample&#34;"></p>
+
+<p>こんな感じになります．好きなページに貼り付けることが出来るし，グラフは自動で更新されます．
+どういうコードになるかは，<a href="http://blog.librato.com/posts/2012/10/embeddable-charts">Libratoの記事</a>を参照してください．</p>
+
+<h3>Fluentdの例</h3>
+
+<p>Fluentdには<a href="https://github.com/treasure-data/fluent-plugin-metricsense">fluent-plugin-metricsense</a>というプラグインがあって，これは保存先にLibrato Metricsが使えたりします．
+これはクライアント使ってないけど，<a href="https://github.com/treasure-data/fluent-plugin-metricsense/blob/master/lib/fluent/plugin/backends/librato_backend.rb">こんな感じで</a>，直接APIを呼ぶくらいなら簡単に実装できます．</p>
+
+<h1>その他</h1>
+
+<h2>料金</h2>
+
+<p><a href="https://metrics.librato.com/pricing">料金ページ</a>を見てください．基本的にはデータの流量(これはLibrato側での保存ベース)，メトリックスの数，ソースの数，が影響します．<br />
+簡単に言うと，どれだけの頻度でどれだけの数のメトリックスを作るか，です．</p>
+
+<h2>サポート</h2>
+
+<p>料金ページにも載ってますが，オンラインチャットとメールとコールがあります．うちではOlarkを使ってますが，最近のスタートアップではこの手のオンラインチャットでの対応というのが広まりつつあって良い感じ．<br />
+緊急を要したり深いディスカッションが必要であれば，コールすることになるかなと．うちでも少し困ったことがあったので，コールして直接要望出したり設計を相談したりしました．</p>
+
+<h1>まとめ</h1>
+
+<p>AnnotationとかCRRELATEとか紹介してないのもありますが，Libartoの基本的な所を書いた．自分達でモニタリング環境を構築出来るなら良いんですが，スタートアップとかだとそこにリソースを割くのが難しかったりするので，そういう所はLibratoとか検討してみてもいいんじゃないかと思います．</p>
 </div>
   
-  
-    <footer>
-      <a rel="full-article" href="/ja/2012/11/change-the-game/">Read on &rarr;</a>
-    </footer>
   
 
 
@@ -120,7 +196,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/ja/2012/10/fluent-plugin-mongo-spec/">Mongoプラグインの仕様</a></h1>
+      <h1 class="entry-title"><a href="/ja/2013/08/elasticsearch-meetup-1st/">ElasticSearch勉強会 第1回</a></h1>
     
     
       <p class="meta">
@@ -136,31 +212,272 @@
   
 
 
-<time datetime="2012-10-31T03:30:00+09:00" pubdate data-updated="true">Oct 31<span>st</span>, 2012</time>
+<time datetime="2013-08-31T17:21:00+09:00" pubdate data-updated="true">Aug 31<span>st</span>, 2013</time>
         
-         | <a href="/ja/2012/10/fluent-plugin-mongo-spec/#disqus_thread">Comments</a>
+         | <a href="/ja/2013/08/elasticsearch-meetup-1st/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>分散パフォーマンステスト関係を書こうと思っていたんですが，よくよく考えたらMongoプラグインについて日本語でまともな記事を書いたことなかったので書きます．</p>
+  <div class="entry-content"><p>8/29日に行われた<a href="http://atnd.org/event/E0018616">ElasticSearch勉強会 第1回</a>に参加してました．ElasticSearchは前々から興味はあったけど，仕事とかで使うこともないのでずっと放置という状態だった． <br />
+<a href="http://blog.johtani.info/blog/2013/08/30/hold-first-elasticsearch-meetup-in-japan/">主催者の方のブログ</a>に各発表スライドへのリンクとかあるので，興味がある方はそちらを参照．</p>
 
-<p>このエントリは<a href="http://www.zusaar.com/event/415005">ウィークリーFluentdユースケースエントリリレー</a>の参加エントリです．</p>
+<p>発表を聞いて思ったのは，Solrよりも後発なのもあり，運用とかエコシステムの構築に関して，かなり頑張っているなという印象．REST APIでの簡単な操作はもちろんのこと，運用で使えるexplainやelasticsearch-headなど，色々とやりやすそう． <br />
+懸念点であるパフォーマンスに関しても，最後のニコ動を使った発表を見るに，かなり改善されて来ているようだ．</p>
 
+<p>インデックスのsharding周りが少し気になっていて，文書IDをユーザが指定できるらしいので，その時のshardの割り当てとかどうやってんのかな，と． <br />
+shardの数は途中で変更出来ないらしく，増やしたい時は別のクラスタを使ってjoinみたいなことするようなんだけど，それはそれで重そう．ここはjohtaniさんが調べてくれるらしいので，それを待ちたい所．</p>
+
+<p>次会はCookpadの人がFluentd + ElasticSearch + Kibana3の事例とか話してくれるようなので，次のイベントが楽しみな所．
+最近<a href="http://www.elasticsearch.org/overview/kibana/">Kibanaのページ</a>にもFluentdが載ったりしたので，今後も踏まえて実運用の話とか気になってます．</p>
+
+<p>皆さん，お疲れ様でした！</p>
 </div>
   
   
-    <footer>
-      <a rel="full-article" href="/ja/2012/10/fluent-plugin-mongo-spec/">Read on &rarr;</a>
-    </footer>
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2013/07/july-tech-festa-2013/">July Tech Festa 2013</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-20T04:54:00+09:00" pubdate data-updated="true">Jul 20<span>th</span>, 2013</time>
+        
+         | <a href="/ja/2013/07/july-tech-festa-2013/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.techfesta.jp/">July Tech Festa 2013</a>というイベントが7月14日にAIITで行われ，基調講演として呼ばれたので，<a href="http://www.techfesta.jp/p/program-2.html#A01">Treasure Dataとして発表</a>してきました．
+<a href="http://www.techfesta.jp/2013/07/jtf2013_16.html">Best Speakerにも選んで頂き</a>，ありがとうございます．</p>
+
+<h3>Slideshare</h3>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/24213160?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/treasure-data/treasure-data-cloud-strategy" title="Treasure Data Cloud Strategy" target="_blank">Treasure Data Cloud Strategy</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
+
+<h3>Togetter</h3>
+
+<ul>
+<li><a href="http://togetter.com/li/533842">JTF全体</a></li>
+<li><a href="http://togetter.com/li/534105">自分の発表のみ</a></li>
+</ul>
+
+
+<p>CTOから無茶ぶりされて「まぁいいか」と承諾したら実は基調講演だったというオチでした．他の発表者の人達がChefやOpenStackなどのいわゆるクラウドやDevOpsプロダクトの中，サービスであるTreasure Dataに講演依頼が来たということは，そういうことなんだろうなと上記の構成になりました．</p>
+
+<p>Treasure Dataのサービスそのものやアーキテクチャに関しては，記事やイベントでぱらぱらと説明はしたものの，おそらくまとまった発表したのは今回が初めてだったんじゃないかなと思っています．こういう場を用意して頂いたJTFの方達には感謝です．</p>
+
+<p>Togetterにまとめられているのを見て貰えれば分かるのですが</p>
+
+<ul>
+<li>なぜクラウドでやっているのか</li>
+<li>システム構築で気をつけていること</li>
+<li>どう運用しているか</li>
+</ul>
+
+
+<p>の辺りを大まかに話しました．僕らはスタートアップということもあり速度がとても重要なので，自分達のビジョンを達成するためにどういう選択をしてきたかと，その考え方について一通り述べたつもりです．</p>
+
+<p>懇親会でも色々な方と話すことが出来て，運用で使っているツール周り話したり，実はFluentd使ってるんですよという人にも会えたり，Treasure Dataのようなサービス検討中なんです，などなど色々と楽しい時間を過ごせました．
+Fluentdなんかはプラグイン機構でガンガンインフラの人にもコード書いて問題を解決してもらおうというプロダクトだったりするので，今後もユーザが増えるといいなという思います．</p>
+
+<p>参加された方々，またスタッフの方々，お疲れ様でした！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2013/05/tdpl-japanese-edition/">プログラミング言語D</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-13T01:44:00+09:00" pubdate data-updated="true">May 13<span>th</span>, 2013</time>
+        
+         | <a href="/ja/2013/05/tdpl-japanese-edition/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://forum.dlang.org/thread/ttyydpzuhtpgxagkynhq@forum.dlang.org">フォーラム</a>にポストしてブログで書くの忘れてました！</p>
+
+<p><img src="/images/tdpl_jp_edition.png" title="&#34;TDPL Japanese Edition&#34;" alt="&#34;TDPL Japanese Edition&#34;"></p>
+
+<ul>
+<li><a href="http://books.shoeisha.co.jp/book/b108222.html">プログラミング言語D</a></li>
+<li><a href="http://www.shoeisha.co.jp/book/qa/15615/list">正誤表</a> : 誤字や誤訳などあれば，こちらから報告してもらえると助かります</li>
+</ul>
+
+
+<p>Andreiが書いたD言語本，通称<a href="http://erdani.com/index.php/books/tdpl/">TDPL</a>の日本語版が翔泳社さんから出版されました．俺と原さんが監訳者として参加してました．<br />
+翻訳された長尾さんの訳の質も高く，監訳のチェックは技術的なものに注力出来ました．</p>
+
+<p>最初に断っておくと，TDPLはD言語の本であって入門本ではありません．
+ある程度，他の言語を触っていてプログラミングに関して知っていることが前提になっています．</p>
+
+<p>その変わりと言っては何ですが，単なる文法の説明などにとどまらず「なぜD言語がこの機能を採用したのか」
+なども書かれている本になっています．そのため，それなりに読み応えのある本だと思います．<br />
+また，Andreiのノリ？が極力残るように勤めました．</p>
+
+<p>TDPL自体は2010年出版ですが，最新のバージョンである2.062までの変更はちゃんとフォローしています．
+モジュール名含めコードも一部新しくなってますし，新機能に関してはコラムなどで説明しています．<br />
+もし何か疑問などあれば，Twitterならば #dlang つけて呟くと，親切なD言語erが答えてくれると思います．</p>
+
+<p>この本が出版されたことで，一つ肩の荷が下りたかなという感じです．
+D言語を始める始めないに関わらず，どういう言語なのかを知って貰える一冊なのは確かです．</p>
+
+<p>Enjoy D！</p>
+
+<h2>P.S.</h2>
+
+<p>恒例のアレなリンクです．すでに1ヶ月経ってますが，こちらから買ってもらえると俺が喜びます :)</p>
+
+<p><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4798131105/repeatedly-22/ref=nosim/">Amazon</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2013/03/getting-started-with-storm/">Stormをはじめよう</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-30T10:54:00+09:00" pubdate data-updated="true">Mar 30<span>th</span>, 2013</time>
+        
+         | <a href="/ja/2013/03/getting-started-with-storm/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>O&#8217;Reillyの方から<a href="http://www.oreilly.co.jp/books/9784873116013/">Stormをはじめよう</a>を献本して頂いて読んだのでレビュー！</p>
+
+<h2>感想</h2>
+
+<p>最近増えてきている100ページくらいの本なので，さっくり読めました．</p>
+
+<p>簡単にまとめると &#8221;<strong>英語は読みたくないので情報が古くてもStormの概要を日本語で読みたい</strong>&#8221; という方向けの本．</p>
+
+<p>大きな理由は以下:</p>
+
+<ul>
+<li>Stormの対象バージョンが0.7.1と古い．俺でもTridentというのが0.8から入っているのを知っているので，その辺の目玉機能は書かれていない</li>
+<li>多分原著の方も少し書き方が雑．なんの説明もなく実装のクラス名を使って説明している所とかあるので「？」となる所がある
+
+<ul>
+<li>サンプルコードも少し雑で，使ってない変数があったり説明と実装があってなかったりもたまにある</li>
+</ul>
+</li>
+<li>翻訳が少し微妙．Cursorが&#8221;カーサー&#8221;だったり，原著の方の構成の不味さもあるのか，日本語的に理解しにくい文がちょくちょく混じっている (監訳はいない？)</li>
+</ul>
+
+
+<p>メッセージングの信頼性に関しては，Storm本家のWikiの方が詳しく書かれていたりするので，本当に「Stormってどういう構成でどういう感じに機能追加するんだろう？ユースケースとかは？」みたいなのを日本語で読みたい場合には，とっかかりにもなるし，これで十分な感じ．</p>
+
+<p>英語が読める人は，本家のWikiとか漁った方が情報も新しく結構細かに書かれているため，そちらの方が正確かもしれない．</p>
+
+<h2>正誤表</h2>
+
+<p>読んでて気になった所はgistにまとめておきました</p>
+
+<p><a href="https://gist.github.com/repeatedly/5274873">Stormをはじめようのerrata</a></p>
+
+<h2>Stormについてのてきとうな所感</h2>
+
+<ul>
+<li><p>NimbusはImpalaのstatestoreみたいな感じで，最初はいるけど落ちても致命的ではない</p></li>
+<li><p>Tupleは基本単体で送られて，それぞれにトポロジーのack tracker(Acker)がついてトラッキングされる</p>
+
+<ul>
+<li>tupleが増えるとAckerも増え，数が増えると結構重そうに見えるけど，そこんところどうなのか</li>
+<li>再送は基本Spoutが判断．まぁこれは分からなくもない</li>
+</ul>
+</li>
+<li><p>0.8からのTridentはBatchをガリガリ使っていると聞いてるけど，通常の利用だとあまりない？ 1 Tupleでトポロジー内forwardしまくるのは結構パフォーマンス的に厳しそう</p></li>
+<li><p>トランザクションはSpout / Boltの両方が頑張る．この辺は今時のストリーミング処理系と同じ．コアで担保は難しい</p></li>
+<li><p>各ワーカーのコアのメソッドはシングルスレッドで呼ばれるようなので，この辺で重い処理すると多分詰まる．at-least-onceっぽいので，多分これが連鎖するとデータ重複する．</p></li>
+<li><p>multilangはHadoop Streamingと同じ</p></li>
+<li><p>ZooKeeperに依存しているので，そこがまた面倒くさそう</p></li>
+</ul>
+
+
+<p>とりあえずこんな感じ．0.8や0.9でもっと改善されているかもしれないので，その辺は必要があれば追う．</p>
+</div>
+  
   
 
 
     </article>
   
   <div class="pagination">
+    
+      <a class="prev" href="/ja/page/4/">&larr; Older</a>
     
     <a href="/archives">Archives</a>
     
@@ -175,23 +492,23 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/ja/2014/01/fluentd-v11-at-tokuben/">Fluentd v11 at Tokuben</a>
+        <a href="/2014/05/the-status-of-coolio/">The status of Cool.io</a>
       </li>
     
       <li class="post">
-        <a href="/ja/2014/01/cross-2014/">CROSS 2014</a>
+        <a href="/ja/2014/03/sapporo-2014-winter/">札幌 2014 冬</a>
       </li>
     
       <li class="post">
-        <a href="/ja/2014/01/2013-report/">2013年の振り返り</a>
+        <a href="/ja/2014/03/about-fluentd-v11/">そろそろFluentd v11についてひとこと言っておくか</a>
       </li>
     
       <li class="post">
-        <a href="/ja/2013/10/d-status-2013/">D言語の現状</a>
+        <a href="/ja/2014/02/the-thoughts-of-sensu/">Sensu雑感</a>
       </li>
     
       <li class="post">
-        <a href="/ja/2013/09/librato-metrics-introduction/">Librato Metrics introduction</a>
+        <a href="/ja/2014/02/developer-summit-2014/">Developer Summit 2014</a>
       </li>
     
   </ul>

@@ -9,7 +9,8 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="@特勉というイベントに呼ばれたので，Fluentd v11について発表してきました． Fluentd v11 at tokuben from Treasure Data, Inc. 今現在見えている機能群について一通りその背景とか，v10ではどうだったのかを絡めて話したので， &hellip;">
+  <meta name="description" content="二つのイベントに参加するため，札幌に行ってました． 技術セミナー２０１４～ビッグデータ時代のＩＴシーズ～ 北海道IT推進協会さまのイベントで，ビッグデータとかデータ解析周りについてクラウド要素も含めて，ビジネス的な話をしてきました．
+参加者に経営者の方も多い感じだったので， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -75,7 +76,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/ja/2014/01/fluentd-v11-at-tokuben/">Fluentd v11 at Tokuben</a></h1>
+      <h1 class="entry-title"><a href="/ja/2014/03/sapporo-2014-winter/">札幌 2014 冬</a></h1>
     
     
       <p class="meta">
@@ -91,135 +92,146 @@
   
 
 
-<time datetime="2014-01-26T02:39:00+09:00" pubdate data-updated="true">Jan 26<span>th</span>, 2014</time>
+<time datetime="2014-03-22T15:41:00+09:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2014</time>
         
-         | <a href="/ja/2014/01/fluentd-v11-at-tokuben/#disqus_thread">Comments</a>
+         | <a href="/ja/2014/03/sapporo-2014-winter/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><a href="http://atnd.org/events/46924">@特勉</a>というイベントに呼ばれたので，Fluentd v11について発表してきました．</p>
+  <div class="entry-content"><p>二つのイベントに参加するため，札幌に行ってました．</p>
 
-<iframe src="http://www.slideshare.net/slideshow/embed_code/30427877?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+<h2><a href="http://www.hicta.or.jp/index_oshirase_detail.php?id=624">技術セミナー２０１４～ビッグデータ時代のＩＴシーズ～</a></h2>
+
+<p>北海道IT推進協会さまのイベントで，ビッグデータとかデータ解析周りについてクラウド要素も含めて，ビジネス的な話をしてきました．
+参加者に経営者の方も多い感じだったので，なるべく技術的な用語は使わないよう心がけて講演．</p>
+
+<p>いつもとは違う雰囲気の中での講演で，こういうのも勉強になって良いかなと．</p>
+
+<h2><a href="http://connpass.com/event/5222/">AWS勉強会 in 北海道札幌！</a></h2>
+
+<p>メインは上のイベントだったのだけど，それだけで北海道を去るのも勿体ないなぁと他のイベントを探していたら</p>
+
+<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p>話す側でお願いしますw <a href="https://twitter.com/repeatedly">@repeatedly</a> あれ，よく見たらクラスメソッドさんの勉強会が次の日にある．これに参加しようかな？ &gt; &quot;AWS勉強会 in 北海道札幌！（懇親会有）&quot; <a href="http://t.co/doSVv4FPb8">http://t.co/doSVv4FPb8</a></p>&mdash; よこたさとし (@sato_shi) <a href="https://twitter.com/sato_shi/statuses/441211073375371264">March 5, 2014</a></blockquote>
 
 
-<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/treasure-data/fluentd-v11-at-tokuben" title="Fluentd v11 at tokuben" target="_blank">Fluentd v11 at tokuben</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-<p>今現在見えている機能群について一通りその背景とか，v10ではどうだったのかを絡めて話したので，上のスライドだけ見ても少しわかりにくいかもしれません．新しい機能の確認みたいな感じで眺めて貰えると．</p>
 
-<p>特勉は今回はログ・データ解析がテーマでしたが，色々とテーマを変えて定期的にやるようなので，随時チェックしておくと良いと思います．</p>
+<p>とのreplyをもらったので，飛び入りでFluentdについて発表してきました．</p>
 
-<h2>その後…</h2>
+<iframe src="http://www.slideshare.net/slideshow/embed_code/32700881?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/treasure-data/fluentd-and-aws-at-classmethod" title="Fluentd and AWS at classmethod" target="_blank">Fluentd and AWS at classmethod</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
+
+<p>Fluentd利用者も少なかったので，基本的な動作原理や，Fluentdが有用なユースケース，
+AWSなイベントなのでAWS関係のプラグインの紹介などなど，一通りやった．</p>
+
+<p>懇親会で色々と話を聞いたけど，まだ地方？だとそもそもデータを集めてなかったり，
+データ解析に関しての需要が出てきておらず，Fluentdなどを使う段階になってないとのこと．
+そもそもIT化出来てない会社とかもあるのでまずはそこから，とも<br />
+東京とかだとこの辺の動きが活発だけど，中央以外ではまた違った形で活動しないと，
+「便利なソフトウェアがある！」とかで広めることは出来ないなぁと実感．<br /></p>
+
+<p>色々と考えないと行けないことが増えた感じで，この辺の話を聞けたのは良かった．</p>
+
+<h2>まとめ</h2>
+
+<p><img src="/images/kinki_sushi.jpg" title="&#34;Kinki no Sushi&#34;" alt="&#34;Kinki no Sushi&#34;"></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2014/03/about-fluentd-v11/">そろそろFluentd v11についてひとこと言っておくか</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-05T19:40:00+09:00" pubdate data-updated="true">Mar 5<span>th</span>, 2014</time>
+        
+         | <a href="/ja/2014/03/about-fluentd-v11/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>リリースは永遠にされません！</p>
+
+<p>日本では色々なところでv11の噂がまことしやかに囁かれていますが，
+俺がメインメンテナである限りv11がリリースされることはないので，諦めてv0.10.xを使ってください！</p>
+
+<p>以下まじめな話になります．</p>
+
+<h2>v11が生まれた背景と現状</h2>
+
+<p>v11が生まれたのは1年以上前です．背景には，v10と呼ばれる今のバージョンがプロトタイプを兼ねたリリースであり，
+「利用者のフィードバックを取り込んで，ダメな所をガッツリ書き換えて互換性を壊してメジャーバージョンアップや！」という流れがありました．</p>
+
+<p>しかし，v10は十分に柔軟でかつパフォーマンスも発揮しており，コミッタ陣はそれほどモチベーションがあったわけではありません．
+また，プラグインによって解決出来た問題も多く，v11が生まれた時ほどユーザから「v11が欲しい！」という要望は聞かれなくなりました．</p>
+
+<p>当たり前ですが，ユーザからの声がなければ「あれ，じゃあこの機能あんまり必要ないんじゃね？」ということになって削られるのはよくあることで，
+v11もそんな感じで開発リソースはあまり割かれなくなって行きました．<br />
+もともと空いた時間に@frsyuki，@tagomoris，@sonotsの人達がたまにコミットしていたくらいなので，直近では機能追加のコミットはほぼありません．</p>
+
+<h2>Fluentdのユーザ拡大</h2>
+
+<p>v11で互換性を壊しても大丈夫だろう，とコミッタ陣が思っていたものの一つに，当時Fluentdのプラグインの大半をコミッタの関係者が書いていた，
+というのがあります．<br />
+そのため，互換性を壊しても必要そうなプラグインの書き換えはすぐに終わるし，
+「えいや！」と同時にバージョン上げれば被害は少ないだろうという感じです．</p>
+
+<p>しかし，v10は思っていたよりも早くユーザが増え，今ではさきがけとなったWeb/アドテク業界のみならず，大小問わず様々な企業，
+IoTな分野など，世界的にも使われるようになってきました．<br />
+また，それにともないプラグイン数も200を越え，当初の目論見が難しくなっているのが現状です．</p>
+
+<h2>開発方針の変更とv1案</h2>
+
+<p>俺がFluentdのメインメンテナとなったのも関わってるんですが，「v11のリリースをどうするか？」という問題もハンドリングするようになりました．</br />
+個人的には「v11の機能群は有用だけど，互換性を壊してリリースするほどのものではないなぁ」というのがv11を見た結論であり，
+その辺やりとりしたのが以下のtogetter．</p>
 
 <p><a href="http://togetter.com/li/620329">Fluentd v11 なんてなかったんだ</a></p>
 
-<p>で，実はこの発表の次の日にTwitterで色々とやりとりがあり，上記のスライドに書かれているいくつかの機能は，v10に取り込まれる可能性が高いです．というか，v11そのものが消える可能性は普通にあります．</p>
+<p>上のまとめにあるように，色々と話した結果，v11が持っているいくつかの機能をv10にマージし，
+それらが終わったらv1としてリリースしようというのが，現在の開発の方向性です．<br />
+段階的な変化になりますが，基本的には互換性が保たれるようにAPIを変えていくので，
+既存ユーザはそのまま使えますし，バージョンアップにともなって徐々に有用な機能が使えるようになります．<br /></p>
 
-<p>Fluentdそのものの改善では色々と考えていることはあるので，定期的にチェックして頂けると！後「v10でこういうところが使いにくい」とかあると，開発陣にフィードバックして貰えると助かります．</p>
+<p>以下のissueで必要そうな機能リストと，進捗を管理してます．</p>
 
-<p>それでは！</p>
-</div>
-  
-  
+<p><a href="https://github.com/fluent/fluentd/issues/251">Plan for v1 release</a></p>
 
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2014/01/cross-2014/">CROSS 2014</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-18T23:57:00+09:00" pubdate data-updated="true">Jan 18<span>th</span>, 2014</time>
-        
-         | <a href="/ja/2014/01/cross-2014/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.cross-party.com/">CROSS 2014</a>というイベントがあり，
-<a href="http://www.cross-party.com/programs/distributed/">分散処理システムCROSS</a>というセッションのオーナーをやってきた．</p>
-
-<h2>分散処理システムCROSS</h2>
-
-<p>元々はログ収集で1セッションどうか，という話だった．が，
-もうFluentdとかの話は色々な所でやってるし，ここで1時間やってもあんま成果はないだろうということでやめた．
-そもそも日本でFluentd以外のログ収集プロジェクトで深い話を出来る人は希で，探すのがつらい．<br /></p>
-
-<p>その変わり分散処理でも話が来ていたので，そっち側でどうにかやることにした．
-分散処理だとなんかアルゴリズムとかそっち系の色が強くなりそうなので，とりあえずシステムをつけた．</p>
-
-<h3>メンバ</h3>
-
-<p>@oza_x86，@kuenishi，@shot6の三人にお願いした．時間を作って頂いてありがとうございました！
-人選に関しては，少し前にTwitterでつぶやいたけど，以下のような感じで選んだ．</p>
-
-<ul>
-<li>分散処理システムを研究・開発している人</li>
-<li>分散処理システムを開発・販売している人</li>
-<li>分散処理システムを運用・サービスとして展開している人</li>
-<li>分散処理システムの基盤を運用・提供している人</li>
-</ul>
-
-
-<p>事前打ち合わせの飲み会をやったけど，自己紹介して結局はなんか適当に喋りましょうということに．</p>
-
-<h3>当日</h3>
-
-<p>セッションが始まる前に，Hadoopやデータベースとかの入門的な話には多分ならないし，
-他に面白そうなセッションがあるので〜，と誘導したにも関わらず，なんか結構人が入ってて驚いた！</p>
-
-<p>色々と予防線は張ったものの，個人的には1時間それなりに話題は出せたんじゃないかと思ってます．
-RaftやPaxosのような合意周り，Jepsenなどの分散処理システムの検証ツール，
-Hadoopやその他のシステムの運用的な話，などなど．<br />
-分散処理システムにおけるモデルの検証とかはやはり鬼門なので，今後色々と勉強したい所．</p>
-
-<p>しかしモデレータというのは色々と疲れますね…</p>
-
-<h2>その他のセッション</h2>
-
-<h3>エンジニアの恋・愛・セックスのDevOps、ホントのところどうしたらいいの</h3>
-
-<p>間に合わなくて参加出来なかったが，かなり反響があったセッションっぽい．
-後で録画を見る．</p>
-
-<h3>ぶつかり稽古</h3>
-
-<p>セッションオーナーが登壇しないという酷いセッションだったｗ
-けど内容そのものは，他社のレビュースタイルとか色々と知れて面白かった．</p>
-
-<h3>アンカンファレンス</h3>
-
-<p>Fluentd v11の話で登録したけど，雨の予報でも出社しないと噂の某モリスさんが一人でセッションの時間全部使い切り，
-何も話せなかった．</p>
+<p>v1というバージョンに関しては，今のFluentdのgemのバージョンがv0.10.xで，v0.11.xのことをv11と呼んでいて非常に紛らわしく，
+新しく入ってくるユーザとかを考えるとそろそろまじめにバージョニングした方が良いだろうという考えです．<br />
+v1だと安定版のイメージが強いですし，実際の所v0.10.xはv1でもおかしくない機能セットはすでに持っています．</p>
 
 <h2>まとめ</h2>
 
-<p>去年と違ってRed Bullガールがいないのが残念だった！来年は期待したい．</p>
-
-<p>全体としては，Tシャツや雑誌の新刊も貰えたし，何人かリアルで合えたしで，色々とドタバタしたけど楽しかったので良し．皆さんお疲れ様でした！</p>
-
-<p><img src="/images/cross_2014.jpg" title="&#34;CROSS 2014 photo&#34;" alt="&#34;CROSS 2014 photo&#34;"></p>
+<p>ということで，色々と今までの流れを書きましたが，皆さんFluentdを今後とも宜しくお願いします :)</p>
 </div>
   
   
@@ -232,7 +244,7 @@ Hadoopやその他のシステムの運用的な話，などなど．<br />
       
   <header>
     
-      <h1 class="entry-title"><a href="/ja/2014/01/2013-report/">2013年の振り返り</a></h1>
+      <h1 class="entry-title"><a href="/ja/2014/02/the-thoughts-of-sensu/">Sensu雑感</a></h1>
     
     
       <p class="meta">
@@ -248,307 +260,204 @@ Hadoopやその他のシステムの運用的な話，などなど．<br />
   
 
 
-<time datetime="2014-01-01T00:00:00+09:00" pubdate data-updated="true">Jan 1<span>st</span>, 2014</time>
+<time datetime="2014-02-25T02:15:00+09:00" pubdate data-updated="true">Feb 25<span>th</span>, 2014</time>
         
-         | <a href="/ja/2014/01/2013-report/#disqus_thread">Comments</a>
+         | <a href="/ja/2014/02/the-thoughts-of-sensu/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>転職したのもあり，色々と取り組むものが増えた年だった．</p>
+  <div class="entry-content"><p><a href="http://sensuapp.org/">Sensu</a></p>
 
-<h2>D言語</h2>
+<p>最近人気が出てきているようなので試して見た．
+仕組みに関しては本家のドキュメントとかスライドとか見ると大体分かる．</p>
 
-<p>ちょっと割ける時間が減ったのもあり，全体的にD言語のコードを書く量は減ったかなと．
-自分が欲しかった小さなライブラリはいくつか書いたりしたけど，
-他にも書きたいのがあるので，2014年はガッツリ時間を取りたい．</p>
+<p>雑感:</p>
 
 <ul>
-<li><a href="http://repeatedly.github.io/2013/05/d-conference-2013/">D Conference 2013</a></li>
-<li><a href="http://repeatedly.github.io/ja/2013/05/tdpl-japanese-edition/">プログラミング言語D</a></li>
+<li>server, client, api, dashboardに分かれているのは良い
+
+<ul>
+<li>実装はRubyでシンプルに書かれているように見える．多分弄るのは簡単</li>
+</ul>
+</li>
+<li>RabbitMQとRedisが必要なのが試すのに結構つらい．chefとかpuppetを使うと良いらしい？
+
+<ul>
+<li>なんかテストモードがあるなら知りたい</li>
+<li>ドキュメントは最低限はある．Advancedなことしようとするとgithubとか先人を頼ることになる</li>
+</ul>
+</li>
+<li>設定がJSONなのはいいけど，ログすらJSONなのは徹底している</li>
+<li>RabbitMQにはクライアントから登録しにいくようで，勝手に監視対象が増えるのは楽
+
+<ul>
+<li>マスターからのpullは限界があるので，この仕組みはモニタリングでは筋が良さそう</li>
+</ul>
+</li>
+<li>プラグインは簡単に書けるが，現状失敗したら諦める前提らしい
+
+<ul>
+<li>まじめにハンドリングするなら，他のと連携する必要がある</li>
+</ul>
+</li>
+<li>apiが気がつけば落ちてる時があって，原因がよく分からない</li>
+<li>Fluentdのハンドラがコミュニティプラグインになかったので<a href="https://github.com/sensu/sensu-community-plugins/blob/master/handlers/notification/fluentd.rb">書いた</a></li>
 </ul>
 
 
-<p>その変わり，D言語の日本語書籍の出版に携わったりと，その他の活動はちょくちょくやった．</p>
+<p>「FluentdかSensuかどっちかに寄せたい」みたいな記事を誰かが書いてた記憶があるけど，何となく分かる．
+Fluentdのプラグイン機構でSensuのクライアント周りの機構はよりロバストに実装出来る．<br />
+コアの機能は結構シンプルなので，visualizationまで考えるとどうしたもんかという感じ．</p>
 
-<h2>Fluentd</h2>
+<p>Sensuはモニタリングのためのフレームワークなのでその辺の機能が中心に開発されてるけど，
+そこの尖った部分が必要でなければ，RabbitMQとかと相まって結構大がかりにも見える．<br />
+Nagiosとかは使ったことはないので，その辺と違ってどこまでメリットがあるのかはよく分かってないけど，
+新しく作るシステムで一からモニタリングシステムを構築するなら十分有り．</p>
 
-<p>会社の関係もあってメインメンテナ的な立場になった．
-Fluentdそのものの機能開発・メンテナンス含め，MLでの対応，イベントでの発表など色々やった．
-2014年は，Windows対応にv11，それにtd-agentのRubyのバージョンアップなど，色々と課題は見えてたり．</p>
-
-<p>MLに関しては，今かなり俺とkiyoto-sanの二人の独壇場な感じになっているので，
-もう少し他の方の協力も欲しいと思ってたりします(その方が盛り上がっているように見えて良い)．<br />
-特に日本は早期にヘビーユーザがついて色々と記事が増えたのもあり，他の国の人達より使いこなしているユーザが多いです．
-なので英語の練習も兼ねて，簡単な質問にでも答えてくれる人が増えるといいな，と思ってます．<br />
-日本の人はTwitterで質問し，海外の人はMLで質問する，というのがOSSやってて思う傾向ですね．</p>
-
-<p>あと，Treasure Dataでは<a href="http://www.treasuredata.com/en/careers/careers-posting-004.php">Fluentdの開発者を募集している</a>ので，興味のある人は応募してみるといいかもしれません！</p>
-
-<p>さらに，<a href="http://www.slideshare.net/treasure-data/treasure-agent-monitoring-service">年末発表したモニタリングシステム</a>のβユーザも随時募集しているので，
-興味のある人は <a href="https://twitter.com/repeatedly">@repeatedly</a> にでも連絡して貰えればと思います．</p>
-
-<h2>発表</h2>
-
-<ul>
-<li><a href="http://atnd.org/events/36713">Fluentd Casual Talks #2</a></li>
-<li><a href="http://www.zusaar.com/event/501053">Fluentd meetup in Fukuoka</a></li>
-<li><a href="http://repeatedly.github.io/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2/">AWSを使ったデータ解析PaaSの裏側</a></li>
-<li><a href="http://herokujp.doorkeeper.jp/events/3405">Heroku Meetup #8 TreasureData + Waza Report!!</a></li>
-<li><a href="http://www.zusaar.com/event/873003">Monitoring Casual Talks #4</a></li>
-<li><a href="http://repeatedly.github.io/ja/2013/07/july-tech-festa-2013/">July Tech Festa 2013</a></li>
-<li><a href="http://atnd.org/events/44556">DevOps向けFluentd勉強会 at IPROS</a></li>
-<li><a href="http://elasticsearch.doorkeeper.jp/events/6532">第2回elasticsearch勉強会</a></li>
-<li><a href="http://www.ipsj.or.jp/event/s-seminar/2013/Exciting_Coding/">Exciting Coding! 2013</a></li>
-</ul>
+<p>仕組み的には柔軟でAPIとかで管理も楽に出来るようになってるので，今後ユーザは増えそうな気もしている．
+しかしRabbitMQとRedisの二つ必要なのどうにかならないものか…</p>
+</div>
+  
+  
 
 
-<p>とりあえず覚えている分だけリンクを貼ってみた．会社に関しての大きめな発表が増えたなと．</p>
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2014/02/developer-summit-2014/">Developer Summit 2014</a></h1>
+    
+    
+      <p class="meta">
+        
 
-<p>発表以外でも色々なイベントに参加して，FluentdやTDに関しての要望とかを聞いたりしていた．
-これらで得たフィードバックは，ちゃんと吟味して取り込んでいきたい．</p>
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-16T19:53:00+09:00" pubdate data-updated="true">Feb 16<span>th</span>, 2014</time>
+        
+         | <a href="/ja/2014/02/developer-summit-2014/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://event.shoeisha.jp/devsumi/20140213/">Developers Summit 2014：開発者のためのITカンファレンス</a></p>
+
+<p>セッション登壇も兼ねて，初めてデブサミに参加してきました．</p>
+
+<h2>1日目</h2>
+
+<p><a href="http://event.shoeisha.jp/devsumi/20140213/session/394/">OSSコミッタ大集合</a></p>
+
+<p>これに登壇してました．登壇といっても，それぞれのプロジェクトの人がわいわいと自分の関わってるプロジェクトについて
+交互に話すというもので，FluentdとD言語の時に壇上にあがってあれやこれや話しました．<br />
+まぁFluentdに関しては登壇して何も喋らずに降りましたが…prz</p>
+
+<p>セッションに関係ないですが登壇者控え室，和室でネットワークも電源もありで環境良すぎて超快適だった．雅叙園良いですね．</p>
+
+<h2>2日目</h2>
+
+<p>「Webの現在過去未来」のセッションなど気になるのがあったのですが，雪が降りすぎていたので参加しませんでした！</p>
+
+<p>それとは別に，渋谷でRubyコミッタ3人との飲み会があり，鍋をつつきつつ色々と話をした．
+その結果，Focuslightのメンテナが正式に決まり，FluentdにはLinux kernel &amp; Rubyコミッタであるkosakiさんがjoin．良い鍋でした．</p>
+
+<blockquote class = "twitter-tweet" lang = "en"><p><a href = "https://twitter.com/sora_h">@sora_h</a> and <a href = "https://twitter.com/sonots">@sonots</a> are now focuslight committer! This is great step for growing <a href = "https://twitter.com/search?q = %23Fluentd&amp;src = hash">#Fluentd</a> visualization environment :)</p>&mdash; Mr. Fiber (@repeatedly) <a href = "https://twitter.com/repeatedly/statuses/434379434435436545">February 14, 2014</a></blockquote>
+
+
+<script async src = "//platform.twitter.com/widgets.js" charset = "utf-8"></script>
+
+
+
+
+<blockquote class = "twitter-tweet" lang = "en"><p><a href = "https://twitter.com/kosaki55tea">@kosaki55tea</a> is now Fluentd committer! We can improve Fluentd more quickly :) <a href = "https://twitter.com/search?q = %23fluentd&amp;src = hash">#fluentd</a></p>&mdash; Mr. Fiber (@repeatedly) <a href = "https://twitter.com/repeatedly/statuses/434395924224167936">February 14, 2014</a></blockquote>
+
+
+<script async src = "//platform.twitter.com/widgets.js" charset = "utf-8"></script>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic/">高トラフィックでのFluentdからElasticsearchへの書き込み問題への対策</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-11T18:39:00+09:00" pubdate data-updated="true">Feb 11<span>th</span>, 2014</time>
+        
+         | <a href="/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://blog.kakipo.com/trouble-with-fluentd-and-elasticsearch/">Fluentd -> Elasticsearch 大量データ転送でトラブル</a></p>
+
+<p>上の記事にあるように，Elasticsearchに大量のデータを一気に流し込むと色々と問題が起きます．
+元々検索エンジンはスケールさせるのが難しく，よく当たる問題だと思います．</p>
+
+<p>また，Fluentdとかだとガンガンログを流し込むことも多く，この辺で詰まる云々はたまに聞きます．</p>
+
+<p><a href="http://elasticsearch.doorkeeper.jp/events/7491">第3回elasticsearch勉強会</a></p>
+
+<p>で，Elasticsearch勉強会にFlorianという本家のエンジニアが来ていたので，
+懇親会でこの辺どうすればいいのか聞いてみました．
+実際Elasticsearchユーザの中でもちょくちょく問題になるらしく，
+大きくわけて二つの方法(またはこの組み合わせ)で回避しているようです．</p>
+
+<h2>書き込み先のノードを増やす</h2>
+
+<p>1ノードへの書き込みで詰まるなら，もっとノードを増やせば良いというアプローチ．
+今のfluent-plugin-elasticsearchにはラウンドロビンの機能はないんですが，
+out_roundrobinとかと組み合わせてやれば，書き込みを複数台に散らせることは出来そうです．</p>
+
+<h2>前段にキューを置く</h2>
+
+<p>書き込みをするノードの前にキューを置いて，そこでバッファリングしておくという方法．
+Fluentdの場合はバッファがキューになっているので，そこのフラッシュ間隔を長めに調整するとか，
+キュー系のプラグインがいくつかあるので，それを間に挟むという感じになるのかなと．<br />
+ただ，キューから値をポップする間隔が短いと結局詰まるので，この辺は少し工夫が必要そうです．</p>
 
 <h2>まとめ</h2>
 
-<p>ざっと振り返ってみた．
-Fluentdに関しては，v10はもうコアでほぼやることがないので，次はv11が中心．
-中心とは言っても，安定版として正式にリリースするのは当分先になる．多分．</p>
-
-<p>2014年もOSS含め対外的な活動は積極的にしていきたいし，色々な人達と交流を増やして行きたい所．</p>
-
-<p>今後も宜しくお願いします :)</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2013/10/d-status-2013/">D言語の現状</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-20T00:00:00+09:00" pubdate data-updated="true">Oct 20<span>th</span>, 2013</time>
-        
-         | <a href="/ja/2013/10/d-status-2013/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://japan.internet.com/webtech/20131018/5.html">「FacebookがプロダクションでD言語の利用を始めた」ことに関する記事</a>が少し話題になってます．で，これだけだとD言語が他の言語のようにプロダクションreadyと勘違いする方もいるかもしれないので，今の現状について書いておきます．</p>
-
-<h2>この記事の一言まとめ</h2>
-
-<p>手軽にプロダクションで使えるわけではありません！</p>
-
-<p>詳細が知りたい方は以降をお読みください.</p>
-
-<h2>今回の話</h2>
-
-<p>FacebookのAndreiはTDPLという本を出した，D言語界隈でも主要なコミッタです．その一方，C++界隈でも有名な人物で，そういう人物がついにC++をやめてプロダクションでD言語を使った，というのが一つの大きなニュースです．</p>
-
-<p>また，Facebookには<a href="http://qiita.com/yasei_no_otoko/items/17f672ec30393a2f928a">この記事を書いたBen</a>など，D言語を使えるエンジニアが他にもいます．</p>
-
-<h2>プロダクションでつかえるのか？</h2>
-
-<p>簡単に言うと，「品質的には問題が無い，が今広まってる言語ほど楽ではない」です．JavaやRuby/Python/PHPなどWebで広く使われているような言語のように，たくさんのライブラリがある訳ではありません．</p>
-
-<p>Dubというパッケージマネージャが最近出てきましたが，<a href="http://code.dlang.org/">登録されているライブラリ</a>はまだ多くなく，なければ自分で書く必要があります．また，ライブラリにバグがあっても他の誰かが報告してくれるほどコミュニティも大きくないので，その辺も気をつける必要があります．まぁ大抵github/bitbucketなので，今時のエンジニアには楽だとは思いますが…</p>
-
-<p>今プロダクションでD言語を使っている会社はFacebook以外にももちろんありますが(広告配信，ゲーム，社内システム，Webサーバなど)，そういう会社は大抵D言語でライブラリを書いてるような精通した人物が開発陣の中にいるのが現状です．まぁ，メジャーではない言語ではよくある光景だと思います．</p>
-
-<p>プロダクション以外だと，研究とかでつかっている人は増えている感じがします．数値計算系，言語処理系，自然言語処理系，などなど書きやすさとパフォーマンスのバランスで選ばれているようです．</p>
-
-<h3>互換性</h3>
-
-<p>D言語を使ってない方からよく「D言語は互換性を維持しないからクソだ」という意見を聞くのですが，これにはいくつか理由があります．</p>
-
-<h3>シェアがない</h3>
-
-<p>当たり前ですが，シェアがない言語が律儀に互換性を維持してリリースすることのメリットはほぼありません．ライブラリも多くない言語では，互換性がなくなって困るライブラリはほとんどなく，ライブラリ開発者もほとんどが言語仕様の議論に参加しているので，基本問題は起きません．</p>
-
-<h3>コミュニティの方向性</h3>
-
-<p>上と関わりがありますが，今コミュニティとして，互換性よりも言語を良くしよう，という流れの方が強いです．</p>
-
-<ul>
-<li>この機能あった方がライブラリとかアプリが書きやすい</li>
-<li>新しい機能でよりよいAPIが出来たのでこっちに移行</li>
-<li>この機能は誰も使ってないから削除</li>
-<li>この機能使うとこういう危険なコードになるので削除</li>
-</ul>
-
-
-<p>みたいな．これは今後プロダクションでの利用が増え，「互換性は保った方がいいんじゃないか？」という開発者が増えれば，流れは変わると思います．この辺はPythonやScalaなど，今時の言語と同じような感じかなと． <br />
-今後に備えて，「bug fixリリースも考慮した開発フロー・バージョニングにした方がいいんじゃないか？」という提案はあがったりしてます．</p>
-
-<h2>開発の流れ</h2>
-
-<p>現状はD2しかメジャーバージョンがないんですが(D1のメンテナンスは終了)，これが開発版/安定版みたいになってます．昔と違って</p>
-
-<ul>
-<li>リグレッションがあったらリリースしない</li>
-<li>リリース前にβ版を公開してフィードバックを得る</li>
-<li>削除/変更するAPIは数ヶ月以上前から警告が出る</li>
-</ul>
-
-
-<p>などなど利用者がいきなり非互換にぶち当たるようなことが起きないように配慮はされてます．D言語はコンパイル時にシンボルやシグネチャをチェック出来る機構があり，ライブラリ開発者としても，多少の変更があってもそれで対応出来てます．<br />
-なので，互換性に関しては少し寛容なのかもしれません．</p>
-
-<p>「D2に入れるには大きすぎるかもしれない変更はD3で議論しよう」という流れになってるので，D2で今後パラダイムに関わるような大きな変更は起きないとは思います．</p>
-
-<h2>まとめ</h2>
-
-<p>記事で言及されている通り，言語，ライブラリ，開発環境，などなど昔に比べて成熟してきているのは確かですが，ご利用は計画的に，というが本当の所です．
-ポジション的にはHaskellやGoに近い所にいて，メジャーとは言い切れないがパワーユーザが使っていて，コミュニティが大きくなりつつあるという感じです．Facebookはこれからも利用箇所を増やすでしょうし，海外では他の事例もちょくちょく出てきそうです．日本は…よく分からんですｗ</p>
-
-<p>とはいえ，日本はアクティブなコミッタが3人いたりと，実はD言語をする環境としては恵まれていたりしてます．困ったら #dlang をつけてTwitterでつぶやくと，誰かが助けてくれるかもしれません．日本語情報については，<a href="https://twitter.com/repeatedly/status/391191903418322944">このtweet</a>を参考にしてください．</p>
-
-<p>追記</p>
-
-<p>@yasei_no_otoko さんが<a href="http://qiita.com/yasei_no_otoko/items/65b6a7cae7a6588dc7f6">エディタ・IDEの現状について書いてくれました</a>．</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2013/09/librato-metrics-introduction/">Librato Metrics introduction</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-08T08:57:00+09:00" pubdate data-updated="true">Sep 8<span>th</span>, 2013</time>
-        
-         | <a href="/ja/2013/09/librato-metrics-introduction/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="https://metrics.librato.com/">Librato Metrics</a>をうちではモニタリングに使ってるんですが，日本で全くと言って良いほど記事を見ないので，紹介記事を書いてみる．</p>
-
-<h1>何が出来る？</h1>
-
-<p>おおまかに分けて以下のようなことが出来る．</p>
-
-<ul>
-<li>メトリックスを作れる</li>
-<li>メトリックスに対してアラートを設定出来る</li>
-<li>ダッシュボードでメトリックスの一覧が見れる</li>
-<li>JavaScript SDKを使って自分のサイトに埋め込むことが出来る</li>
-<li>APIが提供されていて，いくつかの言語のクライアントがある</li>
-</ul>
-
-
-<p>以下それぞれ簡単な説明．</p>
-
-<h2>メトリックス</h2>
-
-<p>LibratoにはMetricというのがあり，これが最小の単位．Metricに監視したいメトリックスの値を入れていき，他のMetricと混ぜたりすることでモニタリングを行います．</p>
-
-<p><img src="/images/librato_metric_sample.png" title="&#34;Librato Metric sample&#34;" alt="&#34;Librato Metric sample&#34;"></p>
-
-<p>上の例のように，一つのMetricに複数の軸の値を入れることが出来ます．これはソースと呼ばれていて，保存する時にsourceを指定すれば良いです．指定しなかったら&#8221;unassigned&#8221;みたいなsourceにまとめられます．<br />
-後，右上にある時間を弄れば，そのレンジでグラフが表示されます．</p>
-
-<p>左の欄に色々とグラフの設定内容があるので，必要であれば弄ります．&#8221;How should we aggregate your data over time?&#8221;の欄が少し大事で「どういう風にメトリックスを見るか」を指定できます(<a href="http://dev.librato.com/v1/post/metrics#gauge_specific">ここ</a>の説明参照)．</p>
-
-<h3>Instrument</h3>
-
-<p>Metricをまとめるのに，Instrumentというのがあります．ここで複数のMetricを重ねることで，関連のありそうなMetric同士を俯瞰出来るようになります．</p>
-
-<p>単純なモニタリングだけだと，MetricとInstrumentが一対一になったりしてダッシュボードやJavaScript SDKでちょっと面倒だったりもします．</p>
-
-<h2>アラート</h2>
-
-<p><img src="/images/librato_alert_sample.png" title="&#34;Librato Alert sample&#34;" alt="&#34;Librato Alert sample&#34;"></p>
-
-<p>上の画像の左のカラムが例で，Metricの中でスレッショルドベースで指定出来ます．どこに飛ばすか設定出来るので，うちでは重要なメトリックスに関してはHipChatやPagerDutyなどに飛ばしてます．</p>
-
-<p>複雑な条件設定や，Metricをまたいだアラートは出来ないので，そういうのが欲しい場合は自分達で頑張る必要があります．</p>
-
-<h2>ダッシュボード</h2>
-
-<p><img src="/images/librato_dashboard_sample.png" title="&#34;Librato Dashboard Sample&#34;" alt="&#34;Librato Dashboard Sample&#34;"></p>
-
-<p>これがダッシュボードの例です．実際はMetricじゃなくてInstrumentを並べてるんですが，こんな感じで表示出来ます．<br />
-ダッシュボードはいくらでも作れるので，自分の見たい粒度で作って，必要なメトリックスを並べます．某社みたいに一つのダッシュボードに数千数万のメトリックスにならないよう気をつけましょう．</p>
-
-<h2>API</h2>
-
-<p><a href="http://dev.librato.com/v1/metrics">APIページ</a>にリストと説明が載ってます．いくつかの言語には<a href="https://github.com/librato">公式のクライアントライブラリ</a>があるので，使うと良いです．<br />
-ただ，Ruby版とか試してもInstrument APIがなかったりと，まだまだサポートAPIにばらつきが多い印象．アプリケーションからガチで使うなら，自分でいくつか実装する必要があります．APIはREST + JSONなので，実装はそんなに難しくないです．</p>
-
-<p><a href="http://dev.librato.com/v1/users">ユーザAPI</a>はまだβ機能なのか，使いたい場合はLibartoに連絡して，使えるようにしてもらう必要があるっぽいです．</p>
-
-<h3>JavaScript SDK</h3>
-
-<p><img src="/images/librato_javascript_sdk_sample.png" title="&#34;Librato JavaScript SDK Sample&#34;" alt="&#34;Librato JavaScript SDK Sample&#34;"></p>
-
-<p>こんな感じになります．好きなページに貼り付けることが出来るし，グラフは自動で更新されます．
-どういうコードになるかは，<a href="http://blog.librato.com/posts/2012/10/embeddable-charts">Libratoの記事</a>を参照してください．</p>
-
-<h3>Fluentdの例</h3>
-
-<p>Fluentdには<a href="https://github.com/treasure-data/fluent-plugin-metricsense">fluent-plugin-metricsense</a>というプラグインがあって，これは保存先にLibrato Metricsが使えたりします．
-これはクライアント使ってないけど，<a href="https://github.com/treasure-data/fluent-plugin-metricsense/blob/master/lib/fluent/plugin/backends/librato_backend.rb">こんな感じで</a>，直接APIを呼ぶくらいなら簡単に実装できます．</p>
-
-<h1>その他</h1>
-
-<h2>料金</h2>
-
-<p><a href="https://metrics.librato.com/pricing">料金ページ</a>を見てください．基本的にはデータの流量(これはLibrato側での保存ベース)，メトリックスの数，ソースの数，が影響します．<br />
-簡単に言うと，どれだけの頻度でどれだけの数のメトリックスを作るか，です．</p>
-
-<h2>サポート</h2>
-
-<p>料金ページにも載ってますが，オンラインチャットとメールとコールがあります．うちではOlarkを使ってますが，最近のスタートアップではこの手のオンラインチャットでの対応というのが広まりつつあって良い感じ．<br />
-緊急を要したり深いディスカッションが必要であれば，コールすることになるかなと．うちでも少し困ったことがあったので，コールして直接要望出したり設計を相談したりしました．</p>
-
-<h1>まとめ</h1>
-
-<p>AnnotationとかCRRELATEとか紹介してないのもありますが，Libartoの基本的な所を書いた．自分達でモニタリング環境を構築出来るなら良いんですが，スタートアップとかだとそこにリソースを割くのが難しかったりするので，そういう所はLibratoとか検討してみてもいいんじゃないかと思います．</p>
+<p>Elasticsearchを真面目に運用したことがないので，どっちが現実的なのかよく分からないのが正直な所．
+この辺は高トラフィック環境で使っている人の話を聞きたい所です．</p>
 </div>
   
   
@@ -571,23 +480,23 @@ Fluentdに関しては，v10はもうコアでほぼやることがないので�
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/ja/2014/01/fluentd-v11-at-tokuben/">Fluentd v11 at Tokuben</a>
+        <a href="/2014/05/the-status-of-coolio/">The status of Cool.io</a>
       </li>
     
       <li class="post">
-        <a href="/ja/2014/01/cross-2014/">CROSS 2014</a>
+        <a href="/ja/2014/03/sapporo-2014-winter/">札幌 2014 冬</a>
       </li>
     
       <li class="post">
-        <a href="/ja/2014/01/2013-report/">2013年の振り返り</a>
+        <a href="/ja/2014/03/about-fluentd-v11/">そろそろFluentd v11についてひとこと言っておくか</a>
       </li>
     
       <li class="post">
-        <a href="/ja/2013/10/d-status-2013/">D言語の現状</a>
+        <a href="/ja/2014/02/the-thoughts-of-sensu/">Sensu雑感</a>
       </li>
     
       <li class="post">
-        <a href="/ja/2013/09/librato-metrics-introduction/">Librato Metrics introduction</a>
+        <a href="/ja/2014/02/developer-summit-2014/">Developer Summit 2014</a>
       </li>
     
   </ul>

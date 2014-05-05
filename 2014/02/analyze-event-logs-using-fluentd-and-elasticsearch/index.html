@@ -1,0 +1,534 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Analyze event logs using Fluentd and Elasticsearch - Go ahead!</title>
+  <meta name="author" content="Masahiro Nakagawa">
+
+  
+  <meta name="description" content="Fluentd is a flexible and robust event log collector, but Fluentd doesn&#8217;t have own data-store and Web UI.
+If you want to analyze the event logs &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://repeatedly.github.com/2014/02/analyze-event-logs-using-fluentd-and-elasticsearch">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Go ahead!" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Go ahead!</a></h1>
+  
+    <h2>Memoization for Everything</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:repeatedly.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+
+
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/works">Works</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/ja">Japanese</a></li>
+</ul>
+
+  
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Analyze event logs using Fluentd and Elasticsearch</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-12T17:25:00+09:00" pubdate data-updated="true">Feb 12<span>th</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="http://fluentd.org/">Fluentd</a> is a flexible and robust event log collector, but Fluentd doesn&#8217;t have own data-store and Web UI.
+If you want to analyze the event logs collected by Fluentd, then you can use <a href="http://www.elasticsearch.org/">Elasticsearch</a> and <a href="http://www.elasticsearch.org/overview/kibana/">Kibana</a> :)</p>
+
+<p>Elasticsearch is an easy to use Distributed Search Engine and Kibana is an awesome Web front-end for Elasticsearch.</p>
+
+<h2>Setup</h2>
+
+<p>I tested on Mac OS X.</p>
+
+<h3>Pre requirements</h3>
+
+<ul>
+<li>Java for Elasticsearch</li>
+</ul>
+
+
+<p>Use Mac OS X&#8217;s Java.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% java -version
+</span><span class='line'>java version <span class="s2">&quot;1.6.0_51&quot;</span>
+</span><span class='line'>Java<span class="o">(</span>TM<span class="o">)</span> SE Runtime Environment <span class="o">(</span>build 1.6.0_51-b11-457-11M4509<span class="o">)</span>
+</span><span class='line'>Java HotSpot<span class="o">(</span>TM<span class="o">)</span> 64-Bit Server VM <span class="o">(</span>build 20.51-b01-457, mixed mode<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Ruby for Fluentd</li>
+</ul>
+
+
+<p>In this article, I use my rbenv&#8217;s Ruby and Fluentd gem directly.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% ruby --version
+</span><span class='line'>ruby 1.9.3p484 <span class="o">(</span>2013-11-22 revision 43786<span class="o">)</span> <span class="o">[</span>x86_64-darwin12.4.0<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that Fluentd doesn&#8217;t work on Ruby 1.8.</p>
+
+<h4>Treasure Agent (td-agent)</h4>
+
+<p>Treasure Agent, as known as <code>td-agent</code>, is a stable distribution which consists of Fluentd, popular plugins and own Ruby processor.
+Many users use <code>td-agent</code> instead of Fluentd gem. See <a href="http://docs.fluentd.org/articles/faq#treasure-agenttd-agnt">this FAQ</a>.</p>
+
+<h3>Elasticsearch</h3>
+
+<p>Downlod and extract the latest package.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% curl -O https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.11.tar.gz
+</span><span class='line'>% tar zxvf elasticsearch-0.90.11.tar.gz
+</span><span class='line'>% <span class="nb">cd </span>elasticsearch-0.90.11/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I use version v0.90.11 but <a href="http://www.elasticsearch.org/blog/0-90-11-1-0-0-rc2-released/">v1.0 will be released</a> soon!</p>
+
+<p>Start Elasticsearch:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% ./bin/elasticsearch -f
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:32,645<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> version<span class="o">[</span>0.90.11<span class="o">]</span>, pid<span class="o">[</span>79737<span class="o">]</span>, build<span class="o">[</span>11da1ba/2014-02-03T15:27:39Z<span class="o">]</span>
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:32,646<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> initializing ...
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:32,651<span class="o">][</span>INFO <span class="o">][</span>plugins                  <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> loaded <span class="o">[]</span>, sites <span class="o">[]</span>
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:34,319<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> initialized
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:34,320<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> starting ...
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:34,395<span class="o">][</span>INFO <span class="o">][</span>transport                <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> bound_address <span class="o">{</span> inet<span class="o">[</span>/0:0:0:0:0:0:0:0%0:9300<span class="o">]}</span>, publish_address <span class="o">{</span> inet<span class="o">[</span>/192.168.1.112:9300<span class="o">]}</span>
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:37,448<span class="o">][</span>INFO <span class="o">][</span>cluster.service          <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> new_master <span class="o">[</span>Powerhouse<span class="o">][</span>tL1IC8xHSCudeVsFt4JFsQ<span class="o">][</span>inet<span class="o">[</span>/192.168.1.112:9300<span class="o">]]</span>, reason: zen-disco-join <span class="o">(</span>elected_as_master<span class="o">)</span>
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:37,481<span class="o">][</span>INFO <span class="o">][</span>discovery                <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> elasticsearch/tL1IC8xHSCudeVsFt4JFsQ
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:37,492<span class="o">][</span>INFO <span class="o">][</span>http                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> bound_address <span class="o">{</span> inet<span class="o">[</span>/0:0:0:0:0:0:0:0%0:9200<span class="o">]}</span>, publish_address <span class="o">{</span> inet<span class="o">[</span>/192.168.1.112:9200<span class="o">]}</span>
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:37,493<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> started
+</span><span class='line'><span class="o">[</span>2014-02-12 17:51:37,505<span class="o">][</span>INFO <span class="o">][</span>gateway                  <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> recovered <span class="o">[</span>0<span class="o">]</span> indices into cluster_state
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Kibana</h3>
+
+<p>Latest Kibana, called Kibana 3, consists of only HTML and JavaScript,
+so setup is very easy:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% curl -O https://download.elasticsearch.org/kibana/kibana/kibana-3.0.0milestone5.tar.gz
+</span><span class='line'>% tar zxvf kibana-3.0.0milestone5.tar.gz
+</span><span class='line'>% <span class="nb">cd </span>kibana-3.0.0milestone5/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Open index.html in the kibana directory:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% open index.html
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you want to change Kibana configuration, please edit <code>config.js</code>, e.g. change elasticsearch URL.</p>
+
+<h3>Fluentd</h3>
+
+<p>Install Fluentd gem and <a href="https://github.com/uken/fluent-plugin-elasticsearch">Elasticsearch plugin</a>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% gem install fluentd fluent-plugin-elasticsearch
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Fluentd configuration is below:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="c"># es.conf</span>
+</span><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> forward
+</span><span class='line'><span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;match</span> <span class="s">es.**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> elasticsearch
+</span><span class='line'>  <span class="err">logstash_</span><span class="nb">format</span> true
+</span><span class='line'>  <span class="err">flush_</span><span class="nb">interval</span> <span class="m">5</span>s # <span class="m">5</span>s for testing. <span class="k">On</span> production environment, <span class="m">60</span>s or higher is better
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>fluent-plugin-elasticsearch provides <code>logstash_format</code> option.
+It enables Kibana to analyze the event logs with day based indexes.</p>
+
+<p>Start Fluentd:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% fluentd -c es.conf
+</span><span class='line'>2014-02-12 18:43:31 +0900 <span class="o">[</span>info<span class="o">]</span>: starting fluentd-0.10.43
+</span><span class='line'>2014-02-12 18:43:31 +0900 <span class="o">[</span>info<span class="o">]</span>: reading config file <span class="nv">path</span> <span class="o">=</span> <span class="s2">&quot;es.conf&quot;</span>
+</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: gem <span class="s1">&#39;fluent-plugin-elasticsearch&#39;</span> version <span class="s1">&#39;0.2.0&#39;</span>
+</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: gem <span class="s1">&#39;fluentd&#39;</span> version <span class="s1">&#39;0.10.43&#39;</span>
+</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: using configuration file: &lt;ROOT&gt;
+</span><span class='line'>  &lt;<span class="nb">source</span>&gt;
+</span><span class='line'>    <span class="nb">type </span>forward
+</span><span class='line'>  &lt;/source&gt;
+</span><span class='line'>  &lt;match es.**&gt;
+</span><span class='line'>    <span class="nb">type </span>elasticsearch
+</span><span class='line'>    logstash_format <span class="nb">true</span>
+</span><span class='line'><span class="nb">    </span>flush_interval 5s
+</span><span class='line'>  &lt;/match&gt;
+</span><span class='line'>&lt;/ROOT&gt;
+</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: adding <span class="nb">source type</span> <span class="o">=</span> <span class="s2">&quot;forward&quot;</span>
+</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: adding match <span class="nv">pattern</span> <span class="o">=</span> <span class="s2">&quot;es.**&quot;</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;elasticsearch&quot;</span>
+</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: listening fluent socket on 0.0.0.0:24224
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Analyze event logs</h2>
+
+<p>Send some events to Fluentd. <code>fluent-cat</code> is an utility command to send json text to Fluentd&#8217;s <code>in_forward</code> plugin.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{&quot;message&quot;:&quot;D&quot;}&#39;</span> | fluent-cat es.event <span class="c"># es.event is a tag. es.event matches es.** of &lt;match&gt;</span>
+</span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{&quot;message&quot;:&quot;Ruby&quot;}&#39;</span> | fluent-cat es.event
+</span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{&quot;message&quot;:&quot;Elasticsearch&quot;}&#39;</span> | fluent-cat es.event
+</span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{&quot;message&quot;:&quot;msgpack&quot;}&#39;</span> | fluent-cat es.event
+</span><span class='line'>% ...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After Fluentd flushed received events to Elasticsearch, you can analyze the event logs via Kibana!
+Following image is one panel example:</p>
+
+<p><img src="/images/fluentd_kibana_elasticsearch.png" title="&#34;Fluentd, Elasticsearch and Kibana&#34;" alt="&#34;Fluentd, Elasticsearch and Kibana&#34;"></p>
+
+<p>Kibana has some built-in panels, so you can create own dashboard easily. See <a href="http://demo.kibana.org/#/dashboard">Kibana demo</a></p>
+
+<h2>Advanced tips</h2>
+
+<p>If your service has a high traffic, then fluent-plugin-elasticsearch sometimes get stucked.
+In this case, built-in <a href="http://docs.fluentd.org/articles/out_roundrobin">out_roundrobin plugin</a> is useful.
+You can distribute a write request to elasticsearch nodes for load balancing.</p>
+
+<p>Of course, putting Queue with multiple fluentd nodes is an another approach.</p>
+
+<h2>Conclusion</h2>
+
+<p>This article introduced Fluentd, Elasticsearch and Kibana combination to analyze the event logs.
+These components are easy to setup and work fine, so you can try this framework soon!
+I heard many companies have already tried / deployed this setup on production :)</p>
+
+<p>Enjoy Fluentd and Elasticsearch!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Masahiro Nakagawa</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-12T17:25:00+09:00" pubdate data-updated="true">Feb 12<span>th</span>, 2014</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/2014/02/analyze-event-logs-using-fluentd-and-elasticsearch/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/2014/02/analyze-event-logs-using-fluentd-and-elasticsearch/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic/" title="Previous Post: 高トラフィックでのFluentdからElasticsearchへの書き込み問題への対策">&laquo; 高トラフィックでのFluentdからElasticsearchへの書き込み問題への対策</a>
+      
+      
+        <a class="basic-alignment right" href="/ja/2014/02/developer-summit-2014/" title="next Post: Developer Summit 2014">Developer Summit 2014 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/05/the-status-of-coolio/">The status of Cool.io</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2014/03/sapporo-2014-winter/">札幌 2014 冬</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2014/03/about-fluentd-v11/">そろそろFluentd v11についてひとこと言っておくか</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2014/02/the-thoughts-of-sensu/">Sensu雑感</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2014/02/developer-summit-2014/">Developer Summit 2014</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/repeatedly">@repeatedly</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'repeatedly',
+            count: 4,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("repeatedly", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/repeatedly" class="twitter-follow-button" data-show-count="false">Follow @repeatedly</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Masahiro Nakagawa -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'repeatedly';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://repeatedly.github.com/2014/02/analyze-event-logs-using-fluentd-and-elasticsearch/';
+        var disqus_url = 'http://repeatedly.github.com/2014/02/analyze-event-logs-using-fluentd-and-elasticsearch/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
