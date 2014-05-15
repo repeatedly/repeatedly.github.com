@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>LTSV for D - Go ahead!</title>
+  <title>MultiOS testing for Fluentd repository on Travis CI - Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="In this week, Shinji Tanaka announced Labeled Tab-separated Values (LTSV).
-LTSV is the flexible and robust row oriented format. I just implemented &hellip;">
+  <meta name="description" content="Recently, Travis CI announces &#8220;Multi-OS feature&#8221; on their blog. Multi-OS Feature Available If this feature is enabled, our project can be &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ LTSV is the flexible and robust row oriented format. I just implemented &hellip;
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.com/2013/02/ltsv-for-d">
+  <link rel="canonical" href="http://repeatedly.github.com/2014/05/multios-testing-for-fluentd-repository-on-travis-ci">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -75,7 +74,7 @@ LTSV is the flexible and robust row oriented format. I just implemented &hellip;
   
   <header>
     
-      <h1 class="entry-title">LTSV for D</h1>
+      <h1 class="entry-title">MultiOS testing for Fluentd repository on Travis CI</h1>
     
     
       <p class="meta">
@@ -91,7 +90,7 @@ LTSV is the flexible and robust row oriented format. I just implemented &hellip;
   
 
 
-<time datetime="2013-02-10T04:10:00+09:00" pubdate data-updated="true">Feb 10<span>th</span>, 2013</time>
+<time datetime="2014-05-15T14:22:00+09:00" pubdate data-updated="true">May 15<span>th</span>, 2014</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -100,36 +99,16 @@ LTSV is the flexible and robust row oriented format. I just implemented &hellip;
   </header>
 
 
-<div class="entry-content"><p>In this week, Shinji Tanaka announced <a href="http://ltsv.org/">Labeled Tab-separated Values (LTSV)</a>.
-LTSV is the flexible and robust row oriented format.</p>
+<div class="entry-content"><p>Recently, Travis CI announces &#8220;Multi-OS feature&#8221; on their blog.</p>
 
-<p>I just implemented ltsv-d for D programming language.</p>
+<p><a href="http://blog.travis-ci.com/2014-05-13-multi-os-feature-available/">Multi-OS Feature Available</a></p>
 
-<p><a href="http://github.com/repeatedly/ltsv-d">LTSV for D</a></p>
+<p>If this feature is enabled, our project can be tested on both Linux and Mac OS X. <br />
+Multi OS feature has been enabled for <a href="https://github.com/fluent/fluentd/commit/e4bb4f61e91c70a95690d19b07414b485e7a3542">Fluentd repository</a>. See following build:</p>
 
-<p>ltsv-d provides <code>fromLTSV</code> and <code>toLTSV</code> functions.</p>
+<p><a href="https://travis-ci.org/fluent/fluentd/builds/25147077">fluent/fluentd on Travis CI</a></p>
 
-<p><code>fromLTSV</code> for parsing:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">auto</span> <span class="n">apacheLog</span> <span class="p">=</span> <span class="s">&quot;host:127.0.0.1\tident:-\tuser:foo\ttime:[10/Oct/2000:13:55:36 -0700]\treq:GET /apache.gif HTTP/1.0\tstatus:200\tsize:777\treferer:http://www.example.com/start.html\tua:Mozilla/4.08 [en] (Win98; I ;Nav)&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="k">auto</span> <span class="n">record</span> <span class="p">=</span> <span class="n">fromLTSV</span><span class="p">(</span><span class="n">apacheLog</span><span class="p">);</span>
-</span><span class='line'><span class="n">writeln</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s">&quot;host&quot;</span><span class="p">]);</span> <span class="c1">// &quot;127.0.0.1&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>toLTSV</code> for dumping:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">auto</span> <span class="n">line</span> <span class="p">=</span> <span class="p">[</span><span class="s">&quot;foo&quot;</span><span class="p">:</span><span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="s">&quot;hoge&quot;</span><span class="p">:</span><span class="s">&quot;fuga&quot;</span><span class="p">,</span> <span class="s">&quot;piyo&quot;</span><span class="p">:</span><span class="s">&quot;puyo&quot;</span><span class="p">].</span><span class="n">toLTSV</span><span class="p">();</span>
-</span><span class='line'><span class="n">writeln</span><span class="p">(</span><span class="n">line</span><span class="p">);</span> <span class="c1">// &quot;foo:bar\thoge:fuga\tpiyo:puyo&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Enjoy LTSV!</p>
+<p>This is very useful for checking commit and PR. Thanks Travis CI and Facebook team!</p>
 </div>
 
 
@@ -152,12 +131,12 @@ LTSV is the flexible and robust row oriented format.</p>
   
 
 
-<time datetime="2013-02-10T04:10:00+09:00" pubdate data-updated="true">Feb 10<span>th</span>, 2013</time>
+<time datetime="2014-05-15T14:22:00+09:00" pubdate data-updated="true">May 15<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/categories/d/'>D</a>
+    <a class='category' href='/categories/fluentd/'>fluentd</a>
   
 </span>
 
@@ -166,7 +145,7 @@ LTSV is the flexible and robust row oriented format.</p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/2013/02/ltsv-for-d/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/2013/02/ltsv-for-d/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/2014/05/multios-testing-for-fluentd-repository-on-travis-ci/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/2014/05/multios-testing-for-fluentd-repository-on-travis-ci/" >Tweet</a>
   
   
   
@@ -177,10 +156,8 @@ LTSV is the flexible and robust row oriented format.</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/2013/01/hadoop-conference-japan-2013-winter/" title="Previous Post: Hadoop Conference Japan 2013 Winter">&laquo; Hadoop Conference Japan 2013 Winter</a>
+        <a class="basic-alignment left" href="/2014/05/the-status-of-coolio/" title="Previous Post: The status of Cool.io">&laquo; The status of Cool.io</a>
       
-      
-        <a class="basic-alignment right" href="/2013/03/the-basics-of-fluentd/" title="next Post: The basics of Fluentd">The basics of Fluentd &raquo;</a>
       
     </p>
   </footer>
@@ -292,8 +269,8 @@ LTSV is the flexible and robust row oriented format.</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://repeatedly.github.com/2013/02/ltsv-for-d/';
-        var disqus_url = 'http://repeatedly.github.com/2013/02/ltsv-for-d/';
+        var disqus_identifier = 'http://repeatedly.github.com/2014/05/multios-testing-for-fluentd-repository-on-travis-ci/';
+        var disqus_url = 'http://repeatedly.github.com/2014/05/multios-testing-for-fluentd-repository-on-travis-ci/';
         var disqus_script = 'embed.js';
       
     (function () {
