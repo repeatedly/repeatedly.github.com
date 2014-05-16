@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>高トラフィックでのFluentdからElasticsearchへの書き込み問題への対策 - Go ahead!</title>
+  <title>Fluentd v1 and Roadmapというプレゼンをしてきた - Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Fluentd -> Elasticsearch 大量データ転送でトラブル 上の記事にあるように，Elasticsearchに大量のデータを一気に流し込むと色々と問題が起きます．
-元々検索エンジンはスケールさせるのが難しく，よく当たる問題だと思います． また， &hellip;">
+  <meta name="description" content="Fluentd Meetup 新しい応用事例とv1に関する発表 フリークアウトさんのオフィスでFluentd Meetupがあり，Fluentdのv1について話してきました． Fluentd v1 and Roadmap from Treasure Data, Inc. 今回の発表は， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.com/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic">
+  <link rel="canonical" href="http://repeatedly.github.com/ja/2014/05/fluentd-v1-and-roadmap">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -73,7 +72,7 @@
   
   <header>
     
-      <h1 class="entry-title">高トラフィックでのFluentdからElasticsearchへの書き込み問題への対策</h1>
+      <h1 class="entry-title">Fluentd v1 and Roadmapというプレゼンをしてきた</h1>
     
     
       <p class="meta">
@@ -89,7 +88,7 @@
   
 
 
-<time datetime="2014-02-11T18:39:00+09:00" pubdate data-updated="true">Feb 11<span>th</span>, 2014</time>
+<time datetime="2014-05-15T18:55:00+09:00" pubdate data-updated="true">May 15<span>th</span>, 2014</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -98,37 +97,42 @@
   </header>
 
 
-<div class="entry-content"><p><a href="http://blog.kakipo.com/trouble-with-fluentd-and-elasticsearch/">Fluentd -> Elasticsearch 大量データ転送でトラブル</a></p>
+<div class="entry-content"><p><a href="http://eventdots.jp/event/49560">Fluentd Meetup 新しい応用事例とv1に関する発表</a></p>
 
-<p>上の記事にあるように，Elasticsearchに大量のデータを一気に流し込むと色々と問題が起きます．
-元々検索エンジンはスケールさせるのが難しく，よく当たる問題だと思います．</p>
+<p>フリークアウトさんのオフィスでFluentd Meetupがあり，Fluentdのv1について話してきました．</p>
 
-<p>また，Fluentdとかだとガンガンログを流し込むことも多く，この辺で詰まる云々はたまに聞きます．</p>
+<iframe src="http://www.slideshare.net/slideshow/embed_code/34652297?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
 
-<p><a href="http://elasticsearch.doorkeeper.jp/events/7491">第3回elasticsearch勉強会</a></p>
 
-<p>で，Elasticsearch勉強会にFlorianという本家のエンジニアが来ていたので，
-懇親会でこの辺どうすればいいのか聞いてみました．
-実際Elasticsearchユーザの中でもちょくちょく問題になるらしく，
-大きくわけて二つの方法(またはこの組み合わせ)で回避しているようです．</p>
+<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/treasure-data/fluentd-v1-and-roadmap" title="Fluentd v1 and Roadmap" target="_blank">Fluentd v1 and Roadmap</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
 
-<h2>書き込み先のノードを増やす</h2>
+<p>今回の発表は，今までのv11やv1に関してのまとめ的な発表になっています．<br />
+以下のリンク集を見れば，発表内容の大抵はカバー出来ると思います．
+また，他の方もまとめ記事とかを書かれているので，そちらも参照してください．</p>
 
-<p>1ノードへの書き込みで詰まるなら，もっとノードを増やせば良いというアプローチ．
-今のfluent-plugin-elasticsearchにはラウンドロビンの機能はないんですが，
-out_roundrobinとかと組み合わせてやれば，書き込みを複数台に散らせることは出来そうです．</p>
+<ul>
+<li><a href="http://repeatedly.github.io/ja/2014/03/about-fluentd-v11/">そろそろFluentd v11についてひとこと言っておくか</a></li>
+<li><a href="https://github.com/fluent/fluentd/issues/251">Plan for v1 release #251</a></li>
+<li><a href="https://github.com/fluent/fluentd/issues/317">Support JRuby #317</a></li>
+<li><a href="https://github.com/fluent/fluentd/tree/windows">FluentdのWindowsブランチ</a></li>
+<li><a href="https://github.com/fluent/fluentd/pull/293">Add &#8211;use-v1-config option to enable new configuration format #293</a></li>
+<li><a href="https://github.com/repeatedly/omnibus-td-agent">td-agent2のパッケージリポジトリ</a></li>
+</ul>
 
-<h2>前段にキューを置く</h2>
 
-<p>書き込みをするノードの前にキューを置いて，そこでバッファリングしておくという方法．
-Fluentdの場合はバッファがキューになっているので，そこのフラッシュ間隔を長めに調整するとか，
-キュー系のプラグインがいくつかあるので，それを間に挟むという感じになるのかなと．<br />
-ただ，キューから値をポップする間隔が短いと結局詰まるので，この辺は少し工夫が必要そうです．</p>
+<p>俺の方から言えることは，Fluentd v0.10.46以降を使っている方は，
+積極的に<code>--use-v1-config</code>オプションを使ってくださいということです．<br />
+既存のフォーマットとの違いは<a href="http://docs.fluentd.org/articles/config-file#v1-format">ドキュメントを参照</a>してください．</p>
 
-<h2>まとめ</h2>
+<p>td-agent2は今ビルド中で，今週末あたりにリリースしたいと思ってます(パッケージングツールをアップデートしたら色々と壊れて無駄に時間が…)．
+それ以降はv1にリソースを割けるはずなので，フィルタやラベルなどを実装していく予定です．ご期待ください！</p>
 
-<p>Elasticsearchを真面目に運用したことがないので，どっちが現実的なのかよく分からないのが正直な所．
-この辺は高トラフィック環境で使っている人の話を聞きたい所です．</p>
+<p>また，Treasure DataはFluentdの開発者含め<a href="http://www.treasuredata.com/jp/about/careers.php">人材を募集している</a>ので，
+興味のある方はぜひぜひコンタクトをしてもらえればと思います！</p>
+
+<p>P.S.</p>
+
+<p>フリークアウトさんのオフィスにある，バスケのゴールにダンク出来なかったのが悔しいので，足腰鍛え直す．</p>
 </div>
 
 
@@ -151,12 +155,12 @@ Fluentdの場合はバッファがキューになっているので，そこの�
   
 
 
-<time datetime="2014-02-11T18:39:00+09:00" pubdate data-updated="true">Feb 11<span>th</span>, 2014</time>
+<time datetime="2014-05-15T18:55:00+09:00" pubdate data-updated="true">May 15<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/categories/elasticsearch/'>Elasticsearch</a>, <a class='category' href='/categories/fluentd/'>Fluentd</a>
+    <a class='category' href='/categories/fluentd/'>fluentd</a>
   
 </span>
 
@@ -165,7 +169,7 @@ Fluentdの場合はバッファがキューになっているので，そこの�
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2014/05/fluentd-v1-and-roadmap/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2014/05/fluentd-v1-and-roadmap/" >Tweet</a>
   
   
   
@@ -176,10 +180,8 @@ Fluentdの場合はバッファがキューになっているので，そこの�
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/ja/2014/02/presto-scr-1/" title="Previous Post: Prestoソースコードリーディング #1">&laquo; Prestoソースコードリーディング #1</a>
+        <a class="basic-alignment left" href="/2014/05/multios-testing-for-fluentd-repository-on-travis-ci/" title="Previous Post: MultiOS testing for Fluentd repository on Travis CI">&laquo; MultiOS testing for Fluentd repository on Travis CI</a>
       
-      
-        <a class="basic-alignment right" href="/2014/02/analyze-event-logs-using-fluentd-and-elasticsearch/" title="next Post: Analyze event logs using Fluentd and Elasticsearch">Analyze event logs using Fluentd and Elasticsearch &raquo;</a>
       
     </p>
   </footer>
@@ -291,8 +293,8 @@ Fluentdの場合はバッファがキューになっているので，そこの�
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://repeatedly.github.com/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic/';
-        var disqus_url = 'http://repeatedly.github.com/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic/';
+        var disqus_identifier = 'http://repeatedly.github.com/ja/2014/05/fluentd-v1-and-roadmap/';
+        var disqus_url = 'http://repeatedly.github.com/ja/2014/05/fluentd-v1-and-roadmap/';
         var disqus_script = 'embed.js';
       
     (function () {

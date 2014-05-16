@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-05-15T14:34:13+09:00</updated>
+  <updated>2014-05-16T19:08:28+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,50 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Fluentd v1 and Roadmapというプレゼンをしてきた]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/05/fluentd-v1-and-roadmap/"/>
+    <updated>2014-05-15T18:55:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/05/fluentd-v1-and-roadmap</id>
+    <content type="html"><![CDATA[<p><a href="http://eventdots.jp/event/49560">Fluentd Meetup 新しい応用事例とv1に関する発表</a></p>
+
+<p>フリークアウトさんのオフィスでFluentd Meetupがあり，Fluentdのv1について話してきました．</p>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/34652297?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/treasure-data/fluentd-v1-and-roadmap" title="Fluentd v1 and Roadmap" target="_blank">Fluentd v1 and Roadmap</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
+
+<p>今回の発表は，今までのv11やv1に関してのまとめ的な発表になっています．<br />
+以下のリンク集を見れば，発表内容の大抵はカバー出来ると思います．
+また，他の方もまとめ記事とかを書かれているので，そちらも参照してください．</p>
+
+<ul>
+<li><a href="http://repeatedly.github.io/ja/2014/03/about-fluentd-v11/">そろそろFluentd v11についてひとこと言っておくか</a></li>
+<li><a href="https://github.com/fluent/fluentd/issues/251">Plan for v1 release #251</a></li>
+<li><a href="https://github.com/fluent/fluentd/issues/317">Support JRuby #317</a></li>
+<li><a href="https://github.com/fluent/fluentd/tree/windows">FluentdのWindowsブランチ</a></li>
+<li><a href="https://github.com/fluent/fluentd/pull/293">Add &#8211;use-v1-config option to enable new configuration format #293</a></li>
+<li><a href="https://github.com/repeatedly/omnibus-td-agent">td-agent2のパッケージリポジトリ</a></li>
+</ul>
+
+
+<p>俺の方から言えることは，Fluentd v0.10.46以降を使っている方は，
+積極的に<code>--use-v1-config</code>オプションを使ってくださいということです．<br />
+既存のフォーマットとの違いは<a href="http://docs.fluentd.org/articles/config-file#v1-format">ドキュメントを参照</a>してください．</p>
+
+<p>td-agent2は今ビルド中で，今週末あたりにリリースしたいと思ってます(パッケージングツールをアップデートしたら色々と壊れて無駄に時間が…)．
+それ以降はv1にリソースを割けるはずなので，フィルタやラベルなどを実装していく予定です．ご期待ください！</p>
+
+<p>また，Treasure DataはFluentdの開発者含め<a href="http://www.treasuredata.com/jp/about/careers.php">人材を募集している</a>ので，
+興味のある方はぜひぜひコンタクトをしてもらえればと思います！</p>
+
+<p>P.S.</p>
+
+<p>フリークアウトさんのオフィスにある，バスケのゴールにダンク出来なかったのが悔しいので，足腰鍛え直す．</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MultiOS testing for Fluentd repository on Travis CI]]></title>
@@ -1176,66 +1220,6 @@ D言語を始める始めないに関わらず，どういう言語なのかを�
 <p><img src="http://repeatedly.github.com/images/walter_autograph_tdpl.png" title="&#34;Walter sign&#34;" alt="&#34;Walter sign&#34;">
 <img src="http://repeatedly.github.com/images/andrei_autograph_tdpl.png" title="&#34;Andrei sign&#34;" alt="&#34;Andrei sign&#34;">
 <img src="http://repeatedly.github.com/images/dconf_2013_shirt.png" title="&#34;DConf 2013 T shirt&#34;" alt="&#34;DConf 2013 T shirt&#34;"></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Stormをはじめよう]]></title>
-    <link href="http://repeatedly.github.com/ja/2013/03/getting-started-with-storm/"/>
-    <updated>2013-03-30T10:54:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2013/03/getting-started-with-storm</id>
-    <content type="html"><![CDATA[<p>O&#8217;Reillyの方から<a href="http://www.oreilly.co.jp/books/9784873116013/">Stormをはじめよう</a>を献本して頂いて読んだのでレビュー！</p>
-
-<h2>感想</h2>
-
-<p>最近増えてきている100ページくらいの本なので，さっくり読めました．</p>
-
-<p>簡単にまとめると &#8221;<strong>英語は読みたくないので情報が古くてもStormの概要を日本語で読みたい</strong>&#8221; という方向けの本．</p>
-
-<p>大きな理由は以下:</p>
-
-<ul>
-<li>Stormの対象バージョンが0.7.1と古い．俺でもTridentというのが0.8から入っているのを知っているので，その辺の目玉機能は書かれていない</li>
-<li>多分原著の方も少し書き方が雑．なんの説明もなく実装のクラス名を使って説明している所とかあるので「？」となる所がある
-
-<ul>
-<li>サンプルコードも少し雑で，使ってない変数があったり説明と実装があってなかったりもたまにある</li>
-</ul>
-</li>
-<li>翻訳が少し微妙．Cursorが&#8221;カーサー&#8221;だったり，原著の方の構成の不味さもあるのか，日本語的に理解しにくい文がちょくちょく混じっている (監訳はいない？)</li>
-</ul>
-
-
-<p>メッセージングの信頼性に関しては，Storm本家のWikiの方が詳しく書かれていたりするので，本当に「Stormってどういう構成でどういう感じに機能追加するんだろう？ユースケースとかは？」みたいなのを日本語で読みたい場合には，とっかかりにもなるし，これで十分な感じ．</p>
-
-<p>英語が読める人は，本家のWikiとか漁った方が情報も新しく結構細かに書かれているため，そちらの方が正確かもしれない．</p>
-
-<h2>正誤表</h2>
-
-<p>読んでて気になった所はgistにまとめておきました</p>
-
-<p><a href="https://gist.github.com/repeatedly/5274873">Stormをはじめようのerrata</a></p>
-
-<h2>Stormについてのてきとうな所感</h2>
-
-<ul>
-<li><p>NimbusはImpalaのstatestoreみたいな感じで，最初はいるけど落ちても致命的ではない</p></li>
-<li><p>Tupleは基本単体で送られて，それぞれにトポロジーのack tracker(Acker)がついてトラッキングされる</p>
-
-<ul>
-<li>tupleが増えるとAckerも増え，数が増えると結構重そうに見えるけど，そこんところどうなのか</li>
-<li>再送は基本Spoutが判断．まぁこれは分からなくもない</li>
-</ul>
-</li>
-<li><p>0.8からのTridentはBatchをガリガリ使っていると聞いてるけど，通常の利用だとあまりない？ 1 Tupleでトポロジー内forwardしまくるのは結構パフォーマンス的に厳しそう</p></li>
-<li><p>トランザクションはSpout / Boltの両方が頑張る．この辺は今時のストリーミング処理系と同じ．コアで担保は難しい</p></li>
-<li><p>各ワーカーのコアのメソッドはシングルスレッドで呼ばれるようなので，この辺で重い処理すると多分詰まる．at-least-onceっぽいので，多分これが連鎖するとデータ重複する．</p></li>
-<li><p>multilangはHadoop Streamingと同じ</p></li>
-<li><p>ZooKeeperに依存しているので，そこがまた面倒くさそう</p></li>
-</ul>
-
-
-<p>とりあえずこんな感じ．0.8や0.9でもっと改善されているかもしれないので，その辺は必要があれば追う．</p>
 ]]></content>
   </entry>
   
