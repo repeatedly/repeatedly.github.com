@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>siphash-d - Go ahead!</title>
+  <title>Release fluent-plugin-netflow - Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="siphash-d is the D implementation of SipHash. The latest CRuby uses SipHash to prevent Hash-flooding DoS attack. From now on, SipHash like algorithm &hellip;">
+  <meta name="description" content="fluent-plugin-netflow CiscoのNetflowプロトコルを受け取るFluentdプラグインを書きました．
+公開してみたら結構反応が良くて，地味にユーザが多そうですね… 経緯 Fluentdを調べていたユーザから「ログ収集基盤をFluentdベースにしたいんだけど， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.com/2012/12/siphash-d">
+  <link rel="canonical" href="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -58,10 +59,8 @@
 
   
 <ul class="main-navigation">
-  <li><a href="/">Home</a></li>
-  <li><a href="/works">Works</a></li>
-  <li><a href="/archives">Archives</a></li>
-  <li><a href="/ja">Japanese</a></li>
+  <li><a href="/ja/archives">Archives</a></li>
+  <li><a href="/">English</a></li>
 </ul>
 
   
@@ -74,7 +73,7 @@
   
   <header>
     
-      <h1 class="entry-title">siphash-d</h1>
+      <h1 class="entry-title">Release fluent-plugin-netflow</h1>
     
     
       <p class="meta">
@@ -90,7 +89,7 @@
   
 
 
-<time datetime="2012-12-04T22:57:00+09:00" pubdate data-updated="true">Dec 4<span>th</span>, 2012</time>
+<time datetime="2014-07-11T21:35:00+09:00" pubdate data-updated="true">Jul 11<span>th</span>, 2014</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -99,29 +98,68 @@
   </header>
 
 
-<div class="entry-content"><p><a href="https://github.com/repeatedly/siphash-d">siphash-d</a> is the D implementation of <a href="https://131002.net/siphash/">SipHash</a>.</p>
+<div class="entry-content"><p><a href="https://github.com/repeatedly/fluent-plugin-netflow">fluent-plugin-netflow</a></p>
 
-<p>The latest CRuby uses SipHash to prevent <a href="http://www.ruby-lang.org/en/news/2012/11/09/ruby19-hashdos-cve-2012-5371/">Hash-flooding DoS attack</a>. From now on, SipHash like algorithm will be important for robust application. So I implemented SipHash for D.</p>
+<p>CiscoのNetflowプロトコルを受け取るFluentdプラグインを書きました．
+公開してみたら結構反応が良くて，地味にユーザが多そうですね…</p>
 
-<p>Current version provides only siphash24 function:</p>
+<h2>経緯</h2>
+
+<p>Fluentdを調べていたユーザから「ログ収集基盤をFluentdベースにしたいんだけど，Netflowをパースするプラグインないの？」と言われたので，
+さくっと作ってみました．<br />
+「さくっと」と言ってもコアのパーサー部分はそのユーザが使っていたLogstashからポーティングしたやつなので，それなりにパース出来るはずです．
+Pull Requestのおかげもあり，対応templateも少し増えてます．</p>
+
+<h2>使い方</h2>
+
+<p>fluent-gemでインストールするだけです．</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ fluent-gem install fluent-plugin-netflow</span></code></pre></td></tr></table></div></figure>
+
+
+<p>その後，以下のように設定します．typeとtagは必須です．他のやつは適宜環境に合わせて設定してください．</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='d'><span class='line'><span class="k">import</span> <span class="n">siphash</span><span class="p">;</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> netflow
+</span><span class='line'>  <span class="nb">tag</span> netflow.event
 </span><span class='line'>
-</span><span class='line'><span class="kt">ubyte</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span> <span class="n">k</span> <span class="p">=</span> <span class="k">cast</span><span class="p">(</span><span class="kt">ubyte</span><span class="p">[])</span><span class="s">&quot;To be|not to be!&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="kt">ubyte</span><span class="p">[]</span> <span class="n">msg</span> <span class="p">=</span> <span class="k">cast</span><span class="p">(</span><span class="kt">ubyte</span><span class="p">[])</span><span class="s">&quot;that is the question.&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="k">auto</span> <span class="n">hashed</span> <span class="p">=</span> <span class="n">siphash24</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">msg</span><span class="p">);</span>
+</span><span class='line'>  <span class="c"># optional parameters</span>
+</span><span class='line'>  <span class="nb">bind</span> <span class="m">127.0.0.1</span>
+</span><span class='line'>  <span class="nb">port</span> <span class="m">9555</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># optional parser parameters</span>
+</span><span class='line'>  <span class="err">cache_</span><span class="nb">ttl</span> <span class="m">6000</span>
+</span><span class='line'>  <span class="nb">versions</span> [5, <span class="m">9</span>]
+</span><span class='line'>  <span class="nb">definitions</span> <span class="sx">/path/to/your_definitions.yml</span>
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>I plan to add std.digest like struct and other APIs if needed.</p>
+<p>今現在はin_syslogの影響もあってデフォルトポートが5140のままなのですが，0.1.0を出す時に変更する予定です．</p>
 
-<p>siphash-d has already listed in the official site.
-Thanks to JP Aumasson!</p>
+<h2>TODO</h2>
+
+<ul>
+<li>俺自身がNetflow関係のやつを持っていないので，使っている人，誰かメンテナになってください！実環境でのテストが出来ませんｗ</li>
+<li>Fluentd v0.10.52が出たら，FluentdのSocketUtilベースで書き直して，0.1.0を出す</li>
+</ul>
+
+
+<p>他，何か要望があれば<a href="https://github.com/repeatedly/fluent-plugin-netflow">issue/pull request</a>をしてもらえれば対応します．</p>
 </div>
 
 
@@ -144,12 +182,12 @@ Thanks to JP Aumasson!</p>
   
 
 
-<time datetime="2012-12-04T22:57:00+09:00" pubdate data-updated="true">Dec 4<span>th</span>, 2012</time>
+<time datetime="2014-07-11T21:35:00+09:00" pubdate data-updated="true">Jul 11<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/categories/d/'>D</a>
+    <a class='category' href='/categories/fluentd/'>fluentd</a>
   
 </span>
 
@@ -158,7 +196,7 @@ Thanks to JP Aumasson!</p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/2012/12/siphash-d/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/2012/12/siphash-d/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow/" >Tweet</a>
   
   
   
@@ -169,10 +207,8 @@ Thanks to JP Aumasson!</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/2012/11/inside-impala-coordinator-at-hscr-13th/" title="Previous Post: Inside Impala Coordinator at HSCR 13th">&laquo; Inside Impala Coordinator at HSCR 13th</a>
+        <a class="basic-alignment left" href="/ja/2014/05/fluentd-v1-and-roadmap/" title="Previous Post: Fluentd v1 and Roadmapというプレゼンをしてきた">&laquo; Fluentd v1 and Roadmapというプレゼンをしてきた</a>
       
-      
-        <a class="basic-alignment right" href="/2012/12/published-introduction-to-tornado-in-japan/" title="next Post: Published 'Introduction to Tornado' in Japan">Published 'Introduction to Tornado' in Japan &raquo;</a>
       
     </p>
   </footer>
@@ -284,8 +320,8 @@ Thanks to JP Aumasson!</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://repeatedly.github.com/2012/12/siphash-d/';
-        var disqus_url = 'http://repeatedly.github.com/2012/12/siphash-d/';
+        var disqus_identifier = 'http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow/';
+        var disqus_url = 'http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow/';
         var disqus_script = 'embed.js';
       
     (function () {

@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-05-16T19:08:28+09:00</updated>
+  <updated>2014-07-11T22:33:31+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,76 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Release fluent-plugin-netflow]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow/"/>
+    <updated>2014-07-11T21:35:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/fluent-plugin-netflow">fluent-plugin-netflow</a></p>
+
+<p>CiscoのNetflowプロトコルを受け取るFluentdプラグインを書きました．
+公開してみたら結構反応が良くて，地味にユーザが多そうですね…</p>
+
+<h2>経緯</h2>
+
+<p>Fluentdを調べていたユーザから「ログ収集基盤をFluentdベースにしたいんだけど，Netflowをパースするプラグインないの？」と言われたので，
+さくっと作ってみました．<br />
+「さくっと」と言ってもコアのパーサー部分はそのユーザが使っていたLogstashからポーティングしたやつなので，それなりにパース出来るはずです．
+Pull Requestのおかげもあり，対応templateも少し増えてます．</p>
+
+<h2>使い方</h2>
+
+<p>fluent-gemでインストールするだけです．</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ fluent-gem install fluent-plugin-netflow</span></code></pre></td></tr></table></div></figure>
+
+
+<p>その後，以下のように設定します．typeとtagは必須です．他のやつは適宜環境に合わせて設定してください．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> netflow
+</span><span class='line'>  <span class="nb">tag</span> netflow.event
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># optional parameters</span>
+</span><span class='line'>  <span class="nb">bind</span> <span class="m">127.0.0.1</span>
+</span><span class='line'>  <span class="nb">port</span> <span class="m">9555</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># optional parser parameters</span>
+</span><span class='line'>  <span class="err">cache_</span><span class="nb">ttl</span> <span class="m">6000</span>
+</span><span class='line'>  <span class="nb">versions</span> [5, <span class="m">9</span>]
+</span><span class='line'>  <span class="nb">definitions</span> <span class="sx">/path/to/your_definitions.yml</span>
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>今現在はin_syslogの影響もあってデフォルトポートが5140のままなのですが，0.1.0を出す時に変更する予定です．</p>
+
+<h2>TODO</h2>
+
+<ul>
+<li>俺自身がNetflow関係のやつを持っていないので，使っている人，誰かメンテナになってください！実環境でのテストが出来ませんｗ</li>
+<li>Fluentd v0.10.52が出たら，FluentdのSocketUtilベースで書き直して，0.1.0を出す</li>
+</ul>
+
+
+<p>他，何か要望があれば<a href="https://github.com/repeatedly/fluent-plugin-netflow">issue/pull request</a>をしてもらえれば対応します．</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Fluentd v1 and Roadmapというプレゼンをしてきた]]></title>
@@ -1207,19 +1277,6 @@ D言語を始める始めないに関わらず，どういう言語なのかを�
 <p>恒例のアレなリンクです．すでに1ヶ月経ってますが，こちらから買ってもらえると俺が喜びます :)</p>
 
 <p><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4798131105/repeatedly-22/ref=nosim/">Amazon</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[D Conference 2013]]></title>
-    <link href="http://repeatedly.github.com/2013/05/d-conference-2013/"/>
-    <updated>2013-05-03T13:00:00+09:00</updated>
-    <id>http://repeatedly.github.com/2013/05/d-conference-2013</id>
-    <content type="html"><![CDATA[<p>Got Walter and Andrei autograph in our TDPL japanese edition :)</p>
-
-<p><img src="http://repeatedly.github.com/images/walter_autograph_tdpl.png" title="&#34;Walter sign&#34;" alt="&#34;Walter sign&#34;">
-<img src="http://repeatedly.github.com/images/andrei_autograph_tdpl.png" title="&#34;Andrei sign&#34;" alt="&#34;Andrei sign&#34;">
-<img src="http://repeatedly.github.com/images/dconf_2013_shirt.png" title="&#34;DConf 2013 T shirt&#34;" alt="&#34;DConf 2013 T shirt&#34;"></p>
 ]]></content>
   </entry>
   

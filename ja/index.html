@@ -9,7 +9,8 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Fluentd Meetup 新しい応用事例とv1に関する発表 フリークアウトさんのオフィスでFluentd Meetupがあり，Fluentdのv1について話してきました． Fluentd v1 and Roadmap from Treasure Data, Inc. 今回の発表は， &hellip;">
+  <meta name="description" content="fluent-plugin-netflow CiscoのNetflowプロトコルを受け取るFluentdプラグインを書きました．
+公開してみたら結構反応が良くて，地味にユーザが多そうですね… 経緯 Fluentdを調べていたユーザから「ログ収集基盤をFluentdベースにしたいんだけど， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +70,105 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2014/07/release-fluent-plugin-netflow/">Release fluent-plugin-netflow</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-11T21:35:00+09:00" pubdate data-updated="true">Jul 11<span>th</span>, 2014</time>
+        
+         | <a href="/ja/2014/07/release-fluent-plugin-netflow/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/repeatedly/fluent-plugin-netflow">fluent-plugin-netflow</a></p>
+
+<p>CiscoのNetflowプロトコルを受け取るFluentdプラグインを書きました．
+公開してみたら結構反応が良くて，地味にユーザが多そうですね…</p>
+
+<h2>経緯</h2>
+
+<p>Fluentdを調べていたユーザから「ログ収集基盤をFluentdベースにしたいんだけど，Netflowをパースするプラグインないの？」と言われたので，
+さくっと作ってみました．<br />
+「さくっと」と言ってもコアのパーサー部分はそのユーザが使っていたLogstashからポーティングしたやつなので，それなりにパース出来るはずです．
+Pull Requestのおかげもあり，対応templateも少し増えてます．</p>
+
+<h2>使い方</h2>
+
+<p>fluent-gemでインストールするだけです．</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ fluent-gem install fluent-plugin-netflow</span></code></pre></td></tr></table></div></figure>
+
+
+<p>その後，以下のように設定します．typeとtagは必須です．他のやつは適宜環境に合わせて設定してください．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> netflow
+</span><span class='line'>  <span class="nb">tag</span> netflow.event
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># optional parameters</span>
+</span><span class='line'>  <span class="nb">bind</span> <span class="m">127.0.0.1</span>
+</span><span class='line'>  <span class="nb">port</span> <span class="m">9555</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># optional parser parameters</span>
+</span><span class='line'>  <span class="err">cache_</span><span class="nb">ttl</span> <span class="m">6000</span>
+</span><span class='line'>  <span class="nb">versions</span> [5, <span class="m">9</span>]
+</span><span class='line'>  <span class="nb">definitions</span> <span class="sx">/path/to/your_definitions.yml</span>
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>今現在はin_syslogの影響もあってデフォルトポートが5140のままなのですが，0.1.0を出す時に変更する予定です．</p>
+
+<h2>TODO</h2>
+
+<ul>
+<li>俺自身がNetflow関係のやつを持っていないので，使っている人，誰かメンテナになってください！実環境でのテストが出来ませんｗ</li>
+<li>Fluentd v0.10.52が出たら，FluentdのSocketUtilベースで書き直して，0.1.0を出す</li>
+</ul>
+
+
+<p>他，何か要望があれば<a href="https://github.com/repeatedly/fluent-plugin-netflow">issue/pull request</a>をしてもらえれば対応します．</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -398,77 +498,6 @@ Nagiosとかは使ったことはないので，その辺と違ってどこま�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2014/02/developer-summit-2014/">Developer Summit 2014</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-02-16T19:53:00+09:00" pubdate data-updated="true">Feb 16<span>th</span>, 2014</time>
-        
-         | <a href="/ja/2014/02/developer-summit-2014/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://event.shoeisha.jp/devsumi/20140213/">Developers Summit 2014：開発者のためのITカンファレンス</a></p>
-
-<p>セッション登壇も兼ねて，初めてデブサミに参加してきました．</p>
-
-<h2>1日目</h2>
-
-<p><a href="http://event.shoeisha.jp/devsumi/20140213/session/394/">OSSコミッタ大集合</a></p>
-
-<p>これに登壇してました．登壇といっても，それぞれのプロジェクトの人がわいわいと自分の関わってるプロジェクトについて
-交互に話すというもので，FluentdとD言語の時に壇上にあがってあれやこれや話しました．<br />
-まぁFluentdに関しては登壇して何も喋らずに降りましたが…prz</p>
-
-<p>セッションに関係ないですが登壇者控え室，和室でネットワークも電源もありで環境良すぎて超快適だった．雅叙園良いですね．</p>
-
-<h2>2日目</h2>
-
-<p>「Webの現在過去未来」のセッションなど気になるのがあったのですが，雪が降りすぎていたので参加しませんでした！</p>
-
-<p>それとは別に，渋谷でRubyコミッタ3人との飲み会があり，鍋をつつきつつ色々と話をした．
-その結果，Focuslightのメンテナが正式に決まり，FluentdにはLinux kernel &amp; Rubyコミッタであるkosakiさんがjoin．良い鍋でした．</p>
-
-<blockquote class = "twitter-tweet" lang = "en"><p><a href = "https://twitter.com/sora_h">@sora_h</a> and <a href = "https://twitter.com/sonots">@sonots</a> are now focuslight committer! This is great step for growing <a href = "https://twitter.com/search?q = %23Fluentd&amp;src = hash">#Fluentd</a> visualization environment :)</p>&mdash; Mr. Fiber (@repeatedly) <a href = "https://twitter.com/repeatedly/statuses/434379434435436545">February 14, 2014</a></blockquote>
-
-
-<script async src = "//platform.twitter.com/widgets.js" charset = "utf-8"></script>
-
-
-
-
-<blockquote class = "twitter-tweet" lang = "en"><p><a href = "https://twitter.com/kosaki55tea">@kosaki55tea</a> is now Fluentd committer! We can improve Fluentd more quickly :) <a href = "https://twitter.com/search?q = %23fluentd&amp;src = hash">#fluentd</a></p>&mdash; Mr. Fiber (@repeatedly) <a href = "https://twitter.com/repeatedly/statuses/434395924224167936">February 14, 2014</a></blockquote>
-
-
-<script async src = "//platform.twitter.com/widgets.js" charset = "utf-8"></script>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/ja/page/2/">&larr; Older</a>
@@ -484,6 +513,10 @@ Nagiosとかは使ったことはないので，その辺と違ってどこま�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/ja/2014/07/release-fluent-plugin-netflow/">Release fluent-plugin-netflow</a>
+      </li>
+    
+      <li class="post">
         <a href="/ja/2014/05/fluentd-v1-and-roadmap/">Fluentd v1 and Roadmapというプレゼンをしてきた</a>
       </li>
     
@@ -497,10 +530,6 @@ Nagiosとかは使ったことはないので，その辺と違ってどこま�
     
       <li class="post">
         <a href="/ja/2014/03/sapporo-2014-winter/">札幌 2014 冬</a>
-      </li>
-    
-      <li class="post">
-        <a href="/ja/2014/03/about-fluentd-v11/">そろそろFluentd v11についてひとこと言っておくか</a>
       </li>
     
   </ul>
