@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-07-11T22:33:31+09:00</updated>
+  <updated>2014-07-13T21:05:16+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,84 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Release fluent-plugin-multi-format-parser]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-multi-format-parser/"/>
+    <updated>2014-07-13T21:00:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-multi-format-parser</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/fluent-plugin-multi-format-parser">fluent-plugin-multi-format-parser</a></p>
+
+<p>一つのログファイルの中に複数のフォーマットがある時に利用可能なパーサプラグイン書きました．</p>
+
+<h2>使い方</h2>
+
+<p>fluent-gemでインストール．</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ fluent-gem install fluent-plugin-multi-format-parser</span></code></pre></td></tr></table></div></figure>
+
+
+<p>インストールすると，TextParserを利用している<code>in_tail</code>や<code>in_udp</code>などで<code>multi_format</code>が使えるようになります．
+そこで<code>&lt;pattern&gt;</code>を複数並べてください．<code>&lt;pattern&gt;</code>内の各設定は，利用するパーサにそのまま渡されます．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> udp
+</span><span class='line'>  <span class="nb">tag</span> logs.multi
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">format</span> multi_format
+</span><span class='line'>  <span class="nt">&lt;pattern&gt;</span>
+</span><span class='line'>    <span class="nb">format</span> apache
+</span><span class='line'>  <span class="nt">&lt;/pattern&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;pattern&gt;</span>
+</span><span class='line'>    <span class="nb">format</span> json
+</span><span class='line'>  <span class="nt">&lt;/pattern&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;pattern&gt;</span>
+</span><span class='line'>    <span class="nb">format</span> <span class="k">none</span>
+</span><span class='line'>  <span class="nt">&lt;/pattern&gt;</span>
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>&lt;pattern&gt;</code>を上から順番に試し，パース出来たらその結果を返します．上の設定例だと，最初に<code>apache</code>，次に<code>json</code>，最後に<code>none</code>になります．
+たとえば，以下のようなログ群を<code>in_udp</code>に流すと</p>
+
+<pre><code>192.168.0.1 - - [28/Feb/2013:12:00:00 +0900] "GET / HTTP/1.1" 200 777
+{"k1":"v", "k2":123456}
+foobar
+</code></pre>
+
+<p>以下のように処理されます．</p>
+
+<pre><code>2013-02-28 12:00:00 +0900 test.**: {"host":"192.168.0.1","user":"-","method":"GET","path":"/","code":"200","size":"777"}
+2014-07-13 20:56:55 +0900 test.**: {"k":"v","k1":123456}
+2014-07-13 20:56:55 +0900 test.**: {"message":"foobar"}
+</code></pre>
+
+<h2>まとめ</h2>
+
+<p>ログファイルの中に複数のフォーマットが混じるのは望ましいことではないのですが，どうしてもそういう状況が起きるときには，使ってみてください．</p>
+
+<p>あと，実装はかなり単純なので，パーサプラグインのサンプルにでもしてもらえればと思います．</p>
+
+<p>何か要望があれば<a href="https://github.com/repeatedly/fluent-plugin-multi-format-parser">issue/pull request</a>に投げてもらえれば対応します．</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Release fluent-plugin-netflow]]></title>
@@ -1235,48 +1313,6 @@ shardの数は途中で変更出来ないらしく，増やしたい時は別の
 Fluentdなんかはプラグイン機構でガンガンインフラの人にもコード書いて問題を解決してもらおうというプロダクトだったりするので，今後もユーザが増えるといいなという思います．</p>
 
 <p>参加された方々，またスタッフの方々，お疲れ様でした！</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[プログラミング言語D]]></title>
-    <link href="http://repeatedly.github.com/ja/2013/05/tdpl-japanese-edition/"/>
-    <updated>2013-05-13T01:44:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2013/05/tdpl-japanese-edition</id>
-    <content type="html"><![CDATA[<p><a href="http://forum.dlang.org/thread/ttyydpzuhtpgxagkynhq@forum.dlang.org">フォーラム</a>にポストしてブログで書くの忘れてました！</p>
-
-<p><img src="http://repeatedly.github.com/images/tdpl_jp_edition.png" title="&#34;TDPL Japanese Edition&#34;" alt="&#34;TDPL Japanese Edition&#34;"></p>
-
-<ul>
-<li><a href="http://books.shoeisha.co.jp/book/b108222.html">プログラミング言語D</a></li>
-<li><a href="http://www.shoeisha.co.jp/book/qa/15615/list">正誤表</a> : 誤字や誤訳などあれば，こちらから報告してもらえると助かります</li>
-</ul>
-
-
-<p>Andreiが書いたD言語本，通称<a href="http://erdani.com/index.php/books/tdpl/">TDPL</a>の日本語版が翔泳社さんから出版されました．俺と原さんが監訳者として参加してました．<br />
-翻訳された長尾さんの訳の質も高く，監訳のチェックは技術的なものに注力出来ました．</p>
-
-<p>最初に断っておくと，TDPLはD言語の本であって入門本ではありません．
-ある程度，他の言語を触っていてプログラミングに関して知っていることが前提になっています．</p>
-
-<p>その変わりと言っては何ですが，単なる文法の説明などにとどまらず「なぜD言語がこの機能を採用したのか」
-なども書かれている本になっています．そのため，それなりに読み応えのある本だと思います．<br />
-また，Andreiのノリ？が極力残るように勤めました．</p>
-
-<p>TDPL自体は2010年出版ですが，最新のバージョンである2.062までの変更はちゃんとフォローしています．
-モジュール名含めコードも一部新しくなってますし，新機能に関してはコラムなどで説明しています．<br />
-もし何か疑問などあれば，Twitterならば #dlang つけて呟くと，親切なD言語erが答えてくれると思います．</p>
-
-<p>この本が出版されたことで，一つ肩の荷が下りたかなという感じです．
-D言語を始める始めないに関わらず，どういう言語なのかを知って貰える一冊なのは確かです．</p>
-
-<p>Enjoy D！</p>
-
-<h2>P.S.</h2>
-
-<p>恒例のアレなリンクです．すでに1ヶ月経ってますが，こちらから買ってもらえると俺が喜びます :)</p>
-
-<p><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4798131105/repeatedly-22/ref=nosim/">Amazon</a></p>
 ]]></content>
   </entry>
   
