@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Presto | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/presto/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-07-13T21:05:16+09:00</updated>
+  <updated>2014-07-17T18:30:21+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,46 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Prestoソースコードリーディング #4]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/07/presto-scr-4/"/>
+    <updated>2014-07-17T17:53:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/07/presto-scr-4</id>
+    <content type="html"><![CDATA[<p><a href="http://atnd.org/events/53545">Presto ソースコードリーディング #4</a></p>
+
+<p>いつものようにLINEでやりました！</p>
+
+<p>@frsyukiが帰国する前に，という流れで開催決定・募集が1週間前というタイトなスケジュールでしたが，
+無茶ぶりにつきあってくれた@ueshinさんに感謝．</p>
+
+<h2>当日の内容</h2>
+
+<p><a href="http://togetter.com/li/694128">togetterのまとめ</a>を見れば，なんとなく大まかな流れは把握できるはず…！</p>
+
+<p>ueshinさんが第二回のashigeruさんの論理計画実行の後を継いで，
+物理計画実行周りの話をしてくれました(<a href="https://gist.github.com/ueshin/5e38cfe915ce15f756b1">資料のgist</a>)．
+バイトコード生成しての高速化の話とか，Presto以外でも有用な話が出てました．</p>
+
+<p>frsyukiが現在のPrestoの開発体制の話，Treasure Dataでハックしている所の紹介，
+CREATE VIEWなどの実装がなぜこうなっているのか(これはfrsyuki案が通ったらしい)，
+今後Prestoチームがやろうとしていることなど含め，その場で色々と議論する感じになりました．</p>
+
+<h2>まとめ</h2>
+
+<p>少人数でソースコードレベルで興味のある人が集まっているのもあり，いつも通り濃い感じでした！
+partitionedの話とか，現在の実行モデルにおけるオペレータの実装の話とか，
+この辺を話すイベントはあんまりないんじゃないかなと思います．</p>
+
+<p>次第5回をいつやるかは決まってませんが，いずれやる予定です．</p>
+
+<p>またソースコードリーディングとは別に，Prestoのユースケースや，
+プロダクションで動かしている人の運用の話などを共有する，
+Presto meetupみたいなもう少し緩めのイベントもやる予定です．</p>
+
+<p>お楽しみに :)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Prestoソースコードリーディング #1]]></title>

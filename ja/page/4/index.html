@@ -9,8 +9,7 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="July Tech Festa 2013というイベントが7月14日にAIITで行われ，基調講演として呼ばれたので，Treasure Dataとして発表してきました．
-Best Speakerにも選んで頂き，ありがとうございます． Slideshare Treasure Data Cloud &hellip;">
+  <meta name="description" content="8/29日に行われたElasticSearch勉強会 第1回に参加してました．ElasticSearchは前々から興味はあったけど，仕事とかで使うこともないのでずっと放置という状態だった． 主催者の方のブログに各発表スライドへのリンクとかあるので，興味がある方はそちらを参照． &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,6 +69,56 @@ Best Speakerにも選んで頂き，ありがとうございます． Slideshare
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2013/08/elasticsearch-meetup-1st/">ElasticSearch勉強会 第1回</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-31T17:21:00+09:00" pubdate data-updated="true">Aug 31<span>st</span>, 2013</time>
+        
+         | <a href="/ja/2013/08/elasticsearch-meetup-1st/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>8/29日に行われた<a href="http://atnd.org/event/E0018616">ElasticSearch勉強会 第1回</a>に参加してました．ElasticSearchは前々から興味はあったけど，仕事とかで使うこともないのでずっと放置という状態だった． <br />
+<a href="http://blog.johtani.info/blog/2013/08/30/hold-first-elasticsearch-meetup-in-japan/">主催者の方のブログ</a>に各発表スライドへのリンクとかあるので，興味がある方はそちらを参照．</p>
+
+<p>発表を聞いて思ったのは，Solrよりも後発なのもあり，運用とかエコシステムの構築に関して，かなり頑張っているなという印象．REST APIでの簡単な操作はもちろんのこと，運用で使えるexplainやelasticsearch-headなど，色々とやりやすそう． <br />
+懸念点であるパフォーマンスに関しても，最後のニコ動を使った発表を見るに，かなり改善されて来ているようだ．</p>
+
+<p>インデックスのsharding周りが少し気になっていて，文書IDをユーザが指定できるらしいので，その時のshardの割り当てとかどうやってんのかな，と． <br />
+shardの数は途中で変更出来ないらしく，増やしたい時は別のクラスタを使ってjoinみたいなことするようなんだけど，それはそれで重そう．ここはjohtaniさんが調べてくれるらしいので，それを待ちたい所．</p>
+
+<p>次会はCookpadの人がFluentd + ElasticSearch + Kibana3の事例とか話してくれるようなので，次のイベントが楽しみな所．
+最近<a href="http://www.elasticsearch.org/overview/kibana/">Kibanaのページ</a>にもFluentdが載ったりしたので，今後も踏まえて実運用の話とか気になってます．</p>
+
+<p>皆さん，お疲れ様でした！</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -386,50 +435,6 @@ AWSのMilesにも「Fluentd is good!!」と言われ，向こうでも徐々にF
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2012/11/change-the-game/">Change The Game</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-01T00:00:00+09:00" pubdate data-updated="true">Nov 1<span>st</span>, 2012</time>
-        
-         | <a href="/ja/2012/11/change-the-game/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>知ってる人はもう知っているとは思いますが，10月をもって1年と10ヶ月勤めた謎のベンチャー<a href="http://preferred.jp/">Preferred Infrastructure, Inc</a>を去りました．PFIの方々，本当に有り難うございました！<br />
-エントリを書けと色々な人に脅されているので，てきとうに書きます．</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/ja/2012/11/change-the-game/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/ja/page/5/">&larr; Older</a>
@@ -447,6 +452,10 @@ AWSのMilesにも「Fluentd is good!!」と言われ，向こうでも徐々にF
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/ja/2014/07/presto-scr-4/">Prestoソースコードリーディング #4</a>
+      </li>
+    
+      <li class="post">
         <a href="/ja/2014/07/release-fluent-plugin-multi-format-parser/">Release fluent-plugin-multi-format-parser</a>
       </li>
     
@@ -460,10 +469,6 @@ AWSのMilesにも「Fluentd is good!!」と言われ，向こうでも徐々にF
     
       <li class="post">
         <a href="/2014/05/multios-testing-for-fluentd-repository-on-travis-ci/">MultiOS testing for Fluentd repository on Travis CI</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/05/the-status-of-coolio/">The status of Cool.io</a>
       </li>
     
   </ul>

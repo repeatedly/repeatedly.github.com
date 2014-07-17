@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Presto - Go ahead!</title>
+  <title>Prestoソースコードリーディング #4 - Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Category: Presto">
+  <meta name="description" content="Presto ソースコードリーディング #4 いつものようにLINEでやりました！ @frsyukiが帰国する前に，という流れで開催決定・募集が1週間前というタイトなスケジュールでしたが，
+無茶ぶりにつきあってくれた@ueshinさんに感謝． 当日の内容 togetterのまとめを見れば， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.comcategories/presto">
+  <link rel="canonical" href="http://repeatedly.github.com/ja/2014/07/presto-scr-4">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -58,10 +59,8 @@
 
   
 <ul class="main-navigation">
-  <li><a href="/">Home</a></li>
-  <li><a href="/works">Works</a></li>
-  <li><a href="/archives">Archives</a></li>
-  <li><a href="/ja">Japanese</a></li>
+  <li><a href="/ja/archives">Archives</a></li>
+  <li><a href="/">English</a></li>
 </ul>
 
   
@@ -70,50 +69,126 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Presto</h1>
+    
+      <h1 class="entry-title">Prestoソースコードリーディング #4</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-17T17:53:00+09:00" pubdate data-updated="true">Jul 17<span>th</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p><a href="http://atnd.org/events/53545">Presto ソースコードリーディング #4</a></p>
 
-  
-  <h2>2014</h2>
+<p>いつものようにLINEでやりました！</p>
 
-<article>
-  
-<h1><a href="/ja/2014/07/presto-scr-4/">Prestoソースコードリーディング #4</a></h1>
-<time datetime="2014-07-17T17:53:00+09:00" pubdate><span class='month'>Jul</span> <span class='day'>17</span> <span class='year'>2014</span></time>
+<p>@frsyukiが帰国する前に，という流れで開催決定・募集が1週間前というタイトなスケジュールでしたが，
+無茶ぶりにつきあってくれた@ueshinさんに感謝．</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/categories/presto/'>Presto</a></span>
-</footer>
+<h2>当日の内容</h2>
 
+<p><a href="http://togetter.com/li/694128">togetterのまとめ</a>を見れば，なんとなく大まかな流れは把握できるはず…！</p>
 
-</article>
+<p>ueshinさんが第二回のashigeruさんの論理計画実行の後を継いで，
+物理計画実行周りの話をしてくれました(<a href="https://gist.github.com/ueshin/5e38cfe915ce15f756b1">資料のgist</a>)．
+バイトコード生成しての高速化の話とか，Presto以外でも有用な話が出てました．</p>
 
+<p>frsyukiが現在のPrestoの開発体制の話，Treasure Dataでハックしている所の紹介，
+CREATE VIEWなどの実装がなぜこうなっているのか(これはfrsyuki案が通ったらしい)，
+今後Prestoチームがやろうとしていることなど含め，その場で色々と議論する感じになりました．</p>
 
+<h2>まとめ</h2>
 
-<article>
-  
-<h1><a href="/ja/2014/02/presto-scr-1/">Prestoソースコードリーディング #1</a></h1>
-<time datetime="2014-02-11T02:39:00+09:00" pubdate><span class='month'>Feb</span> <span class='day'>11</span> <span class='year'>2014</span></time>
+<p>少人数でソースコードレベルで興味のある人が集まっているのもあり，いつも通り濃い感じでした！
+partitionedの話とか，現在の実行モデルにおけるオペレータの実装の話とか，
+この辺を話すイベントはあんまりないんじゃないかなと思います．</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/categories/presto/'>Presto</a></span>
-</footer>
+<p>次第5回をいつやるかは決まってませんが，いずれやる予定です．</p>
 
+<p>またソースコードリーディングとは別に，Prestoのユースケースや，
+プロダクションで動かしている人の運用の話などを共有する，
+Presto meetupみたいなもう少し緩めのイベントもやる予定です．</p>
 
-</article>
-
+<p>お楽しみに :)</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Masahiro Nakagawa</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-17T17:53:00+09:00" pubdate data-updated="true">Jul 17<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/presto/'>Presto</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2014/07/presto-scr-4/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2014/07/presto-scr-4/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/ja/2014/07/release-fluent-plugin-multi-format-parser/" title="Previous Post: Release fluent-plugin-multi-format-parser">&laquo; Release fluent-plugin-multi-format-parser</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -214,7 +289,10 @@
       var disqus_shortname = 'repeatedly';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://repeatedly.github.com/ja/2014/07/presto-scr-4/';
+        var disqus_url = 'http://repeatedly.github.com/ja/2014/07/presto-scr-4/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

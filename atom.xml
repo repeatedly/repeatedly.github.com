@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-07-13T21:05:16+09:00</updated>
+  <updated>2014-07-17T18:30:21+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,46 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Prestoソースコードリーディング #4]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/07/presto-scr-4/"/>
+    <updated>2014-07-17T17:53:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/07/presto-scr-4</id>
+    <content type="html"><![CDATA[<p><a href="http://atnd.org/events/53545">Presto ソースコードリーディング #4</a></p>
+
+<p>いつものようにLINEでやりました！</p>
+
+<p>@frsyukiが帰国する前に，という流れで開催決定・募集が1週間前というタイトなスケジュールでしたが，
+無茶ぶりにつきあってくれた@ueshinさんに感謝．</p>
+
+<h2>当日の内容</h2>
+
+<p><a href="http://togetter.com/li/694128">togetterのまとめ</a>を見れば，なんとなく大まかな流れは把握できるはず…！</p>
+
+<p>ueshinさんが第二回のashigeruさんの論理計画実行の後を継いで，
+物理計画実行周りの話をしてくれました(<a href="https://gist.github.com/ueshin/5e38cfe915ce15f756b1">資料のgist</a>)．
+バイトコード生成しての高速化の話とか，Presto以外でも有用な話が出てました．</p>
+
+<p>frsyukiが現在のPrestoの開発体制の話，Treasure Dataでハックしている所の紹介，
+CREATE VIEWなどの実装がなぜこうなっているのか(これはfrsyuki案が通ったらしい)，
+今後Prestoチームがやろうとしていることなど含め，その場で色々と議論する感じになりました．</p>
+
+<h2>まとめ</h2>
+
+<p>少人数でソースコードレベルで興味のある人が集まっているのもあり，いつも通り濃い感じでした！
+partitionedの話とか，現在の実行モデルにおけるオペレータの実装の話とか，
+この辺を話すイベントはあんまりないんじゃないかなと思います．</p>
+
+<p>次第5回をいつやるかは決まってませんが，いずれやる予定です．</p>
+
+<p>またソースコードリーディングとは別に，Prestoのユースケースや，
+プロダクションで動かしている人の運用の話などを共有する，
+Presto meetupみたいなもう少し緩めのイベントもやる予定です．</p>
+
+<p>お楽しみに :)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Release fluent-plugin-multi-format-parser]]></title>
@@ -1268,51 +1308,6 @@ shardの数は途中で変更出来ないらしく，増やしたい時は別の
 最近<a href="http://www.elasticsearch.org/overview/kibana/">Kibanaのページ</a>にもFluentdが載ったりしたので，今後も踏まえて実運用の話とか気になってます．</p>
 
 <p>皆さん，お疲れ様でした！</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[July Tech Festa 2013]]></title>
-    <link href="http://repeatedly.github.com/ja/2013/07/july-tech-festa-2013/"/>
-    <updated>2013-07-20T04:54:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2013/07/july-tech-festa-2013</id>
-    <content type="html"><![CDATA[<p><a href="http://www.techfesta.jp/">July Tech Festa 2013</a>というイベントが7月14日にAIITで行われ，基調講演として呼ばれたので，<a href="http://www.techfesta.jp/p/program-2.html#A01">Treasure Dataとして発表</a>してきました．
-<a href="http://www.techfesta.jp/2013/07/jtf2013_16.html">Best Speakerにも選んで頂き</a>，ありがとうございます．</p>
-
-<h3>Slideshare</h3>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/24213160?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/treasure-data/treasure-data-cloud-strategy" title="Treasure Data Cloud Strategy" target="_blank">Treasure Data Cloud Strategy</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
-
-<h3>Togetter</h3>
-
-<ul>
-<li><a href="http://togetter.com/li/533842">JTF全体</a></li>
-<li><a href="http://togetter.com/li/534105">自分の発表のみ</a></li>
-</ul>
-
-
-<p>CTOから無茶ぶりされて「まぁいいか」と承諾したら実は基調講演だったというオチでした．他の発表者の人達がChefやOpenStackなどのいわゆるクラウドやDevOpsプロダクトの中，サービスであるTreasure Dataに講演依頼が来たということは，そういうことなんだろうなと上記の構成になりました．</p>
-
-<p>Treasure Dataのサービスそのものやアーキテクチャに関しては，記事やイベントでぱらぱらと説明はしたものの，おそらくまとまった発表したのは今回が初めてだったんじゃないかなと思っています．こういう場を用意して頂いたJTFの方達には感謝です．</p>
-
-<p>Togetterにまとめられているのを見て貰えれば分かるのですが</p>
-
-<ul>
-<li>なぜクラウドでやっているのか</li>
-<li>システム構築で気をつけていること</li>
-<li>どう運用しているか</li>
-</ul>
-
-
-<p>の辺りを大まかに話しました．僕らはスタートアップということもあり速度がとても重要なので，自分達のビジョンを達成するためにどういう選択をしてきたかと，その考え方について一通り述べたつもりです．</p>
-
-<p>懇親会でも色々な方と話すことが出来て，運用で使っているツール周り話したり，実はFluentd使ってるんですよという人にも会えたり，Treasure Dataのようなサービス検討中なんです，などなど色々と楽しい時間を過ごせました．
-Fluentdなんかはプラグイン機構でガンガンインフラの人にもコード書いて問題を解決してもらおうというプロダクトだったりするので，今後もユーザが増えるといいなという思います．</p>
-
-<p>参加された方々，またスタッフの方々，お疲れ様でした！</p>
 ]]></content>
   </entry>
   
