@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-07-17T18:30:21+09:00</updated>
+  <updated>2014-07-20T19:31:20+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,114 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Release fluent-plugin-http-puma]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-http-puma/"/>
+    <updated>2014-07-20T18:42:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-http-puma</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/fluent-plugin-http-puma">fluent-plugin-http-puma</a></p>
+
+<p>標準で入っているin_httpとは違って，Pumaと呼ばれるWebサーバベースのHTTP(S)でのリクエストを受け付けるInputプラグイン書きました．</p>
+
+<h2>使い方</h2>
+
+<p>fluent-gemでインストール．</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ fluent-gem install fluent-plugin-http-puma</span></code></pre></td></tr></table></div></figure>
+
+
+<p>in_httpとほぼ同じように動きますが，独自でHTTPリクエストをパースしてないので，keepaliveやボディサイズチェック用のオプションはありません．その代わりPuma関係のオプションが増えてます(<a href="https://github.com/repeatedly/fluent-plugin-http-puma#configuration">README参照</a>)．<br />
+一番の違いは，HTTPSをサポートしている所です．<code>use_ssl</code>と<code>ssl_keys</code>を使うことで，HTTPSとして立ち上がります．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> http_puma
+</span><span class='line'>
+</span><span class='line'>  <span class="err">use_</span><span class="nb">ssl</span>
+</span><span class='line'>  ssl_keys [<span class="s2">&quot;/path/to/key&quot;</span>, <span class="s2">&quot;/path/to/cert&quot;</span>]
+</span><span class='line'><span class="nt">&lt;/source&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>パフォーマンス</h2>
+
+<p>手元のMBPで試して見たら，HTTPはin_httpより少し速かった．HTTPSは当たり前ですがｶﾞｸｯと落ちます．</p>
+
+<p>クライアントはRubyの<code>net/http</code>を使って，小さめのjsonを<code>application/json</code>で送ってます．</p>
+
+<ul>
+<li>in_http</li>
+</ul>
+
+
+<p>平均2400 events/secくらい．</p>
+
+<pre><code>2014-07-20 19:02:30 +0900 [info]: plugin:out_flowcounter_simple count:2318      indicator:num   unit:second
+2014-07-20 19:02:31 +0900 [info]: plugin:out_flowcounter_simple count:2420      indicator:num   unit:second
+2014-07-20 19:02:32 +0900 [info]: plugin:out_flowcounter_simple count:2383      indicator:num   unit:second
+2014-07-20 19:02:33 +0900 [info]: plugin:out_flowcounter_simple count:2399      indicator:num   unit:second
+2014-07-20 19:02:34 +0900 [info]: plugin:out_flowcounter_simple count:2382      indicator:num   unit:second
+</code></pre>
+
+<ul>
+<li>in_http_puma</li>
+</ul>
+
+
+<p>平均2500 events/secくらい．Ojを使ったらもっと速くなるかと思ったけど，ほぼ誤差の範囲だった．</p>
+
+<pre><code>2014-07-20 19:01:12 +0900 [info]: plugin:out_flowcounter_simple count:2472      indicator:num   unit:second
+2014-07-20 19:01:13 +0900 [info]: plugin:out_flowcounter_simple count:2550      indicator:num   unit:second
+2014-07-20 19:01:14 +0900 [info]: plugin:out_flowcounter_simple count:2294      indicator:num   unit:second
+2014-07-20 19:01:15 +0900 [info]: plugin:out_flowcounter_simple count:2537      indicator:num   unit:second
+2014-07-20 19:01:16 +0900 [info]: plugin:out_flowcounter_simple count:2538      indicator:num   unit:second
+</code></pre>
+
+<ul>
+<li>in_http_puma with VERIFY_NONE client</li>
+</ul>
+
+
+<p>平均400 events/secくらい．けどVERIFY_NONEはほとんど本番では使われないので参考程度．</p>
+
+<pre><code>2014-07-20 19:04:06 +0900 [info]: plugin:out_flowcounter_simple count:406       indicator:num   unit:second
+2014-07-20 19:04:07 +0900 [info]: plugin:out_flowcounter_simple count:365       indicator:num   unit:second
+2014-07-20 19:04:08 +0900 [info]: plugin:out_flowcounter_simple count:400       indicator:num   unit:second
+2014-07-20 19:04:09 +0900 [info]: plugin:out_flowcounter_simple count:399       indicator:num   unit:second
+2014-07-20 19:04:10 +0900 [info]: plugin:out_flowcounter_simple count:400       indicator:num   unit:second
+</code></pre>
+
+<ul>
+<li>in_http_puma with VERIFY_PEER client</li>
+</ul>
+
+
+<p>平均320 events/secくらい．高負荷環境で無ければ大丈夫かな…？</p>
+
+<pre><code>2014-07-20 19:05:18 +0900 [info]: plugin:out_flowcounter_simple count:329       indicator:num   unit:second
+2014-07-20 19:05:19 +0900 [info]: plugin:out_flowcounter_simple count:327       indicator:num   unit:second
+2014-07-20 19:05:20 +0900 [info]: plugin:out_flowcounter_simple count:327       indicator:num   unit:second
+2014-07-20 19:05:21 +0900 [info]: plugin:out_flowcounter_simple count:325       indicator:num   unit:second
+2014-07-20 19:05:22 +0900 [info]: plugin:out_flowcounter_simple count:326       indicator:num   unit:second
+</code></pre>
+
+<h2>まとめ</h2>
+
+<p>モダンと言われるPumaってどんなもんなんだろう？と調べてたら，HTTPSを標準でサポートしてるし，ライブラリとしても簡単に使えそうだったので試して見たら，それなりにパフォーマンスが出たので公開してみたという感じです．<br />
+Pumaなので，今後FluentdがJRubyとかサポートしても普通にそのまま使えると思います．</p>
+
+<p>実際HTTPSを処理するならFluentdの前にNginxとかを置いた方が良いのだけど，バックエンドでも通信はHTTPSでやってるとかなんか縛りがあるような環境では，手軽に使えるのではないかと思います．</p>
+
+<p>何かあれば<a href="https://github.com/repeatedly/fluent-plugin-http-puma">issue/pull request</a>に投げてもらえれば対応します．</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Prestoソースコードリーディング #4]]></title>
@@ -1287,27 +1395,6 @@ Fluentdに関しては，v10はもうコアでほぼやることがないので�
 <h1>まとめ</h1>
 
 <p>AnnotationとかCRRELATEとか紹介してないのもありますが，Libartoの基本的な所を書いた．自分達でモニタリング環境を構築出来るなら良いんですが，スタートアップとかだとそこにリソースを割くのが難しかったりするので，そういう所はLibratoとか検討してみてもいいんじゃないかと思います．</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ElasticSearch勉強会 第1回]]></title>
-    <link href="http://repeatedly.github.com/ja/2013/08/elasticsearch-meetup-1st/"/>
-    <updated>2013-08-31T17:21:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2013/08/elasticsearch-meetup-1st</id>
-    <content type="html"><![CDATA[<p>8/29日に行われた<a href="http://atnd.org/event/E0018616">ElasticSearch勉強会 第1回</a>に参加してました．ElasticSearchは前々から興味はあったけど，仕事とかで使うこともないのでずっと放置という状態だった． <br />
-<a href="http://blog.johtani.info/blog/2013/08/30/hold-first-elasticsearch-meetup-in-japan/">主催者の方のブログ</a>に各発表スライドへのリンクとかあるので，興味がある方はそちらを参照．</p>
-
-<p>発表を聞いて思ったのは，Solrよりも後発なのもあり，運用とかエコシステムの構築に関して，かなり頑張っているなという印象．REST APIでの簡単な操作はもちろんのこと，運用で使えるexplainやelasticsearch-headなど，色々とやりやすそう． <br />
-懸念点であるパフォーマンスに関しても，最後のニコ動を使った発表を見るに，かなり改善されて来ているようだ．</p>
-
-<p>インデックスのsharding周りが少し気になっていて，文書IDをユーザが指定できるらしいので，その時のshardの割り当てとかどうやってんのかな，と． <br />
-shardの数は途中で変更出来ないらしく，増やしたい時は別のクラスタを使ってjoinみたいなことするようなんだけど，それはそれで重そう．ここはjohtaniさんが調べてくれるらしいので，それを待ちたい所．</p>
-
-<p>次会はCookpadの人がFluentd + ElasticSearch + Kibana3の事例とか話してくれるようなので，次のイベントが楽しみな所．
-最近<a href="http://www.elasticsearch.org/overview/kibana/">Kibanaのページ</a>にもFluentdが載ったりしたので，今後も踏まえて実運用の話とか気になってます．</p>
-
-<p>皆さん，お疲れ様でした！</p>
 ]]></content>
   </entry>
   

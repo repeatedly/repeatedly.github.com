@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Release fluent-plugin-netflow - Go ahead!</title>
+  <title>Release fluent-plugin-http-puma - Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="fluent-plugin-netflow CiscoのNetflowプロトコルを受け取るFluentdプラグインを書きました．
-公開してみたら結構反応が良くて，地味にユーザが多そうですね… 経緯 Fluentdを調べていたユーザから「ログ収集基盤をFluentdベースにしたいんだけど， &hellip;">
+  <meta name="description" content="fluent-plugin-http-puma 標準で入っているin_httpとは違って，Pumaと呼ばれるWebサーバベースのHTTP(S)でのリクエストを受け付けるInputプラグイン書きました． 使い方 fluent-gemでインストール． 1
+$ fluent-gem install &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow">
+  <link rel="canonical" href="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-http-puma">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -73,7 +73,7 @@
   
   <header>
     
-      <h1 class="entry-title">Release fluent-plugin-netflow</h1>
+      <h1 class="entry-title">Release fluent-plugin-http-puma</h1>
     
     
       <p class="meta">
@@ -89,7 +89,7 @@
   
 
 
-<time datetime="2014-07-11T21:35:00+09:00" pubdate data-updated="true">Jul 11<span>th</span>, 2014</time>
+<time datetime="2014-07-20T18:42:00+09:00" pubdate data-updated="true">Jul 20<span>th</span>, 2014</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -98,27 +98,20 @@
   </header>
 
 
-<div class="entry-content"><p><a href="https://github.com/repeatedly/fluent-plugin-netflow">fluent-plugin-netflow</a></p>
+<div class="entry-content"><p><a href="https://github.com/repeatedly/fluent-plugin-http-puma">fluent-plugin-http-puma</a></p>
 
-<p>CiscoのNetflowプロトコルを受け取るFluentdプラグインを書きました．
-公開してみたら結構反応が良くて，地味にユーザが多そうですね…</p>
-
-<h2>経緯</h2>
-
-<p>Fluentdを調べていたユーザから「ログ収集基盤をFluentdベースにしたいんだけど，Netflowをパースするプラグインないの？」と言われたので，
-さくっと作ってみました．<br />
-「さくっと」と言ってもコアのパーサー部分はそのユーザが使っていたLogstashからポーティングしたやつなので，それなりにパース出来るはずです．
-Pull Requestのおかげもあり，対応templateも少し増えてます．</p>
+<p>標準で入っているin_httpとは違って，Pumaと呼ばれるWebサーバベースのHTTP(S)でのリクエストを受け付けるInputプラグイン書きました．</p>
 
 <h2>使い方</h2>
 
-<p>fluent-gemでインストールするだけです．</p>
+<p>fluent-gemでインストール．</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ fluent-gem install fluent-plugin-netflow</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ fluent-gem install fluent-plugin-http-puma</span></code></pre></td></tr></table></div></figure>
 
 
-<p>その後，以下のように設定します．typeとtagは必須です．他のやつは適宜環境に合わせて設定してください．</p>
+<p>in_httpとほぼ同じように動きますが，独自でHTTPリクエストをパースしてないので，keepaliveやボディサイズチェック用のオプションはありません．その代わりPuma関係のオプションが増えてます(<a href="https://github.com/repeatedly/fluent-plugin-http-puma#configuration">README参照</a>)．<br />
+一番の違いは，HTTPSをサポートしている所です．<code>use_ssl</code>と<code>ssl_keys</code>を使うことで，HTTPSとして立ち上がります．</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -126,40 +119,85 @@ Pull Requestのおかげもあり，対応templateも少し増えてます．</p
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
 </pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> netflow
-</span><span class='line'>  <span class="nb">tag</span> netflow.event
+</span><span class='line'>  <span class="nb">type</span> http_puma
 </span><span class='line'>
-</span><span class='line'>  <span class="c"># optional parameters</span>
-</span><span class='line'>  <span class="nb">bind</span> <span class="m">127.0.0.1</span>
-</span><span class='line'>  <span class="nb">port</span> <span class="m">9555</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># optional parser parameters</span>
-</span><span class='line'>  <span class="err">cache_</span><span class="nb">ttl</span> <span class="m">6000</span>
-</span><span class='line'>  <span class="nb">versions</span> [5, <span class="m">9</span>]
-</span><span class='line'>  <span class="nb">definitions</span> <span class="sx">/path/to/your_definitions.yml</span>
-</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span><span class='line'>  <span class="err">use_</span><span class="nb">ssl</span>
+</span><span class='line'>  ssl_keys [<span class="s2">&quot;/path/to/key&quot;</span>, <span class="s2">&quot;/path/to/cert&quot;</span>]
+</span><span class='line'><span class="nt">&lt;/source&gt;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>今現在はin_syslogの影響もあってデフォルトポートが5140のままなのですが，0.1.0を出す時に変更する予定です．</p>
+<h2>パフォーマンス</h2>
 
-<h2>TODO</h2>
+<p>手元のMBPで試して見たら，HTTPはin_httpより少し速かった．HTTPSは当たり前ですがｶﾞｸｯと落ちます．</p>
+
+<p>クライアントはRubyの<code>net/http</code>を使って，小さめのjsonを<code>application/json</code>で送ってます．</p>
 
 <ul>
-<li>俺自身がNetflow関係のやつを持っていないので，使っている人，誰かメンテナになってください！実環境でのテストが出来ませんｗ</li>
-<li>Fluentd v0.10.52が出たら，FluentdのSocketUtilベースで書き直して，0.1.0を出す</li>
+<li>in_http</li>
 </ul>
 
 
-<p>他，何か要望があれば<a href="https://github.com/repeatedly/fluent-plugin-netflow">issue/pull request</a>をしてもらえれば対応します．</p>
+<p>平均2400 events/secくらい．</p>
+
+<pre><code>2014-07-20 19:02:30 +0900 [info]: plugin:out_flowcounter_simple count:2318      indicator:num   unit:second
+2014-07-20 19:02:31 +0900 [info]: plugin:out_flowcounter_simple count:2420      indicator:num   unit:second
+2014-07-20 19:02:32 +0900 [info]: plugin:out_flowcounter_simple count:2383      indicator:num   unit:second
+2014-07-20 19:02:33 +0900 [info]: plugin:out_flowcounter_simple count:2399      indicator:num   unit:second
+2014-07-20 19:02:34 +0900 [info]: plugin:out_flowcounter_simple count:2382      indicator:num   unit:second
+</code></pre>
+
+<ul>
+<li>in_http_puma</li>
+</ul>
+
+
+<p>平均2500 events/secくらい．Ojを使ったらもっと速くなるかと思ったけど，ほぼ誤差の範囲だった．</p>
+
+<pre><code>2014-07-20 19:01:12 +0900 [info]: plugin:out_flowcounter_simple count:2472      indicator:num   unit:second
+2014-07-20 19:01:13 +0900 [info]: plugin:out_flowcounter_simple count:2550      indicator:num   unit:second
+2014-07-20 19:01:14 +0900 [info]: plugin:out_flowcounter_simple count:2294      indicator:num   unit:second
+2014-07-20 19:01:15 +0900 [info]: plugin:out_flowcounter_simple count:2537      indicator:num   unit:second
+2014-07-20 19:01:16 +0900 [info]: plugin:out_flowcounter_simple count:2538      indicator:num   unit:second
+</code></pre>
+
+<ul>
+<li>in_http_puma with VERIFY_NONE client</li>
+</ul>
+
+
+<p>平均400 events/secくらい．けどVERIFY_NONEはほとんど本番では使われないので参考程度．</p>
+
+<pre><code>2014-07-20 19:04:06 +0900 [info]: plugin:out_flowcounter_simple count:406       indicator:num   unit:second
+2014-07-20 19:04:07 +0900 [info]: plugin:out_flowcounter_simple count:365       indicator:num   unit:second
+2014-07-20 19:04:08 +0900 [info]: plugin:out_flowcounter_simple count:400       indicator:num   unit:second
+2014-07-20 19:04:09 +0900 [info]: plugin:out_flowcounter_simple count:399       indicator:num   unit:second
+2014-07-20 19:04:10 +0900 [info]: plugin:out_flowcounter_simple count:400       indicator:num   unit:second
+</code></pre>
+
+<ul>
+<li>in_http_puma with VERIFY_PEER client</li>
+</ul>
+
+
+<p>平均320 events/secくらい．高負荷環境で無ければ大丈夫かな…？</p>
+
+<pre><code>2014-07-20 19:05:18 +0900 [info]: plugin:out_flowcounter_simple count:329       indicator:num   unit:second
+2014-07-20 19:05:19 +0900 [info]: plugin:out_flowcounter_simple count:327       indicator:num   unit:second
+2014-07-20 19:05:20 +0900 [info]: plugin:out_flowcounter_simple count:327       indicator:num   unit:second
+2014-07-20 19:05:21 +0900 [info]: plugin:out_flowcounter_simple count:325       indicator:num   unit:second
+2014-07-20 19:05:22 +0900 [info]: plugin:out_flowcounter_simple count:326       indicator:num   unit:second
+</code></pre>
+
+<h2>まとめ</h2>
+
+<p>モダンと言われるPumaってどんなもんなんだろう？と調べてたら，HTTPSを標準でサポートしてるし，ライブラリとしても簡単に使えそうだったので試して見たら，それなりにパフォーマンスが出たので公開してみたという感じです．<br />
+Pumaなので，今後FluentdがJRubyとかサポートしても普通にそのまま使えると思います．</p>
+
+<p>実際HTTPSを処理するならFluentdの前にNginxとかを置いた方が良いのだけど，バックエンドでも通信はHTTPSでやってるとかなんか縛りがあるような環境では，手軽に使えるのではないかと思います．</p>
+
+<p>何かあれば<a href="https://github.com/repeatedly/fluent-plugin-http-puma">issue/pull request</a>に投げてもらえれば対応します．</p>
 </div>
 
 
@@ -182,7 +220,7 @@ Pull Requestのおかげもあり，対応templateも少し増えてます．</p
   
 
 
-<time datetime="2014-07-11T21:35:00+09:00" pubdate data-updated="true">Jul 11<span>th</span>, 2014</time>
+<time datetime="2014-07-20T18:42:00+09:00" pubdate data-updated="true">Jul 20<span>th</span>, 2014</time>
       
 
 <span class="categories">
@@ -196,7 +234,7 @@ Pull Requestのおかげもあり，対応templateも少し増えてます．</p
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-http-puma/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-http-puma/" >Tweet</a>
   
   
   
@@ -207,10 +245,8 @@ Pull Requestのおかげもあり，対応templateも少し増えてます．</p
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/ja/2014/05/fluentd-v1-and-roadmap/" title="Previous Post: Fluentd v1 and Roadmapというプレゼンをしてきた">&laquo; Fluentd v1 and Roadmapというプレゼンをしてきた</a>
+        <a class="basic-alignment left" href="/ja/2014/07/presto-scr-4/" title="Previous Post: Prestoソースコードリーディング #4">&laquo; Prestoソースコードリーディング #4</a>
       
-      
-        <a class="basic-alignment right" href="/ja/2014/07/release-fluent-plugin-multi-format-parser/" title="next Post: Release fluent-plugin-multi-format-parser">Release fluent-plugin-multi-format-parser &raquo;</a>
       
     </p>
   </footer>
@@ -322,8 +358,8 @@ Pull Requestのおかげもあり，対応templateも少し増えてます．</p
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow/';
-        var disqus_url = 'http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow/';
+        var disqus_identifier = 'http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-http-puma/';
+        var disqus_url = 'http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-http-puma/';
         var disqus_script = 'embed.js';
       
     (function () {
