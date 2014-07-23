@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-07-24T00:52:43+09:00</updated>
+  <updated>2014-07-24T02:25:35+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -120,14 +120,14 @@ Prestoそのものについては，@frsyuki が<a href="http://treasure-data.ha
 <li>クエリの同時実行制御周りは他のに比べて優秀
 
 <ul>
-<li>データマートして使いやすい．</li>
+<li>データマートして使いやすい．<a href="https://twitter.com/mineroaoki/status/491995296671363073">バッチを投げると厳しい</a>とのこと．</li>
 </ul>
 </li>
 <li>ストレージと演算パワーが分離してないので，ユースケースによってはコストが割に合わない
 
 <ul>
 <li>特に周りだとSSDインスタンスを使っている人は<del>いない</del>ほとんどいない(<a href="https://twitter.com/repeatedly/status/489635755979837441">この辺の話</a>)．</li>
-<li>某ふっふはっほ社が「たべみる」でSSDをつかってました(<a href="http://www.slideshare.net/mineroaoki/at-aws-summit-tokyo-2014/9">AWS Summitでのスライド</a>)．が，これはかなり<a href="https://twitter.com/mirakui/status/491947294019690497">特殊な</a><a href="https://twitter.com/mirakui/status/491948100571758592">ケース</a>な気も…</li>
+<li>某ふっふはっほ社が「たべみる」でSSDをつかってました(<a href="http://www.slideshare.net/mineroaoki/at-aws-summit-tokyo-2014/9">AWS Summitでのスライド</a>)．が，これはかなり<a href="https://twitter.com/mirakui/status/491947294019690497">特殊な</a><a href="https://twitter.com/mirakui/status/491948100571758592">ケース</a>な気も．そのほか<a href="https://twitter.com/mineroaoki/status/491993131638743040">横に並べることによるメリットも</a>あるようです．</li>
 </ul>
 </li>
 </ul>
