@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Sensu雑感 - Go ahead!</title>
+  <title>Category: MPP - Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Sensu 最近人気が出てきているようなので試して見た．
-仕組みに関しては本家のドキュメントとかスライドとか見ると大体分かる． 雑感: server, client, api, dashboardに分かれているのは良い 実装はRubyでシンプルに書かれているように見える．多分弄るのは簡単 &hellip;">
+  <meta name="description" content="Category: MPP">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.com/ja/2014/02/the-thoughts-of-sensu">
+  <link rel="canonical" href="http://repeatedly.github.comcategories/mpp">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -59,8 +58,10 @@
 
   
 <ul class="main-navigation">
-  <li><a href="/ja/archives">Archives</a></li>
-  <li><a href="/">English</a></li>
+  <li><a href="/">Home</a></li>
+  <li><a href="/works">Works</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/ja">Japanese</a></li>
 </ul>
 
   
@@ -69,140 +70,36 @@
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry" role="article">
+<article role="article">
   
   <header>
-    
-      <h1 class="entry-title">Sensu雑感</h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-02-25T02:15:00+09:00" pubdate data-updated="true">Feb 25<span>th</span>, 2014</time>
-        
-         | <a href="#disqus_thread">Comments</a>
-        
-      </p>
+    <h1 class="entry-title">Category: MPP</h1>
     
   </header>
-
-
-<div class="entry-content"><p><a href="http://sensuapp.org/">Sensu</a></p>
-
-<p>最近人気が出てきているようなので試して見た．
-仕組みに関しては本家のドキュメントとかスライドとか見ると大体分かる．</p>
-
-<p>雑感:</p>
-
-<ul>
-<li>server, client, api, dashboardに分かれているのは良い
-
-<ul>
-<li>実装はRubyでシンプルに書かれているように見える．多分弄るのは簡単</li>
-</ul>
-</li>
-<li>RabbitMQとRedisが必要なのが試すのに結構つらい．chefとかpuppetを使うと良いらしい？
-
-<ul>
-<li>なんかテストモードがあるなら知りたい</li>
-<li>ドキュメントは最低限はある．Advancedなことしようとするとgithubとか先人を頼ることになる</li>
-</ul>
-</li>
-<li>設定がJSONなのはいいけど，ログすらJSONなのは徹底している</li>
-<li>RabbitMQにはクライアントから登録しにいくようで，勝手に監視対象が増えるのは楽
-
-<ul>
-<li>マスターからのpullは限界があるので，この仕組みはモニタリングでは筋が良さそう</li>
-</ul>
-</li>
-<li>プラグインは簡単に書けるが，現状失敗したら諦める前提らしい
-
-<ul>
-<li>まじめにハンドリングするなら，他のと連携する必要がある</li>
-</ul>
-</li>
-<li>apiが気がつけば落ちてる時があって，原因がよく分からない</li>
-<li>Fluentdのハンドラがコミュニティプラグインになかったので<a href="https://github.com/sensu/sensu-community-plugins/blob/master/handlers/notification/fluentd.rb">書いた</a></li>
-</ul>
-
-
-<p>「FluentdかSensuかどっちかに寄せたい」みたいな記事を誰かが書いてた記憶があるけど，何となく分かる．
-Fluentdのプラグイン機構でSensuのクライアント周りの機構はよりロバストに実装出来る．<br />
-コアの機能は結構シンプルなので，visualizationまで考えるとどうしたもんかという感じ．</p>
-
-<p>Sensuはモニタリングのためのフレームワークなのでその辺の機能が中心に開発されてるけど，
-そこの尖った部分が必要でなければ，RabbitMQとかと相まって結構大がかりにも見える．<br />
-Nagiosとかは使ったことはないので，その辺と違ってどこまでメリットがあるのかはよく分かってないけど，
-新しく作るシステムで一からモニタリングシステムを構築するなら十分有り．</p>
-
-<p>仕組み的には柔軟でAPIとかで管理も楽に出来るようになってるので，今後ユーザは増えそうな気もしている．
-しかしRabbitMQとRedisの二つ必要なのどうにかならないものか…</p>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">Masahiro Nakagawa</span></span>
-
-      
-
-
-
-
-
+  <div id="blog-archives" class="category">
 
 
 
   
+  <h2>2014</h2>
+
+<article>
+  
+<h1><a href="/ja/2014/07/mpp-on-hadoop-redshift-bigquery/">MPP on Hadoop, Redshift, BigQuery</a></h1>
+<time datetime="2014-07-23T22:33:00+09:00" pubdate><span class='month'>Jul</span> <span class='day'>23</span> <span class='year'>2014</span></time>
+
+<footer>
+  <span class="categories">posted in <a class='category' href='/categories/mpp/'>MPP</a></span>
+</footer>
 
 
-<time datetime="2014-02-25T02:15:00+09:00" pubdate data-updated="true">Feb 25<span>th</span>, 2014</time>
-      
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2014/02/the-thoughts-of-sensu/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2014/02/the-thoughts-of-sensu/" >Tweet</a>
-  
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/ja/2014/02/developer-summit-2014/" title="Previous Post: Developer Summit 2014">&laquo; Developer Summit 2014</a>
-      
-      
-        <a class="basic-alignment right" href="/ja/2014/03/about-fluentd-v11/" title="next Post: そろそろFluentd v11についてひとこと言っておくか">そろそろFluentd v11についてひとこと言っておくか &raquo;</a>
-      
-    </p>
-  </footer>
 </article>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-  </section>
+
+  
+</article>
 
 </div>
 
@@ -303,10 +200,7 @@ Nagiosとかは使ったことはないので，その辺と違ってどこま�
       var disqus_shortname = 'repeatedly';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://repeatedly.github.com/ja/2014/02/the-thoughts-of-sensu/';
-        var disqus_url = 'http://repeatedly.github.com/ja/2014/02/the-thoughts-of-sensu/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
