@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-07-23T22:47:30+09:00</updated>
+  <updated>2014-07-23T22:54:12+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -30,8 +30,15 @@
 
 <h2>簡単なまとめ</h2>
 
+<p>オンプレミスかどうかでまず分かれて，運用出来るかどうかで大きく分かれる．</p>
+
 <ul>
-<li>データを貯める所が作れるのであれば，そこに直接クエリを投げられるPrestoなどのMPPクエリエンジンを立てるのが楽</li>
+<li>データを貯める所が作れるのであれば，そこに直接クエリを投げられるPrestoなどのMPPクエリエンジンを立てるのが楽
+
+<ul>
+<li>特にHadoopとかすでにある場合には，まずこれ</li>
+</ul>
+</li>
 <li>データマートが必要であれば，RedshiftやBigQueryの方が向いている</li>
 <li>ストレージもスキーマも運用も何も考えずにやりたいのであれば，BigQueryにFluentdとかでとりあえずJSONでぶち込むのが，多分この候補の中では一番初期コストが掛からない
 
@@ -50,7 +57,7 @@
 Prestoそのものについては，@frsyuki が<a href="http://treasure-data.hateblo.jp/entry/2014/07/10/150250">HCJ 2014で発表したスライド</a>があるので，そっちも参考に．</p>
 
 <ul>
-<li>PrestoやImpalaはそもそもサービスじゃないので，自分で運用する必要がある．
+<li>PrestoやImpalaはそもそもサービスじゃないので，自分ですべて運用する必要がある．
 
 <ul>
 <li>死活監視とか，もう少しワーカーが欲しかったら追加でデプロイみたいなのをする人が必要</li>
@@ -103,6 +110,7 @@ Prestoそのものについては，@frsyuki が<a href="http://treasure-data.ha
 <li>データ量がすくないとそれでもパワーでなんとかなる</li>
 </ul>
 </li>
+<li>マネージドサービスとはいえ，ノードが落ちた場合などの障害対応など，色々とやる必要がある</li>
 <li>カラムを弄る場合は基本テーブルを作り直すのがベター．クラスタ再配置中はREAD ONLYになるので，その辺含めて運用を考える必要がある
 
 <ul>
@@ -130,6 +138,7 @@ Prestoそのものについては，@frsyuki が<a href="http://treasure-data.ha
 <ul>
 <li>Redshiftと同じく，アドホックに色々とデータをぶち込んで解析するには，JSON文字列で保存する必要がある</li>
 <li>既存のMPPデータベースとかで考えないと行けない問題(distkeyとか)を，Googleパワーで強引に解決</li>
+<li>運用は完全Google任せ</li>
 <li>Googleの制約を受ける
 
 <ul>
