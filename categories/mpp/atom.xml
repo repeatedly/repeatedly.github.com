@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MPP | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/mpp/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-07-23T23:01:14+09:00</updated>
+  <updated>2014-07-23T23:19:12+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -125,7 +125,8 @@ Prestoそのものについては，@frsyuki が<a href="http://treasure-data.ha
 <li>ストレージと演算パワーが分離してないので，ユースケースによってはコストが割に合わない
 
 <ul>
-<li>特に周りだとSSDインスタンスを使っている人はいない(<a href="https://twitter.com/repeatedly/status/489635755979837441">この辺の話</a>)．誰か使っている人いますかね？</li>
+<li>特に周りだとSSDインスタンスを使っている人は<del>いない</del>ほとんどいない(<a href="https://twitter.com/repeatedly/status/489635755979837441">この辺の話</a>)．</li>
+<li>某ふっふはっほ社が「たべみる」でSSDをつかってました(<a href="http://www.slideshare.net/mineroaoki/at-aws-summit-tokyo-2014/9">AWS Summitでのスライド</a>)．が，これはかなり<a href="https://twitter.com/mirakui/status/491947294019690497">特殊な</a><a href="https://twitter.com/mirakui/status/491948100571758592">ケース</a>な気も…</li>
 </ul>
 </li>
 </ul>
