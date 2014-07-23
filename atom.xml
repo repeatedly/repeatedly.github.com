@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-07-23T22:54:12+09:00</updated>
+  <updated>2014-07-23T22:57:21+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -29,8 +29,6 @@
 <p>アプリケーションを開発していて，そのための解析基盤を一から作る．</p>
 
 <h2>簡単なまとめ</h2>
-
-<p>オンプレミスかどうかでまず分かれて，運用出来るかどうかで大きく分かれる．</p>
 
 <ul>
 <li>データを貯める所が作れるのであれば，そこに直接クエリを投げられるPrestoなどのMPPクエリエンジンを立てるのが楽
