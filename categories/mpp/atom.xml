@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MPP | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/mpp/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-07-23T22:57:21+09:00</updated>
+  <updated>2014-07-23T23:01:14+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -108,7 +108,7 @@ Prestoそのものについては，@frsyuki が<a href="http://treasure-data.ha
 <li>データ量がすくないとそれでもパワーでなんとかなる</li>
 </ul>
 </li>
-<li>マネージドサービスとはいえ，ノードが落ちた場合などの障害対応など，色々とやる必要がある</li>
+<li>マネージドサービスとはいえ，リーダーノードの挙動がおかしい時など，面倒を見ないと行けないケースはある</li>
 <li>カラムを弄る場合は基本テーブルを作り直すのがベター．クラスタ再配置中はREAD ONLYになるので，その辺含めて運用を考える必要がある
 
 <ul>
