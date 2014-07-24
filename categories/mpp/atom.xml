@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MPP | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/mpp/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-07-24T16:41:44+09:00</updated>
+  <updated>2014-07-24T16:47:09+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -143,7 +143,7 @@ Prestoそのものについては，@frsyuki が<a href="http://treasure-data.ha
 
 <ul>
 <li>負荷が極端に上がるようなクエリとかは望み薄(FULL OUTER JOIN, 数億同士のjoin，count(distinct))</li>
-<li>Redshift同様，でかいバッチ向けにHDFSかオブジェクトストレージに生のデータを置いておくのがベター</li>
+<li>Redshift同様，でかいバッチ向けにHDFSとかオブジェクトストレージに生のデータを置いておくのがベター</li>
 </ul>
 </li>
 <li>BigQueryもスキーマがあり，alter column的なものがないので，変更する時は適宜テーブルを作り直すのがベター</li>
