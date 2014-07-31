@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-07-31T19:04:34+09:00</updated>
+  <updated>2014-07-31T19:05:19+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -114,7 +114,7 @@ Push型での分岐とは違い，キューからログを取る側の都合で�
 <p>Fluentdが向いているケースと向いてないケース，そのPros/Consみたいなのを書いた．細かく書けばもっと色々と書けるのだけど，記事でそんなに長々と書いても疲れるだけなので大まかに．
 何か質問があればTwitterで<a href="https://twitter.com/repeatedly">@repeatedly</a>にmentionするなり，この記事にコメントするなりしてください :)</p>
 
-<p>もうすぐFluentd + Elasticsearch + Kibanaという有名な構成のムック本が出るようなので，この本とか読むと，解析のノウハウ含め色々とここには書いていない情報が手に入るのではないかと思います．
+<p>もうすぐFluentd + Elasticsearch + Kibanaという有名な構成のムック本が出るようなので，この本とか読むと，解析のノウハウ含め色々とここには書いていない情報が手に入るのではないかと思います．<br />
 <a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774169838/repeatedly-22/ref=nosim/"><img src="http://ecx.images-amazon.com/images/I/61vwvFp6EEL._SL160_.jpg" /></a></p>
 
 <p>何か思い出したら追記するかもしれません．</p>
