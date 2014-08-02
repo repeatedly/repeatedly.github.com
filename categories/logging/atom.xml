@@ -4,7 +4,7 @@
   <title><![CDATA[Category: logging | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/logging/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-08-01T17:20:26+09:00</updated>
+  <updated>2014-08-03T01:20:06+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -59,7 +59,7 @@ Fluentdそのものについては<a href="http://docs.fluentd.org/articles/quic
 
 
 <p>などの場合に有効になる．次で書く集約ノードが必要ないので，その分管理は楽になる．<br />
-Fluentdは転送役と集約役に違いはないので，この段階でプラグインなどを使って，データを加工したりすることもある．</p>
+Fluentdは転送役と集約役に違いはないので，この段階でフィルター系プラグインを使って，データを加工することもある．</p>
 
 <p><a href="http://www.treasuredata.com/">Treasure Data</a>の場合には，<a href="https://metrics.librato.com/">Librato Metrics</a>に投げる所などは集約ノードを経由せず，各Fluentd(Treasure Agent)から直接投げている．この場合は各ノードのメトリックスが取りたいので，集約ノードでデータストリームをまとめる必要もない．</p>
 
@@ -84,9 +84,9 @@ Fluentdは転送役と集約役に違いはないので，この段階でプラ�
 
 <p><img src="/images/fluentd_queue_pattern.png" title="&#34;Using queue pattern&#34;" alt="&#34;Using queue pattern&#34;"></p>
 
-<p>データストリームの中にキューを間に挟むことの主な理由は，ログのreliabilityの向上と，処理の間でワンクッション置くこと．</p>
+<p>データストリームの中でキューを間に挟むことの主な理由は，ログのreliabilityの向上と，処理の間にワンクッション置くこと．</p>
 
-<p>そもそもキューはPush型ではなくPull型であり，Producer・Queue・Consumerと登場人物も増えるので，キューを置くことでログ収集そのものが効率化されることはあまりない．その他のシステムとの連携をするときに，間にキューを置くことが多い．</p>
+<p>そもそもキューはPush型ではなくPull型であり，Producer・Queue・Consumerと登場人物も増えるので，キューを置くことでログ収集そのものが効率化されることはあまりない．異なる粒度のシステム間で連携をする時に，間にキューを置くことが多い．</p>
 
 <p>実際Fluentdとキューを連携させている例はいくつかあり，たとえば複雑なシステムを構築している<a href="http://engineering.viki.com/blog/2014/data-warehouse-and-analytics-infrastructure-at-viki/">Vikiの例</a>ではKestrelでFluentdからのデータストリームを分岐させているし，AWSは本家が<a href="https://github.com/awslabs/aws-fluent-plugin-kinesis">fluent-plugin-kinesis</a>を書いているので，いずれこの事例も増えるはず.</p>
 
