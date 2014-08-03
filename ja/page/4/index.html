@@ -9,9 +9,9 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="転職したのもあり，色々と取り組むものが増えた年だった． D言語 ちょっと割ける時間が減ったのもあり，全体的にD言語のコードを書く量は減ったかなと．
-自分が欲しかった小さなライブラリはいくつか書いたりしたけど，
-他にも書きたいのがあるので，2014年はガッツリ時間を取りたい． D &hellip;">
+  <meta name="description" content="CROSS 2014というイベントがあり，
+分散処理システムCROSSというセッションのオーナーをやってきた． 分散処理システムCROSS 元々はログ収集で1セッションどうか，という話だった．が，
+もうFluentdとかの話は色々な所でやってるし， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +71,106 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2014/01/cross-2014/">CROSS 2014</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-18T23:57:00+09:00" pubdate data-updated="true">Jan 18<span>th</span>, 2014</time>
+        
+         | <a href="/ja/2014/01/cross-2014/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.cross-party.com/">CROSS 2014</a>というイベントがあり，
+<a href="http://www.cross-party.com/programs/distributed/">分散処理システムCROSS</a>というセッションのオーナーをやってきた．</p>
+
+<h2>分散処理システムCROSS</h2>
+
+<p>元々はログ収集で1セッションどうか，という話だった．が，
+もうFluentdとかの話は色々な所でやってるし，ここで1時間やってもあんま成果はないだろうということでやめた．
+そもそも日本でFluentd以外のログ収集プロジェクトで深い話を出来る人は希で，探すのがつらい．<br /></p>
+
+<p>その変わり分散処理でも話が来ていたので，そっち側でどうにかやることにした．
+分散処理だとなんかアルゴリズムとかそっち系の色が強くなりそうなので，とりあえずシステムをつけた．</p>
+
+<h3>メンバ</h3>
+
+<p>@oza_x86，@kuenishi，@shot6の三人にお願いした．時間を作って頂いてありがとうございました！
+人選に関しては，少し前にTwitterでつぶやいたけど，以下のような感じで選んだ．</p>
+
+<ul>
+<li>分散処理システムを研究・開発している人</li>
+<li>分散処理システムを開発・販売している人</li>
+<li>分散処理システムを運用・サービスとして展開している人</li>
+<li>分散処理システムの基盤を運用・提供している人</li>
+</ul>
+
+
+<p>事前打ち合わせの飲み会をやったけど，自己紹介して結局はなんか適当に喋りましょうということに．</p>
+
+<h3>当日</h3>
+
+<p>セッションが始まる前に，Hadoopやデータベースとかの入門的な話には多分ならないし，
+他に面白そうなセッションがあるので〜，と誘導したにも関わらず，なんか結構人が入ってて驚いた！</p>
+
+<p>色々と予防線は張ったものの，個人的には1時間それなりに話題は出せたんじゃないかと思ってます．
+RaftやPaxosのような合意周り，Jepsenなどの分散処理システムの検証ツール，
+Hadoopやその他のシステムの運用的な話，などなど．<br />
+分散処理システムにおけるモデルの検証とかはやはり鬼門なので，今後色々と勉強したい所．</p>
+
+<p>しかしモデレータというのは色々と疲れますね…</p>
+
+<h2>その他のセッション</h2>
+
+<h3>エンジニアの恋・愛・セックスのDevOps、ホントのところどうしたらいいの</h3>
+
+<p>間に合わなくて参加出来なかったが，かなり反響があったセッションっぽい．
+後で録画を見る．</p>
+
+<h3>ぶつかり稽古</h3>
+
+<p>セッションオーナーが登壇しないという酷いセッションだったｗ
+けど内容そのものは，他社のレビュースタイルとか色々と知れて面白かった．</p>
+
+<h3>アンカンファレンス</h3>
+
+<p>Fluentd v11の話で登録したけど，雨の予報でも出社しないと噂の某モリスさんが一人でセッションの時間全部使い切り，
+何も話せなかった．</p>
+
+<h2>まとめ</h2>
+
+<p>去年と違ってRed Bullガールがいないのが残念だった！来年は期待したい．</p>
+
+<p>全体としては，Tシャツや雑誌の新刊も貰えたし，何人かリアルで合えたしで，色々とドタバタしたけど楽しかったので良し．皆さんお疲れ様でした！</p>
+
+<p><img src="/images/cross_2014.jpg" title="&#34;CROSS 2014 photo&#34;" alt="&#34;CROSS 2014 photo&#34;"></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -451,80 +551,6 @@ shardの数は途中で変更出来ないらしく，増やしたい時は別の
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2013/07/july-tech-festa-2013/">July Tech Festa 2013</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-20T04:54:00+09:00" pubdate data-updated="true">Jul 20<span>th</span>, 2013</time>
-        
-         | <a href="/ja/2013/07/july-tech-festa-2013/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.techfesta.jp/">July Tech Festa 2013</a>というイベントが7月14日にAIITで行われ，基調講演として呼ばれたので，<a href="http://www.techfesta.jp/p/program-2.html#A01">Treasure Dataとして発表</a>してきました．
-<a href="http://www.techfesta.jp/2013/07/jtf2013_16.html">Best Speakerにも選んで頂き</a>，ありがとうございます．</p>
-
-<h3>Slideshare</h3>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/24213160?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/treasure-data/treasure-data-cloud-strategy" title="Treasure Data Cloud Strategy" target="_blank">Treasure Data Cloud Strategy</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
-
-<h3>Togetter</h3>
-
-<ul>
-<li><a href="http://togetter.com/li/533842">JTF全体</a></li>
-<li><a href="http://togetter.com/li/534105">自分の発表のみ</a></li>
-</ul>
-
-
-<p>CTOから無茶ぶりされて「まぁいいか」と承諾したら実は基調講演だったというオチでした．他の発表者の人達がChefやOpenStackなどのいわゆるクラウドやDevOpsプロダクトの中，サービスであるTreasure Dataに講演依頼が来たということは，そういうことなんだろうなと上記の構成になりました．</p>
-
-<p>Treasure Dataのサービスそのものやアーキテクチャに関しては，記事やイベントでぱらぱらと説明はしたものの，おそらくまとまった発表したのは今回が初めてだったんじゃないかなと思っています．こういう場を用意して頂いたJTFの方達には感謝です．</p>
-
-<p>Togetterにまとめられているのを見て貰えれば分かるのですが</p>
-
-<ul>
-<li>なぜクラウドでやっているのか</li>
-<li>システム構築で気をつけていること</li>
-<li>どう運用しているか</li>
-</ul>
-
-
-<p>の辺りを大まかに話しました．僕らはスタートアップということもあり速度がとても重要なので，自分達のビジョンを達成するためにどういう選択をしてきたかと，その考え方について一通り述べたつもりです．</p>
-
-<p>懇親会でも色々な方と話すことが出来て，運用で使っているツール周り話したり，実はFluentd使ってるんですよという人にも会えたり，Treasure Dataのようなサービス検討中なんです，などなど色々と楽しい時間を過ごせました．
-Fluentdなんかはプラグイン機構でガンガンインフラの人にもコード書いて問題を解決してもらおうというプロダクトだったりするので，今後もユーザが増えるといいなという思います．</p>
-
-<p>参加された方々，またスタッフの方々，お疲れ様でした！</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/ja/page/5/">&larr; Older</a>
@@ -542,6 +568,10 @@ Fluentdなんかはプラグイン機構でガンガンインフラの人にも�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/ja/2014/08/fluentd-ui/">Fluentd UI</a>
+      </li>
+    
+      <li class="post">
         <a href="/ja/2014/07/fluentd-and-log-forwarding-patterns/">Fluentdとログ収集のパターン</a>
       </li>
     
@@ -555,10 +585,6 @@ Fluentdなんかはプラグイン機構でガンガンインフラの人にも�
     
       <li class="post">
         <a href="/ja/2014/07/presto-scr-4/">Prestoソースコードリーディング #4</a>
-      </li>
-    
-      <li class="post">
-        <a href="/ja/2014/07/release-fluent-plugin-multi-format-parser/">Release fluent-plugin-multi-format-parser</a>
       </li>
     
   </ul>

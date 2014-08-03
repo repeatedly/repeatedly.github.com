@@ -5,12 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Release fluent-plugin-netflow - Go ahead!</title>
+  <title>Fluentd UI - Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="fluent-plugin-netflow CiscoのNetflowプロトコルを受け取るFluentdプラグインを書きました．
-公開してみたら結構反応が良くて，地味にユーザが多そうですね… 経緯 Fluentdを調べていたユーザから「ログ収集基盤をFluentdベースにしたいんだけど， &hellip;">
+  <meta name="description" content="fluent/fluentd-ui Fluentdのエコシステムの一つとして，Fluentd UIをリリースしました．
+すでに試してくれたユーザもいるようなので，現在の使用感などは下記の記事を参考にしてください． Fluentd UIが出たので触ってみた
+Touch the fluentd-ui( &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow">
+  <link rel="canonical" href="http://repeatedly.github.com/ja/2014/08/fluentd-ui">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -73,7 +74,7 @@
   
   <header>
     
-      <h1 class="entry-title">Release fluent-plugin-netflow</h1>
+      <h1 class="entry-title">Fluentd UI</h1>
     
     
       <p class="meta">
@@ -89,7 +90,7 @@
   
 
 
-<time datetime="2014-07-11T21:35:00+09:00" pubdate data-updated="true">Jul 11<span>th</span>, 2014</time>
+<time datetime="2014-08-04T04:10:00+09:00" pubdate data-updated="true">Aug 4<span>th</span>, 2014</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -98,68 +99,85 @@
   </header>
 
 
-<div class="entry-content"><p><a href="https://github.com/repeatedly/fluent-plugin-netflow">fluent-plugin-netflow</a></p>
+<div class="entry-content"><p><a href="https://github.com/fluent/fluentd-ui">fluent/fluentd-ui</a></p>
 
-<p>CiscoのNetflowプロトコルを受け取るFluentdプラグインを書きました．
-公開してみたら結構反応が良くて，地味にユーザが多そうですね…</p>
+<p><img src="/images/fluentd_ui_ss.png" title="&#34;Fluentd UI image&#34;" alt="&#34;Fluentd UI image&#34;"></p>
 
-<h2>経緯</h2>
-
-<p>Fluentdを調べていたユーザから「ログ収集基盤をFluentdベースにしたいんだけど，Netflowをパースするプラグインないの？」と言われたので，
-さくっと作ってみました．<br />
-「さくっと」と言ってもコアのパーサー部分はそのユーザが使っていたLogstashからポーティングしたやつなので，それなりにパース出来るはずです．
-Pull Requestのおかげもあり，対応templateも少し増えてます．</p>
-
-<h2>使い方</h2>
-
-<p>fluent-gemでインストールするだけです．</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ fluent-gem install fluent-plugin-netflow</span></code></pre></td></tr></table></div></figure>
-
-
-<p>その後，以下のように設定します．typeとtagは必須です．他のやつは適宜環境に合わせて設定してください．</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> netflow
-</span><span class='line'>  <span class="nb">tag</span> netflow.event
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># optional parameters</span>
-</span><span class='line'>  <span class="nb">bind</span> <span class="m">127.0.0.1</span>
-</span><span class='line'>  <span class="nb">port</span> <span class="m">9555</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># optional parser parameters</span>
-</span><span class='line'>  <span class="err">cache_</span><span class="nb">ttl</span> <span class="m">6000</span>
-</span><span class='line'>  <span class="nb">versions</span> [5, <span class="m">9</span>]
-</span><span class='line'>  <span class="nb">definitions</span> <span class="sx">/path/to/your_definitions.yml</span>
-</span><span class='line'><span class="nt">&lt;/match&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>今現在はin_syslogの影響もあってデフォルトポートが5140のままなのですが，0.1.0を出す時に変更する予定です．</p>
-
-<h2>TODO</h2>
+<p>Fluentdのエコシステムの一つとして，Fluentd UIをリリースしました．
+すでに試してくれたユーザもいるようなので，現在の使用感などは下記の記事を参考にしてください．</p>
 
 <ul>
-<li>俺自身がNetflow関係のやつを持っていないので，使っている人，誰かメンテナになってください！実環境でのテストが出来ませんｗ</li>
-<li>Fluentd v0.10.52が出たら，FluentdのSocketUtilベースで書き直して，0.1.0を出す</li>
+<li><a href="http://suzuken.hatenablog.jp/entry/2014/08/01/202334">Fluentd UIが出たので触ってみた</a></li>
+<li><a href="http://qiita.com/inokappa/items/0a4a2db7abad22458bea">Touch the fluentd-ui(1)</a></li>
 </ul>
 
 
-<p>他，何か要望があれば<a href="https://github.com/repeatedly/fluent-plugin-netflow">issue/pull request</a>をしてもらえれば対応します．</p>
+<p>この記事ではFluentd UIそのものについてつらつらと書きたいと思います．英語でのアナウンスもいずれ公式ブログに載るはず．</p>
+
+<h2>Fluentd UIの生い立ち</h2>
+
+<p>Fluentd UIの背景として，Fluentdも最近は色々な地域でユーザが増えてきており，
+「CLIとか楽勝！」以外のユーザの割合も増えつつあります．</p>
+
+<p>ログコレクタでリッチな管理UIを持っているプロダクトってほとんどないと思うのですが，
+新しく使い始めるユーザの嵌まり所とか見ていると，
+GUIの方が始めるための敷居が下がりそうなポイントがいくつかありました．</p>
+
+<p>なので，Fluentdを使いたい人がなるべく嵌まらずに始められるようにと，
+万葉の方と開発したのがFluentd UIです．</p>
+
+<h2>Fluentd UIのコンセプト</h2>
+
+<p>生い立ちの所で書いた通り，Fluentdの敷居を下げるのが第一の目的なので，
+すでにFluentdをバリバリ使っている人はユーザの対象ではありません．</p>
+
+<p>バージョン0.1.0の段階で，以下の機能があります:</p>
+
+<ul>
+<li>Fluentdのプロセスの管理 (start/stop/restart)</li>
+<li>Fluentdの設定ファイルの管理と編集</li>
+<li>Fluentdのプラグインの管理 (install/uninstall/update)</li>
+<li>ログやシステム情報のビューワー，などなど</li>
+</ul>
+
+
+<p>最初に色々機能を洗い出したのですが，全部入れるとリリースが遅れるし，
+複雑なのを入れるとユーザが混乱するかもということで，ベーシックな機能セットに絞りました．<br />
+それでも，プラグイン入れての挙動チェックなど，全部Webから出来るようになっています．また，
+ユーザがテストしにくかったin_tailは，<a href="http://fluentular.herokuapp.com/">Fluentular</a>を参考にかなり使いやすいUIになったと思います．</p>
+
+<p>実装的にもかなり依存を減らしていて，例えば，最初はSQLiteベースだったのですが，
+「SQLiteだとFluentd UIそのもののセットアップに嵌まる人が出る可能性がある」とファイルベースに変更してもらいました．</p>
+
+<h2>Fluentd UIの今後の展望</h2>
+
+<h3>機能追加</h3>
+
+<p>バージョン0.1.0ということから分かる通り，まだまだ始まったばかりのプロダクトで，
+今回は開発者側が「こういう機能があったら始めやすいだろう」というものを中心に入れました．<br />
+今後はユーザからのフィードバックも受けつつ，更に使いやすさを改善して行けたらなと．</p>
+
+<p>現状各プラグインの設定を削除する時は，自分でフリーフォームから消す必要があるので，
+この辺もボタンで消せるようにとか，出来たらいいかなぁと考えてます．<br />
+あと，今設定が組み込みで実装してあるので(3rd partyのプラグイン用の設定ページがない)，
+各プラグインから自動で設定ページが生成できるような仕組みも必要かなと，色々と模索中です．</p>
+
+<h3>td-agent 2への同梱</h3>
+
+<p>td-agentには同梱予定はないんですが，td-agent 2にはtd-agent-uiみたいな感じで同梱する予定です．すでに起動した人は知っていると思いますが，td-agentをセットアップする用のボタンがあります :)</p>
+
+<h3>他の環境との連携</h3>
+
+<p>Fluentd UIは，UI上で色々と試行錯誤しその結果出来た設定ファイルをChefとかで配布，
+みたいなのを想定しているのですが，毎回コピペとか面倒ですし，
+最近だと<a href="https://github.com/sonots/fluentd-server">fluentd-server</a>とかもあるので，この辺なんか上手くやりたいな，と．</p>
+
+<h2>まとめ</h2>
+
+<p>Fluentd UIについて色々と書きました．是非試して頂いて，問題があったら<a href="https://github.com/fluent/fluentd-ui/issues">issue</a>投げるなり<a href="https://github.com/fluent/fluentd-ui/pulls">PR</a>なりしてもらえると助かります！</p>
+
+<p>あ，ちなみに最初のリリースは俺がやりましたが，開発はコミットを見れば分かる通り<a href="https://github.com/uu59">uu59</a>さんで
+ちゃんとしたRailsコードになっているので，ご心配なく！</p>
 </div>
 
 
@@ -182,7 +200,7 @@ Pull Requestのおかげもあり，対応templateも少し増えてます．</p
   
 
 
-<time datetime="2014-07-11T21:35:00+09:00" pubdate data-updated="true">Jul 11<span>th</span>, 2014</time>
+<time datetime="2014-08-04T04:10:00+09:00" pubdate data-updated="true">Aug 4<span>th</span>, 2014</time>
       
 
 <span class="categories">
@@ -196,7 +214,7 @@ Pull Requestのおかげもあり，対応templateも少し増えてます．</p
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2014/08/fluentd-ui/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2014/08/fluentd-ui/" >Tweet</a>
   
   
   
@@ -207,10 +225,8 @@ Pull Requestのおかげもあり，対応templateも少し増えてます．</p
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/ja/2014/05/fluentd-v1-and-roadmap/" title="Previous Post: Fluentd v1 and Roadmapというプレゼンをしてきた">&laquo; Fluentd v1 and Roadmapというプレゼンをしてきた</a>
+        <a class="basic-alignment left" href="/ja/2014/07/fluentd-and-log-forwarding-patterns/" title="Previous Post: Fluentdとログ収集のパターン">&laquo; Fluentdとログ収集のパターン</a>
       
-      
-        <a class="basic-alignment right" href="/ja/2014/07/release-fluent-plugin-multi-format-parser/" title="next Post: Release fluent-plugin-multi-format-parser">Release fluent-plugin-multi-format-parser &raquo;</a>
       
     </p>
   </footer>
@@ -322,8 +338,8 @@ Pull Requestのおかげもあり，対応templateも少し増えてます．</p
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow/';
-        var disqus_url = 'http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow/';
+        var disqus_identifier = 'http://repeatedly.github.com/ja/2014/08/fluentd-ui/';
+        var disqus_url = 'http://repeatedly.github.com/ja/2014/08/fluentd-ui/';
         var disqus_script = 'embed.js';
       
     (function () {
