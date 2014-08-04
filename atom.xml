@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-08-04T14:12:54+09:00</updated>
+  <updated>2014-08-04T14:14:34+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -93,7 +93,7 @@ GUIの方が始めるための敷居が下がりそうなポイントがいく�
 
 <h2>まとめ</h2>
 
-<p>Fluentd UIについて書きました．是非試して頂いて，問題があったら<a href="https://github.com/fluent/fluentd-ui/issues">issue</a>投げるなり<a href="https://github.com/fluent/fluentd-ui/pulls">PR</a>なりしてもらえると助かります！</p>
+<p>Fluentd UIについて背景含めつらつらと書きました．是非試して頂いて，問題があったら<a href="https://github.com/fluent/fluentd-ui/issues">issue</a>投げるなり<a href="https://github.com/fluent/fluentd-ui/pulls">PR</a>なりしてもらえると助かります！</p>
 
 <p>あ，ちなみに最初のリリースは俺がやりましたが，開発はコミットを見れば分かる通り<a href="https://github.com/uu59">uu59</a>さんでちゃんとしたRailsコードになっているので，ご心配なく！</p>
 ]]></content>
