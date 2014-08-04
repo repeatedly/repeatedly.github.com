@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-08-04T05:20:47+09:00</updated>
+  <updated>2014-08-04T14:12:54+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -35,7 +35,7 @@
 
 <h2>Fluentd UIの生い立ち</h2>
 
-<p>Fluentd UIの背景として，Fluentdも最近は色々な地域でユーザが増えてきており，
+<p>Fluentd UIの背景として，Fluentdも最近は国を問わず色々な所でユーザが増えてきており，
 「CLIとか楽勝！」以外のユーザの割合も増えつつあります．</p>
 
 <p>ログコレクタでリッチな管理UIを持っているプロダクトってほとんどないと思うのですが，
@@ -66,7 +66,7 @@ GUIの方が始めるための敷居が下がりそうなポイントがいく�
 ユーザがテストしにくかったin_tailは，<a href="http://fluentular.herokuapp.com/">Fluentular</a>を参考にかなり使いやすいUIになったと思います．</p>
 
 <p>実装的にもかなり依存を減らしていて，例えば，最初はSQLiteベースだったのですが，
-「SQLiteだとFluentd UIそのもののセットアップに嵌まる人が出る可能性がある」とファイルベースに変更してもらいました．</p>
+「SQLiteだとFluentd UIそのもののセットアップに嵌まる人が出る可能性がある」とファイルベースに変更したりしました．</p>
 
 <h2>Fluentd UIの今後の展望</h2>
 
@@ -78,7 +78,7 @@ GUIの方が始めるための敷居が下がりそうなポイントがいく�
 
 <p>現状各プラグインの設定を削除する時は，自分でフリーフォームから消す必要があるので，
 この辺もボタンで消せるようにとか，出来たらいいかなぁと考えてます．<br />
-あと，今設定が組み込みで実装してあるので(3rd partyのプラグイン用の設定ページがない)，
+あと，今設定が組み込みで実装してあるので(インストールした3rd partyプラグイン用の設定ページがない)，
 各プラグインから自動で設定ページが生成できるような仕組みも必要かなと，色々と模索中です．</p>
 
 <h3>td-agent 2への同梱</h3>
@@ -93,10 +93,9 @@ GUIの方が始めるための敷居が下がりそうなポイントがいく�
 
 <h2>まとめ</h2>
 
-<p>Fluentd UIについて色々と書きました．是非試して頂いて，問題があったら<a href="https://github.com/fluent/fluentd-ui/issues">issue</a>投げるなり<a href="https://github.com/fluent/fluentd-ui/pulls">PR</a>なりしてもらえると助かります！</p>
+<p>Fluentd UIについて書きました．是非試して頂いて，問題があったら<a href="https://github.com/fluent/fluentd-ui/issues">issue</a>投げるなり<a href="https://github.com/fluent/fluentd-ui/pulls">PR</a>なりしてもらえると助かります！</p>
 
-<p>あ，ちなみに最初のリリースは俺がやりましたが，開発はコミットを見れば分かる通り<a href="https://github.com/uu59">uu59</a>さんで
-ちゃんとしたRailsコードになっているので，ご心配なく！</p>
+<p>あ，ちなみに最初のリリースは俺がやりましたが，開発はコミットを見れば分かる通り<a href="https://github.com/uu59">uu59</a>さんでちゃんとしたRailsコードになっているので，ご心配なく！</p>
 ]]></content>
   </entry>
   
