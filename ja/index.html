@@ -480,7 +480,7 @@ Prestoそのものについては，@frsyuki が<a href="http://treasure-data.ha
 <li>今時はMPPデータベース単体で運用している所は少ない．RedshiftでもEMRなどからデータを整形して一気にガツンと入れるのが多い</li>
 </ul>
 </li>
-<li>クエリの同時実行制御周りは他のに比べて優秀
+<li>クエリの同時実行制御周りはそれなりに頑張っている
 
 <ul>
 <li>データマートして使いやすい．<a href="https://twitter.com/mineroaoki/status/491995296671363073">バッチを投げると厳しい</a>とのこと．</li>
@@ -501,7 +501,12 @@ Prestoそのものについては，@frsyuki が<a href="http://treasure-data.ha
 <ul>
 <li>Redshiftと同じく，アドホックに色々とデータをぶち込んで解析するには，JSON文字列(record型？)で保存する必要がある</li>
 <li>既存のMPPデータベースとかで考えないと行けない問題(distkeyとか)を，Googleパワーで強引に解決</li>
-<li>運用は完全Google任せ</li>
+<li>運用は完全Google任せ
+
+<ul>
+<li>Redshiftと違いGoogleの環境を共有するので，細かなことは出来ない</li>
+</ul>
+</li>
 <li>Googleの制約を受ける
 
 <ul>
@@ -517,7 +522,18 @@ Prestoそのものについては，@frsyuki が<a href="http://treasure-data.ha
 </ul>
 </li>
 <li>Streaming Importが結構パフォーマンスが出るので，importして即クエリがやりやすい(<a href="http://qiita.com/kazunori279/items/10ac0066ac9b0b5aaaf3">参考記事</a>)</li>
-<li>同時実行制御周り誰か教えてください</li>
+<li>同時実行制御周りは基本よく動く
+
+<ul>
+<li>リソースはGoogle側が管理しているので，バッチ投げたら詰まるとかは起きにくい</li>
+<li>リソースを占有しているわけではないので，勝手にクエリが死んだり，いきなり遅くなったりすることもある
+
+<ul>
+<li>日本時間の21時当たりで起きやすいらしい．でかいバッチを投げまくっているユーザが海外にいる？</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
 
