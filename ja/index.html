@@ -144,14 +144,18 @@ Fluentdは元々Treasure Dataへロバストにデータを転送するための
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
 <span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
 </pre></td><td class='code'><pre><code class='rb'><span class='line'><span class="k">module</span> <span class="nn">Fluent</span>
-</span><span class='line'>  <span class="k">class</span> <span class="nc">Filter</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">SomeFilter</span> <span class="o">&lt;</span> <span class="no">Filter</span>
+</span><span class='line'>    <span class="no">Plugin</span><span class="o">.</span><span class="n">register_filter</span><span class="p">(</span><span class="s1">&#39;some_filter&#39;</span><span class="p">,</span> <span class="nb">self</span><span class="p">)</span>
+</span><span class='line'>
 </span><span class='line'>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
-</span><span class='line'>      <span class="c1"># レコードを弄るプラグインは，これを実装すればOK</span>
+</span><span class='line'>      <span class="c1"># レコードを弄るプラグインは，ここを実装すればOK</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="k">def</span> <span class="nf">filter_stream</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">es</span><span class="p">)</span>
-</span><span class='line'>      <span class="c1"># 以下はデフォルト実装．grepなどはこちらを置き換えればOK</span>
+</span><span class='line'>      <span class="c1"># 以下はFilterのデフォルト実装．grepなどはこちらを置き換えればOK</span>
 </span><span class='line'>      <span class="n">es</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span>  <span class="o">|</span><span class="n">time</span><span class="p">,</span> <span class="n">record</span><span class="o">|</span>
 </span><span class='line'>        <span class="n">filter</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
 </span><span class='line'>      <span class="p">}</span>
@@ -165,7 +169,8 @@ Fluentdは元々Treasure Dataへロバストにデータを転送するための
 <h4>filter(tag, time, record)</h4>
 
 <p><code>SetXXXMixin</code>を置き換える<a href="https://gist.github.com/repeatedly/cb16d5667350c8a0e2c9#file-filter_add_metadata-rb">add_metadata</a>フィルタを見て貰えればわかりやすいと思いますが，
-引数で渡ってくるレコードを弄るだけです．</p>
+引数で渡ってくるレコードを弄るだけです．<br />
+<code>filter</code>とは違い<code>filter_stream</code>は上記のデフォルト実装があるので，変更する必要はありません．</p>
 
 <p>大抵のプラグインはこのAPIをオーバーライドして処理を実装すれば，その結果が次のフィルタに渡されるようになります．</p>
 
