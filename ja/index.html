@@ -156,7 +156,7 @@ Fluentdは元々Treasure Dataへロバストにデータを転送するための
 </span><span class='line'>
 </span><span class='line'>    <span class="k">def</span> <span class="nf">filter_stream</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">es</span><span class="p">)</span>
 </span><span class='line'>      <span class="c1"># 以下はFilterのデフォルト実装．grepなどはこちらを置き換えればOK</span>
-</span><span class='line'>      <span class="n">es</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span>  <span class="o">|</span><span class="n">time</span><span class="p">,</span> <span class="n">record</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">es</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">time</span><span class="p">,</span> <span class="n">record</span><span class="o">|</span>
 </span><span class='line'>        <span class="n">filter</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
 </span><span class='line'>      <span class="p">}</span>
 </span><span class='line'>      <span class="n">es</span>
@@ -178,7 +178,7 @@ Fluentdは元々Treasure Dataへロバストにデータを転送するための
 
 <p>EventStreamを直接処理するFilterを書くためのAPIです．例えば<code>grep</code>はレコードを弄らず，EventStream全体に対して処理を行うプラグインなので，
 このAPIをオーバーライドします．<code>filter_stream</code>を変更する場合，<code>filter</code>を変更する必要はありません．<br />
-<code>filter</code>とは違い，返り値としてEventStreamを返す必要があります．Fluentdは，この<code>filter_stream</code>の返り値を次のFilterに渡し，最終結果をOutputプラグイン渡します．</p>
+<code>filter</code>とは違い，返り値としてEventStreamを返す必要があります．Fluentdは，この<code>filter_stream</code>の返り値を次のFilterに渡し，最終結果をOutputプラグインに渡します．</p>
 
 <p>また，<code>record_reformer</code>の<code>renew_record</code>みたいに，新しくレコードを生成する系のプラグインもこちら側で処理を実装することになります．
 <code>grep</code>と<code>record_reformer</code>のFilter例は以下にあります．</p>
@@ -245,7 +245,7 @@ Fluentdは元々Treasure Dataへロバストにデータを転送するための
 
 <p>タグを書き換えて<code>match</code>の条件を調整して〜という煩わしさから解放されるようになります．</p>
 
-<p>注意点としては，<code>match</code>の下にある<code>filter</code>は，たとえtagがマッチしようが適用されない所です．</p>
+<p>注意点としては，マッチした<code>match</code>の下にある<code>filter</code>は，たとえtagがマッチしようが適用されない所です．</p>
 
 <h3>パフォーマンス</h3>
 
