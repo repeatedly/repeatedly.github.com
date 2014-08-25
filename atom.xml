@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-08-22T18:50:07+09:00</updated>
+  <updated>2014-08-25T20:51:22+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,257 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Fluentd v0.12でのFilterとLabel]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/08/fluentd-filter-and-label/"/>
+    <updated>2014-08-25T17:30:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/08/fluentd-filter-and-label</id>
+    <content type="html"><![CDATA[<p>Fluentd，最近だと海外でも露出が増えてきていて，軽量・柔軟・ロバストという所で，
+新規の他，既存のログコレクタのリプレース含め，採用する所が増えてたりします．</p>
+
+<p>より改善するため色々とユーザにヒアリングした結果，「フィルタ機能が欲しい」というのが一番多い意見でした．
+Fluentdは元々Treasure Dataへロバストにデータを転送するためのミドルウェアで，「ETLとかはTreasure Dataで」
+というのもあり，組み込みでフィルタ機能はありませんでした．</p>
+
+<p>今現在のOutputプラグインによるフィルタ実装は，タグの書き換えが必要だったりして少し慣れが必要で，初心者にはちと難しい．
+ということで，より簡単に効率よくデータストリームを扱えるフィルタ機能を入れることにしました！</p>
+
+<p>前置きが長くなりましたが，次のバージョンであるv0.12ではFilterとLabelの導入が目玉機能になります．
+これらは二つともデータストリームの処理をより楽にするための機能です．</p>
+
+<p>後，<a href="http://www.fluentd.org/blog/fluentd-v0.10.53-is-released">Fluentd v0.10.53のリリースアナウンス</a>でも書きましたが，
+今現在のmasterブランチはすでにv0.12用になっています．また，以下の機能はまだmasterにはマージされていません．今週中にはマージ予定ですが，
+試して見たい方は，<a href="https://github.com/fluent/fluentd/pull/416">PR #416</a>をチェックしてください．</p>
+
+<h2>Filter</h2>
+
+<p>Outputプラグインで出力する前に，イベント群に処理を適用するための仕組みです．
+<code>grep</code>や<code>record_refomer</code>や<code>geoip</code>プラグインなどは，Filterとして実装することでより効率良く処理出来るようになります．</p>
+
+<p>最初に実装，その後に設定の例を見せます．</p>
+
+<h3>実装</h3>
+
+<p>FilterのAPIは以下のようになっています．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='rb'><span class='line'><span class="k">module</span> <span class="nn">Fluent</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">Filter</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
+</span><span class='line'>      <span class="c1"># レコードを弄るプラグインは，これを実装すればOK</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">filter_stream</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">es</span><span class="p">)</span>
+</span><span class='line'>      <span class="c1"># 以下はデフォルト実装．grepなどはこちらを置き換えればOK</span>
+</span><span class='line'>      <span class="n">es</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span>  <span class="o">|</span><span class="n">time</span><span class="p">,</span> <span class="n">record</span><span class="o">|</span>
+</span><span class='line'>        <span class="n">filter</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="n">es</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span> <span class="k">if</span> <span class="n">defined?</span><span class="p">(</span><span class="no">Filter</span><span class="p">)</span> <span class="c1"># v0.10とかでエラーにならないための回避策</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>filter(tag, time, record)</h4>
+
+<p><code>SetXXXMixin</code>を置き換える<a href="https://gist.github.com/repeatedly/cb16d5667350c8a0e2c9#file-filter_add_metadata-rb">add_metadata</a>フィルタを見て貰えればわかりやすいと思いますが，
+引数で渡ってくるレコードを弄るだけです．</p>
+
+<p>大抵のプラグインはこのAPIをオーバーライドして処理を実装すれば，その結果が次のフィルタに渡されるようになります．</p>
+
+<h4>filter_stream(tag, es)</h4>
+
+<p>EventStreamを直接処理するFilterを書くためのAPIです．例えば<code>grep</code>はレコードを弄らず，EventStream全体に対して処理を行うプラグインなので，
+このAPIをオーバーライドします．<code>filter_stream</code>を変更する場合，<code>filter</code>を変更する必要はありません．<br />
+<code>filter</code>とは違い，返り値としてEventStreamを返す必要があります．Fluentdは，この<code>filter_stream</code>の返り値を次のFilterに渡し，最終結果をOutputプラグイン渡します．</p>
+
+<p>また，<code>record_reformer</code>の<code>renew_record</code>みたいに，新しくレコードを生成する系のプラグインもこちら側で処理を実装することになります．
+<code>grep</code>と<code>record_reformer</code>のFilter例は以下にあります．</p>
+
+<ul>
+<li><a href="https://gist.github.com/repeatedly/0ed3e2b4016b4045640a#file-filter_grep-rb">filter_grep</a></li>
+<li><a href="https://gist.github.com/repeatedly/5c9f89e14aace5cda195#file-filter_record_reformer-rb">filter_record_reformer</a></li>
+</ul>
+
+
+<h3>設定</h3>
+
+<p><code>&lt;filter&gt;</code>セクションが追加されています．たとえば，<code>add_metadata</code>と<code>grep</code>を使う場合には以下のようになります．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> forward
+</span><span class='line'><span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;filter&gt;</span> <span class="c"># &lt;filter&gt;と&lt;filter **&gt;は同じ</span>
+</span><span class='line'>  <span class="nb">type</span> grep
+</span><span class='line'>  <span class="err">input_</span><span class="nb">key</span> message
+</span><span class='line'>  <span class="nb">regexp</span> <span class="k">WARN</span>
+</span><span class='line'><span class="nt">&lt;/filter&gt;</span>
+</span><span class='line'><span class="nt">&lt;filter&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> add_metadata
+</span><span class='line'>  <span class="err">include_tag_</span><span class="nb">key</span>
+</span><span class='line'>&lt;/filter&gt;
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;match</span> <span class="s">**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> stdout
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Fluentdの設定ファイルの流儀にしたがって，上から順番に<code>match</code>にマッチしたところまでのFilterが適用されます．
+この例では，まず<code>grep</code>が適用され，その次に<code>add_metadata</code>，そしてこれらの結果のEventStreamが<code>stdout</code>に渡されます．<br />
+例えば以下のデータが入ってきたとして:</p>
+
+<pre><code>{"message":"INFO"}
+{"message":"WARN"}
+</code></pre>
+
+<p><code>stdout</code>には，<code>grep</code>で最初のレコードがフィルタリングされ，<code>add_metadata</code>でタグが追加された以下のデータが渡されます:</p>
+
+<pre><code>{"message":"WARN", "tag":"filter.test"}
+</code></pre>
+
+<p>タグを書き換えて<code>match</code>の条件を調整して〜という煩わしさから解放されるようになります．</p>
+
+<p>注意点としては，<code>match</code>の下にある<code>filter</code>は，たとえtagがマッチしようが適用されない所です．</p>
+
+<h3>パフォーマンス</h3>
+
+<p>タグの書き換えや再emitが発生しないため，速度やメモリ効率は多少よくなるはずです．</p>
+
+<p>手元で約450MBのファイルを<code>in_tail</code>で読み込み，<code>record_reformer</code>でホスト名などを付加して転送する，
+というのをv0.10とv0.12で測ってみた所，v0.10は181秒，v0.12は149秒で，約30秒短縮されました．</p>
+
+<p>ユーザによってはもっとFilterがチェーンしている所もあるはずなので，そういう場合には恩恵が大きいと思います．</p>
+
+<h2>Label</h2>
+
+<p>これはFilterやOutputをまとめるための機能になります．制限として，InputはLabelの中に含めることは出来ません．
+こちらは先に設定から見てみます．</p>
+
+<h3>設定</h3>
+
+<p>以下が簡単な例になります．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> forward
+</span><span class='line'>  <span class="err">@</span><span class="nb">label</span> @forward
+</span><span class='line'><span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> tail
+</span><span class='line'>  <span class="nb">path</span> <span class="sx">/path/to/file</span>
+</span><span class='line'>  <span class="nb">tag</span> tail
+</span><span class='line'><span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;filter</span> <span class="s">**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> grep
+</span><span class='line'>  <span class="c"># ...</span>
+</span><span class='line'><span class="nt">&lt;/filter&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;match</span> <span class="s">**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> mongo
+</span><span class='line'>  <span class="c"># ...</span>
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;label</span> <span class="s">@forward</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;filter</span> <span class="s">**</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nb">type</span> add_metadata
+</span><span class='line'>    <span class="err">include_tag_</span><span class="nb">key</span>
+</span><span class='line'>  &lt;/filter&gt;
+</span><span class='line'>  <span class="nt">&lt;match</span> <span class="s">**</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nb">type</span> file
+</span><span class='line'>  <span class="nt">&lt;/match&gt;</span>
+</span><span class='line'><span class="nt">&lt;/label&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>forward</code>の中に<code>@label @forward</code>というパラメータがあります．これがLabelの指定になっていて，
+<code>@label</code>があるとその指定されたLabelにイベント群が流れて行きます．なので，この例では<code>forward</code>で
+受け付けたイベント群は，<code>add_metadata</code>フィルタを通り，その下の<code>file</code>に到達します．<br />
+一方，<code>@label</code>のないInputは今までと同じ挙動となり，トップにイベント群を流します．
+この例では，<code>grep</code>フィルタを通り，その下の<code>mongo</code>に到達します．</p>
+
+<p>Labelの機能によって，各プラグイン間の関係がわかりやすくなり，またルーティングのためにタグを調整する必要もなくなります．
+<code>out_relabel</code>プラグインを使えばデータを別のLabelに飛ばせるので，入力によって違うフィルタを適用したいが，書き込み先は一緒にしたい，
+みたいな処理も簡単にできるようになります．</p>
+
+<h3>実装</h3>
+
+<p>v0.12から，<code>router</code>というのがInput/Outputに増えてます．今まで<code>Engine.emit</code>と書いていた所を，<code>router.emit</code>に書き換えるだけで，
+Labelの機能が使えるようになります．<br />
+言い換えれば，この書き換えをしていないInput/Outputプラグインは，<code>@label</code>が使えないということになります．</p>
+
+<h2>まとめ</h2>
+
+<p>v0.12の主要機能であるFilterとLabelについて簡単に説明しました．まだ実装としていくつか細かな改善はあるのですが，
+基本機能は上記のままで行くと思います．<br />
+何かフィードバックがあれば<code>@repeatedly</code>にmentionをするか，上記の該当PRにコメントをして貰えればと思います．</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Fluentd UI]]></title>
@@ -1542,77 +1793,6 @@ It enables you can set different log level separated from global log level, e.g.
 <p>Fluentdそのものの改善では色々と考えていることはあるので，定期的にチェックして頂けると！後「v10でこういうところが使いにくい」とかあると，開発陣にフィードバックして貰えると助かります．</p>
 
 <p>それでは！</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[CROSS 2014]]></title>
-    <link href="http://repeatedly.github.com/ja/2014/01/cross-2014/"/>
-    <updated>2014-01-18T23:57:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2014/01/cross-2014</id>
-    <content type="html"><![CDATA[<p><a href="http://www.cross-party.com/">CROSS 2014</a>というイベントがあり，
-<a href="http://www.cross-party.com/programs/distributed/">分散処理システムCROSS</a>というセッションのオーナーをやってきた．</p>
-
-<h2>分散処理システムCROSS</h2>
-
-<p>元々はログ収集で1セッションどうか，という話だった．が，
-もうFluentdとかの話は色々な所でやってるし，ここで1時間やってもあんま成果はないだろうということでやめた．
-そもそも日本でFluentd以外のログ収集プロジェクトで深い話を出来る人は希で，探すのがつらい．<br /></p>
-
-<p>その変わり分散処理でも話が来ていたので，そっち側でどうにかやることにした．
-分散処理だとなんかアルゴリズムとかそっち系の色が強くなりそうなので，とりあえずシステムをつけた．</p>
-
-<h3>メンバ</h3>
-
-<p>@oza_x86，@kuenishi，@shot6の三人にお願いした．時間を作って頂いてありがとうございました！
-人選に関しては，少し前にTwitterでつぶやいたけど，以下のような感じで選んだ．</p>
-
-<ul>
-<li>分散処理システムを研究・開発している人</li>
-<li>分散処理システムを開発・販売している人</li>
-<li>分散処理システムを運用・サービスとして展開している人</li>
-<li>分散処理システムの基盤を運用・提供している人</li>
-</ul>
-
-
-<p>事前打ち合わせの飲み会をやったけど，自己紹介して結局はなんか適当に喋りましょうということに．</p>
-
-<h3>当日</h3>
-
-<p>セッションが始まる前に，Hadoopやデータベースとかの入門的な話には多分ならないし，
-他に面白そうなセッションがあるので〜，と誘導したにも関わらず，なんか結構人が入ってて驚いた！</p>
-
-<p>色々と予防線は張ったものの，個人的には1時間それなりに話題は出せたんじゃないかと思ってます．
-RaftやPaxosのような合意周り，Jepsenなどの分散処理システムの検証ツール，
-Hadoopやその他のシステムの運用的な話，などなど．<br />
-分散処理システムにおけるモデルの検証とかはやはり鬼門なので，今後色々と勉強したい所．</p>
-
-<p>しかしモデレータというのは色々と疲れますね…</p>
-
-<h2>その他のセッション</h2>
-
-<h3>エンジニアの恋・愛・セックスのDevOps、ホントのところどうしたらいいの</h3>
-
-<p>間に合わなくて参加出来なかったが，かなり反響があったセッションっぽい．
-後で録画を見る．</p>
-
-<h3>ぶつかり稽古</h3>
-
-<p>セッションオーナーが登壇しないという酷いセッションだったｗ
-けど内容そのものは，他社のレビュースタイルとか色々と知れて面白かった．</p>
-
-<h3>アンカンファレンス</h3>
-
-<p>Fluentd v11の話で登録したけど，雨の予報でも出社しないと噂の某モリスさんが一人でセッションの時間全部使い切り，
-何も話せなかった．</p>
-
-<h2>まとめ</h2>
-
-<p>去年と違ってRed Bullガールがいないのが残念だった！来年は期待したい．</p>
-
-<p>全体としては，Tシャツや雑誌の新刊も貰えたし，何人かリアルで合えたしで，色々とドタバタしたけど楽しかったので良し．皆さんお疲れ様でした！</p>
-
-<p><img src="http://repeatedly.github.com/images/cross_2014.jpg" title="&#34;CROSS 2014 photo&#34;" alt="&#34;CROSS 2014 photo&#34;"></p>
 ]]></content>
   </entry>
   

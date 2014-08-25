@@ -1,0 +1,545 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Fluentd v0.12でのFilterとLabel - Go ahead!</title>
+  <meta name="author" content="Masahiro Nakagawa">
+
+  
+  <meta name="description" content="Fluentd，最近だと海外でも露出が増えてきていて，軽量・柔軟・ロバストという所で，
+新規の他，既存のログコレクタのリプレース含め，採用する所が増えてたりします． より改善するため色々とユーザにヒアリングした結果，「フィルタ機能が欲しい」というのが一番多い意見でした． &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://repeatedly.github.com/ja/2014/08/fluentd-filter-and-label">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Go ahead!" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Go ahead!</a></h1>
+  
+    <h2>Memoization for Everything</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:repeatedly.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+
+
+  
+<ul class="main-navigation">
+  <li><a href="/ja/archives">Archives</a></li>
+  <li><a href="/">English</a></li>
+</ul>
+
+  
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Fluentd v0.12でのFilterとLabel</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-25T17:30:00+09:00" pubdate data-updated="true">Aug 25<span>th</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Fluentd，最近だと海外でも露出が増えてきていて，軽量・柔軟・ロバストという所で，
+新規の他，既存のログコレクタのリプレース含め，採用する所が増えてたりします．</p>
+
+<p>より改善するため色々とユーザにヒアリングした結果，「フィルタ機能が欲しい」というのが一番多い意見でした．
+Fluentdは元々Treasure Dataへロバストにデータを転送するためのミドルウェアで，「ETLとかはTreasure Dataで」
+というのもあり，組み込みでフィルタ機能はありませんでした．</p>
+
+<p>今現在のOutputプラグインによるフィルタ実装は，タグの書き換えが必要だったりして少し慣れが必要で，初心者にはちと難しい．
+ということで，より簡単に効率よくデータストリームを扱えるフィルタ機能を入れることにしました！</p>
+
+<p>前置きが長くなりましたが，次のバージョンであるv0.12ではFilterとLabelの導入が目玉機能になります．
+これらは二つともデータストリームの処理をより楽にするための機能です．</p>
+
+<p>後，<a href="http://www.fluentd.org/blog/fluentd-v0.10.53-is-released">Fluentd v0.10.53のリリースアナウンス</a>でも書きましたが，
+今現在のmasterブランチはすでにv0.12用になっています．また，以下の機能はまだmasterにはマージされていません．今週中にはマージ予定ですが，
+試して見たい方は，<a href="https://github.com/fluent/fluentd/pull/416">PR #416</a>をチェックしてください．</p>
+
+<h2>Filter</h2>
+
+<p>Outputプラグインで出力する前に，イベント群に処理を適用するための仕組みです．
+<code>grep</code>や<code>record_refomer</code>や<code>geoip</code>プラグインなどは，Filterとして実装することでより効率良く処理出来るようになります．</p>
+
+<p>最初に実装，その後に設定の例を見せます．</p>
+
+<h3>実装</h3>
+
+<p>FilterのAPIは以下のようになっています．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='rb'><span class='line'><span class="k">module</span> <span class="nn">Fluent</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">Filter</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
+</span><span class='line'>      <span class="c1"># レコードを弄るプラグインは，これを実装すればOK</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">filter_stream</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">es</span><span class="p">)</span>
+</span><span class='line'>      <span class="c1"># 以下はデフォルト実装．grepなどはこちらを置き換えればOK</span>
+</span><span class='line'>      <span class="n">es</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span>  <span class="o">|</span><span class="n">time</span><span class="p">,</span> <span class="n">record</span><span class="o">|</span>
+</span><span class='line'>        <span class="n">filter</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="n">es</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span> <span class="k">if</span> <span class="n">defined?</span><span class="p">(</span><span class="no">Filter</span><span class="p">)</span> <span class="c1"># v0.10とかでエラーにならないための回避策</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>filter(tag, time, record)</h4>
+
+<p><code>SetXXXMixin</code>を置き換える<a href="https://gist.github.com/repeatedly/cb16d5667350c8a0e2c9#file-filter_add_metadata-rb">add_metadata</a>フィルタを見て貰えればわかりやすいと思いますが，
+引数で渡ってくるレコードを弄るだけです．</p>
+
+<p>大抵のプラグインはこのAPIをオーバーライドして処理を実装すれば，その結果が次のフィルタに渡されるようになります．</p>
+
+<h4>filter_stream(tag, es)</h4>
+
+<p>EventStreamを直接処理するFilterを書くためのAPIです．例えば<code>grep</code>はレコードを弄らず，EventStream全体に対して処理を行うプラグインなので，
+このAPIをオーバーライドします．<code>filter_stream</code>を変更する場合，<code>filter</code>を変更する必要はありません．<br />
+<code>filter</code>とは違い，返り値としてEventStreamを返す必要があります．Fluentdは，この<code>filter_stream</code>の返り値を次のFilterに渡し，最終結果をOutputプラグイン渡します．</p>
+
+<p>また，<code>record_reformer</code>の<code>renew_record</code>みたいに，新しくレコードを生成する系のプラグインもこちら側で処理を実装することになります．
+<code>grep</code>と<code>record_reformer</code>のFilter例は以下にあります．</p>
+
+<ul>
+<li><a href="https://gist.github.com/repeatedly/0ed3e2b4016b4045640a#file-filter_grep-rb">filter_grep</a></li>
+<li><a href="https://gist.github.com/repeatedly/5c9f89e14aace5cda195#file-filter_record_reformer-rb">filter_record_reformer</a></li>
+</ul>
+
+
+<h3>設定</h3>
+
+<p><code>&lt;filter&gt;</code>セクションが追加されています．たとえば，<code>add_metadata</code>と<code>grep</code>を使う場合には以下のようになります．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> forward
+</span><span class='line'><span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;filter&gt;</span> <span class="c"># &lt;filter&gt;と&lt;filter **&gt;は同じ</span>
+</span><span class='line'>  <span class="nb">type</span> grep
+</span><span class='line'>  <span class="err">input_</span><span class="nb">key</span> message
+</span><span class='line'>  <span class="nb">regexp</span> <span class="k">WARN</span>
+</span><span class='line'><span class="nt">&lt;/filter&gt;</span>
+</span><span class='line'><span class="nt">&lt;filter&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> add_metadata
+</span><span class='line'>  <span class="err">include_tag_</span><span class="nb">key</span>
+</span><span class='line'>&lt;/filter&gt;
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;match</span> <span class="s">**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> stdout
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Fluentdの設定ファイルの流儀にしたがって，上から順番に<code>match</code>にマッチしたところまでのFilterが適用されます．
+この例では，まず<code>grep</code>が適用され，その次に<code>add_metadata</code>，そしてこれらの結果のEventStreamが<code>stdout</code>に渡されます．<br />
+例えば以下のデータが入ってきたとして:</p>
+
+<pre><code>{"message":"INFO"}
+{"message":"WARN"}
+</code></pre>
+
+<p><code>stdout</code>には，<code>grep</code>で最初のレコードがフィルタリングされ，<code>add_metadata</code>でタグが追加された以下のデータが渡されます:</p>
+
+<pre><code>{"message":"WARN", "tag":"filter.test"}
+</code></pre>
+
+<p>タグを書き換えて<code>match</code>の条件を調整して〜という煩わしさから解放されるようになります．</p>
+
+<p>注意点としては，<code>match</code>の下にある<code>filter</code>は，たとえtagがマッチしようが適用されない所です．</p>
+
+<h3>パフォーマンス</h3>
+
+<p>タグの書き換えや再emitが発生しないため，速度やメモリ効率は多少よくなるはずです．</p>
+
+<p>手元で約450MBのファイルを<code>in_tail</code>で読み込み，<code>record_reformer</code>でホスト名などを付加して転送する，
+というのをv0.10とv0.12で測ってみた所，v0.10は181秒，v0.12は149秒で，約30秒短縮されました．</p>
+
+<p>ユーザによってはもっとFilterがチェーンしている所もあるはずなので，そういう場合には恩恵が大きいと思います．</p>
+
+<h2>Label</h2>
+
+<p>これはFilterやOutputをまとめるための機能になります．制限として，InputはLabelの中に含めることは出来ません．
+こちらは先に設定から見てみます．</p>
+
+<h3>設定</h3>
+
+<p>以下が簡単な例になります．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> forward
+</span><span class='line'>  <span class="err">@</span><span class="nb">label</span> @forward
+</span><span class='line'><span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> tail
+</span><span class='line'>  <span class="nb">path</span> <span class="sx">/path/to/file</span>
+</span><span class='line'>  <span class="nb">tag</span> tail
+</span><span class='line'><span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;filter</span> <span class="s">**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> grep
+</span><span class='line'>  <span class="c"># ...</span>
+</span><span class='line'><span class="nt">&lt;/filter&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;match</span> <span class="s">**</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> mongo
+</span><span class='line'>  <span class="c"># ...</span>
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;label</span> <span class="s">@forward</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;filter</span> <span class="s">**</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nb">type</span> add_metadata
+</span><span class='line'>    <span class="err">include_tag_</span><span class="nb">key</span>
+</span><span class='line'>  &lt;/filter&gt;
+</span><span class='line'>  <span class="nt">&lt;match</span> <span class="s">**</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nb">type</span> file
+</span><span class='line'>  <span class="nt">&lt;/match&gt;</span>
+</span><span class='line'><span class="nt">&lt;/label&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>forward</code>の中に<code>@label @forward</code>というパラメータがあります．これがLabelの指定になっていて，
+<code>@label</code>があるとその指定されたLabelにイベント群が流れて行きます．なので，この例では<code>forward</code>で
+受け付けたイベント群は，<code>add_metadata</code>フィルタを通り，その下の<code>file</code>に到達します．<br />
+一方，<code>@label</code>のないInputは今までと同じ挙動となり，トップにイベント群を流します．
+この例では，<code>grep</code>フィルタを通り，その下の<code>mongo</code>に到達します．</p>
+
+<p>Labelの機能によって，各プラグイン間の関係がわかりやすくなり，またルーティングのためにタグを調整する必要もなくなります．
+<code>out_relabel</code>プラグインを使えばデータを別のLabelに飛ばせるので，入力によって違うフィルタを適用したいが，書き込み先は一緒にしたい，
+みたいな処理も簡単にできるようになります．</p>
+
+<h3>実装</h3>
+
+<p>v0.12から，<code>router</code>というのがInput/Outputに増えてます．今まで<code>Engine.emit</code>と書いていた所を，<code>router.emit</code>に書き換えるだけで，
+Labelの機能が使えるようになります．<br />
+言い換えれば，この書き換えをしていないInput/Outputプラグインは，<code>@label</code>が使えないということになります．</p>
+
+<h2>まとめ</h2>
+
+<p>v0.12の主要機能であるFilterとLabelについて簡単に説明しました．まだ実装としていくつか細かな改善はあるのですが，
+基本機能は上記のままで行くと思います．<br />
+何かフィードバックがあれば<code>@repeatedly</code>にmentionをするか，上記の該当PRにコメントをして貰えればと思います．</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Masahiro Nakagawa</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-25T17:30:00+09:00" pubdate data-updated="true">Aug 25<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/fluentd/'>fluentd</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2014/08/fluentd-filter-and-label/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2014/08/fluentd-filter-and-label/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/ja/2014/08/fluentd-ui/" title="Previous Post: Fluentd UI">&laquo; Fluentd UI</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/ja/2014/08/fluentd-filter-and-label/">Fluentd v0.12でのFilterとLabel</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2014/08/fluentd-ui/">Fluentd UI</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2014/07/fluentd-and-log-forwarding-patterns/">Fluentdとログ収集のパターン</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2014/07/mpp-on-hadoop-redshift-bigquery/">MPP on Hadoop, Redshift, BigQuery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2014/07/release-fluent-plugin-http-puma/">Release fluent-plugin-http-puma</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/repeatedly">@repeatedly</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'repeatedly',
+            count: 4,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("repeatedly", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/repeatedly" class="twitter-follow-button" data-show-count="false">Follow @repeatedly</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Masahiro Nakagawa -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'repeatedly';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://repeatedly.github.com/ja/2014/08/fluentd-filter-and-label/';
+        var disqus_url = 'http://repeatedly.github.com/ja/2014/08/fluentd-filter-and-label/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
