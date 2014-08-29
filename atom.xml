@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-08-25T21:57:15+09:00</updated>
+  <updated>2014-08-29T15:35:35+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -63,20 +63,26 @@ Fluentdは元々Treasure Dataへロバストにデータを転送するための
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
 </pre></td><td class='code'><pre><code class='rb'><span class='line'><span class="k">module</span> <span class="nn">Fluent</span>
 </span><span class='line'>  <span class="k">class</span> <span class="nc">SomeFilter</span> <span class="o">&lt;</span> <span class="no">Filter</span>
 </span><span class='line'>    <span class="no">Plugin</span><span class="o">.</span><span class="n">register_filter</span><span class="p">(</span><span class="s1">&#39;some_filter&#39;</span><span class="p">,</span> <span class="nb">self</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
 </span><span class='line'>      <span class="c1"># レコードを弄るプラグインは，ここを実装すればOK</span>
+</span><span class='line'>      <span class="c1"># レコードを返す必要がある</span>
+</span><span class='line'>      <span class="n">modified_record</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="k">def</span> <span class="nf">filter_stream</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">es</span><span class="p">)</span>
 </span><span class='line'>      <span class="c1"># 以下はFilterのデフォルト実装．grepなどはこちらを置き換えればOK</span>
+</span><span class='line'>      <span class="n">new_es</span> <span class="o">=</span> <span class="no">MultiEventStream</span><span class="o">.</span><span class="n">new</span>
 </span><span class='line'>      <span class="n">es</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">time</span><span class="p">,</span> <span class="n">record</span><span class="o">|</span>
-</span><span class='line'>        <span class="n">filter</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">new_es</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">filter</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">record</span><span class="p">))</span>
 </span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="n">es</span>
+</span><span class='line'>      <span class="n">new_es</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>  <span class="k">end</span> <span class="k">if</span> <span class="n">defined?</span><span class="p">(</span><span class="no">Filter</span><span class="p">)</span> <span class="c1"># v0.10とかでエラーにならないための回避策</span>
 </span><span class='line'><span class="k">end</span>
@@ -86,7 +92,7 @@ Fluentdは元々Treasure Dataへロバストにデータを転送するための
 <h4>filter(tag, time, record)</h4>
 
 <p><code>SetXXXMixin</code>を置き換える<a href="https://gist.github.com/repeatedly/cb16d5667350c8a0e2c9#file-filter_add_metadata-rb">add_metadata</a>フィルタを見て貰えればわかりやすいと思いますが，
-引数で渡ってくるレコードを弄るだけです．<br />
+引数で渡ってくるレコードを弄って，それを返り値にするだけです<br />
 <code>filter</code>とは違い<code>filter_stream</code>は上記のデフォルト実装があるので，変更する必要はありません．</p>
 
 <p>大抵のプラグインはこのAPIをオーバーライドして処理を実装すれば，その結果が次のフィルタに渡されるようになります．</p>
@@ -97,7 +103,7 @@ Fluentdは元々Treasure Dataへロバストにデータを転送するための
 このAPIをオーバーライドします．<code>filter_stream</code>を変更する場合，<code>filter</code>を変更する必要はありません．<br />
 <code>filter</code>とは違い，返り値としてEventStreamを返す必要があります．Fluentdは，この<code>filter_stream</code>の返り値を次のFilterに渡し，最終結果をOutputプラグインに渡します．</p>
 
-<p>また，<code>record_reformer</code>の<code>renew_record</code>みたいに，新しくレコードを生成する系のプラグインもこちら側で処理を実装することになります．
+<p>また，<code>record_reformer</code>の<code>renew_record</code>のように，新しくレコードを生成する系のプラグインもこちら側で処理を実装することになります．
 <code>grep</code>と<code>record_reformer</code>のFilter例は以下にあります．</p>
 
 <ul>
