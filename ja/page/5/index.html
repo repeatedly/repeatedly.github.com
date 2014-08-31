@@ -9,7 +9,8 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="8/29日に行われたElasticSearch勉強会 第1回に参加してました．ElasticSearchは前々から興味はあったけど，仕事とかで使うこともないのでずっと放置という状態だった． 主催者の方のブログに各発表スライドへのリンクとかあるので，興味がある方はそちらを参照． &hellip;">
+  <meta name="description" content="Librato Metricsをうちではモニタリングに使ってるんですが，日本で全くと言って良いほど記事を見ないので，紹介記事を書いてみる． 何が出来る？ おおまかに分けて以下のようなことが出来る． メトリックスを作れる
+メトリックスに対してアラートを設定出来る &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +70,126 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2013/09/librato-metrics-introduction/">Librato Metrics introduction</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-08T08:57:00+09:00" pubdate data-updated="true">Sep 8<span>th</span>, 2013</time>
+        
+         | <a href="/ja/2013/09/librato-metrics-introduction/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://metrics.librato.com/">Librato Metrics</a>をうちではモニタリングに使ってるんですが，日本で全くと言って良いほど記事を見ないので，紹介記事を書いてみる．</p>
+
+<h1>何が出来る？</h1>
+
+<p>おおまかに分けて以下のようなことが出来る．</p>
+
+<ul>
+<li>メトリックスを作れる</li>
+<li>メトリックスに対してアラートを設定出来る</li>
+<li>ダッシュボードでメトリックスの一覧が見れる</li>
+<li>JavaScript SDKを使って自分のサイトに埋め込むことが出来る</li>
+<li>APIが提供されていて，いくつかの言語のクライアントがある</li>
+</ul>
+
+
+<p>以下それぞれ簡単な説明．</p>
+
+<h2>メトリックス</h2>
+
+<p>LibratoにはMetricというのがあり，これが最小の単位．Metricに監視したいメトリックスの値を入れていき，他のMetricと混ぜたりすることでモニタリングを行います．</p>
+
+<p><img src="/images/librato_metric_sample.png" title="&#34;Librato Metric sample&#34;" alt="&#34;Librato Metric sample&#34;"></p>
+
+<p>上の例のように，一つのMetricに複数の軸の値を入れることが出来ます．これはソースと呼ばれていて，保存する時にsourceを指定すれば良いです．指定しなかったら&#8221;unassigned&#8221;みたいなsourceにまとめられます．<br />
+後，右上にある時間を弄れば，そのレンジでグラフが表示されます．</p>
+
+<p>左の欄に色々とグラフの設定内容があるので，必要であれば弄ります．&#8221;How should we aggregate your data over time?&#8221;の欄が少し大事で「どういう風にメトリックスを見るか」を指定できます(<a href="http://dev.librato.com/v1/post/metrics#gauge_specific">ここ</a>の説明参照)．</p>
+
+<h3>Instrument</h3>
+
+<p>Metricをまとめるのに，Instrumentというのがあります．ここで複数のMetricを重ねることで，関連のありそうなMetric同士を俯瞰出来るようになります．</p>
+
+<p>単純なモニタリングだけだと，MetricとInstrumentが一対一になったりしてダッシュボードやJavaScript SDKでちょっと面倒だったりもします．</p>
+
+<h2>アラート</h2>
+
+<p><img src="/images/librato_alert_sample.png" title="&#34;Librato Alert sample&#34;" alt="&#34;Librato Alert sample&#34;"></p>
+
+<p>上の画像の左のカラムが例で，Metricの中でスレッショルドベースで指定出来ます．どこに飛ばすか設定出来るので，うちでは重要なメトリックスに関してはHipChatやPagerDutyなどに飛ばしてます．</p>
+
+<p>複雑な条件設定や，Metricをまたいだアラートは出来ないので，そういうのが欲しい場合は自分達で頑張る必要があります．</p>
+
+<h2>ダッシュボード</h2>
+
+<p><img src="/images/librato_dashboard_sample.png" title="&#34;Librato Dashboard Sample&#34;" alt="&#34;Librato Dashboard Sample&#34;"></p>
+
+<p>これがダッシュボードの例です．実際はMetricじゃなくてInstrumentを並べてるんですが，こんな感じで表示出来ます．<br />
+ダッシュボードはいくらでも作れるので，自分の見たい粒度で作って，必要なメトリックスを並べます．某社みたいに一つのダッシュボードに数千数万のメトリックスにならないよう気をつけましょう．</p>
+
+<h2>API</h2>
+
+<p><a href="http://dev.librato.com/v1/metrics">APIページ</a>にリストと説明が載ってます．いくつかの言語には<a href="https://github.com/librato">公式のクライアントライブラリ</a>があるので，使うと良いです．<br />
+ただ，Ruby版とか試してもInstrument APIがなかったりと，まだまだサポートAPIにばらつきが多い印象．アプリケーションからガチで使うなら，自分でいくつか実装する必要があります．APIはREST + JSONなので，実装はそんなに難しくないです．</p>
+
+<p><a href="http://dev.librato.com/v1/users">ユーザAPI</a>はまだβ機能なのか，使いたい場合はLibartoに連絡して，使えるようにしてもらう必要があるっぽいです．</p>
+
+<h3>JavaScript SDK</h3>
+
+<p><img src="/images/librato_javascript_sdk_sample.png" title="&#34;Librato JavaScript SDK Sample&#34;" alt="&#34;Librato JavaScript SDK Sample&#34;"></p>
+
+<p>こんな感じになります．好きなページに貼り付けることが出来るし，グラフは自動で更新されます．
+どういうコードになるかは，<a href="http://blog.librato.com/posts/2012/10/embeddable-charts">Libratoの記事</a>を参照してください．</p>
+
+<h3>Fluentdの例</h3>
+
+<p>Fluentdには<a href="https://github.com/treasure-data/fluent-plugin-metricsense">fluent-plugin-metricsense</a>というプラグインがあって，これは保存先にLibrato Metricsが使えたりします．
+これはクライアント使ってないけど，<a href="https://github.com/treasure-data/fluent-plugin-metricsense/blob/master/lib/fluent/plugin/backends/librato_backend.rb">こんな感じで</a>，直接APIを呼ぶくらいなら簡単に実装できます．</p>
+
+<h1>その他</h1>
+
+<h2>料金</h2>
+
+<p><a href="https://metrics.librato.com/pricing">料金ページ</a>を見てください．基本的にはデータの流量(これはLibrato側での保存ベース)，メトリックスの数，ソースの数，が影響します．<br />
+簡単に言うと，どれだけの頻度でどれだけの数のメトリックスを作るか，です．</p>
+
+<h2>サポート</h2>
+
+<p>料金ページにも載ってますが，オンラインチャットとメールとコールがあります．うちではOlarkを使ってますが，最近のスタートアップではこの手のオンラインチャットでの対応というのが広まりつつあって良い感じ．<br />
+緊急を要したり深いディスカッションが必要であれば，コールすることになるかなと．うちでも少し困ったことがあったので，コールして直接要望出したり設計を相談したりしました．</p>
+
+<h1>まとめ</h1>
+
+<p>AnnotationとかCRRELATEとか紹介してないのもありますが，Libartoの基本的な所を書いた．自分達でモニタリング環境を構築出来るなら良いんですが，スタートアップとかだとそこにリソースを割くのが難しかったりするので，そういう所はLibratoとか検討してみてもいいんじゃないかと思います．</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -354,87 +475,6 @@ D言語を始める始めないに関わらず，どういう言語なのかを�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2/">AWSを使ったデータ解析PaaSの裏側</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-18T16:11:00+09:00" pubdate data-updated="true">Mar 18<span>th</span>, 2013</time>
-        
-         | <a href="/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://jaws-ug.jp/jawsdays2013/">JAWS DAYS 2013</a>というイベントがあって，2日目に<a href="http://jaws-ug.jp/jawsdays2013/speaker.html#DEV-01">Treasure Dataとして発表</a>してきました．実は1日目には弊社CTOが<a href="http://jaws-ug.jp/jawsdays2013/speaker.html#PD-02">パネルディスカッションに登壇</a>したりしてました．</p>
-
-<ul>
-<li>Slideshare</li>
-</ul>
-
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/17252380?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/treasure-data/the-architecture-ofdataanalyticspaasonaws" title="The architecture of data analytics PaaS on AWS" target="_blank">The architecture of data analytics PaaS on AWS</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
-
-<ul>
-<li>Ustream</li>
-</ul>
-
-
-<iframe width="480" height="302" src="http://www.ustream.tv/embed/recorded/30009634?v=3&amp;wmode=direct" scrolling="no" frameborder="0" style="border: 0px none transparent;">    </iframe>
-
-
-<br /><a href="http://www.ustream.tv/" style="padding: 2px 0px 4px; width: 400px; background: #ffffff; display: block; color: #000000; font-weight: normal; font-size: 10px; text-decoration: underline; text-align: center;" target="_blank">Video streaming by Ustream</a>
-
-
-<p>最初はfrsyukiが登壇予定に上がっていたんだけど，今彼はアメリカということで代打で役割が回ってきた，というのが発表の経緯．</p>
-
-<p>なんかラベルが&#8221;Dev&#8221;と&#8221;Ops&#8221;という超大雑把なくくりで「AWSで&#8221;Dev&#8221;って何発表すれば…」という状態だったので，
-AWS上で展開しているTreasure Dataサービスの仕組みについてつらつらと話しました．</p>
-
-<p>AWSべったりな感じではなくて</p>
-
-<ul>
-<li>Treasure Dataのサービス内容と目的</li>
-<li>どうAWSのプロダクトを使っているのか</li>
-<li>なぜこのAWSのサービスを使わないのか</li>
-</ul>
-
-
-<p>というのを大まかに話しました．仕組みの部分はどちらかというと一般的な設計の話になったかなという感じです．<br />
-会場だったトラックBの席はほぼ満席で，発表の後の質疑応答も時間いっぱい掛かったので，個人的にはかなり嬉しい結果でした．</p>
-
-<p>発表の後の時間や懇親会などで，すでにTreasure Dataを使っている人や，Fluentdを導入している人達とも交流出来，楽しい時間を過ごせました．これから導入しようかな，と考えている人もおられたので，何か問題があれば是非相談して頂ければなぁという感じです．<br />
-AWSのMilesにも「Fluentd is good!!」と言われ，向こうでも徐々にFluentdが広まってきていると感じている今日この頃．このままTreasure Dataも伸びていきたい所です．</p>
-
-<p>各セッションの感想は他の人が書いてくれるはず．ということで，皆さんお疲れ様でした！またどこかでお会いしましょう :)</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/ja/page/6/">&larr; Older</a>
@@ -452,6 +492,10 @@ AWSのMilesにも「Fluentd is good!!」と言われ，向こうでも徐々にF
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/ja/2014/08/yapc-asia-2014/">YAPC::Asia 2014</a>
+      </li>
+    
+      <li class="post">
         <a href="/ja/2014/08/fluentd-filter-and-label/">Fluentd v0.12でのFilterとLabel</a>
       </li>
     
@@ -465,10 +509,6 @@ AWSのMilesにも「Fluentd is good!!」と言われ，向こうでも徐々にF
     
       <li class="post">
         <a href="/ja/2014/07/mpp-on-hadoop-redshift-bigquery/">MPP on Hadoop, Redshift, BigQuery</a>
-      </li>
-    
-      <li class="post">
-        <a href="/ja/2014/07/release-fluent-plugin-http-puma/">Release fluent-plugin-http-puma</a>
       </li>
     
   </ul>

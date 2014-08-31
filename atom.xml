@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-08-29T15:35:35+09:00</updated>
+  <updated>2014-09-01T01:27:36+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,112 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[YAPC::Asia 2014]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/08/yapc-asia-2014/"/>
+    <updated>2014-08-31T11:59:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/08/yapc-asia-2014</id>
+    <content type="html"><![CDATA[<p><a href="http://yapcasia.org/2014/">YAPC::Asia 2014</a>に初めて参加してきました．</p>
+
+<p>Perl使ってないし最初は行く気なかったんだけど，登録中のセッション見るとPerlじゃないの多いし，
+個人スポンサーになればTシャツやパーカーも貰えると言うことで，個人スポンサーでチケット入手．</p>
+
+<p>0日目は参加せず，1日目は朝から，2日目は昼から参加した</p>
+
+<h2>1日目</h2>
+
+<h3>完成されたシステムなどない。完成された人間もいない。あるのは成長し続ける未完成なシステムと、それを支える未完成な人間だけだ</h3>
+
+<p>YAPCでのTEDを目指したという発表．大ホールの暗い雰囲気と，宇宙に覆われたスライドによって，
+宗教的な感じがしたプレゼン．</p>
+
+<p>発表時間の半分で発表そのものは終わったのだけど，質疑応答をもっと盛り上げれば，完成度は上がったんじゃ無いかと思う．</p>
+
+<h3>お待たせしました。Perl で BDD を簡単に実践する最高にクールなフレームワークができました</h3>
+
+<p>一番Perlっぽい話かな，と思って参加．Perlのテストにおける歴史みたいなのとか，
+エコシステムの話みたいなのが聞けたのは面白かった．「Perl 6と同じくらい夢が詰まっている」という言葉，つらい</p>
+
+<h3>作られては消えていく、泡のように儚いクラスタの運用話</h3>
+
+<p>番組用システムの裏側の話．あるある系もあったり，便利そうなコマンド作ってたり，
+なかなかみんな苦労しているな，と．最近TV系の運用話はちょくちょく聞くので，どこも似ている感じ．</p>
+
+<h3>ライブコーディング</h3>
+
+<p>songmuさんともずにおんのコンビ漫才を休憩がてら見ていた．やっぱ本番では色々とミスが起きるｗ<br />
+ここで食べたDMMかき氷，普通に美味しかった</p>
+
+<h3>O2O/IoT/Wearable時代におけるWeb以外のネットワーク技術入門</h3>
+
+<p>IoT周辺の技術の用語とか仕組みの説明．いやー，しかしこの辺りは略語が多くてすぐ覚えるのがつらい</p>
+
+<p>その後はセッションには参加せず，休憩スペースで何人かでISUCONとかPHPとか色々とだべっていた．
+MQTT Meetupに参加する予定があったので，懇親会には参加せず帰った．</p>
+
+<h2>2日目</h2>
+
+<p>naoyaさんの発表をにやにやしながら見ようかと思っていたのだけど，起きたらもう終わっていたのが心残り．</p>
+
+<p>ついた時間も中途半端だったので，naoyaさんとHUBに行き，そこでmiyagawaさんとかけんじおじさん，shiba_yuさんとかとしゃべっていた．
+時間が経つと色々と人が集まってきたのだけど，大ホールの席を取るため移動．</p>
+
+<h3>そんなにビッグでもないデータ処理手法の話</h3>
+
+<p>言うことはないというか，全部知っている話だったので内職をしていた．が，ベストトークで2位だったようなので，
+やっぱ分野が違うと受けるトークも変わるんだなぁという．</p>
+
+<p>ただ，最初にモリスさんがFluentdのユーザを聞いてくれたら半分くらい？は手をあげていたので，
+ちゃんと浸透してるんだなと嬉しく思う反面，あと半数にどうやってリーチすべきかというのも考えないと行けない．</p>
+
+<p>モリストリーム…じゃなくてNorikraの宣伝が少なかったな，という印象</p>
+
+<h3>Lightning Talks Day 2</h3>
+
+<p>席を取っていて良かった，というくらい人がわらわらと集まってきていた．</p>
+
+<p>FluentdがTwitterで非常にアクティブに議論・サポートされている話とか出てきて，Twiterの監視社会怖い．<br />
+やっぱLTは短い中にネタを押し込んでくる人が多いので，それ故に面白いのだけど，すぐ終わるのがちょっと悲しい．</p>
+
+<h3>キーノート</h3>
+
+<p>typesterさんのエモい話．typesterさんのキャリアって他の人が真似するのはかなり難しいのだけど，
+話の中でも出ていた「複数の人のロールモデルを参考にする」というのに結局落ち着く．</p>
+
+<p>お子さんも一緒に来ていて，ほっこりする感じの発表だった．</p>
+
+<h3>HUB</h3>
+
+<p>そうそうに一つのビールが無くなっていたけど，ジンジャーエール派の俺には関係なかった．
+土曜日は夜に外せない用事があるので，色々な人に絡んでから，早めに帰った．</p>
+
+<h2>改善点</h2>
+
+<p>他の人も書いてると思うけど，意見が多いとそれだけ反映されるだろうということで書いておく．</p>
+
+<h3>キャパシティプランニング</h3>
+
+<p>今年の参加者は約1300人で，それに対して会場のキャパシティは約500人らしく，非常に狭かった．
+特に多目的教室は毎度部屋から出るくらいまで立ち見とか出ていたので，ちゃんと聞けない人も多かったのではないかなと．</p>
+
+<p>去年も同じ場所で約1100人だったらしいけど，去年は大丈夫だったのかな？参加してないのでよく分からない．
+この辺のマネージは本当に難しいので，一発で解決のアイディアは提示できないのだけども…</p>
+
+<h3>トーク間の移動時間</h3>
+
+<p>2つのトークが続いて休憩がないのがいくつかあって，これは質疑応答と移動時間がかぶってしまうので勿体ないなぁと．</p>
+
+<h2>まとめ</h2>
+
+<p>トークの種類がPerlに限らず色々とあり，それに伴って参加者も結構多様な感じがしていて楽しかった．
+ベストトーク賞のベスト3がどれもPerl関係ないのが，それを物語っていると思う．</p>
+
+<p>ネットワークも快適だったし，休憩スペースも飲み物とかあって，セッション以外でぶらぶらするのも困らなかった．</p>
+
+<p>1000人規模の運営超大変だし，運営チームの方達は本当にお疲れ様でした！来年も楽しみです :)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Fluentd v0.12でのFilterとLabel]]></title>
@@ -1776,34 +1882,6 @@ It enables you can set different log level separated from global log level, e.g.
 <p><code>log_level</code> feature is very useful for Fluentd users. So if you have a time, please apply above changes and release new version plugin ;)</p>
 
 <p>I will release new version of several plugins soon, S3, TD, Mongo and etc.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Fluentd v11 at Tokuben]]></title>
-    <link href="http://repeatedly.github.com/ja/2014/01/fluentd-v11-at-tokuben/"/>
-    <updated>2014-01-26T02:39:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2014/01/fluentd-v11-at-tokuben</id>
-    <content type="html"><![CDATA[<p><a href="http://atnd.org/events/46924">@特勉</a>というイベントに呼ばれたので，Fluentd v11について発表してきました．</p>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/30427877?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/treasure-data/fluentd-v11-at-tokuben" title="Fluentd v11 at tokuben" target="_blank">Fluentd v11 at tokuben</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
-
-<p>今現在見えている機能群について一通りその背景とか，v10ではどうだったのかを絡めて話したので，上のスライドだけ見ても少しわかりにくいかもしれません．新しい機能の確認みたいな感じで眺めて貰えると．</p>
-
-<p>特勉は今回はログ・データ解析がテーマでしたが，色々とテーマを変えて定期的にやるようなので，随時チェックしておくと良いと思います．</p>
-
-<h2>その後…</h2>
-
-<p><a href="http://togetter.com/li/620329">Fluentd v11 なんてなかったんだ</a></p>
-
-<p>で，実はこの発表の次の日にTwitterで色々とやりとりがあり，上記のスライドに書かれているいくつかの機能は，v10に取り込まれる可能性が高いです．というか，v11そのものが消える可能性は普通にあります．</p>
-
-<p>Fluentdそのものの改善では色々と考えていることはあるので，定期的にチェックして頂けると！後「v10でこういうところが使いにくい」とかあると，開発陣にフィードバックして貰えると助かります．</p>
-
-<p>それでは！</p>
 ]]></content>
   </entry>
   
