@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ServerEngine | Go ahead!]]></title>
+  <link href="http://repeatedly.github.com/categories/serverengine/atom.xml" rel="self"/>
+  <link href="http://repeatedly.github.com/"/>
+  <updated>2014-09-22T01:09:01+09:00</updated>
+  <id>http://repeatedly.github.com/</id>
+  <author>
+    <name><![CDATA[Masahiro Nakagawa]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[ServerEngine at RubyKaigi 2014]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/09/serverengine-at-rubykaigi-2014/"/>
+    <updated>2014-09-22T00:03:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/09/serverengine-at-rubykaigi-2014</id>
+    <content type="html"><![CDATA[<p><a href="http://rubykaigi.org/2014">RubyKaigi 2014</a>で<a href="http://rubykaigi.org/2014/presentation/S-MasahiroNakagawa">ServerEngineについて発表</a>してきました．</p>
+
+<p>最初は<a href="http://www.fluentd.org/">Fluentd</a>で発表しようかと思ったんですが，別の有用なプロジェクトの話もそろそろした方がいいかな，ということでServerEngineにしました． <a href="http://blog.livedoor.jp/sonots/archives/40303560.html">@sonotsさんがFluentdの発表をしてくれた</a>ので，被らなくて良かった…</p>
+
+<p><img src="/images/rubykaigi2014_serverengine_pic.jpg" width="425" title="&#34;RubyKaigi 2014: ServerEngine&#34;" alt="&#34;RubyKaigi 2014: ServerEngine&#34;">
+画像は<a href="https://twitter.com/gihyoreport/status/512867195504701440/photo/1">技評さんから</a>．</p>
+
+<p>以下がスライドです．書いてないことも発表では色々と話したので，動画が公開されればそれとセットで見た方が良いです．</p>
+
+<iframe src="http://repeatedly.github.com//www.slideshare.net/slideshow/embed_code/39292931" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://repeatedly.github.com//www.slideshare.net/treasure-data/rubykaigi-2014-serverengine" title="RubyKaigi 2014: ServerEngine" target="_blank">RubyKaigi 2014: ServerEngine</a> </strong> from <strong><a href="http://repeatedly.github.com//www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
+
+<h2>ServerEngine</h2>
+
+<p><a href="https://github.com/fluent/serverengine">fluent/serverengine</a></p>
+
+<p>ServerEngineはTreasure Dataで開発・運用されている分散キューや分散スケジューラ，それとFluentdなどの経験を元に，汎用的な部分を抽出してフレームワークにしたプロダクトです．発表で言及した機能の他にもBlockingFlagなどのユーティリティがあるので，Rubyでデーモンやバッチワーカーを書くときには是非試して貰えればと思います．</p>
+
+<p>また，FluentdもいずれはServerEngineベースになる予定です．今でもServerEngineと似たような機能を俺俺で実装しているのですが，ServerEngineにすることでよりコードは簡潔に，また新しい機能も実装出来るようになります．この辺は乞うご期待という感じです．</p>
+
+<h2>発表に関して</h2>
+
+<p>1週間前に台北で英語でのキーノートがあり，直前まで時間が取れませんでした．台北後にひたすらスライドを作り，前日にやっと完成という，かなり際どいスケジュール．</p>
+
+<p>本番どうかなと思ったんですが，時間進行を見ながら一部詳細を飛ばしたり，大ホールだったけどそんなに詰まることなく発表出来たんじゃないかなと思います．ここ数年は色々と大きいイベントでの発表も増え，それらの経験のおかげか，日本語であればそれなりにこなせるようになってきたかなと実感しています．</p>
+
+<p>また，Railsとか関係のない，かなり地味というか泥臭い話とかもあったんですが，何人かの人には受けたようで，良かったです．</p>
+
+<blockquote class="twitter-tweet" lang="en"><p><a href="https://twitter.com/repeatedly">@repeatedly</a> 今年のセッションの中でトップクラスなぐらい良いセッションでした</p>&mdash; 複数DB (@ryopeko) <a href="https://twitter.com/ryopeko/status/512867029565460480">September 19, 2014</a></blockquote>
+
+
+<script async src="http://repeatedly.github.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p><a href="https://twitter.com/repeatedly">@repeatedly</a> よかったですよ！数年前にあれば、あの時苦労しなくてもよかったのに…と思ってしまいました</p>&mdash; Toshiwo (@toshiwo) <a href="https://twitter.com/toshiwo/status/512879201326596097">September 19, 2014</a></blockquote>
+
+
+<script async src="http://repeatedly.github.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p><a href="https://twitter.com/repeatedly">@repeatedly</a> BTW, your talk was great and ServerEngine is cool. Thanks!</p>&mdash; Hiroshi Nakamura (@nahi) <a href="https://twitter.com/nahi/status/513213969855565824">September 20, 2014</a></blockquote>
+
+
+<script async src="http://repeatedly.github.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p>聞きに来てくれた皆さん，ありがとうございました！！</p>
+
+<p>とりあえず8月9月のイベントラッシュが終わった感じなので，少しのんびりしたい…んだけど，11月のRubyConfで<a href="http://rubyconf.org/program#prop_569">kiyoto-sanがFluentdについて発表する</a>ようなので，俺も参加しているかもしれません．</p>
+]]></content>
+  </entry>
+  
+</feed>
