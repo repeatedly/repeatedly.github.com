@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Fluentd | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/fluentd/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-09-22T01:18:13+09:00</updated>
+  <updated>2014-09-22T01:24:39+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -70,7 +70,7 @@
 <script async src="http://repeatedly.github.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-<p>聞きに来てくれた皆さん，ありがとうございました！！</p>
+<p>聞きに来てくれた皆さん，手伝ってくれたスタッフ，そして同時通訳の方々，ありがとうございました！！</p>
 
 <p>とりあえず8月9月のイベントラッシュが終わった感じなので，少しのんびりしたい…んだけど，11月のRubyConfで<a href="http://rubyconf.org/program#prop_569">kiyoto-sanがFluentdについて発表する</a>ようなので，俺も参加しているかもしれません．</p>
 ]]></content>
