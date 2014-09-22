@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MPP | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/mpp/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-09-22T01:42:21+09:00</updated>
+  <updated>2014-09-22T14:26:17+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -158,7 +158,12 @@ Prestoそのものについては，@frsyuki が<a href="http://treasure-data.ha
 <li>小さい会社だとかなりマネージしやすい(<a href="https://twitter.com/repeatedly/status/491889139579506688">この辺の話</a>)．大きい会社や，マーケや営業の人がガンガン使う場合には，かなりバーストする可能性がある．Reservedがあるが，<a href="https://developers.google.com/bigquery/pricing?hl=ja#reserved_cap">月200万から</a>なので，判断が難しい</li>
 </ul>
 </li>
-<li>Streaming Importが結構パフォーマンスが出るので，importして即クエリがやりやすい(<a href="http://qiita.com/kazunori279/items/10ac0066ac9b0b5aaaf3">参考記事</a>)</li>
+<li>Streaming Importが結構パフォーマンスが出るので，importして即クエリがやりやすい(<a href="http://qiita.com/kazunori279/items/10ac0066ac9b0b5aaaf3">参考記事</a>)
+
+<ul>
+<li>リミットがあるので，大量に入れる時には気をつける．2015年から有料．</li>
+</ul>
+</li>
 <li>同時実行制御周りは基本よく動く
 
 <ul>
