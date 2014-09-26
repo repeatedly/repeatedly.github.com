@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Hadoop | Go ahead!]]></title>
+  <link href="http://repeatedly.github.com/categories/hadoop/atom.xml" rel="self"/>
+  <link href="http://repeatedly.github.com/"/>
+  <updated>2014-09-26T16:26:27+09:00</updated>
+  <id>http://repeatedly.github.com/</id>
+  <author>
+    <name><![CDATA[Masahiro Nakagawa]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[HadoopCon 2014 in Taiwan]]></title>
+    <link href="http://repeatedly.github.com/ja/2014/09/hadoopcon-2014-in-taiwan/"/>
+    <updated>2014-09-26T01:26:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2014/09/hadoopcon-2014-in-taiwan</id>
+    <content type="html"><![CDATA[<p>記事にするの遅れたけど，9月12日から9月16日まで台北に行ってきた．
+目的は台北で行われた<a href="http://2014.hadoopcon.org/wp/?page_id=21">HadoopCon 2014</a>で発表すること．</p>
+
+<p>一緒に参加することになったモリスさんの感想記事は<a href="http://d.hatena.ne.jp/tagomoris/20140916/1410857871">こちら</a>.</p>
+
+<h2>HadoopCon 2014</h2>
+
+<p><img src="/images/hadoopcon2014_taiwan.jpg" width="600" title="&#34;HadoopCon 2014&#34;" alt="&#34;HadoopCon 2014&#34;"></p>
+
+<p>色々と紆余曲折？があり，なぜか俺がキーノートで発表することに．
+初めての英語での発表が40分のキーノートということもあって，色々と疲れた．<br /></p>
+
+<iframe src="http://repeatedly.github.com//www.slideshare.net/slideshow/embed_code/39130038" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://repeatedly.github.com//www.slideshare.net/treasure-data/sql-on-hadoop-in-taiwan-39130038" title="SQL on Hadoop in Taiwan" target="_blank">SQL on Hadoop in Taiwan</a> </strong> from <strong><a href="http://repeatedly.github.com//www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
+
+<p>発表内容はHadoop上で使えるSQLプロダクトについて，基本からTreasure Dataでの経験周りを含めてあれやこれや話した．
+質問もあったので，俺のアレな英語でもそれなりに伝わっていたのかなという感じ．</p>
+
+<p>他のセッションも聞きたかったのだけど，中国語で正直何を話しているか分からなかったので，外のスペースで他の人と話していた．<br />
+海外から招待された人の気持ちが分かった一瞬だったｗ</p>
+
+<p>カンファレンス会場だった中央研究院は，台北政府直属？の研究所らしくかなり大きかった．向こうの人曰く，大抵のイベントはここでやっているらしい．
+その他，大規模ではないけどHBaseを使っている所が多かったりと，色々と情報交換も出来た感じで良かった．</p>
+
+<h2>残りは観光</h2>
+
+<p>HadoopCon 2014で知り合った人たちが観光案内をしてくれて，HadoopConの日と次の日に色々と回れた．</p>
+
+<p>台北101含む観光地だったり，地元の人が集まる店だったり，夜市だったり，色々と解説もしてくれてかなり楽しめた．</p>
+
+<p><img src="/images/hadoopcon2014_temple.jpg" width="500" title="&#34;HadoopCon 2014: Temple&#34;" alt="&#34;HadoopCon 2014: Temple&#34;">
+<img src="/images/hadoopcon2014_chiang.jpg" width="500" title="&#34;HadoopCon 2014: Chiang&#34;" alt="&#34;HadoopCon 2014: Chiang&#34;">
+<img src="/images/hadoopcon2014_soup_dumpling.jpg" width="500" title="&#34;HadoopCon 2014: Soup dumplin&#34;" alt="&#34;HadoopCon 2014: Soup dumplin&#34;">
+<img src="/images/hadoopcon2014_yoichi.jpg" width="500" title="&#34;HadoopCon 2014: Night market&#34;" alt="&#34;HadoopCon 2014: Night market&#34;">
+<img src="/images/hadoopcon2014_yoichi_shop.jpg" width="500" title="&#34;HadoopCon 2014: Night market shop&#34;" alt="&#34;HadoopCon 2014: Night market shop&#34;"></p>
+
+<p>写真あげまくるのもアレなので，残りはFBのアルバムで…</p>
+
+<h2>感想</h2>
+
+<p>色々と調整してくれた台北の人たちには本当に感謝というか，かなり台北中は楽できたので，こういう恩はいつか返したいなと．</p>
+
+<p>台北，ココイチとかすき家とか大戸屋とかゆで太郎とか麺屋武蔵とかあるので，日本の人がいっても多分食には困らない．
+ホテルとか，探せば普通に日本語が通じる所もかなりあるので，気軽にこれる所だなぁと．<br />
+交通費もかなり安いので，気軽にタクシーとか乗れる．</p>
+
+<p>RubyConfとかOSDCとか，大きめのイベントも毎年やってるっぽいので，近いし，英語の練習がてら皆さんも参加しましょう！と参加仲間を増やす作戦．</p>
+]]></content>
+  </entry>
+  
+</feed>
