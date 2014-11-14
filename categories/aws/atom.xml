@@ -4,7 +4,7 @@
   <title><![CDATA[Category: AWS | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/aws/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-10-06T17:48:18+09:00</updated>
+  <updated>2014-11-14T03:37:45-08:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[AWSを使ったデータ解析PaaSの裏側]]></title>
     <link href="http://repeatedly.github.com/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2/"/>
-    <updated>2013-03-18T16:11:00+09:00</updated>
+    <updated>2013-03-18T16:11:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2</id>
     <content type="html"><![CDATA[<p><a href="http://jaws-ug.jp/jawsdays2013/">JAWS DAYS 2013</a>というイベントがあって，2日目に<a href="http://jaws-ug.jp/jawsdays2013/speaker.html#DEV-01">Treasure Dataとして発表</a>してきました．実は1日目には弊社CTOが<a href="http://jaws-ug.jp/jawsdays2013/speaker.html#PD-02">パネルディスカッションに登壇</a>したりしてました．</p>
 

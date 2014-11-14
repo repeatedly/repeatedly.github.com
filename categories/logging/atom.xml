@@ -4,7 +4,7 @@
   <title><![CDATA[Category: logging | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/logging/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-10-06T17:48:18+09:00</updated>
+  <updated>2014-11-14T03:37:45-08:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Fluentdとログ収集のパターン]]></title>
     <link href="http://repeatedly.github.com/ja/2014/07/fluentd-and-log-forwarding-patterns/"/>
-    <updated>2014-07-31T18:35:00+09:00</updated>
+    <updated>2014-07-31T18:35:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2014/07/fluentd-and-log-forwarding-patterns</id>
     <content type="html"><![CDATA[<p>「ログを集めて保存する」と言うのは簡単だけど，ログ収集の構成にはいくつか方法があり，勉強会などでちょくちょく聞かれるので，いくつかのパターンについて書く．<br />
 「俺はもうバリバリログ収集やってるぜ！」という人は多分すでに知っていることが書かれているので，タブを閉じて良い．</p>
@@ -117,7 +117,7 @@ Push型での分岐とは違い，キューからログを取る側の都合で�
 
 <h4>Fluentdのモデル</h4>
 
-<p>FluentdはAt Most Onceであり，<a href="http://docs.fluentd.org/articles/high-availability">ドキュメントにもモデルの説明と対策が書いてある</a>，<br />
+<p>FluentdはデフォルトAt Most Onceであり，<a href="http://docs.fluentd.org/articles/high-availability">ドキュメントにもモデルの説明と対策が書いてある</a>，<br />
 これはログが欠損/重複しまくるということではなく，At Most OnceもAt Least Onceも通常は問題は起きない．トポロジーに問題がある場合に，システム的に欠損/重複が起きうるという話．そして大抵のユーザはExactly Onceでなくても上手く行く．</p>
 
 <p>Fluentdでも欠損/重複を防ぐための対策はいくつかあり</p>
@@ -130,6 +130,10 @@ Push型での分岐とは違い，キューからログを取る側の都合で�
 
 
 <p>などなど．システム的にExactly Onceではなくても，それに低コストで近づけることは可能．</p>
+
+<h5>追記(2014/11/14)</h5>
+
+<p>v0.12からはAt Least Onceもサポートする．現在リリースされているv0.12.pre2から使えるが，v0.12の正式リリース後，ドキュメントにもちゃんと書く．</p>
 
 <h3>データストリームが一本で密結合したサービスがある</h3>
 

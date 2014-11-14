@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-10-06T17:48:18+09:00</updated>
+  <updated>2014-11-14T03:37:45-08:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[HadoopCon 2014 in Taiwan]]></title>
     <link href="http://repeatedly.github.com/ja/2014/09/hadoopcon-2014-in-taiwan/"/>
-    <updated>2014-09-26T01:26:00+09:00</updated>
+    <updated>2014-09-26T01:26:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2014/09/hadoopcon-2014-in-taiwan</id>
     <content type="html"><![CDATA[<p>記事にするの遅れたけど，9月12日から9月16日まで台北に行ってきた．
 目的は台北で行われた<a href="http://2014.hadoopcon.org/wp/?page_id=21">HadoopCon 2014</a>で発表すること．</p>
@@ -73,7 +73,7 @@
   <entry>
     <title type="html"><![CDATA[ServerEngine at RubyKaigi 2014]]></title>
     <link href="http://repeatedly.github.com/ja/2014/09/serverengine-at-rubykaigi-2014/"/>
-    <updated>2014-09-22T00:03:00+09:00</updated>
+    <updated>2014-09-22T00:03:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2014/09/serverengine-at-rubykaigi-2014</id>
     <content type="html"><![CDATA[<p><a href="http://rubykaigi.org/2014">RubyKaigi 2014</a>で<a href="http://rubykaigi.org/2014/presentation/S-MasahiroNakagawa">ServerEngineについて発表</a>してきました．</p>
 
@@ -139,7 +139,7 @@
   <entry>
     <title type="html"><![CDATA[YAPC::Asia 2014]]></title>
     <link href="http://repeatedly.github.com/ja/2014/08/yapc-asia-2014/"/>
-    <updated>2014-08-31T11:59:00+09:00</updated>
+    <updated>2014-08-31T11:59:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2014/08/yapc-asia-2014</id>
     <content type="html"><![CDATA[<p><a href="http://yapcasia.org/2014/">YAPC::Asia 2014</a>に初めて参加した．</p>
 
@@ -251,7 +251,7 @@ MQTT Meetupに参加する予定があったので，懇親会には参加せず
   <entry>
     <title type="html"><![CDATA[Fluentd v0.12でのFilterとLabel]]></title>
     <link href="http://repeatedly.github.com/ja/2014/08/fluentd-filter-and-label/"/>
-    <updated>2014-08-25T17:30:00+09:00</updated>
+    <updated>2014-08-25T17:30:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2014/08/fluentd-filter-and-label</id>
     <content type="html"><![CDATA[<p>Fluentd，最近だと海外でも露出が増えてきていて，軽量・柔軟・ロバストという所で，
 新規の他，既存のログコレクタのリプレース含め，採用する所が増えてたりします．</p>
@@ -513,7 +513,7 @@ Labelの機能が使えるようになります．<br />
   <entry>
     <title type="html"><![CDATA[Fluentd UI]]></title>
     <link href="http://repeatedly.github.com/ja/2014/08/fluentd-ui/"/>
-    <updated>2014-08-04T04:10:00+09:00</updated>
+    <updated>2014-08-04T04:10:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2014/08/fluentd-ui</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/fluent/fluentd-ui">fluent/fluentd-ui</a></p>
 
@@ -599,7 +599,7 @@ GUIの方が始めるための敷居が下がりそうなポイントがいく�
   <entry>
     <title type="html"><![CDATA[Fluentdとログ収集のパターン]]></title>
     <link href="http://repeatedly.github.com/ja/2014/07/fluentd-and-log-forwarding-patterns/"/>
-    <updated>2014-07-31T18:35:00+09:00</updated>
+    <updated>2014-07-31T18:35:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2014/07/fluentd-and-log-forwarding-patterns</id>
     <content type="html"><![CDATA[<p>「ログを集めて保存する」と言うのは簡単だけど，ログ収集の構成にはいくつか方法があり，勉強会などでちょくちょく聞かれるので，いくつかのパターンについて書く．<br />
 「俺はもうバリバリログ収集やってるぜ！」という人は多分すでに知っていることが書かれているので，タブを閉じて良い．</p>
@@ -700,7 +700,7 @@ Push型での分岐とは違い，キューからログを取る側の都合で�
 
 <h4>Fluentdのモデル</h4>
 
-<p>FluentdはAt Most Onceであり，<a href="http://docs.fluentd.org/articles/high-availability">ドキュメントにもモデルの説明と対策が書いてある</a>，<br />
+<p>FluentdはデフォルトAt Most Onceであり，<a href="http://docs.fluentd.org/articles/high-availability">ドキュメントにもモデルの説明と対策が書いてある</a>，<br />
 これはログが欠損/重複しまくるということではなく，At Most OnceもAt Least Onceも通常は問題は起きない．トポロジーに問題がある場合に，システム的に欠損/重複が起きうるという話．そして大抵のユーザはExactly Onceでなくても上手く行く．</p>
 
 <p>Fluentdでも欠損/重複を防ぐための対策はいくつかあり</p>
@@ -713,6 +713,10 @@ Push型での分岐とは違い，キューからログを取る側の都合で�
 
 
 <p>などなど．システム的にExactly Onceではなくても，それに低コストで近づけることは可能．</p>
+
+<h5>追記(2014/11/14)</h5>
+
+<p>v0.12からはAt Least Onceもサポートする．現在リリースされているv0.12.pre2から使えるが，v0.12の正式リリース後，ドキュメントにもちゃんと書く．</p>
 
 <h3>データストリームが一本で密結合したサービスがある</h3>
 
@@ -734,7 +738,7 @@ Push型での分岐とは違い，キューからログを取る側の都合で�
   <entry>
     <title type="html"><![CDATA[MPP on Hadoop, Redshift, BigQuery]]></title>
     <link href="http://repeatedly.github.com/ja/2014/07/mpp-on-hadoop-redshift-bigquery/"/>
-    <updated>2014-07-23T22:33:00+09:00</updated>
+    <updated>2014-07-23T22:33:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2014/07/mpp-on-hadoop-redshift-bigquery</id>
     <content type="html"><![CDATA[<p>Twitterで「早く今流行のMPPの大まかな使い方の違い書けよ！」というプレッシャーが半端ないのでてきとうに書きます．この記事は俺の経験と勉強会などでユーザから聞いた話をもとに書いているので，すべてが俺の経験ではありません(特にBigQuery)．各社のSAの人とかに聞けば，もっと良いアプローチとか詳細を教えてくれるかもしれません．<br />
 オンプレミスの商用MPPは使ったことないのでノーコメントです．</p>
@@ -978,7 +982,7 @@ MPPと一纏めにするにはユースケースや得意なものが違うの�
   <entry>
     <title type="html"><![CDATA[Release fluent-plugin-http-puma]]></title>
     <link href="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-http-puma/"/>
-    <updated>2014-07-20T18:42:00+09:00</updated>
+    <updated>2014-07-20T18:42:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-http-puma</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/fluent-plugin-http-puma">fluent-plugin-http-puma</a></p>
 
@@ -1086,7 +1090,7 @@ Pumaなので，今後FluentdがJRubyとかサポートしても普通にその�
   <entry>
     <title type="html"><![CDATA[Prestoソースコードリーディング #4]]></title>
     <link href="http://repeatedly.github.com/ja/2014/07/presto-scr-4/"/>
-    <updated>2014-07-17T17:53:00+09:00</updated>
+    <updated>2014-07-17T17:53:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2014/07/presto-scr-4</id>
     <content type="html"><![CDATA[<p><a href="http://atnd.org/events/53545">Presto ソースコードリーディング #4</a></p>
 
@@ -1126,7 +1130,7 @@ Presto meetupみたいなもう少し緩めのイベントもやる予定です�
   <entry>
     <title type="html"><![CDATA[Release fluent-plugin-multi-format-parser]]></title>
     <link href="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-multi-format-parser/"/>
-    <updated>2014-07-13T21:00:00+09:00</updated>
+    <updated>2014-07-13T21:00:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-multi-format-parser</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/fluent-plugin-multi-format-parser">fluent-plugin-multi-format-parser</a></p>
 
@@ -1204,7 +1208,7 @@ foobar
   <entry>
     <title type="html"><![CDATA[Release fluent-plugin-netflow]]></title>
     <link href="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow/"/>
-    <updated>2014-07-11T21:35:00+09:00</updated>
+    <updated>2014-07-11T21:35:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/fluent-plugin-netflow">fluent-plugin-netflow</a></p>
 
@@ -1274,7 +1278,7 @@ Pull Requestのおかげもあり，対応templateも少し増えてます．</p
   <entry>
     <title type="html"><![CDATA[Fluentd v1 and Roadmapというプレゼンをしてきた]]></title>
     <link href="http://repeatedly.github.com/ja/2014/05/fluentd-v1-and-roadmap/"/>
-    <updated>2014-05-15T18:55:00+09:00</updated>
+    <updated>2014-05-15T18:55:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2014/05/fluentd-v1-and-roadmap</id>
     <content type="html"><![CDATA[<p><a href="http://eventdots.jp/event/49560">Fluentd Meetup 新しい応用事例とv1に関する発表</a></p>
 
@@ -1318,7 +1322,7 @@ Pull Requestのおかげもあり，対応templateも少し増えてます．</p
   <entry>
     <title type="html"><![CDATA[MultiOS testing for Fluentd repository on Travis CI]]></title>
     <link href="http://repeatedly.github.com/2014/05/multios-testing-for-fluentd-repository-on-travis-ci/"/>
-    <updated>2014-05-15T14:22:00+09:00</updated>
+    <updated>2014-05-15T14:22:00-07:00</updated>
     <id>http://repeatedly.github.com/2014/05/multios-testing-for-fluentd-repository-on-travis-ci</id>
     <content type="html"><![CDATA[<p>Recently, Travis CI announces &#8220;Multi-OS feature&#8221; on their blog.</p>
 
@@ -1336,7 +1340,7 @@ Multi OS feature has been enabled for <a href="https://github.com/fluent/fluentd
   <entry>
     <title type="html"><![CDATA[The status of Cool.io]]></title>
     <link href="http://repeatedly.github.com/2014/05/the-status-of-coolio/"/>
-    <updated>2014-05-06T02:55:00+09:00</updated>
+    <updated>2014-05-06T02:55:00-07:00</updated>
     <id>http://repeatedly.github.com/2014/05/the-status-of-coolio</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/tarcieri/cool.io">Cool.io</a> was revived after I became a maintainer. This article describes the current stauts and future work of Cool.io.</p>
 
@@ -1380,7 +1384,7 @@ This limitation is of little concern in Fluentd forward use-case.</p>
   <entry>
     <title type="html"><![CDATA[札幌 2014 冬]]></title>
     <link href="http://repeatedly.github.com/ja/2014/03/sapporo-2014-winter/"/>
-    <updated>2014-03-22T15:41:00+09:00</updated>
+    <updated>2014-03-22T15:41:00-07:00</updated>
     <id>http://repeatedly.github.com/ja/2014/03/sapporo-2014-winter</id>
     <content type="html"><![CDATA[<p>二つのイベントに参加するため，札幌に行ってました．</p>
 
@@ -1428,7 +1432,7 @@ AWSなイベントなのでAWS関係のプラグインの紹介などなど，�
   <entry>
     <title type="html"><![CDATA[そろそろFluentd v11についてひとこと言っておくか]]></title>
     <link href="http://repeatedly.github.com/ja/2014/03/about-fluentd-v11/"/>
-    <updated>2014-03-05T19:40:00+09:00</updated>
+    <updated>2014-03-05T19:40:00-08:00</updated>
     <id>http://repeatedly.github.com/ja/2014/03/about-fluentd-v11</id>
     <content type="html"><![CDATA[<p>リリースは永遠にされません！</p>
 
@@ -1490,7 +1494,7 @@ v1だと安定版のイメージが強いですし，実際の所v0.10.xはv1で
   <entry>
     <title type="html"><![CDATA[Sensu雑感]]></title>
     <link href="http://repeatedly.github.com/ja/2014/02/the-thoughts-of-sensu/"/>
-    <updated>2014-02-25T02:15:00+09:00</updated>
+    <updated>2014-02-25T02:15:00-08:00</updated>
     <id>http://repeatedly.github.com/ja/2014/02/the-thoughts-of-sensu</id>
     <content type="html"><![CDATA[<p><a href="http://sensuapp.org/">Sensu</a></p>
 
@@ -1548,7 +1552,7 @@ Nagiosとかは使ったことはないので，その辺と違ってどこま�
   <entry>
     <title type="html"><![CDATA[Developer Summit 2014]]></title>
     <link href="http://repeatedly.github.com/ja/2014/02/developer-summit-2014/"/>
-    <updated>2014-02-16T19:53:00+09:00</updated>
+    <updated>2014-02-16T19:53:00-08:00</updated>
     <id>http://repeatedly.github.com/ja/2014/02/developer-summit-2014</id>
     <content type="html"><![CDATA[<p><a href="http://event.shoeisha.jp/devsumi/20140213/">Developers Summit 2014：開発者のためのITカンファレンス</a></p>
 
@@ -1590,7 +1594,7 @@ Nagiosとかは使ったことはないので，その辺と違ってどこま�
   <entry>
     <title type="html"><![CDATA[Analyze event logs using Fluentd and Elasticsearch]]></title>
     <link href="http://repeatedly.github.com/2014/02/analyze-event-logs-using-fluentd-and-elasticsearch/"/>
-    <updated>2014-02-12T17:25:00+09:00</updated>
+    <updated>2014-02-12T17:25:00-08:00</updated>
     <id>http://repeatedly.github.com/2014/02/analyze-event-logs-using-fluentd-and-elasticsearch</id>
     <content type="html"><![CDATA[<p><a href="http://fluentd.org/">Fluentd</a> is a flexible and robust event log collector, but Fluentd doesn&#8217;t have own data-store and Web UI.
 If you want to analyze the event logs collected by Fluentd, then you can use <a href="http://www.elasticsearch.org/">Elasticsearch</a> and <a href="http://www.elasticsearch.org/overview/kibana/">Kibana</a> :)</p>
@@ -1832,7 +1836,7 @@ I heard many companies have already tried / deployed this setup on production :)
   <entry>
     <title type="html"><![CDATA[高トラフィックでのFluentdからElasticsearchへの書き込み問題への対策]]></title>
     <link href="http://repeatedly.github.com/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic/"/>
-    <updated>2014-02-11T18:39:00+09:00</updated>
+    <updated>2014-02-11T18:39:00-08:00</updated>
     <id>http://repeatedly.github.com/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic</id>
     <content type="html"><![CDATA[<p><a href="http://blog.kakipo.com/trouble-with-fluentd-and-elasticsearch/">Fluentd -> Elasticsearch 大量データ転送でトラブル</a></p>
 

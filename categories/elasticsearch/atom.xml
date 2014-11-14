@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Elasticsearch | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/elasticsearch/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-10-06T17:48:18+09:00</updated>
+  <updated>2014-11-14T03:37:45-08:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[高トラフィックでのFluentdからElasticsearchへの書き込み問題への対策]]></title>
     <link href="http://repeatedly.github.com/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic/"/>
-    <updated>2014-02-11T18:39:00+09:00</updated>
+    <updated>2014-02-11T18:39:00-08:00</updated>
     <id>http://repeatedly.github.com/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic</id>
     <content type="html"><![CDATA[<p><a href="http://blog.kakipo.com/trouble-with-fluentd-and-elasticsearch/">Fluentd -> Elasticsearch 大量データ転送でトラブル</a></p>
 
