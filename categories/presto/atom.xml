@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Presto | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/presto/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-11-14T03:37:45-08:00</updated>
+  <updated>2015-01-01T01:52:08+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[HadoopCon 2014 in Taiwan]]></title>
     <link href="http://repeatedly.github.com/ja/2014/09/hadoopcon-2014-in-taiwan/"/>
-    <updated>2014-09-26T01:26:00-07:00</updated>
+    <updated>2014-09-26T01:26:00+09:00</updated>
     <id>http://repeatedly.github.com/ja/2014/09/hadoopcon-2014-in-taiwan</id>
     <content type="html"><![CDATA[<p>記事にするの遅れたけど，9月12日から9月16日まで台北に行ってきた．
 目的は台北で行われた<a href="http://2014.hadoopcon.org/wp/?page_id=21">HadoopCon 2014</a>で発表すること．</p>
@@ -73,7 +73,7 @@
   <entry>
     <title type="html"><![CDATA[Prestoソースコードリーディング #4]]></title>
     <link href="http://repeatedly.github.com/ja/2014/07/presto-scr-4/"/>
-    <updated>2014-07-17T17:53:00-07:00</updated>
+    <updated>2014-07-17T17:53:00+09:00</updated>
     <id>http://repeatedly.github.com/ja/2014/07/presto-scr-4</id>
     <content type="html"><![CDATA[<p><a href="http://atnd.org/events/53545">Presto ソースコードリーディング #4</a></p>
 
@@ -113,7 +113,7 @@ Presto meetupみたいなもう少し緩めのイベントもやる予定です�
   <entry>
     <title type="html"><![CDATA[Prestoソースコードリーディング #1]]></title>
     <link href="http://repeatedly.github.com/ja/2014/02/presto-scr-1/"/>
-    <updated>2014-02-11T02:39:00-08:00</updated>
+    <updated>2014-02-11T02:39:00+09:00</updated>
     <id>http://repeatedly.github.com/ja/2014/02/presto-scr-1</id>
     <content type="html"><![CDATA[<p><a href="http://atnd.org/events/47149">Presto ソースコードリーディング #1のATND</a></p>
 

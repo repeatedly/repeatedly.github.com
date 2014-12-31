@@ -2,246 +2,250 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://repeatedly.github.com/2012/01/released-msgpack-rpc-python-0.2.0/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/2012/01/released-fluent-plugin-mongo-0.6.0/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://repeatedly.github.com/2012/01/yaml-engine-mismatched-problem-in-rubygems/
         </loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/2012/02/fluentd-meetup-in-japan/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/2012/02/released-fluent-logger-d/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/
         </loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/2012/03/download-script-written-in-d/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/2012/04/lt-at-fluentd-casual-talks/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/2012/05/released-denv/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/2012/10/dconf-2013-on-kickstarter/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2012/10/fluent-plugin-mongo-spec/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2012/11/change-the-game/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/2012/11/inside-impala-coordinator-at-hscr-13th/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/2012/12/siphash-d/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://repeatedly.github.com/2012/12/published-introduction-to-tornado-in-japan/
         </loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/2013/01/yajl-d/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/2013/01/hadoop-conference-japan-2013-winter/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/2013/02/ltsv-for-d/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/2013/03/the-basics-of-fluentd/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://repeatedly.github.com/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2/
         </loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2013/03/getting-started-with-storm/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/2013/05/d-conference-2013/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2013/05/tdpl-japanese-edition/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2013/07/july-tech-festa-2013/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2013/08/elasticsearch-meetup-1st/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2013/09/librato-metrics-introduction/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2013/10/d-status-2013/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/01/2013-report/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/01/cross-2014/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/01/fluentd-v11-at-tokuben/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/2014/02/new-log-level-parameter/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/02/presto-scr-1/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://repeatedly.github.com/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic/
         </loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://repeatedly.github.com/2014/02/analyze-event-logs-using-fluentd-and-elasticsearch/
         </loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/02/developer-summit-2014/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/02/the-thoughts-of-sensu/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/03/about-fluentd-v11/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/03/sapporo-2014-winter/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/2014/05/the-status-of-coolio/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://repeatedly.github.com/2014/05/multios-testing-for-fluentd-repository-on-travis-ci/
         </loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/05/fluentd-v1-and-roadmap/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-netflow/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-multi-format-parser/
         </loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/07/presto-scr-4/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-http-puma/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/07/mpp-on-hadoop-redshift-bigquery/</loc>
-        <lastmod>2014-09-21T22:26:08-07:00</lastmod>
+        <lastmod>2014-09-22T14:26:08+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/07/fluentd-and-log-forwarding-patterns/</loc>
-        <lastmod>2014-11-14T03:36:29-08:00</lastmod>
+        <lastmod>2014-11-14T20:36:29+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/08/fluentd-ui/</loc>
-        <lastmod>2014-08-03T22:14:31-07:00</lastmod>
+        <lastmod>2014-08-04T14:14:31+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/08/fluentd-filter-and-label/</loc>
-        <lastmod>2014-08-28T23:34:23-07:00</lastmod>
+        <lastmod>2014-08-29T15:34:23+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/08/yapc-asia-2014/</loc>
-        <lastmod>2014-08-31T10:10:50-07:00</lastmod>
+        <lastmod>2014-09-01T02:10:50+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/09/serverengine-at-rubykaigi-2014/</loc>
-        <lastmod>2014-10-06T01:46:44-07:00</lastmod>
+        <lastmod>2014-10-06T17:46:44+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/2014/09/hadoopcon-2014-in-taiwan/</loc>
-        <lastmod>2014-09-26T00:25:41-07:00</lastmod>
+        <lastmod>2014-09-26T16:25:41+09:00</lastmod>
+    </url>
+    <url>
+        <loc>http://repeatedly.github.com/ja/2014/12/inventory-2014/</loc>
+        <lastmod>2015-01-01T01:51:26+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/archives/</loc>
-        <lastmod>2014-11-14T03:36:29-08:00</lastmod>
+        <lastmod>2015-01-01T01:51:26+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/</loc>
-        <lastmod>2014-11-14T03:36:29-08:00</lastmod>
+        <lastmod>2015-01-01T01:51:26+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/archives/</loc>
-        <lastmod>2014-11-14T03:36:29-08:00</lastmod>
+        <lastmod>2015-01-01T01:51:26+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/ja/</loc>
-        <lastmod>2014-11-14T03:36:29-08:00</lastmod>
+        <lastmod>2015-01-01T01:51:26+09:00</lastmod>
     </url>
     <url>
         <loc>http://repeatedly.github.com/works/</loc>
-        <lastmod>2014-07-31T23:50:39-07:00</lastmod>
+        <lastmod>2014-08-01T15:50:39+09:00</lastmod>
     </url>
 </urlset>

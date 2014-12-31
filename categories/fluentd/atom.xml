@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Fluentd | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/fluentd/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-11-14T03:37:45-08:00</updated>
+  <updated>2015-01-01T01:52:08+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[ServerEngine at RubyKaigi 2014]]></title>
     <link href="http://repeatedly.github.com/ja/2014/09/serverengine-at-rubykaigi-2014/"/>
-    <updated>2014-09-22T00:03:00-07:00</updated>
+    <updated>2014-09-22T00:03:00+09:00</updated>
     <id>http://repeatedly.github.com/ja/2014/09/serverengine-at-rubykaigi-2014</id>
     <content type="html"><![CDATA[<p><a href="http://rubykaigi.org/2014">RubyKaigi 2014</a>で<a href="http://rubykaigi.org/2014/presentation/S-MasahiroNakagawa">ServerEngineについて発表</a>してきました．</p>
 
@@ -82,7 +82,7 @@
   <entry>
     <title type="html"><![CDATA[そろそろFluentd v11についてひとこと言っておくか]]></title>
     <link href="http://repeatedly.github.com/ja/2014/03/about-fluentd-v11/"/>
-    <updated>2014-03-05T19:40:00-08:00</updated>
+    <updated>2014-03-05T19:40:00+09:00</updated>
     <id>http://repeatedly.github.com/ja/2014/03/about-fluentd-v11</id>
     <content type="html"><![CDATA[<p>リリースは永遠にされません！</p>
 
@@ -144,7 +144,7 @@ v1だと安定版のイメージが強いですし，実際の所v0.10.xはv1で
   <entry>
     <title type="html"><![CDATA[高トラフィックでのFluentdからElasticsearchへの書き込み問題への対策]]></title>
     <link href="http://repeatedly.github.com/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic/"/>
-    <updated>2014-02-11T18:39:00-08:00</updated>
+    <updated>2014-02-11T18:39:00+09:00</updated>
     <id>http://repeatedly.github.com/ja/2014/02/measures-for-fluentd-with-elasticsearch-issue-on-high-traffic</id>
     <content type="html"><![CDATA[<p><a href="http://blog.kakipo.com/trouble-with-fluentd-and-elasticsearch/">Fluentd -> Elasticsearch 大量データ転送でトラブル</a></p>
 
@@ -183,7 +183,7 @@ Fluentdの場合はバッファがキューになっているので，そこの�
   <entry>
     <title type="html"><![CDATA[July Tech Festa 2013]]></title>
     <link href="http://repeatedly.github.com/ja/2013/07/july-tech-festa-2013/"/>
-    <updated>2013-07-20T04:54:00-07:00</updated>
+    <updated>2013-07-20T04:54:00+09:00</updated>
     <id>http://repeatedly.github.com/ja/2013/07/july-tech-festa-2013</id>
     <content type="html"><![CDATA[<p><a href="http://www.techfesta.jp/">July Tech Festa 2013</a>というイベントが7月14日にAIITで行われ，基調講演として呼ばれたので，<a href="http://www.techfesta.jp/p/program-2.html#A01">Treasure Dataとして発表</a>してきました．
 <a href="http://www.techfesta.jp/2013/07/jtf2013_16.html">Best Speakerにも選んで頂き</a>，ありがとうございます．</p>
@@ -228,7 +228,7 @@ Fluentdなんかはプラグイン機構でガンガンインフラの人にも�
   <entry>
     <title type="html"><![CDATA[AWSを使ったデータ解析PaaSの裏側]]></title>
     <link href="http://repeatedly.github.com/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2/"/>
-    <updated>2013-03-18T16:11:00-07:00</updated>
+    <updated>2013-03-18T16:11:00+09:00</updated>
     <id>http://repeatedly.github.com/ja/2013/03/the-architecture-of-data-analytics-paas-on-aws-jaws-days-2013-day2</id>
     <content type="html"><![CDATA[<p><a href="http://jaws-ug.jp/jawsdays2013/">JAWS DAYS 2013</a>というイベントがあって，2日目に<a href="http://jaws-ug.jp/jawsdays2013/speaker.html#DEV-01">Treasure Dataとして発表</a>してきました．実は1日目には弊社CTOが<a href="http://jaws-ug.jp/jawsdays2013/speaker.html#PD-02">パネルディスカッションに登壇</a>したりしてました．</p>
 

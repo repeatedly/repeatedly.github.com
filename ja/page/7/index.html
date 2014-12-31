@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Prestoソースコードリーディング #4 - Go ahead!</title>
+  <title>Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Presto ソースコードリーディング #4 いつものようにLINEでやりました！ @frsyukiが帰国する前に，という流れで開催決定・募集が1週間前というタイトなスケジュールでしたが，
-無茶ぶりにつきあってくれた@ueshinさんに感謝． 当日の内容 togetterのまとめを見れば， &hellip;">
+  <meta name="description" content="分散パフォーマンステスト関係を書こうと思っていたんですが，よくよく考えたらMongoプラグインについて日本語でまともな記事を書いたことなかったので書きます． このエントリはウィークリーFluentdユースケースエントリリレーの参加エントリです． ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.com/ja/2014/07/presto-scr-4">
+  <link rel="canonical" href="http://repeatedly.github.com/ja/page/7">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -68,12 +67,15 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div>
-<article class="hentry" role="article">
+      <div class="blog-index">
   
+  
+  
+    <article>
+      
   <header>
     
-      <h1 class="entry-title">Prestoソースコードリーディング #4</h1>
+      <h1 class="entry-title"><a href="/ja/2012/10/fluent-plugin-mongo-spec/">Mongoプラグインの仕様</a></h1>
     
     
       <p class="meta">
@@ -89,111 +91,38 @@
   
 
 
-<time datetime="2014-07-17T17:53:00+09:00" pubdate data-updated="true">Jul 17<span>th</span>, 2014</time>
+<time datetime="2012-10-31T03:30:00+09:00" pubdate data-updated="true">Oct 31<span>st</span>, 2012</time>
         
-         | <a href="#disqus_thread">Comments</a>
+         | <a href="/ja/2012/10/fluent-plugin-mongo-spec/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p><a href="http://atnd.org/events/53545">Presto ソースコードリーディング #4</a></p>
+  <div class="entry-content"><p>分散パフォーマンステスト関係を書こうと思っていたんですが，よくよく考えたらMongoプラグインについて日本語でまともな記事を書いたことなかったので書きます．</p>
 
-<p>いつものようにLINEでやりました！</p>
+<p>このエントリは<a href="http://www.zusaar.com/event/415005">ウィークリーFluentdユースケースエントリリレー</a>の参加エントリです．</p>
 
-<p>@frsyukiが帰国する前に，という流れで開催決定・募集が1週間前というタイトなスケジュールでしたが，
-無茶ぶりにつきあってくれた@ueshinさんに感謝．</p>
-
-<h2>当日の内容</h2>
-
-<p><a href="http://togetter.com/li/694128">togetterのまとめ</a>を見れば，なんとなく大まかな流れは把握できるはず…！</p>
-
-<p>ueshinさんが第二回のashigeruさんの論理計画実行の後を継いで，
-物理計画実行周りの話をしてくれました(<a href="https://gist.github.com/ueshin/5e38cfe915ce15f756b1">資料のgist</a>)．
-バイトコード生成しての高速化の話とか，Presto以外でも有用な話が出てました．</p>
-
-<p>frsyukiが現在のPrestoの開発体制の話，Treasure Dataでハックしている所の紹介，
-CREATE VIEWなどの実装がなぜこうなっているのか(これはfrsyuki案が通ったらしい)，
-今後Prestoチームがやろうとしていることなど含め，その場で色々と議論する感じになりました．</p>
-
-<h2>まとめ</h2>
-
-<p>少人数でソースコードレベルで興味のある人が集まっているのもあり，いつも通り濃い感じでした！
-partitionedの話とか，現在の実行モデルにおけるオペレータの実装の話とか，
-この辺を話すイベントはあんまりないんじゃないかなと思います．</p>
-
-<p>次第5回をいつやるかは決まってませんが，いずれやる予定です．</p>
-
-<p>またソースコードリーディングとは別に，Prestoのユースケースや，
-プロダクションで動かしている人の運用の話などを共有する，
-Presto meetupみたいなもう少し緩めのイベントもやる予定です．</p>
-
-<p>お楽しみに :)</p>
 </div>
-
-
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">Masahiro Nakagawa</span></span>
-
-      
-
-
-
-
-
-
-
-
+  
+    <footer>
+      <a rel="full-article" href="/ja/2012/10/fluent-plugin-mongo-spec/">Read on &rarr;</a>
+    </footer>
   
 
 
-<time datetime="2014-07-17T17:53:00+09:00" pubdate data-updated="true">Jul 17<span>th</span>, 2014</time>
-      
-
-<span class="categories">
+    </article>
   
-    <a class='category' href='/categories/presto/'>Presto</a>
-  
-</span>
-
-
-    </p>
+  <div class="pagination">
     
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2014/07/presto-scr-4/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2014/07/presto-scr-4/" >Tweet</a>
-  
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
+    <a href="/archives">Archives</a>
     
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/ja/2014/07/release-fluent-plugin-multi-format-parser/" title="Previous Post: Release fluent-plugin-multi-format-parser">&laquo; Release fluent-plugin-multi-format-parser</a>
-      
-      
-        <a class="basic-alignment right" href="/ja/2014/07/release-fluent-plugin-http-puma/" title="next Post: Release fluent-plugin-http-puma">Release fluent-plugin-http-puma &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a class="next" href="/ja/page/6/">Newer &rarr;</a>
+    
+  </div>
 </div>
-  </section>
-
-</div>
-
 <aside class="sidebar">
   
     <section>
@@ -226,7 +155,7 @@ Presto meetupみたいなもう少し緩めのイベントもやる予定です�
 <section>
   <h1>Github Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
+    <li class="loading">Status updating&#8230;</li>
   </ul>
   
   <a href="https://github.com/repeatedly">@repeatedly</a> on Github
@@ -256,7 +185,7 @@ Presto meetupみたいなもう少し緩めのイベントもやる予定です�
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating...</li>
+    <li class="loading">Status updating&#8230;</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -276,7 +205,6 @@ Presto meetupみたいなもう少し緩めのイベントもやる予定です�
   
 </aside>
 
-
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -291,10 +219,7 @@ Presto meetupみたいなもう少し緩めのイベントもやる予定です�
       var disqus_shortname = 'repeatedly';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://repeatedly.github.com/ja/2014/07/presto-scr-4/';
-        var disqus_url = 'http://repeatedly.github.com/ja/2014/07/presto-scr-4/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

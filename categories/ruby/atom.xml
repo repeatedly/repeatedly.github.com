@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/ruby/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2014-11-14T03:37:45-08:00</updated>
+  <updated>2015-01-01T01:52:08+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Collect invalid documents for bulk-insert in mongo-ruby-driver]]></title>
     <link href="http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver/"/>
-    <updated>2012-02-29T11:49:00-08:00</updated>
+    <updated>2012-02-29T11:49:00+09:00</updated>
     <id>http://repeatedly.github.com/2012/02/collect-invalid-documents-for-bulk-insert-in-mongo-ruby-driver</id>
     <content type="html"><![CDATA[<p>Mongo gem 1.6.0 includes <a href="https://github.com/mongodb/mongo-ruby-driver/pull/82">my pull request</a>(and <a href="https://github.com/mongodb/mongo-ruby-driver/commit/a4343e53feb582103366bb9c02628a4c6b29fcbd">HISTORY</a>).</p>
 
@@ -70,7 +70,7 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
   <entry>
     <title type="html"><![CDATA[Fluentd meetup in Japan]]></title>
     <link href="http://repeatedly.github.com/2012/02/fluentd-meetup-in-japan/"/>
-    <updated>2012-02-06T01:07:00-08:00</updated>
+    <updated>2012-02-06T01:07:00+09:00</updated>
     <id>http://repeatedly.github.com/2012/02/fluentd-meetup-in-japan</id>
     <content type="html"><![CDATA[<p><a href="http://www.zusaar.com/event/193104">Fluentd meetup in Japan</a> was held on Feb 4th.</p>
 

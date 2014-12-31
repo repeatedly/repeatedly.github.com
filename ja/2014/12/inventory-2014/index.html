@@ -5,12 +5,15 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Prestoソースコードリーディング #4 - Go ahead!</title>
+  <title>2014年振り返り - Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Presto ソースコードリーディング #4 いつものようにLINEでやりました！ @frsyukiが帰国する前に，という流れで開催決定・募集が1週間前というタイトなスケジュールでしたが，
-無茶ぶりにつきあってくれた@ueshinさんに感謝． 当日の内容 togetterのまとめを見れば， &hellip;">
+  <meta name="description" content="乗るしかない，このビッグウェーブに！ イベント・勉強会 覚えている限りメインで発表したのは以下． CROSS 2014の分散処理システムセッションのモデレータ
+@特勉
+筑波大学の情報システム特別講義D(聴講者のgist)
+Developer Summit 2014
+北海道IT推進協会のセミナー &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +22,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.com/ja/2014/07/presto-scr-4">
+  <link rel="canonical" href="http://repeatedly.github.com/ja/2014/12/inventory-2014">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -73,7 +76,7 @@
   
   <header>
     
-      <h1 class="entry-title">Prestoソースコードリーディング #4</h1>
+      <h1 class="entry-title">2014年振り返り</h1>
     
     
       <p class="meta">
@@ -89,7 +92,7 @@
   
 
 
-<time datetime="2014-07-17T17:53:00+09:00" pubdate data-updated="true">Jul 17<span>th</span>, 2014</time>
+<time datetime="2014-12-31T11:59:00+09:00" pubdate data-updated="true">Dec 31<span>st</span>, 2014</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -98,38 +101,63 @@
   </header>
 
 
-<div class="entry-content"><p><a href="http://atnd.org/events/53545">Presto ソースコードリーディング #4</a></p>
+<div class="entry-content"><p>乗るしかない，このビッグウェーブに！</p>
 
-<p>いつものようにLINEでやりました！</p>
+<h2>イベント・勉強会</h2>
 
-<p>@frsyukiが帰国する前に，という流れで開催決定・募集が1週間前というタイトなスケジュールでしたが，
-無茶ぶりにつきあってくれた@ueshinさんに感謝．</p>
+<p>覚えている限りメインで発表したのは以下．</p>
 
-<h2>当日の内容</h2>
+<ul>
+<li><a href="http://repeatedly.github.io/ja/2014/01/cross-2014/">CROSS 2014の分散処理システムセッションのモデレータ</a></li>
+<li><a href="http://repeatedly.github.io/ja/2014/01/fluentd-v11-at-tokuben/">@特勉</a></li>
+<li>筑波大学の情報システム特別講義D(<a href="https://gist.github.com/rkmathi/8700805">聴講者のgist</a>)</li>
+<li><a href="http://repeatedly.github.io/ja/2014/02/developer-summit-2014/">Developer Summit 2014</a></li>
+<li><a href="http://www.hicta.or.jp/index_oshirase_detail.php?id=624">北海道IT推進協会のセミナー</a></li>
+<li><a href="http://repeatedly.github.io/ja/2014/03/sapporo-2014-winter/">AWS勉強会 in 北海道札幌！</a></li>
+<li><a href="http://repeatedly.github.io/ja/2014/05/fluentd-v1-and-roadmap/">Fluentd Meetup 新しい応用事例とv1に関する発表</a></li>
+<li><a href="http://repeatedly.github.io/ja/2014/09/serverengine-at-rubykaigi-2014/">RubyKaigi 2014</a></li>
+<li><a href="http://repeatedly.github.io/ja/2014/09/hadoopcon-2014-in-taiwan/">Hadoop Conference Taiwan</a></li>
+<li><a href="http://rubyconf.org/program#prop_569">RubyConf 2014</a>: セッショントーク自体はkiyotoさん</li>
+</ul>
 
-<p><a href="http://togetter.com/li/694128">togetterのまとめ</a>を見れば，なんとなく大まかな流れは把握できるはず…！</p>
 
-<p>ueshinさんが第二回のashigeruさんの論理計画実行の後を継いで，
-物理計画実行周りの話をしてくれました(<a href="https://gist.github.com/ueshin/5e38cfe915ce15f756b1">資料のgist</a>)．
-バイトコード生成しての高速化の話とか，Presto以外でも有用な話が出てました．</p>
+<p>30分以上のトークが増えた年でもあった．HadoopCon Taiwanでは英語のみで基調講演というかなりレアな体験をした．
+Fluentdを広めるのが仕事なので，来年も色々と発表はしていきたい．<br />
+LTっぽいので話したのだと，<a href="http://www.zusaar.com/event/11447004">モニカジ</a>とか<a href="http://www.slideshare.net/repeatedly/sql-for-everything-at-cwt2014">Cloudera World Tokyo</a>でも喋った．多分他にもあるけどよく覚えていない．</p>
 
-<p>frsyukiが現在のPrestoの開発体制の話，Treasure Dataでハックしている所の紹介，
-CREATE VIEWなどの実装がなぜこうなっているのか(これはfrsyuki案が通ったらしい)，
-今後Prestoチームがやろうとしていることなど含め，その場で色々と議論する感じになりました．</p>
+<p>2014年はPrestoのソースコードリーディングを4回くらい開催して，そのままの流れで来年は<a href="http://eventdots.jp/event/276987">Presto Meetup</a>をやる．
+ユーザが増えつつあるPrestoの日本での普及に貢献出来ればという感じで活動している．</p>
+
+<p>D言語関係のイベントは開催出来なかったのだけど，周りから少し要望があるので，2015年はmeetupっぽいのを開きたい．</p>
+
+<h2>OSSなアレコレ</h2>
+
+<p><img src="/images/github_2014.png" title="&#34;github contribution 2014&#34;" alt="&#34;github contribution 2014&#34;"></p>
+
+<p>Contributionがあんまり多くない感じもするので，来年はもっと色々とやる必要がありそう．</p>
+
+<h3>Fluentd</h3>
+
+<p>仕事でFluentd・td-agent関係をやっているので，開発の大半はそっちにリソースを割いた．以下がFluentdの2014年のまとめ的な記事．</p>
+
+<p><a href="http://qiita.com/repeatedly/items/e4535709fe7d803d4b59">Fluentd update 2014</a></p>
+
+<p>Fluentdもユーザが増えてきて色々と改善すべきところが見えているので，それらを来年は解決する．
+v1に向けて，とりあえず年末に<a href="http://qiita.com/repeatedly/items/78fcd7e14e31b931f7eb">v0.12を出せた</a>のは良かった．</p>
+
+<h3>D言語</h3>
+
+<p>本体の破壊的変更の数が激減したので，ちょいちょいとしたメンテナンスが多めだった．</p>
+
+<p><a href="http://qiita.com/repeatedly/items/68a70bc50bbd0383c57e">D言語 Language Update 2014</a></p>
+
+<p>俺のライブラリにもユーザがいるらしく，俺が気づくより先にパッチが届くのもあったりして嬉しい．
+個人的にはvibe.dがやっぱりイベント駆動ライブラリとして使うには少し自由度がアレな感じなので，
+もう少し薄いライブラリでも書こうかなぁと考え中…</p>
 
 <h2>まとめ</h2>
 
-<p>少人数でソースコードレベルで興味のある人が集まっているのもあり，いつも通り濃い感じでした！
-partitionedの話とか，現在の実行モデルにおけるオペレータの実装の話とか，
-この辺を話すイベントはあんまりないんじゃないかなと思います．</p>
-
-<p>次第5回をいつやるかは決まってませんが，いずれやる予定です．</p>
-
-<p>またソースコードリーディングとは別に，Prestoのユースケースや，
-プロダクションで動かしている人の運用の話などを共有する，
-Presto meetupみたいなもう少し緩めのイベントもやる予定です．</p>
-
-<p>お楽しみに :)</p>
+<p>すきやばし次郎，超美味かった</p>
 </div>
 
 
@@ -152,21 +180,15 @@ Presto meetupみたいなもう少し緩めのイベントもやる予定です�
   
 
 
-<time datetime="2014-07-17T17:53:00+09:00" pubdate data-updated="true">Jul 17<span>th</span>, 2014</time>
+<time datetime="2014-12-31T11:59:00+09:00" pubdate data-updated="true">Dec 31<span>st</span>, 2014</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/categories/presto/'>Presto</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2014/07/presto-scr-4/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2014/07/presto-scr-4/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2014/12/inventory-2014/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2014/12/inventory-2014/" >Tweet</a>
   
   
   
@@ -177,10 +199,8 @@ Presto meetupみたいなもう少し緩めのイベントもやる予定です�
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/ja/2014/07/release-fluent-plugin-multi-format-parser/" title="Previous Post: Release fluent-plugin-multi-format-parser">&laquo; Release fluent-plugin-multi-format-parser</a>
+        <a class="basic-alignment left" href="/ja/2014/09/hadoopcon-2014-in-taiwan/" title="Previous Post: HadoopCon 2014 in Taiwan">&laquo; HadoopCon 2014 in Taiwan</a>
       
-      
-        <a class="basic-alignment right" href="/ja/2014/07/release-fluent-plugin-http-puma/" title="next Post: Release fluent-plugin-http-puma">Release fluent-plugin-http-puma &raquo;</a>
       
     </p>
   </footer>
@@ -292,8 +312,8 @@ Presto meetupみたいなもう少し緩めのイベントもやる予定です�
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://repeatedly.github.com/ja/2014/07/presto-scr-4/';
-        var disqus_url = 'http://repeatedly.github.com/ja/2014/07/presto-scr-4/';
+        var disqus_identifier = 'http://repeatedly.github.com/ja/2014/12/inventory-2014/';
+        var disqus_url = 'http://repeatedly.github.com/ja/2014/12/inventory-2014/';
         var disqus_script = 'embed.js';
       
     (function () {

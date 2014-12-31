@@ -9,8 +9,9 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="「ログを集めて保存する」と言うのは簡単だけど，ログ収集の構成にはいくつか方法があり，勉強会などでちょくちょく聞かれるので，いくつかのパターンについて書く．
-「俺はもうバリバリログ収集やってるぜ！」という人は多分すでに知っていることが書かれているので，タブを閉じて良い． &hellip;">
+  <meta name="description" content="fluent/fluentd-ui Fluentdのエコシステムの一つとして，Fluentd UIをリリースしました．
+すでに試してくれたユーザもいるようなので，現在の使用感などは下記の記事を参考にしてください． Fluentd UIが出たので触ってみた
+Touch the fluentd-ui( &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +77,121 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/ja/2014/08/fluentd-ui/">Fluentd UI</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-04T04:10:00+09:00" pubdate data-updated="true">Aug 4<span>th</span>, 2014</time>
+        
+         | <a href="/ja/2014/08/fluentd-ui/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/fluent/fluentd-ui">fluent/fluentd-ui</a></p>
+
+<p><img src="/images/fluentd_ui_ss.png" title="&#34;Fluentd UI image&#34;" alt="&#34;Fluentd UI image&#34;"></p>
+
+<p>Fluentdのエコシステムの一つとして，Fluentd UIをリリースしました．
+すでに試してくれたユーザもいるようなので，現在の使用感などは下記の記事を参考にしてください．</p>
+
+<ul>
+<li><a href="http://suzuken.hatenablog.jp/entry/2014/08/01/202334">Fluentd UIが出たので触ってみた</a></li>
+<li><a href="http://qiita.com/inokappa/items/0a4a2db7abad22458bea">Touch the fluentd-ui(1)</a></li>
+</ul>
+
+
+<p>この記事ではFluentd UIそのものについてつらつらと書きたいと思います．英語でのアナウンスもいずれ公式ブログに載るはず．</p>
+
+<h2>Fluentd UIの生い立ち</h2>
+
+<p>Fluentd UIの背景として，Fluentdも最近は国を問わず色々な所でユーザが増えてきており，
+「CLIとか楽勝！」以外のユーザの割合も増えつつあります．</p>
+
+<p>ログコレクタでリッチな管理UIを持っているプロダクトってほとんどないと思うのですが，
+新しく使い始めるユーザの嵌まり所とか見ていると，
+GUIの方が始めるための敷居が下がりそうなポイントがいくつかありました．</p>
+
+<p>なので，Fluentdを使いたい人がなるべく嵌まらずに始められるようにと，
+万葉の方と開発したのがFluentd UIです．</p>
+
+<h2>Fluentd UIのコンセプト</h2>
+
+<p>生い立ちの所で書いた通り，Fluentdの敷居を下げるのが第一の目的なので，
+すでにFluentdをバリバリ使っている人はユーザの対象ではありません．</p>
+
+<p>バージョン0.1.0の段階で，以下の機能があります:</p>
+
+<ul>
+<li>Fluentdのプロセスの管理 (start/stop/restart)</li>
+<li>Fluentdの設定ファイルの管理と編集</li>
+<li>Fluentdのプラグインの管理 (install/uninstall/update)</li>
+<li>ログやシステム情報のビューワー，などなど</li>
+</ul>
+
+
+<p>最初に色々機能を洗い出したのですが，全部入れるとリリースが遅れるし，
+複雑なのを入れるとユーザが混乱するかもということで，ベーシックな機能セットに絞りました．<br />
+それでも，プラグイン入れての挙動チェックなど，全部Webから出来るようになっています．また，
+ユーザがテストしにくかったin_tailは，<a href="http://fluentular.herokuapp.com/">Fluentular</a>を参考にかなり使いやすいUIになったと思います．</p>
+
+<p>実装的にもかなり依存を減らしていて，例えば，最初はSQLiteベースだったのですが，
+「SQLiteだとFluentd UIそのもののセットアップに嵌まる人が出る可能性がある」とファイルベースに変更したりしました．</p>
+
+<h2>Fluentd UIの今後の展望</h2>
+
+<h3>機能追加</h3>
+
+<p>バージョン0.1.0ということから分かる通り，まだまだ始まったばかりのプロダクトで，
+今回は開発者側が「こういう機能があったら始めやすいだろう」というものを中心に入れました．<br />
+今後はユーザからのフィードバックも受けつつ，更に使いやすさを改善して行けたらなと．</p>
+
+<p>現状各プラグインの設定を削除する時は，自分でフリーフォームから消す必要があるので，
+この辺もボタンで消せるようにとか，出来たらいいかなぁと考えてます．<br />
+あと，今設定が組み込みで実装してあるので(インストールした3rd partyプラグイン用の設定ページがない)，
+各プラグインから自動で設定ページが生成できるような仕組みも必要かなと，色々と模索中です．</p>
+
+<h3>td-agent 2への同梱</h3>
+
+<p>td-agentには同梱予定はないんですが，td-agent 2にはtd-agent-uiみたいな感じで同梱する予定です．すでに起動した人は知っていると思いますが，td-agentをセットアップする用のボタンがあります :)</p>
+
+<h3>他の環境との連携</h3>
+
+<p>Fluentd UIは，UI上で色々と試行錯誤しその結果出来た設定ファイルをChefとかで配布，
+みたいなのを想定しているのですが，毎回コピペとか面倒ですし，
+最近だと<a href="https://github.com/sonots/fluentd-server">fluentd-server</a>とかもあるので，この辺なんか上手くやりたいな，と．</p>
+
+<h2>まとめ</h2>
+
+<p>Fluentd UIについて背景含めつらつらと書きました．是非試して頂いて，問題があったら<a href="https://github.com/fluent/fluentd-ui/issues">issue</a>投げるなり<a href="https://github.com/fluent/fluentd-ui/pulls">PR</a>なりしてもらえると助かります！</p>
+
+<p>あ，ちなみに最初のリリースは俺がやりましたが，開発はコミットを見れば分かる通り<a href="https://github.com/uu59">uu59</a>さんでちゃんとしたRailsコードになっているので，ご心配なく！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/ja/2014/07/fluentd-and-log-forwarding-patterns/">Fluentdとログ収集のパターン</a></h1>
     
     
@@ -92,7 +208,7 @@
   
 
 
-<time datetime="2014-07-31T18:35:00-07:00" pubdate data-updated="true">Jul 31<span>st</span>, 2014</time>
+<time datetime="2014-07-31T18:35:00+09:00" pubdate data-updated="true">Jul 31<span>st</span>, 2014</time>
         
          | <a href="/ja/2014/07/fluentd-and-log-forwarding-patterns/#disqus_thread">Comments</a>
         
@@ -260,7 +376,7 @@ Push型での分岐とは違い，キューからログを取る側の都合で�
   
 
 
-<time datetime="2014-07-23T22:33:00-07:00" pubdate data-updated="true">Jul 23<span>rd</span>, 2014</time>
+<time datetime="2014-07-23T22:33:00+09:00" pubdate data-updated="true">Jul 23<span>rd</span>, 2014</time>
         
          | <a href="/ja/2014/07/mpp-on-hadoop-redshift-bigquery/#disqus_thread">Comments</a>
         
@@ -533,7 +649,7 @@ MPPと一纏めにするにはユースケースや得意なものが違うの�
   
 
 
-<time datetime="2014-07-20T18:42:00-07:00" pubdate data-updated="true">Jul 20<span>th</span>, 2014</time>
+<time datetime="2014-07-20T18:42:00+09:00" pubdate data-updated="true">Jul 20<span>th</span>, 2014</time>
         
          | <a href="/ja/2014/07/release-fluent-plugin-http-puma/#disqus_thread">Comments</a>
         
@@ -670,7 +786,7 @@ Pumaなので，今後FluentdがJRubyとかサポートしても普通にその�
   
 
 
-<time datetime="2014-07-17T17:53:00-07:00" pubdate data-updated="true">Jul 17<span>th</span>, 2014</time>
+<time datetime="2014-07-17T17:53:00+09:00" pubdate data-updated="true">Jul 17<span>th</span>, 2014</time>
         
          | <a href="/ja/2014/07/presto-scr-4/#disqus_thread">Comments</a>
         
@@ -718,113 +834,6 @@ Presto meetupみたいなもう少し緩めのイベントもやる予定です�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2014/07/release-fluent-plugin-multi-format-parser/">Release fluent-plugin-multi-format-parser</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-13T21:00:00-07:00" pubdate data-updated="true">Jul 13<span>th</span>, 2014</time>
-        
-         | <a href="/ja/2014/07/release-fluent-plugin-multi-format-parser/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="https://github.com/repeatedly/fluent-plugin-multi-format-parser">fluent-plugin-multi-format-parser</a></p>
-
-<p>一つのログファイルの中に複数のフォーマットがある時に利用可能なパーサプラグイン書きました．</p>
-
-<h2>使い方</h2>
-
-<p>fluent-gemでインストール．</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ fluent-gem install fluent-plugin-multi-format-parser</span></code></pre></td></tr></table></div></figure>
-
-
-<p>インストールすると，TextParserを利用している<code>in_tail</code>や<code>in_udp</code>などで<code>multi_format</code>が使えるようになります．
-そこで<code>&lt;pattern&gt;</code>を複数並べてください．<code>&lt;pattern&gt;</code>内の各設定は，利用するパーサにそのまま渡されます．</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> udp
-</span><span class='line'>  <span class="nb">tag</span> logs.multi
-</span><span class='line'>
-</span><span class='line'>  <span class="nb">format</span> multi_format
-</span><span class='line'>  <span class="nt">&lt;pattern&gt;</span>
-</span><span class='line'>    <span class="nb">format</span> apache
-</span><span class='line'>  <span class="nt">&lt;/pattern&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;pattern&gt;</span>
-</span><span class='line'>    <span class="nb">format</span> json
-</span><span class='line'>  <span class="nt">&lt;/pattern&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;pattern&gt;</span>
-</span><span class='line'>    <span class="nb">format</span> <span class="k">none</span>
-</span><span class='line'>  <span class="nt">&lt;/pattern&gt;</span>
-</span><span class='line'><span class="nt">&lt;/match&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>&lt;pattern&gt;</code>を上から順番に試し，パース出来たらその結果を返します．上の設定例だと，最初に<code>apache</code>，次に<code>json</code>，最後に<code>none</code>になります．
-たとえば，以下のようなログ群を<code>in_udp</code>に流すと</p>
-
-<pre><code>192.168.0.1 - - [28/Feb/2013:12:00:00 +0900] "GET / HTTP/1.1" 200 777
-{"k1":"v", "k2":123456}
-foobar
-</code></pre>
-
-<p>以下のように処理されます．</p>
-
-<pre><code>2013-02-28 12:00:00 +0900 test.**: {"host":"192.168.0.1","user":"-","method":"GET","path":"/","code":"200","size":"777"}
-2014-07-13 20:56:55 +0900 test.**: {"k":"v","k1":123456}
-2014-07-13 20:56:55 +0900 test.**: {"message":"foobar"}
-</code></pre>
-
-<h2>まとめ</h2>
-
-<p>ログファイルの中に複数のフォーマットが混じるのは望ましいことではないのですが，どうしてもそういう状況が起きるときには，使ってみてください．</p>
-
-<p>あと，実装はかなり単純なので，パーサプラグインのサンプルにでもしてもらえればと思います．</p>
-
-<p>何か要望があれば<a href="https://github.com/repeatedly/fluent-plugin-multi-format-parser">issue/pull request</a>に投げてもらえれば対応します．</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/ja/page/3/">&larr; Older</a>
@@ -842,6 +851,10 @@ foobar
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/ja/2014/12/inventory-2014/">2014年振り返り</a>
+      </li>
+    
+      <li class="post">
         <a href="/ja/2014/09/hadoopcon-2014-in-taiwan/">HadoopCon 2014 in Taiwan</a>
       </li>
     
@@ -855,10 +868,6 @@ foobar
     
       <li class="post">
         <a href="/ja/2014/08/fluentd-filter-and-label/">Fluentd v0.12でのFilterとLabel</a>
-      </li>
-    
-      <li class="post">
-        <a href="/ja/2014/08/fluentd-ui/">Fluentd UI</a>
       </li>
     
   </ul>
@@ -920,7 +929,7 @@ foobar
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Masahiro Nakagawa -
+  Copyright &copy; 2015 - Masahiro Nakagawa -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
