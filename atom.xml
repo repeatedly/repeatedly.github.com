@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-01-01T02:01:20+09:00</updated>
+  <updated>2015-01-12T22:41:35+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Serverspec本]]></title>
+    <link href="http://repeatedly.github.com/ja/2015/01/serverspec-book/"/>
+    <updated>2015-01-12T20:09:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2015/01/serverspec-book</id>
+    <content type="html"><![CDATA[<p>著者のmizzyさんから頂きました．ありがとうございます！</p>
+
+<p><img src="http://repeatedly.github.com/images/serverspec_cover.jpg" title="&#34;Serverspec book cover&#34;" alt="&#34;Serverspec book cover&#34;"></p>
+
+<p>Serverspecそのものの説明はいらないとは思いますが，公式サイトと書籍へのリンクを張っておきます．</p>
+
+<ul>
+<li><a href="http://serverspec.org/">Serverspec - Home</a></li>
+<li><a href="http://www.oreilly.co.jp/books/9784873117096/">O&#8217;Reilly Japan - Serverspec</a></li>
+</ul>
+
+
+<h2>本の感想</h2>
+
+<p>ソフトウェアの書籍でよくあるような「Serverspecはこう使う」といよりも「Serverspecはなぜこうなっているのか？」という所に重みを置いている書籍です．D言語のTDPLもそうですが，メイン開発者だからこそ書ける書籍になっています．
+もちろん，Serverspecの説明のために使い方や機能の説明もありますが，個人的には1章と4章がこの本の肝だろうと勝手に思っています．</p>
+
+<h3>1章</h3>
+
+<p>Serverspecの誕生から，どういう時に使うのか，また今どういう哲学でmizzyさんがServerspecを開発しているかについて書かれています．この章は，Serverspecというよりも，ソフトウェア開発に関する考えとして読むのも面白いと思います．</p>
+
+<h3>4章</h3>
+
+<p>Serverspec・Specinfraの内部的な構造から設計指針まで広く深く書かれている章です．もし今後Serverspecをがっつり使いたい・またパッチを投げたい，と思っている人は読むべきでしょう．この章のいくつかは，英語でどこかで公開した方がいいんじゃないかと思うくらいです(PRのレビューの負荷が下がりそう)．</p>
+
+<p>実装寄りの章ですが，ソースコードもふんだんに出てくるので，理解はしやすいと思います．</p>
+
+<h2>Serverspecを使っている所</h2>
+
+<p>個人的に，Treasure Agent(td-agent)のインストール後の状態テストにServerspecを使っています．ミドルウェアのパッケージは構成が変わると，運用している人のスクリプトが動かなくなったりするので，そこを動くコードでチェック出来るようにServerspecで書きました．</p>
+
+<p>この時には汎用的なパッケージの構成テストにServerspecを使っている例がなかったのか，OSなどの判定をする機能がありませんでした．その影響でテスト出来ない箇所がありましたが，「ohaiみたいなのがあるとこうやってテスト書ける〜」みたいな要望を出したら，次の日にはServerspec(実際はSpecinfra)に入ってました！
+この機能に関しては，3章の3.8のセクションに書かれてます．</p>
+
+<h2>まとめ</h2>
+
+<p>Serverspecの作者が著者ということもあり，付録含めて200ページの中に様々な情報がちりばめられています．Serverspec使ってみようかな，と思っている方は買って損はないと思いますし，各リソースタイプも付録に列挙されているので，簡単なリファレンスとしても使える感じです．</p>
+
+<p>mizzyさん，執筆お疲れ様でした and ありがとうございました！</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[2014年振り返り]]></title>
@@ -1654,248 +1701,6 @@ Nagiosとかは使ったことはないので，その辺と違ってどこま�
 
 <script async src = "http://repeatedly.github.com//platform.twitter.com/widgets.js" charset = "utf-8"></script>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Analyze event logs using Fluentd and Elasticsearch]]></title>
-    <link href="http://repeatedly.github.com/2014/02/analyze-event-logs-using-fluentd-and-elasticsearch/"/>
-    <updated>2014-02-12T17:25:00+09:00</updated>
-    <id>http://repeatedly.github.com/2014/02/analyze-event-logs-using-fluentd-and-elasticsearch</id>
-    <content type="html"><![CDATA[<p><a href="http://fluentd.org/">Fluentd</a> is a flexible and robust event log collector, but Fluentd doesn&#8217;t have own data-store and Web UI.
-If you want to analyze the event logs collected by Fluentd, then you can use <a href="http://www.elasticsearch.org/">Elasticsearch</a> and <a href="http://www.elasticsearch.org/overview/kibana/">Kibana</a> :)</p>
-
-<p>Elasticsearch is an easy to use Distributed Search Engine and Kibana is an awesome Web front-end for Elasticsearch.</p>
-
-<h2>Setup</h2>
-
-<p>I tested on Mac OS X.</p>
-
-<h3>Pre requirements</h3>
-
-<ul>
-<li>Java for Elasticsearch</li>
-</ul>
-
-
-<p>Use Mac OS X&#8217;s Java.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% java -version
-</span><span class='line'>java version <span class="s2">&quot;1.6.0_51&quot;</span>
-</span><span class='line'>Java<span class="o">(</span>TM<span class="o">)</span> SE Runtime Environment <span class="o">(</span>build 1.6.0_51-b11-457-11M4509<span class="o">)</span>
-</span><span class='line'>Java HotSpot<span class="o">(</span>TM<span class="o">)</span> 64-Bit Server VM <span class="o">(</span>build 20.51-b01-457, mixed mode<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Ruby for Fluentd</li>
-</ul>
-
-
-<p>In this article, I use my rbenv&#8217;s Ruby and Fluentd gem directly.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% ruby --version
-</span><span class='line'>ruby 1.9.3p484 <span class="o">(</span>2013-11-22 revision 43786<span class="o">)</span> <span class="o">[</span>x86_64-darwin12.4.0<span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Note that Fluentd doesn&#8217;t work on Ruby 1.8.</p>
-
-<h4>Treasure Agent (td-agent)</h4>
-
-<p>Treasure Agent, as known as <code>td-agent</code>, is a stable distribution which consists of Fluentd, popular plugins and own Ruby processor.
-Many users use <code>td-agent</code> instead of Fluentd gem. See <a href="http://docs.fluentd.org/articles/faq#treasure-agenttd-agnt">this FAQ</a>.</p>
-
-<h3>Elasticsearch</h3>
-
-<p>Downlod and extract the latest package.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% curl -O https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.11.tar.gz
-</span><span class='line'>% tar zxvf elasticsearch-0.90.11.tar.gz
-</span><span class='line'>% <span class="nb">cd </span>elasticsearch-0.90.11/
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I use version v0.90.11 but <a href="http://www.elasticsearch.org/blog/0-90-11-1-0-0-rc2-released/">v1.0 will be released</a> soon!</p>
-
-<p>Start Elasticsearch:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% ./bin/elasticsearch -f
-</span><span class='line'><span class="o">[</span>2014-02-12 17:51:32,645<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> version<span class="o">[</span>0.90.11<span class="o">]</span>, pid<span class="o">[</span>79737<span class="o">]</span>, build<span class="o">[</span>11da1ba/2014-02-03T15:27:39Z<span class="o">]</span>
-</span><span class='line'><span class="o">[</span>2014-02-12 17:51:32,646<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> initializing ...
-</span><span class='line'><span class="o">[</span>2014-02-12 17:51:32,651<span class="o">][</span>INFO <span class="o">][</span>plugins                  <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> loaded <span class="o">[]</span>, sites <span class="o">[]</span>
-</span><span class='line'><span class="o">[</span>2014-02-12 17:51:34,319<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> initialized
-</span><span class='line'><span class="o">[</span>2014-02-12 17:51:34,320<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> starting ...
-</span><span class='line'><span class="o">[</span>2014-02-12 17:51:34,395<span class="o">][</span>INFO <span class="o">][</span>transport                <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> bound_address <span class="o">{</span> inet<span class="o">[</span>/0:0:0:0:0:0:0:0%0:9300<span class="o">]}</span>, publish_address <span class="o">{</span> inet<span class="o">[</span>/192.168.1.112:9300<span class="o">]}</span>
-</span><span class='line'><span class="o">[</span>2014-02-12 17:51:37,448<span class="o">][</span>INFO <span class="o">][</span>cluster.service          <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> new_master <span class="o">[</span>Powerhouse<span class="o">][</span>tL1IC8xHSCudeVsFt4JFsQ<span class="o">][</span>inet<span class="o">[</span>/192.168.1.112:9300<span class="o">]]</span>, reason: zen-disco-join <span class="o">(</span>elected_as_master<span class="o">)</span>
-</span><span class='line'><span class="o">[</span>2014-02-12 17:51:37,481<span class="o">][</span>INFO <span class="o">][</span>discovery                <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> elasticsearch/tL1IC8xHSCudeVsFt4JFsQ
-</span><span class='line'><span class="o">[</span>2014-02-12 17:51:37,492<span class="o">][</span>INFO <span class="o">][</span>http                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> bound_address <span class="o">{</span> inet<span class="o">[</span>/0:0:0:0:0:0:0:0%0:9200<span class="o">]}</span>, publish_address <span class="o">{</span> inet<span class="o">[</span>/192.168.1.112:9200<span class="o">]}</span>
-</span><span class='line'><span class="o">[</span>2014-02-12 17:51:37,493<span class="o">][</span>INFO <span class="o">][</span>node                     <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> started
-</span><span class='line'><span class="o">[</span>2014-02-12 17:51:37,505<span class="o">][</span>INFO <span class="o">][</span>gateway                  <span class="o">]</span> <span class="o">[</span>Powerhouse<span class="o">]</span> recovered <span class="o">[</span>0<span class="o">]</span> indices into cluster_state
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Kibana</h3>
-
-<p>Latest Kibana, called Kibana 3, consists of only HTML and JavaScript,
-so setup is very easy:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% curl -O https://download.elasticsearch.org/kibana/kibana/kibana-3.0.0milestone5.tar.gz
-</span><span class='line'>% tar zxvf kibana-3.0.0milestone5.tar.gz
-</span><span class='line'>% <span class="nb">cd </span>kibana-3.0.0milestone5/
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Open index.html in the kibana directory:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% open index.html
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you want to change Kibana configuration, please edit <code>config.js</code>, e.g. change elasticsearch URL.</p>
-
-<h3>Fluentd</h3>
-
-<p>Install Fluentd gem and <a href="https://github.com/uken/fluent-plugin-elasticsearch">Elasticsearch plugin</a>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% gem install fluentd fluent-plugin-elasticsearch
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Fluentd configuration is below:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'><span class="c"># es.conf</span>
-</span><span class='line'><span class="nt">&lt;source&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> forward
-</span><span class='line'><span class="nt">&lt;/source&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;match</span> <span class="s">es.**</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> elasticsearch
-</span><span class='line'>  <span class="err">logstash_</span><span class="nb">format</span> true
-</span><span class='line'>  <span class="err">flush_</span><span class="nb">interval</span> <span class="m">5</span>s # <span class="m">5</span>s for testing. <span class="k">On</span> production environment, <span class="m">60</span>s or higher is better
-</span><span class='line'><span class="nt">&lt;/match&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>fluent-plugin-elasticsearch provides <code>logstash_format</code> option.
-It enables Kibana to analyze the event logs with day based indexes.</p>
-
-<p>Start Fluentd:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% fluentd -c es.conf
-</span><span class='line'>2014-02-12 18:43:31 +0900 <span class="o">[</span>info<span class="o">]</span>: starting fluentd-0.10.43
-</span><span class='line'>2014-02-12 18:43:31 +0900 <span class="o">[</span>info<span class="o">]</span>: reading config file <span class="nv">path</span> <span class="o">=</span> <span class="s2">&quot;es.conf&quot;</span>
-</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: gem <span class="s1">&#39;fluent-plugin-elasticsearch&#39;</span> version <span class="s1">&#39;0.2.0&#39;</span>
-</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: gem <span class="s1">&#39;fluentd&#39;</span> version <span class="s1">&#39;0.10.43&#39;</span>
-</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: using configuration file: &lt;ROOT&gt;
-</span><span class='line'>  &lt;<span class="nb">source</span>&gt;
-</span><span class='line'>    <span class="nb">type </span>forward
-</span><span class='line'>  &lt;/source&gt;
-</span><span class='line'>  &lt;match es.**&gt;
-</span><span class='line'>    <span class="nb">type </span>elasticsearch
-</span><span class='line'>    logstash_format <span class="nb">true</span>
-</span><span class='line'><span class="nb">    </span>flush_interval 5s
-</span><span class='line'>  &lt;/match&gt;
-</span><span class='line'>&lt;/ROOT&gt;
-</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: adding <span class="nb">source type</span> <span class="o">=</span> <span class="s2">&quot;forward&quot;</span>
-</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: adding match <span class="nv">pattern</span> <span class="o">=</span> <span class="s2">&quot;es.**&quot;</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;elasticsearch&quot;</span>
-</span><span class='line'>2014-02-12 18:43:32 +0900 <span class="o">[</span>info<span class="o">]</span>: listening fluent socket on 0.0.0.0:24224
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Analyze event logs</h2>
-
-<p>Send some events to Fluentd. <code>fluent-cat</code> is an utility command to send json text to Fluentd&#8217;s <code>in_forward</code> plugin.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{&quot;message&quot;:&quot;D&quot;}&#39;</span> | fluent-cat es.event <span class="c"># es.event is a tag. es.event matches es.** of &lt;match&gt;</span>
-</span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{&quot;message&quot;:&quot;Ruby&quot;}&#39;</span> | fluent-cat es.event
-</span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{&quot;message&quot;:&quot;Elasticsearch&quot;}&#39;</span> | fluent-cat es.event
-</span><span class='line'>% <span class="nb">echo</span> <span class="s1">&#39;{&quot;message&quot;:&quot;msgpack&quot;}&#39;</span> | fluent-cat es.event
-</span><span class='line'>% ...
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>After Fluentd flushed received events to Elasticsearch, you can analyze the event logs via Kibana!
-Following image is one panel example:</p>
-
-<p><img src="http://repeatedly.github.com/images/fluentd_kibana_elasticsearch.png" title="&#34;Fluentd, Elasticsearch and Kibana&#34;" alt="&#34;Fluentd, Elasticsearch and Kibana&#34;"></p>
-
-<p>Kibana has some built-in panels, so you can create own dashboard easily. See <a href="http://demo.kibana.org/#/dashboard">Kibana demo</a></p>
-
-<h2>Advanced tips</h2>
-
-<p>If your service has a high traffic, then fluent-plugin-elasticsearch sometimes get stucked.
-In this case, built-in <a href="http://docs.fluentd.org/articles/out_roundrobin">out_roundrobin plugin</a> is useful.
-You can distribute a write request to elasticsearch nodes for load balancing.</p>
-
-<p>Of course, putting Queue with multiple fluentd nodes is an another approach.</p>
-
-<h2>Conclusion</h2>
-
-<p>This article introduced Fluentd, Elasticsearch and Kibana combination to analyze the event logs.
-These components are easy to setup and work fine, so you can try this framework soon!
-I heard many companies have already tried / deployed this setup on production :)</p>
-
-<p>Enjoy Fluentd and Elasticsearch!</p>
 ]]></content>
   </entry>
   

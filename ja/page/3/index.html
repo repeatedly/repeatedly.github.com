@@ -9,8 +9,8 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="fluent-plugin-multi-format-parser 一つのログファイルの中に複数のフォーマットがある時に利用可能なパーサプラグイン書きました． 使い方 fluent-gemでインストール． 1
-$ fluent-gem install fluent-plugin-multi- &hellip;">
+  <meta name="description" content="Presto ソースコードリーディング #4 いつものようにLINEでやりました！ @frsyukiが帰国する前に，という流れで開催決定・募集が1週間前というタイトなスケジュールでしたが，
+無茶ぶりにつきあってくれた@ueshinさんに感謝． 当日の内容 togetterのまとめを見れば， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,6 +70,75 @@ $ fluent-gem install fluent-plugin-multi- &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2014/07/presto-scr-4/">Prestoソースコードリーディング #4</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-17T17:53:00+09:00" pubdate data-updated="true">Jul 17<span>th</span>, 2014</time>
+        
+         | <a href="/ja/2014/07/presto-scr-4/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://atnd.org/events/53545">Presto ソースコードリーディング #4</a></p>
+
+<p>いつものようにLINEでやりました！</p>
+
+<p>@frsyukiが帰国する前に，という流れで開催決定・募集が1週間前というタイトなスケジュールでしたが，
+無茶ぶりにつきあってくれた@ueshinさんに感謝．</p>
+
+<h2>当日の内容</h2>
+
+<p><a href="http://togetter.com/li/694128">togetterのまとめ</a>を見れば，なんとなく大まかな流れは把握できるはず…！</p>
+
+<p>ueshinさんが第二回のashigeruさんの論理計画実行の後を継いで，
+物理計画実行周りの話をしてくれました(<a href="https://gist.github.com/ueshin/5e38cfe915ce15f756b1">資料のgist</a>)．
+バイトコード生成しての高速化の話とか，Presto以外でも有用な話が出てました．</p>
+
+<p>frsyukiが現在のPrestoの開発体制の話，Treasure Dataでハックしている所の紹介，
+CREATE VIEWなどの実装がなぜこうなっているのか(これはfrsyuki案が通ったらしい)，
+今後Prestoチームがやろうとしていることなど含め，その場で色々と議論する感じになりました．</p>
+
+<h2>まとめ</h2>
+
+<p>少人数でソースコードレベルで興味のある人が集まっているのもあり，いつも通り濃い感じでした！
+partitionedの話とか，現在の実行モデルにおけるオペレータの実装の話とか，
+この辺を話すイベントはあんまりないんじゃないかなと思います．</p>
+
+<p>次第5回をいつやるかは決まってませんが，いずれやる予定です．</p>
+
+<p>またソースコードリーディングとは別に，Prestoのユースケースや，
+プロダクションで動かしている人の運用の話などを共有する，
+Presto meetupみたいなもう少し緩めのイベントもやる予定です．</p>
+
+<p>お楽しみに :)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -427,97 +496,6 @@ AWSなイベントなのでAWS関係のプラグインの紹介などなど，�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2014/03/about-fluentd-v11/">そろそろFluentd v11についてひとこと言っておくか</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-05T19:40:00+09:00" pubdate data-updated="true">Mar 5<span>th</span>, 2014</time>
-        
-         | <a href="/ja/2014/03/about-fluentd-v11/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>リリースは永遠にされません！</p>
-
-<p>日本では色々なところでv11の噂がまことしやかに囁かれていますが，
-俺がメインメンテナである限りv11がリリースされることはないので，諦めてv0.10.xを使ってください！</p>
-
-<p>以下まじめな話になります．</p>
-
-<h2>v11が生まれた背景と現状</h2>
-
-<p>v11が生まれたのは1年以上前です．背景には，v10と呼ばれる今のバージョンがプロトタイプを兼ねたリリースであり，
-「利用者のフィードバックを取り込んで，ダメな所をガッツリ書き換えて互換性を壊してメジャーバージョンアップや！」という流れがありました．</p>
-
-<p>しかし，v10は十分に柔軟でかつパフォーマンスも発揮しており，コミッタ陣はそれほどモチベーションがあったわけではありません．
-また，プラグインによって解決出来た問題も多く，v11が生まれた時ほどユーザから「v11が欲しい！」という要望は聞かれなくなりました．</p>
-
-<p>当たり前ですが，ユーザからの声がなければ「あれ，じゃあこの機能あんまり必要ないんじゃね？」ということになって削られるのはよくあることで，
-v11もそんな感じで開発リソースはあまり割かれなくなって行きました．<br />
-もともと空いた時間に@frsyuki，@tagomoris，@sonotsの人達がたまにコミットしていたくらいなので，直近では機能追加のコミットはほぼありません．</p>
-
-<h2>Fluentdのユーザ拡大</h2>
-
-<p>v11で互換性を壊しても大丈夫だろう，とコミッタ陣が思っていたものの一つに，当時Fluentdのプラグインの大半をコミッタの関係者が書いていた，
-というのがあります．<br />
-そのため，互換性を壊しても必要そうなプラグインの書き換えはすぐに終わるし，
-「えいや！」と同時にバージョン上げれば被害は少ないだろうという感じです．</p>
-
-<p>しかし，v10は思っていたよりも早くユーザが増え，今ではさきがけとなったWeb/アドテク業界のみならず，大小問わず様々な企業，
-IoTな分野など，世界的にも使われるようになってきました．<br />
-また，それにともないプラグイン数も200を越え，当初の目論見が難しくなっているのが現状です．</p>
-
-<h2>開発方針の変更とv1案</h2>
-
-<p>俺がFluentdのメインメンテナとなったのも関わってるんですが，「v11のリリースをどうするか？」という問題もハンドリングするようになりました．</br />
-個人的には「v11の機能群は有用だけど，互換性を壊してリリースするほどのものではないなぁ」というのがv11を見た結論であり，
-その辺やりとりしたのが以下のtogetter．</p>
-
-<p><a href="http://togetter.com/li/620329">Fluentd v11 なんてなかったんだ</a></p>
-
-<p>上のまとめにあるように，色々と話した結果，v11が持っているいくつかの機能をv10にマージし，
-それらが終わったらv1としてリリースしようというのが，現在の開発の方向性です．<br />
-段階的な変化になりますが，基本的には互換性が保たれるようにAPIを変えていくので，
-既存ユーザはそのまま使えますし，バージョンアップにともなって徐々に有用な機能が使えるようになります．<br /></p>
-
-<p>以下のissueで必要そうな機能リストと，進捗を管理してます．</p>
-
-<p><a href="https://github.com/fluent/fluentd/issues/251">Plan for v1 release</a></p>
-
-<p>v1というバージョンに関しては，今のFluentdのgemのバージョンがv0.10.xで，v0.11.xのことをv11と呼んでいて非常に紛らわしく，
-新しく入ってくるユーザとかを考えるとそろそろまじめにバージョニングした方が良いだろうという考えです．<br />
-v1だと安定版のイメージが強いですし，実際の所v0.10.xはv1でもおかしくない機能セットはすでに持っています．</p>
-
-<h2>まとめ</h2>
-
-<p>ということで，色々と今までの流れを書きましたが，皆さんFluentdを今後とも宜しくお願いします :)</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/ja/page/4/">&larr; Older</a>
@@ -535,6 +513,10 @@ v1だと安定版のイメージが強いですし，実際の所v0.10.xはv1で
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/ja/2015/01/serverspec-book/">Serverspec本</a>
+      </li>
+    
+      <li class="post">
         <a href="/ja/2014/12/inventory-2014/">2014年振り返り</a>
       </li>
     
@@ -548,10 +530,6 @@ v1だと安定版のイメージが強いですし，実際の所v0.10.xはv1で
     
       <li class="post">
         <a href="/ja/2014/08/yapc-asia-2014/">YAPC::Asia 2014</a>
-      </li>
-    
-      <li class="post">
-        <a href="/ja/2014/08/fluentd-filter-and-label/">Fluentd v0.12でのFilterとLabel</a>
       </li>
     
   </ul>
