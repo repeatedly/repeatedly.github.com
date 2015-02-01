@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-01-12T22:41:35+09:00</updated>
+  <updated>2015-02-02T02:34:48+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,61 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Presto meetup #1]]></title>
+    <link href="http://repeatedly.github.com/ja/2015/02/presto-meetup-1/"/>
+    <updated>2015-02-02T02:24:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2015/02/presto-meetup-1</id>
+    <content type="html"><![CDATA[<p><a href="http://eventdots.jp/event/276987">Presto meetup</a></p>
+
+<p>1月20日に第一回をやりました！キャンセルも少なめで，イベント参加100人強，懇親会が80人くらいでした．予想の倍以上集まった感じで，Prestoも注目されてるんだなと実感したイベントでした．</p>
+
+<p>今回は基本から始まり，それぞれ今使っている人達に，運用の話，BIツールとの連携の話，どういう組み合わせで使っているかなど発表してもらいました．「PrestoのDynamoDBコネクタを作る！」みたいな話もあったりして，リリースが待ち遠しい所です．</p>
+
+<p>懇親会でもたくさんの人と話をしましたが，やはり安定した運用のしやすさとか，コネクタによる複数ソースへのアクセスなど，色々と使っている理由含め情報交換出来たのが良かったです．発表してくれそうな人を二人くらい見つけたので，日程は決まってませんが，また第二回でもやろうと思っています．</p>
+
+<p>このイベントの後，発表に関しての議論が他で行われたりもして，良いイベントになったんじゃないかと思います．</p>
+
+<p>会場をかしてくれたFreakOut，会場準備や手配などをしてくれたdots，懇親会をスポンサーしてくれたTreasure Data，発表者の方々，また参加者の方々，皆さんお疲れ様でした！
+第二回でお会いしましょう :)</p>
+
+<p>スライドは以下です．</p>
+
+<h3>いまさら聞けないPrestoのアーキテクチャ 〜 設計の違いから知るPrestoのメリットとデメリット</h3>
+
+<iframe src="http://repeatedly.github.com//www.slideshare.net/slideshow/embed_code/43692990" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://repeatedly.github.com//www.slideshare.net/frsyuki/understanding-presto-presto-meetup-tokyo-1" title="Understanding Presto - Presto meetup @ Tokyo #1" target="_blank">Understanding Presto - Presto meetup @ Tokyo #1</a> </strong> from <strong><a href="http://repeatedly.github.com//www.slideshare.net/frsyuki" target="_blank">Sadayuki Furuhashi</a></strong> </div></p>
+
+<h3>Presto as a Service 〜 運用とモニタリングのコツ</h3>
+
+<iframe src="http://repeatedly.github.com//www.slideshare.net/slideshow/embed_code/43693529" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://repeatedly.github.com//www.slideshare.net/taroleo/presto-as-a-service-at-treasure-data" title="Presto as a Service - Tips for operation and monitoring" target="_blank">Presto as a Service - Tips for operation and monitoring</a> </strong> from <strong><a href="http://repeatedly.github.com//www.slideshare.net/taroleo" target="_blank">Taro L. Saito</a></strong> </div></p>
+
+<h3>Presto in my use case</h3>
+
+<iframe src="http://repeatedly.github.com//www.slideshare.net/slideshow/embed_code/43701223" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://repeatedly.github.com//www.slideshare.net/wyukawa/presto-in-myusecase" title="Presto in my_use_case" target="_blank">Presto in my_use_case</a> </strong> from <strong><a href="http://repeatedly.github.com//www.slideshare.net/wyukawa" target="_blank">Wataru Yukawa</a></strong> </div></p>
+
+<h3>シロクでの利用方法と、Sparkとの比較</h3>
+
+<script async class="speakerdeck-embed" data-id="65ca751085cb0132de3a7a1c3ec56d64" data-ratio="1.33333333333333" src="http://repeatedly.github.com//speakerdeck.com/assets/embed.js"></script>
+
+
+<h3>社内の利用例の紹介と、自社でのHIVE、TEZとの比較</h3>
+
+<iframe src="http://repeatedly.github.com//www.slideshare.net/slideshow/embed_code/43774471" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://repeatedly.github.com//www.slideshare.net/Ogibayashi/20140120-presto-meetupen" title="20140120 presto meetup_en" target="_blank">20140120 presto meetup_en</a> </strong> from <strong><a href="http://repeatedly.github.com//www.slideshare.net/Ogibayashi" target="_blank">Ogibayashi</a></strong> </div></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Serverspec本]]></title>
@@ -1659,48 +1714,6 @@ Nagiosとかは使ったことはないので，その辺と違ってどこま�
 
 <p>仕組み的には柔軟でAPIとかで管理も楽に出来るようになってるので，今後ユーザは増えそうな気もしている．
 しかしRabbitMQとRedisの二つ必要なのどうにかならないものか…</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Developer Summit 2014]]></title>
-    <link href="http://repeatedly.github.com/ja/2014/02/developer-summit-2014/"/>
-    <updated>2014-02-16T19:53:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2014/02/developer-summit-2014</id>
-    <content type="html"><![CDATA[<p><a href="http://event.shoeisha.jp/devsumi/20140213/">Developers Summit 2014：開発者のためのITカンファレンス</a></p>
-
-<p>セッション登壇も兼ねて，初めてデブサミに参加してきました．</p>
-
-<h2>1日目</h2>
-
-<p><a href="http://event.shoeisha.jp/devsumi/20140213/session/394/">OSSコミッタ大集合</a></p>
-
-<p>これに登壇してました．登壇といっても，それぞれのプロジェクトの人がわいわいと自分の関わってるプロジェクトについて
-交互に話すというもので，FluentdとD言語の時に壇上にあがってあれやこれや話しました．<br />
-まぁFluentdに関しては登壇して何も喋らずに降りましたが…prz</p>
-
-<p>セッションに関係ないですが登壇者控え室，和室でネットワークも電源もありで環境良すぎて超快適だった．雅叙園良いですね．</p>
-
-<h2>2日目</h2>
-
-<p>「Webの現在過去未来」のセッションなど気になるのがあったのですが，雪が降りすぎていたので参加しませんでした！</p>
-
-<p>それとは別に，渋谷でRubyコミッタ3人との飲み会があり，鍋をつつきつつ色々と話をした．
-その結果，Focuslightのメンテナが正式に決まり，FluentdにはLinux kernel &amp; Rubyコミッタであるkosakiさんがjoin．良い鍋でした．</p>
-
-<blockquote class = "twitter-tweet" lang = "en"><p><a href = "https://twitter.com/sora_h">@sora_h</a> and <a href = "https://twitter.com/sonots">@sonots</a> are now focuslight committer! This is great step for growing <a href = "https://twitter.com/search?q = %23Fluentd&amp;src = hash">#Fluentd</a> visualization environment :)</p>&mdash; Mr. Fiber (@repeatedly) <a href = "https://twitter.com/repeatedly/statuses/434379434435436545">February 14, 2014</a></blockquote>
-
-
-<script async src = "http://repeatedly.github.com//platform.twitter.com/widgets.js" charset = "utf-8"></script>
-
-
-
-
-<blockquote class = "twitter-tweet" lang = "en"><p><a href = "https://twitter.com/kosaki55tea">@kosaki55tea</a> is now Fluentd committer! We can improve Fluentd more quickly :) <a href = "https://twitter.com/search?q = %23fluentd&amp;src = hash">#fluentd</a></p>&mdash; Mr. Fiber (@repeatedly) <a href = "https://twitter.com/repeatedly/statuses/434395924224167936">February 14, 2014</a></blockquote>
-
-
-<script async src = "http://repeatedly.github.com//platform.twitter.com/widgets.js" charset = "utf-8"></script>
-
 ]]></content>
   </entry>
   
