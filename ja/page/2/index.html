@@ -9,8 +9,7 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="YAPC::Asia 2014に初めて参加した． Perl使ってないし最初は行く気なかったんだけど，登録中のセッション見るとPerlじゃないの多いし，
-個人スポンサーになればTシャツやパーカーも貰えると言うことで，個人スポンサーでチケット入手． 0日目は参加せず，1日目は朝から，2日目は昼から参加 &hellip;">
+  <meta name="description" content="RubyKaigi 2014でServerEngineについて発表してきました． 最初はFluentdで発表しようかと思ったんですが，別の有用なプロジェクトの話もそろそろした方がいいかな，ということでServerEngineにしました． @sonotsさんがFluentdの発表をしてくれたので， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,6 +69,101 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2014/09/serverengine-at-rubykaigi-2014/">ServerEngine at RubyKaigi 2014</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-22T00:03:00+09:00" pubdate data-updated="true">Sep 22<span>nd</span>, 2014</time>
+        
+         | <a href="/ja/2014/09/serverengine-at-rubykaigi-2014/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://rubykaigi.org/2014">RubyKaigi 2014</a>で<a href="http://rubykaigi.org/2014/presentation/S-MasahiroNakagawa">ServerEngineについて発表</a>してきました．</p>
+
+<p>最初は<a href="http://www.fluentd.org/">Fluentd</a>で発表しようかと思ったんですが，別の有用なプロジェクトの話もそろそろした方がいいかな，ということでServerEngineにしました． <a href="http://blog.livedoor.jp/sonots/archives/40303560.html">@sonotsさんがFluentdの発表をしてくれた</a>ので，被らなくて良かった…</p>
+
+<p><img src="/images/rubykaigi2014_serverengine_pic.jpg" width="425" title="&#34;RubyKaigi 2014: ServerEngine&#34;" alt="&#34;RubyKaigi 2014: ServerEngine&#34;">
+画像は<a href="https://twitter.com/gihyoreport/status/512867195504701440/photo/1">技評さんから</a>．</p>
+
+<p>以下がスライドです．書いてないことも発表では色々と話したので，動画もセットで見た方が良いです．</p>
+
+<iframe src="//www.slideshare.net/slideshow/embed_code/39292931" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/treasure-data/rubykaigi-2014-serverengine" title="RubyKaigi 2014: ServerEngine" target="_blank">RubyKaigi 2014: ServerEngine</a> </strong> from <strong><a href="//www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
+
+<iframe width="560" height="315" src="//www.youtube.com/embed/_f7XEDvnZIU?list=UUBSg5zH-VFJ42BGQFk4VH2A" frameborder="0" allowfullscreen></iframe>
+
+
+<h2>ServerEngine</h2>
+
+<p><a href="https://github.com/fluent/serverengine">fluent/serverengine</a></p>
+
+<p>ServerEngineはTreasure Dataで開発・運用されている分散キューや分散スケジューラ，それとFluentdなどの経験を元に，汎用的な部分を抽出してフレームワークにしたプロダクトです．発表で言及した機能の他にもBlockingFlagなどのユーティリティがあるので，Rubyでデーモンやバッチワーカーを書くときには是非試して貰えればと思います．</p>
+
+<p>また，FluentdもいずれはServerEngineベースになる予定です．今でもServerEngineと似たような機能を俺俺で実装しているのですが，ServerEngineにすることでよりコードは簡潔に，また新しい機能も実装出来るようになります．この辺は乞うご期待という感じです．</p>
+
+<h2>発表に関して</h2>
+
+<p>1週間前に台北で英語でのキーノートがあり，直前まで時間が取れませんでした．台北後にひたすらスライドを作り，前日にやっと完成という，かなり際どいスケジュール．</p>
+
+<p>本番どうかなと思ったんですが，時間進行を見ながら一部詳細を飛ばしたり，メインホールだったけどそんなに詰まることなく発表出来たんじゃないかなと思います．ここ数年は色々と大きいイベントでの発表も増え，それらの経験のおかげか，日本語であればそれなりにこなせるようになってきたかなと実感してます．</p>
+
+<p>また，Railsとか関係のない，どちらかというと地味というか泥臭い感じの話が多めだったんですが，何人かには受けたようで，良かったです．</p>
+
+<blockquote class="twitter-tweet" lang="en"><p><a href="https://twitter.com/repeatedly">@repeatedly</a> 今年のセッションの中でトップクラスなぐらい良いセッションでした</p>&mdash; 複数DB (@ryopeko) <a href="https://twitter.com/ryopeko/status/512867029565460480">September 19, 2014</a></blockquote>
+
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p><a href="https://twitter.com/repeatedly">@repeatedly</a> よかったですよ！数年前にあれば、あの時苦労しなくてもよかったのに…と思ってしまいました</p>&mdash; Toshiwo (@toshiwo) <a href="https://twitter.com/toshiwo/status/512879201326596097">September 19, 2014</a></blockquote>
+
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p><a href="https://twitter.com/repeatedly">@repeatedly</a> BTW, your talk was great and ServerEngine is cool. Thanks!</p>&mdash; Hiroshi Nakamura (@nahi) <a href="https://twitter.com/nahi/status/513213969855565824">September 20, 2014</a></blockquote>
+
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p>聞きに来てくれた皆さん，手伝ってくれたスタッフ，そして同時通訳の方々，ありがとうございました！！</p>
+
+<p>とりあえず8月9月のイベントラッシュが終わった感じなので，少しのんびりしたい…んだけど，11月のRubyConfで<a href="http://rubyconf.org/program#prop_569">kiyoto-sanがFluentdについて発表する</a>ようなので，俺も参加しているかもしれません．</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -786,279 +880,6 @@ Push型での分岐とは違い，キューからログを取る側の都合で�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2014/07/mpp-on-hadoop-redshift-bigquery/">MPP on Hadoop, Redshift, BigQuery</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-23T22:33:00+09:00" pubdate data-updated="true">Jul 23<span>rd</span>, 2014</time>
-        
-         | <a href="/ja/2014/07/mpp-on-hadoop-redshift-bigquery/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Twitterで「早く今流行のMPPの大まかな使い方の違い書けよ！」というプレッシャーが半端ないのでてきとうに書きます．この記事は俺の経験と勉強会などでユーザから聞いた話をもとに書いているので，すべてが俺の経験ではありません(特にBigQuery)．各社のSAの人とかに聞けば，もっと良いアプローチとか詳細を教えてくれるかもしれません．<br />
-オンプレミスの商用MPPは使ったことないのでノーコメントです．</p>
-
-<p>MPP on HadoopでPrestoがメインなのは今一番使っているからで，Impalaなど他のMPP on Hadoop的なものも似たような感じかなと思っています．
-もちろん実装の違いなどがあるので，その辺は適宜自分で補間してください．</p>
-
-<h2>前提</h2>
-
-<p>アプリケーションを開発していて，そのための解析基盤を一から作る．</p>
-
-<h2>簡単なまとめ</h2>
-
-<ul>
-<li>データを貯める所が作れるのであれば，そこに直接クエリを投げられるPrestoなどのMPPクエリエンジンを立てるのが楽
-
-<ul>
-<li>特にHadoopとかすでにある場合には，まずこれ</li>
-</ul>
-</li>
-<li>データマートが必要であれば，RedshiftやBigQueryの方が向いている</li>
-<li>ストレージもスキーマも運用も何も考えずにやりたいのであれば，BigQueryにFluentdとかでとりあえずJSONでぶち込むのが，多分この候補の中では一番初期コストが掛からない
-
-<ul>
-<li>もちろん要求によるので気をつける</li>
-</ul>
-</li>
-<li>Presto + Redshiftというケースも有り(アドホックなクエリはPresto，BIからガリガリつなぐのにRedshiftなど)</li>
-</ul>
-
-
-<p>以下つらつらとリスト形式で書いてます．</p>
-
-<h2>Presto/Impala/Drill</h2>
-
-<p>PrestoやImpalaやApache Drillは，Redshift/BigQueryと違ってMPPデータベースではなくてMPPクエリエンジンなので，そこに違いがある．
-Prestoそのものについては，@frsyuki が<a href="http://treasure-data.hateblo.jp/entry/2014/07/10/150250">HCJ 2014で発表したスライド</a>があるので，そっちも参考に．</p>
-
-<ul>
-<li>PrestoやImpalaはそもそもサービスじゃないので，自分ですべて運用する必要がある．
-
-<ul>
-<li>死活監視とか，もう少しワーカーが欲しかったら追加でデプロイみたいなのをする人が必要</li>
-</ul>
-</li>
-<li>外部にストレージが必要
-
-<ul>
-<li>すでにある場合には，RedshiftやBigQueryじゃなくて，まずこれで十分かどうか試すという流れになりつつある</li>
-<li>PrestoならS3とかにもクエリが投げられるので，FluentdでS3にJSONで貯めて，とかで構築コストはかなり軽減出来る</li>
-</ul>
-</li>
-<li>ストレージ側にスキーマを要求せず，直接クエリが投げられる</li>
-<li>MapReduceとかとデータソースを共有出来る
-
-<ul>
-<li>データ量が増えてくると，ストレージからMPPデータベースにimportするだけでコストになるので，アドホックにクエリが投げにくくなる</li>
-<li>PrestoやApache Drillは一つのクエリで複数のデータソースにアクセス出来るので．マスターテーブルとのjoinとかが楽に出来る</li>
-</ul>
-</li>
-<li>速さに関しては，やはりスキーマありでチューニングされたMPPにはまだ基本勝てない．状況によっては勝てる時もある
-
-<ul>
-<li>それでも数秒 - 数十秒で返ってきたりするので，どこまでパフォーマンスを求めるかによる</li>
-</ul>
-</li>
-<li>クエリ同時実行制御に関しては，まだ商用のものに迫っているのはない印象
-
-<ul>
-<li>ここの改善に取り組んでいる人たちがいるので，いずれデータマート的にも使えるようになる可能性は高い</li>
-</ul>
-</li>
-<li>オープンソースなので，問題があったら自分で修正可能，処理傾向も把握しやすい</li>
-</ul>
-
-
-<h2>Redshift</h2>
-
-<ul>
-<li>スキーマが必須なので，アドホックに解析するためのデータベースとしては少し不向き
-
-<ul>
-<li>やるならデータをJSON文字列で保存，クエリ時に分解する．効率は落ちる</li>
-</ul>
-</li>
-<li>MPPデータベース(ParAccel)がAWSカスタマイズされて載っているので，その辺の知識がないと嵌まりやすい
-
-<ul>
-<li>AWS Casualで青木さんが話した<a href="http://www.slideshare.net/mineroaoki/20140419-aws-casualredshiftpublic">ふつうのRedshiftパフォーマンスチューニング</a>が参考になる</li>
-<li>データ量がすくないとそれでもパワーでなんとかなる</li>
-</ul>
-</li>
-<li>マネージドサービスとはいえ，リーダーノードの挙動がおかしい時など，面倒を見ないと行けないケースはある</li>
-<li>カラムを弄る場合は基本テーブルを作り直すのがベター．クラスタ再配置中はREAD ONLYになるので，その辺含めて運用を考える必要がある
-
-<ul>
-<li>数時間READ ONLYの場合，貯めようとしていたログはどうするか，など</li>
-<li>今時はMPPデータベース単体で運用している所は少ない．RedshiftでもEMRなどからデータを整形して一気にガツンと入れるのが多い</li>
-</ul>
-</li>
-<li>クエリの同時実行制御周りはそれなりに頑張っている
-
-<ul>
-<li>データマートして使いやすい．<a href="https://twitter.com/mineroaoki/status/491995296671363073">バッチを投げると厳しい</a>とのこと．</li>
-</ul>
-</li>
-<li>ストレージと演算パワーが分離してないので，ユースケースによってはコストが割に合わない
-
-<ul>
-<li>特に周りだとSSDインスタンスを使っている人は<del>いない</del>ほとんどいない(<a href="https://twitter.com/repeatedly/status/489635755979837441">この辺の話</a>)．</li>
-<li>某ふっふはっほ社が「たべみる」でSSDをつかってました(<a href="http://www.slideshare.net/mineroaoki/at-aws-summit-tokyo-2014/9">AWS Summitでのスライド</a>)．が，これはかなり<a href="https://twitter.com/mirakui/status/491947294019690497">特殊な</a><a href="https://twitter.com/mirakui/status/491948100571758592">ケース</a>な気も．<a href="https://twitter.com/mineroaoki/status/49">横に並べることによるメリット</a>が大きいようです．</li>
-</ul>
-</li>
-</ul>
-
-
-<h2>BigQuery</h2>
-
-<ul>
-<li>Redshiftと同じく，アドホックに色々とデータをぶち込んで解析するには，JSON文字列(record型？)で保存する必要がある</li>
-<li>既存のMPPデータベースとかで考えないと行けない問題(distkeyとか)を，Googleパワーで強引に解決</li>
-<li>運用は完全Google任せ
-
-<ul>
-<li>Redshiftと違いGoogleの環境を共有するので，細かなことは出来ない</li>
-</ul>
-</li>
-<li>Googleの制約を受ける
-
-<ul>
-<li>負荷が極端に上がるようなクエリとかは望み薄(FULL OUTER JOIN, 数億同士のjoin，count(distinct))</li>
-<li>Redshift同様，でかいバッチ向けにHDFSとかオブジェクトストレージに生のデータを置いておくのがベター</li>
-</ul>
-</li>
-<li>BigQueryもスキーマがあり，alter column的なものがないので，変更する時は適宜テーブルを作り直すのがベター</li>
-<li>Redshiftと違いクエリ単位の課金なので，どれだけ掛かるか把握するのが難しい
-
-<ul>
-<li>小さい会社だとかなりマネージしやすい(<a href="https://twitter.com/repeatedly/status/491889139579506688">この辺の話</a>)．大きい会社や，マーケや営業の人がガンガン使う場合には，かなりバーストする可能性がある．Reservedがあるが，<a href="https://developers.google.com/bigquery/pricing?hl=ja#reserved_cap">月200万から</a>なので，判断が難しい</li>
-</ul>
-</li>
-<li>Streaming Importが結構パフォーマンスが出るので，importして即クエリがやりやすい(<a href="http://qiita.com/kazunori279/items/10ac0066ac9b0b5aaaf3">参考記事</a>)
-
-<ul>
-<li>リミットがあるので，大量に入れる時には気をつける．2015年から有料．</li>
-</ul>
-</li>
-<li>同時実行制御周りは基本よく動く
-
-<ul>
-<li>リソースはGoogle側が管理しているので，バッチ投げたら詰まるとかは起きにくい</li>
-<li>リソースを占有しているわけではないので，勝手にクエリが死んだり，いきなり遅くなったりすることもある
-
-<ul>
-<li>日本時間の21時当たりで起きやすいらしい．でかいバッチを投げまくっているユーザが海外にいる？</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<h2>まとめ</h2>
-
-<p>基本的にこれらの裏にはHadoopなどの基盤が前提になりつつある(オブジェクトストレージ + 演算リソースでも可)．上のリストを眺めれば，なんとなく使い分けが分かるんじゃないでしょうか！
-MPPと一纏めにするにはユースケースや得意なものが違うので，ちゃんと使い分けましょう．基本的にどれもBIツールと接続する方法があり，苦労はそんなにしないはず．</p>
-
-<p>各プロダクトは常に改善されているので，ここに書いてある制約などは，いずれ緩和される可能性があります．常に最新情報をチェックしましょう．</p>
-
-<p>今回はMPPクエリエンジンプロダクトの話なので上のリストでは省きましたが，Treasure Dataが提供しているTQAというMPPサービスは「Prestoで運用とかストレージを考えなくていい版」に近い感じになります．TDはさまざまな<a href="http://docs.treasuredata.com/categories/result">外部ストレージと連携出来る</a>ので，<a href="http://treasure-data.hateblo.jp/entry/2014/05/14/104632">Treasure Dataを中心に使い分ける感じになります</a>．<br />
-最後に宣伝！</p>
-
-<h2>P.S</h2>
-
-<p>Twitterに流したさらに要約したtweet.</p>
-
-<blockquote class="twitter-tweet" lang="en"><p>Presto on Storage/BigQuery/Redshiftはユースケースがバラバラなので，適宜使い分ければ良いという単純な話．ただ，HDFSやオブジェクトストレージみたいなのにデータが永続化されている前提なので，Prestoは入りには楽だよね，というのはあります．</p>&mdash; Mr. Fiber (@repeatedly) <a href="https://twitter.com/repeatedly/statuses/491883277829951488">July 23, 2014</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-
-
-<blockquote class="twitter-tweet" lang="en"><p>Redshiftは同時実行制御頑張っているし，distkeyとかをちゃんと設計してあげればかなりパフォーマンスが出るので，データマートとして優秀．特に8XLとかであれば，RDSとかでは頑張れない領域になる．ただ，スキーマの変更に弱いので，適宜ロードしてあげないと行けないのがネック</p>&mdash; Mr. Fiber (@repeatedly) <a href="https://twitter.com/repeatedly/statuses/491884516605038592">July 23, 2014</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-
-
-<blockquote class="twitter-tweet" lang="en"><p>BigQueryは逆に，その辺のMPPの知識ないけど楽に処理したい，という時には便利．ストレージと密結合しているRedshiftと違ってストレージとしては安価なので，ガンガンデータを入れられる．スキーマの変更に弱いのと，G社の都合でクエリに制限が掛かったり不安定になるのがネック</p>&mdash; Mr. Fiber (@repeatedly) <a href="https://twitter.com/repeatedly/statuses/491884911515533312">July 23, 2014</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-
-
-<blockquote class="twitter-tweet" lang="en"><p>Prestoは単体だとストレージがないので，裏側に何を使うかによってかなり左右される．ちゃんとしたHadoopクラスタやオブジェクトストレージがあれば，同時実行制御の部分に難はあるが，低レイテンシクエリーとしては十分優秀．データのインポートの手間がないのが大きい．</p>&mdash; Mr. Fiber (@repeatedly) <a href="https://twitter.com/repeatedly/statuses/491885404665049089">July 23, 2014</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-
-
-<blockquote class="twitter-tweet" lang="en"><p>まぁHadoopとかあるならとりあえずPresto入れとくか，という流れにはなりつつある気がする．それでも同時にたくさんのクエリが飛んでくるとか，ある程度スキーマ固まったのでガッツリ使いたい，になるとRedshiftとかBigQueryにバッチでinsert，がよくあるパターン</p>&mdash; Mr. Fiber (@repeatedly) <a href="https://twitter.com/repeatedly/statuses/491886467266789376">July 23, 2014</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-
-
-<blockquote class="twitter-tweet" lang="en"><p>やっぱり他のMPPデータベースにデータ入れるの面倒だからPrestoでがんばりたい，というユーザ結構いてその人たちが色々とPrestoをデータマート的に使えるようにと頑張っているようなので，いずれHadoop上ですべて完結する世界は来るかもしれない</p>&mdash; Mr. Fiber (@repeatedly) <a href="https://twitter.com/repeatedly/statuses/491887539267960833">July 23, 2014</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-
-
-<blockquote class="twitter-tweet" lang="en"><p>トレジャーデータというサービス，自分でインフラ管理する必要ないですし，Fluentd/JS/iOS/Androidなどからデータを入れるだけで，即バッチや低レイテンシクエリを投げられる，便利なサービスらしいですよ &gt; <a href="http://t.co/gSg9ZTNjKt">http://t.co/gSg9ZTNjKt</a></p>&mdash; Mr. Fiber (@repeatedly) <a href="https://twitter.com/repeatedly/statuses/491889631437144064">July 23, 2014</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-
-
-<blockquote class="twitter-tweet" lang="en"><p>社会人の勤めを果たした</p>&mdash; Mr. Fiber (@repeatedly) <a href="https://twitter.com/repeatedly/statuses/491889663787819008">July 23, 2014</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/ja/page/3/">&larr; Older</a>
@@ -1076,6 +897,10 @@ MPPと一纏めにするにはユースケースや得意なものが違うの�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/ja/2015/02/data-transfer-middleware-meetup/">データ転送ミドルウェア勉強会</a>
+      </li>
+    
+      <li class="post">
         <a href="/ja/2015/02/presto-meetup-1/">Presto meetup #1</a>
       </li>
     
@@ -1089,10 +914,6 @@ MPPと一纏めにするにはユースケースや得意なものが違うの�
     
       <li class="post">
         <a href="/ja/2014/09/hadoopcon-2014-in-taiwan/">HadoopCon 2014 in Taiwan</a>
-      </li>
-    
-      <li class="post">
-        <a href="/ja/2014/09/serverengine-at-rubykaigi-2014/">ServerEngine at RubyKaigi 2014</a>
       </li>
     
   </ul>

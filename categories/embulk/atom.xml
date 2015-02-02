@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: embulk | Go ahead!]]></title>
+  <link href="http://repeatedly.github.com/categories/embulk/atom.xml" rel="self"/>
+  <link href="http://repeatedly.github.com/"/>
+  <updated>2015-02-02T17:12:16+09:00</updated>
+  <id>http://repeatedly.github.com/</id>
+  <author>
+    <name><![CDATA[Masahiro Nakagawa]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[データ転送ミドルウェア勉強会]]></title>
+    <link href="http://repeatedly.github.com/ja/2015/02/data-transfer-middleware-meetup/"/>
+    <updated>2015-02-02T17:00:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2015/02/data-transfer-middleware-meetup</id>
+    <content type="html"><![CDATA[<ul>
+<li><a href="http://eventdots.jp/event/312015">データ転送ミドルウェア勉強会</a></li>
+<li><a href="http://dev.classmethod.jp/tool/dtm_meetup/">「データ転送ミドルウェア勉強会」レポート #dtm_meetup</a></li>
+</ul>
+
+
+<p>「古橋君がアメリカに帰る前にEmbulkのリリースイベントしちゃうか〜」というノリで1日で立ち上げたイベントでしたが，めちゃくちゃ人が集まって正直驚きでした．</p>
+
+<p>Embulk以外にも，ファイル転送のドンであるHULFTの機能や20年以上つづく開発のアレコレ，Fluentdのv1までのバージョニングと実装予定の機能の説明，そしてHTTP2対応ウェブサーバであるh2oの話，などなど結構バラエティに富んだイベントになったんじゃないかと思っています．</p>
+
+<p>質疑応答や懇親会でEmbulkに色々とフィードバックがあったり，その後触ってもらってバグ報告などもらったりして，イベントをやった甲斐があったなと実感してます．要望の多かったresume機能などもさっそく実装が始まっているので，随時チェックしてもらえればと思います．<br />
+また，FluentdとEmbulkの関係みたいなものも，別途記事にする予定です．</p>
+
+<p>データ転送ミドルウェア勉強会みたいなイベント，結構需要があるようなので，また色々と開いて行きたいと思っています．</p>
+
+<p>会場をかしてくれたSAP Japan，会場手配などをしてくれたdots，懇親会をスポンサーしてくれたTreasure Data，発表者の方々，また参加者の方々，皆さんお疲れ様でした！</p>
+
+<p>スライドは上記に貼ってある"「データ転送ミドルウェア勉強会」レポート #dtm_meetup"でまとめられているので，気になる方は参照してみてください！</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-02-02T04:18:27+09:00</updated>
+  <updated>2015-02-02T17:12:16+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -14,9 +14,35 @@
 
   
   <entry>
+    <title type="html"><![CDATA[データ転送ミドルウェア勉強会]]></title>
+    <link href="http://repeatedly.github.com/ja/2015/02/data-transfer-middleware-meetup/"/>
+    <updated>2015-02-02T17:00:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2015/02/data-transfer-middleware-meetup</id>
+    <content type="html"><![CDATA[<ul>
+<li><a href="http://eventdots.jp/event/312015">データ転送ミドルウェア勉強会</a></li>
+<li><a href="http://dev.classmethod.jp/tool/dtm_meetup/">「データ転送ミドルウェア勉強会」レポート #dtm_meetup</a></li>
+</ul>
+
+
+<p>「古橋君がアメリカに帰る前にEmbulkのリリースイベントしちゃうか〜」というノリで1日で立ち上げたイベントでしたが，めちゃくちゃ人が集まって正直驚きでした．</p>
+
+<p>Embulk以外にも，ファイル転送のドンであるHULFTの機能や20年以上つづく開発のアレコレ，Fluentdのv1までのバージョニングと実装予定の機能の説明，そしてHTTP2対応ウェブサーバであるh2oの話，などなど結構バラエティに富んだイベントになったんじゃないかと思っています．</p>
+
+<p>質疑応答や懇親会でEmbulkに色々とフィードバックがあったり，その後触ってもらってバグ報告などもらったりして，イベントをやった甲斐があったなと実感してます．要望の多かったresume機能などもさっそく実装が始まっているので，随時チェックしてもらえればと思います．<br />
+また，FluentdとEmbulkの関係みたいなものも，別途記事にする予定です．</p>
+
+<p>データ転送ミドルウェア勉強会みたいなイベント，結構需要があるようなので，また色々と開いて行きたいと思っています．</p>
+
+<p>会場をかしてくれたSAP Japan，会場手配などをしてくれたdots，懇親会をスポンサーしてくれたTreasure Data，発表者の方々，また参加者の方々，皆さんお疲れ様でした！</p>
+
+<p>スライドは上記に貼ってある&#8221;「データ転送ミドルウェア勉強会」レポート #dtm_meetup&#8221;でまとめられているので，気になる方は参照してみてください！</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Presto meetup #1]]></title>
     <link href="http://repeatedly.github.com/ja/2015/02/presto-meetup-1/"/>
-    <updated>2015-02-02T02:24:00+09:00</updated>
+    <updated>2015-02-02T02:00:00+09:00</updated>
     <id>http://repeatedly.github.com/ja/2015/02/presto-meetup-1</id>
     <content type="html"><![CDATA[<p><a href="http://eventdots.jp/event/276987">Presto meetup</a></p>
 
@@ -1656,64 +1682,6 @@ v1だと安定版のイメージが強いですし，実際の所v0.10.xはv1で
 <h2>まとめ</h2>
 
 <p>ということで，色々と今までの流れを書きましたが，皆さんFluentdを今後とも宜しくお願いします :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Sensu雑感]]></title>
-    <link href="http://repeatedly.github.com/ja/2014/02/the-thoughts-of-sensu/"/>
-    <updated>2014-02-25T02:15:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2014/02/the-thoughts-of-sensu</id>
-    <content type="html"><![CDATA[<p><a href="http://sensuapp.org/">Sensu</a></p>
-
-<p>最近人気が出てきているようなので試して見た．
-仕組みに関しては本家のドキュメントとかスライドとか見ると大体分かる．</p>
-
-<p>雑感:</p>
-
-<ul>
-<li>server, client, api, dashboardに分かれているのは良い
-
-<ul>
-<li>実装はRubyでシンプルに書かれているように見える．多分弄るのは簡単</li>
-</ul>
-</li>
-<li>RabbitMQとRedisが必要なのが試すのに結構つらい．chefとかpuppetを使うと良いらしい？
-
-<ul>
-<li>なんかテストモードがあるなら知りたい</li>
-<li>ドキュメントは最低限はある．Advancedなことしようとするとgithubとか先人を頼ることになる</li>
-</ul>
-</li>
-<li>設定がJSONなのはいいけど，ログすらJSONなのは徹底している</li>
-<li>RabbitMQにはクライアントから登録しにいくようで，勝手に監視対象が増えるのは楽
-
-<ul>
-<li>マスターからのpullは限界があるので，この仕組みはモニタリングでは筋が良さそう</li>
-</ul>
-</li>
-<li>プラグインは簡単に書けるが，現状失敗したら諦める前提らしい
-
-<ul>
-<li>まじめにハンドリングするなら，他のと連携する必要がある</li>
-</ul>
-</li>
-<li>apiが気がつけば落ちてる時があって，原因がよく分からない</li>
-<li>Fluentdのハンドラがコミュニティプラグインになかったので<a href="https://github.com/sensu/sensu-community-plugins/blob/master/handlers/notification/fluentd.rb">書いた</a></li>
-</ul>
-
-
-<p>「FluentdかSensuかどっちかに寄せたい」みたいな記事を誰かが書いてた記憶があるけど，何となく分かる．
-Fluentdのプラグイン機構でSensuのクライアント周りの機構はよりロバストに実装出来る．<br />
-コアの機能は結構シンプルなので，visualizationまで考えるとどうしたもんかという感じ．</p>
-
-<p>Sensuはモニタリングのためのフレームワークなのでその辺の機能が中心に開発されてるけど，
-そこの尖った部分が必要でなければ，RabbitMQとかと相まって結構大がかりにも見える．<br />
-Nagiosとかは使ったことはないので，その辺と違ってどこまでメリットがあるのかはよく分かってないけど，
-新しく作るシステムで一からモニタリングシステムを構築するなら十分有り．</p>
-
-<p>仕組み的には柔軟でAPIとかで管理も楽に出来るようになってるので，今後ユーザは増えそうな気もしている．
-しかしRabbitMQとRedisの二つ必要なのどうにかならないものか…</p>
 ]]></content>
   </entry>
   

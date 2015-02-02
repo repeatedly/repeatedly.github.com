@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Presto | Go ahead!]]></title>
+  <title><![CDATA[Category: presto | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/presto/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-02-02T04:18:27+09:00</updated>
+  <updated>2015-02-02T17:12:16+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -14,147 +14,57 @@
 
   
   <entry>
-    <title type="html"><![CDATA[HadoopCon 2014 in Taiwan]]></title>
-    <link href="http://repeatedly.github.com/ja/2014/09/hadoopcon-2014-in-taiwan/"/>
-    <updated>2014-09-26T01:26:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2014/09/hadoopcon-2014-in-taiwan</id>
-    <content type="html"><![CDATA[<p>記事にするの遅れたけど，9月12日から9月16日まで台北に行ってきた．
-目的は台北で行われた<a href="http://2014.hadoopcon.org/wp/?page_id=21">HadoopCon 2014</a>で発表すること．</p>
+    <title type="html"><![CDATA[Presto meetup #1]]></title>
+    <link href="http://repeatedly.github.com/ja/2015/02/presto-meetup-1/"/>
+    <updated>2015-02-02T02:00:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2015/02/presto-meetup-1</id>
+    <content type="html"><![CDATA[<p><a href="http://eventdots.jp/event/276987">Presto meetup</a></p>
 
-<p>一緒に参加することになったモリスさんの感想記事は<a href="http://d.hatena.ne.jp/tagomoris/20140916/1410857871">こちら</a>.</p>
+<p>1月20日に第一回をやりました！キャンセルも少なめで，イベント参加100人強，懇親会が80人くらいでした．予想の倍以上集まった感じで，Prestoも注目されてるんだなと実感したイベントでした．</p>
 
-<h2>HadoopCon 2014</h2>
+<p>今回は基本から始まり，それぞれ今使っている人達に，運用の話，BIツールとの連携の話，どういう組み合わせで使っているかなど発表してもらいました．「PrestoのDynamoDBコネクタを作る！」みたいな話もあったりして，リリースが待ち遠しい所です．</p>
 
-<p><img src="/images/hadoopcon2014_taiwan.jpg" width="600" title="&#34;HadoopCon 2014&#34;" alt="&#34;HadoopCon 2014&#34;"></p>
+<p>懇親会でもたくさんの人と話をしましたが，やはり安定した運用のしやすさとか，コネクタによる複数ソースへのアクセスなど，色々と使っている理由含め情報交換出来たのが良かったです．発表してくれそうな人を二人くらい見つけたので，日程は決まってませんが，また第二回でもやろうと思っています．</p>
 
-<p>色々と紆余曲折？があり，なぜか俺がキーノートで発表することに．
-初めての英語での発表が40分のキーノートということもあって，色々と疲れた．<br /></p>
+<p>このイベントの後，発表に関しての議論が他で行われたりもして，良いイベントになったんじゃないかと思います．</p>
 
-<iframe src="http://repeatedly.github.com//www.slideshare.net/slideshow/embed_code/39130038" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+<p>会場をかしてくれたFreakOut，会場準備や手配などをしてくれたdots，懇親会をスポンサーしてくれたTreasure Data，発表者の方々，また参加者の方々，皆さんお疲れ様でした！
+第二回でお会いしましょう :)</p>
+
+<p>スライドは以下です．</p>
+
+<h3>いまさら聞けないPrestoのアーキテクチャ 〜 設計の違いから知るPrestoのメリットとデメリット</h3>
+
+<iframe src="http://repeatedly.github.com//www.slideshare.net/slideshow/embed_code/43692990" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
 
 
-<p> <div style="margin-bottom:5px"> <strong> <a href="http://repeatedly.github.com//www.slideshare.net/treasure-data/sql-on-hadoop-in-taiwan-39130038" title="SQL on Hadoop in Taiwan" target="_blank">SQL on Hadoop in Taiwan</a> </strong> from <strong><a href="http://repeatedly.github.com//www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://repeatedly.github.com//www.slideshare.net/frsyuki/understanding-presto-presto-meetup-tokyo-1" title="Understanding Presto - Presto meetup @ Tokyo #1" target="_blank">Understanding Presto - Presto meetup @ Tokyo #1</a> </strong> from <strong><a href="http://repeatedly.github.com//www.slideshare.net/frsyuki" target="_blank">Sadayuki Furuhashi</a></strong> </div></p>
 
-<p>発表内容はHadoop上で使えるSQLプロダクトについて，基本からTreasure Dataでの経験周りを含めてあれやこれや話した．
-質問もあったので，俺のアレな英語でもそれなりに伝わっていたのかなという感じ．</p>
+<h3>Presto as a Service 〜 運用とモニタリングのコツ</h3>
 
-<p>他のセッションも聞きたかったのだけど，中国語で正直何を話しているか分からなかったので，外のスペースで他の人と話していた．<br />
-海外から招待された人の気持ちが分かった一瞬だったｗ</p>
+<iframe src="http://repeatedly.github.com//www.slideshare.net/slideshow/embed_code/43693529" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
 
-<p>カンファレンス会場だった中央研究院は，台北政府直属？の研究所らしくかなり大きかった．向こうの人曰く，大抵のイベントはここでやっているらしい．
-その他，大規模ではないけどHBaseを使っている所が多かったりと，色々と情報交換も出来た感じで良かった．</p>
 
-<h2>残りは観光</h2>
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://repeatedly.github.com//www.slideshare.net/taroleo/presto-as-a-service-at-treasure-data" title="Presto as a Service - Tips for operation and monitoring" target="_blank">Presto as a Service - Tips for operation and monitoring</a> </strong> from <strong><a href="http://repeatedly.github.com//www.slideshare.net/taroleo" target="_blank">Taro L. Saito</a></strong> </div></p>
 
-<p>HadoopCon 2014で知り合った人たちが観光案内をしてくれて，HadoopConの日と次の日に色々と回れた．</p>
+<h3>Presto in my use case</h3>
 
-<p>台北101含む観光地だったり，地元の人が集まる店だったり，夜市だったり，色々と解説もしてくれてかなり楽しめた．</p>
+<iframe src="http://repeatedly.github.com//www.slideshare.net/slideshow/embed_code/43701223" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
 
-<p><img src="/images/hadoopcon2014_temple.jpg" width="500" title="&#34;HadoopCon 2014: Temple&#34;" alt="&#34;HadoopCon 2014: Temple&#34;">
-<img src="/images/hadoopcon2014_chiang.jpg" width="500" title="&#34;HadoopCon 2014: Chiang&#34;" alt="&#34;HadoopCon 2014: Chiang&#34;">
-<img src="/images/hadoopcon2014_soup_dumpling.jpg" width="500" title="&#34;HadoopCon 2014: Soup dumplin&#34;" alt="&#34;HadoopCon 2014: Soup dumplin&#34;">
-<img src="/images/hadoopcon2014_yoichi.jpg" width="500" title="&#34;HadoopCon 2014: Night market&#34;" alt="&#34;HadoopCon 2014: Night market&#34;">
-<img src="/images/hadoopcon2014_yoichi_shop.jpg" width="500" title="&#34;HadoopCon 2014: Night market shop&#34;" alt="&#34;HadoopCon 2014: Night market shop&#34;"></p>
 
-<p>写真あげまくるのもアレなので，残りはFBのアルバムで…</p>
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://repeatedly.github.com//www.slideshare.net/wyukawa/presto-in-myusecase" title="Presto in my_use_case" target="_blank">Presto in my_use_case</a> </strong> from <strong><a href="http://repeatedly.github.com//www.slideshare.net/wyukawa" target="_blank">Wataru Yukawa</a></strong> </div></p>
 
-<h2>感想</h2>
+<h3>シロクでの利用方法と、Sparkとの比較</h3>
 
-<p>色々と調整してくれた台北の人たちには本当に感謝というか，かなり台北中は楽できたので，こういう恩はいつか返したいなと．</p>
+<script async class="speakerdeck-embed" data-id="65ca751085cb0132de3a7a1c3ec56d64" data-ratio="1.33333333333333" src="http://repeatedly.github.com//speakerdeck.com/assets/embed.js"></script>
 
-<p>台北，ココイチとかすき家とか大戸屋とかゆで太郎とか麺屋武蔵とかあるので，日本の人がいっても多分食には困らない．
-ホテルとか，探せば普通に日本語が通じる所もかなりあるので，気軽にこれる所だなぁと．<br />
-交通費もかなり安いので，気軽にタクシーとか乗れる．</p>
 
-<p>RubyConfとかOSDCとか，大きめのイベントも毎年やってるっぽいので，近いし，英語の練習がてら皆さんも参加しましょう！と参加仲間を増やす作戦．</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Prestoソースコードリーディング #4]]></title>
-    <link href="http://repeatedly.github.com/ja/2014/07/presto-scr-4/"/>
-    <updated>2014-07-17T17:53:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2014/07/presto-scr-4</id>
-    <content type="html"><![CDATA[<p><a href="http://atnd.org/events/53545">Presto ソースコードリーディング #4</a></p>
+<h3>社内の利用例の紹介と、自社でのHIVE、TEZとの比較</h3>
 
-<p>いつものようにLINEでやりました！</p>
+<iframe src="http://repeatedly.github.com//www.slideshare.net/slideshow/embed_code/43774471" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
 
-<p>@frsyukiが帰国する前に，という流れで開催決定・募集が1週間前というタイトなスケジュールでしたが，
-無茶ぶりにつきあってくれた@ueshinさんに感謝．</p>
 
-<h2>当日の内容</h2>
-
-<p><a href="http://togetter.com/li/694128">togetterのまとめ</a>を見れば，なんとなく大まかな流れは把握できるはず…！</p>
-
-<p>ueshinさんが第二回のashigeruさんの論理計画実行の後を継いで，
-物理計画実行周りの話をしてくれました(<a href="https://gist.github.com/ueshin/5e38cfe915ce15f756b1">資料のgist</a>)．
-バイトコード生成しての高速化の話とか，Presto以外でも有用な話が出てました．</p>
-
-<p>frsyukiが現在のPrestoの開発体制の話，Treasure Dataでハックしている所の紹介，
-CREATE VIEWなどの実装がなぜこうなっているのか(これはfrsyuki案が通ったらしい)，
-今後Prestoチームがやろうとしていることなど含め，その場で色々と議論する感じになりました．</p>
-
-<h2>まとめ</h2>
-
-<p>少人数でソースコードレベルで興味のある人が集まっているのもあり，いつも通り濃い感じでした！
-partitionedの話とか，現在の実行モデルにおけるオペレータの実装の話とか，
-この辺を話すイベントはあんまりないんじゃないかなと思います．</p>
-
-<p>次第5回をいつやるかは決まってませんが，いずれやる予定です．</p>
-
-<p>またソースコードリーディングとは別に，Prestoのユースケースや，
-プロダクションで動かしている人の運用の話などを共有する，
-Presto meetupみたいなもう少し緩めのイベントもやる予定です．</p>
-
-<p>お楽しみに :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Prestoソースコードリーディング #1]]></title>
-    <link href="http://repeatedly.github.com/ja/2014/02/presto-scr-1/"/>
-    <updated>2014-02-11T02:39:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2014/02/presto-scr-1</id>
-    <content type="html"><![CDATA[<p><a href="http://atnd.org/events/47149">Presto ソースコードリーディング #1のATND</a></p>
-
-<p>@tagomorisさんに場所を確保してもらって，LINEで第一回をやりました．</p>
-
-<h2>開催の流れ</h2>
-
-<p>CROSS辺りでPrestoのソースコードリーディングしたいね，という話が出て，
-じゃあ俺が立てるので場所はLINE辺りで〜というその場のノリで決まった．</p>
-
-<p>どうせ10人前後だろうということでかなり適当な感じで募集とかやってたんだけど，
-応募人数が40人越え，当日参加が25人前後くらいだったので，予想より多かったかなという感じ．</p>
-
-<h2>やったこと</h2>
-
-<h3>全体の概要</h3>
-
-<p>俺が軽めにやりました．Prestoの生まれた背景とか，依存している主要なライブラリ，
-@frsyukiのスライドを拝借しての主要なクラス群の紹介，現在サポートしている型，
-Slice使ってのデータの持ち方とか．後，最近の変更周りも少し紹介した</p>
-
-<h3>HTTPレイヤー</h3>
-
-<p>@tagomorisさんが担当で，クライアントが最初に到達するHTTP APIの <code>/v1/execution</code> や <code>/v1/statement</code> 周りの
-処理の話．ソースコード的にはpresto-server．この辺もairliftにがっつり依存しているので，
-パフォーマンスが気になるなど真面目に読みたい人はairliftも読みましょう．</p>
-
-<h3>Execution</h3>
-
-<p><a href="https://gist.github.com/oza/8912147">当日のgist</a></p>
-
-<p>@oza_x86が担当．Coordinator内部でPlanやStageが出来るまでの流れ，
-Workerで処理がどう進むかとかその辺の話．SplitsやそれぞれのRunnerの処理，
-時間が掛かっているタスクの優先度下げるとか，工夫がいくつか見て取れた感じ．</p>
-
-<h2>感想</h2>
-
-<p>適当にやったわりにはそれなりに上手く進んで良かった．</p>
-
-<p>第二回は，shot6さん，ashigeruさん，feeblefakieさん辺りが担当になってくれるかも？
-という感じです．またソース読みつつあーだこーだ言い合いましょう．</p>
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://repeatedly.github.com//www.slideshare.net/Ogibayashi/20140120-presto-meetupen" title="20140120 presto meetup_en" target="_blank">20140120 presto meetup_en</a> </strong> from <strong><a href="http://repeatedly.github.com//www.slideshare.net/Ogibayashi" target="_blank">Ogibayashi</a></strong> </div></p>
 ]]></content>
   </entry>
   
