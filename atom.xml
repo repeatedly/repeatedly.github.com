@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-02-02T17:12:16+09:00</updated>
+  <updated>2015-03-27T09:28:16+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,150 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[第一回 Vertica勉強会]]></title>
+    <link href="http://repeatedly.github.com/ja/2015/03/vertica-meetup-1/"/>
+    <updated>2015-03-26T18:54:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2015/03/vertica-meetup-1</id>
+    <content type="html"><![CDATA[<p><a href="https://atnd.org/events/62925">第１回 Vertica 勉強会</a></p>
+
+<p>DeNAでVerticaの勉強会が開かれるということで行ってきた．皆さんお疲れ様 &amp; ありがとうございました．</p>
+
+<p>VerticaはMPPデータベースと呼ばれるプロダクトの一つ．まとめみたいなのはすでに他の人が用意してくれているので，そちらを参照してください．</p>
+
+<ul>
+<li><a href="http://togetter.com/li/799648">第1回 Vertica 勉強会 - Togetterまとめ</a></li>
+<li><a href="http://estrellita.hatenablog.com/entry/2015/03/25/233003">第1回Vertica勉強会に参加してきた - INPUTしたらOUTPUT!</a></li>
+<li><a href="http://d.hatena.ne.jp/wyukawa/20150326/1427360270">第１回 Vertica 勉強会に行ってきた - wyukawa’s blog</a></li>
+</ul>
+
+
+<h2>はじめてのVertica！（はじめのて方にも、20分で分かりやすく解説）</h2>
+
+<p>Verticaの基本的な話．<a href="http://db.lcs.mit.edu/projects/cstore/">C-Store</a>が元になっていて，
+やはりC-Storeの論文に書かれている機能がベースになってた．</p>
+
+<p>ここで出てきた</p>
+
+<ul>
+<li>列指向フォーマット
+
+<ul>
+<li>そして列毎の圧縮</li>
+</ul>
+</li>
+<li>Shared Nothing</li>
+<li>ANSI SQL準拠</li>
+</ul>
+
+
+<p>とかはMPPでは基本的な特徴で，それらを一通り持っている感じ．</p>
+
+<p>少し珍しいものとしては，マルチマスタみたいにすべてのノードがクエリを受け付ける所．
+複数クエリが飛んでいる時にどういう負荷分散をするか分かってないけど，クエリを投げた時にあるノードが自動でリーダーになるっぽい．<br />
+Impalaも似たような仕組みだけど，Statestoreみたいな外部サービスすら存在してないようなので，
+クラスタがどういう風に状態を共有しているのかが，個人的には気になっている．</p>
+
+<p>あとで言及するけど，DB Designerというツールが一番の肝.</p>
+
+<h2>DeNAでのverticaを活用したアナリスト業務のご紹介</h2>
+
+<p>DeNAでどうやってVerticaを利用しているかの話．まだPrestoやImpalaが広まる前から利用しているようで，
+やはりHiveやPigをAd-hocクエリの代わりに使うのはつらかったという．</p>
+
+<p>もちろんすべてをVerticaでやっているわけではなくて，データはHadoopクラスタにも入れていて，
+でかいサービスなどの場合はHadoopで中間データをつくってVerticaに入れているという，よくある構成.<br />
+ストレージと密結合しているMPPデータベースはこまめなロードが大抵苦手なので，
+データ量が大きいところでは皆この構成を取っている．</p>
+
+<p><code>lead</code>とか<code>lag</code>とかのWindow関数はHiveやPrestoでも使えるんだけど，<code>timeseriese</code>というgap-fillingな関数は少し面白いなと思った．</p>
+
+<h2>DeNAでのVertica運用について</h2>
+
+<p>FluentdとKafkaを使ってデータを収集している話があって，ここでもFluentdが！</p>
+
+<p>ここでHadoopを機械学習にも使っているという話をしていた．何のプロジェクトを使っているんだろうか？懇親会で聞くの忘れてた．</p>
+
+<p>運用に関して色々とTipsを話されていて，参考になる発表だった．
+データインポート時に型が一致してないレコードをデフォルトで捨てるのが，なかなか豪快だなぁという感じ．</p>
+
+<p>あとクエリは基本Resource Poolで細かく制御するのが複数ユーザで使う時の前提．
+これはどこのMPPデータベースでも同じで，何もしないと一人がでかいクエリ投げると他の処理が止まってしまう．</p>
+
+<h2>CTC、Vertica はじめました！－テスト結果を共有！</h2>
+
+<p>「Verticaがすごい」という話だったんだけど，テスト内容の詳細がなくて，
+どういうスキーマで，どれくらいのデータがあって，どういうクエリかが分からずかなりふわっとしていた．
+あとグラフに目盛りとかもなかったので，さらにすごさがよく分からなかった…</p>
+
+<p>お客さんのテスト結果ということらしいので詳細を話せないのは分かるのだけど，
+こういうオープンなイベントだと<a href="http://www.tpc.org/information/benchmarks.asp">TPC</a>とか使って分かるデータで見せないと，
+ちょっと厳しいかなぁという感じ(特にパフォーマンスとかを気にするエンジニアには)．</p>
+
+<h2>Verticaの速さの秘密、プロジェクションに関して20分で！</h2>
+
+<p>Verticaでのテーブルは単にどういうカラムがあるかというスキーマを持っているだけで，
+実際にデータを保持するのはプロジェクションという単位．誰かがtweetしていたけど，Materialized Viewみたいなもの．</p>
+
+<p>ここでDB Desingerというのが使えて，データやクエリを登録すると，それに最適なプロジェクションを構築してくれるらしい．
+プロジェクションは一つのテーブルに何個も構築出来るので，それぞれ必要なプロジェクションを作っておけば，
+後でクエリエンジンが勝手に最適なプロジェクションを選んで実行してくれる．</p>
+
+<p>Vertica，てきとうにやっても速い，みたいなの前聞いたことあったけど，実際はDB Designerにお任せという感じのようだ．
+DB Designer便利だけど，当たり前だけどプロジェクション作るとそれだけ容量食うので，作りすぎに注意．</p>
+
+<p>データロード時に集計してしまうLive Aggregate Projectionという仕組みがあるのだけど，
+ロードの負荷が結構無視できないVerticaだと，大規模だと使いにくい印象を受けた．</p>
+
+<h2>懇親会</h2>
+
+<p>色々と生の声が聞けた．</p>
+
+<p>懇親会でユーザに聞いた話だと，OOMみたいなので落ちることはないらしく，20-30人とかで投げてもキューに貯めて順次処理する．
+ただメモリ使用量が大きすぎたり，キューが貯まりすぎると，落ちるより先にクエリがRejectされる．</p>
+
+<p>K-safetyといういわゆるレプリケーションの仕組みがあるのだけど，DeNAさんや他のユーザも1とのこと．
+2にするとデータロードの負荷が高くなり，色々と大変になるらしい．<br />
+個人的には，K-safetyの数を増やせばデータの分散具合が増してクエリの処理効率がよくなると思っていたんだけど，
+Verticaは基本マスターデータしか見に行かないので，増やしても意味ないらしい．</p>
+
+<blockquote class="twitter-tweet" lang="en"><p>K-safe 2ってレプリケーションすることでデータを分散させるわけだから，その分各ノードでのデータのローカリティがあがってクエリが高速になる気もするし，安易に減らすのはアンチパターンな気もする <a href="https://twitter.com/hashtag/vertica_meetup?src=hash">#vertica_meetup</a></p>&mdash; Mr. Fiber (@repeatedly) <a href="https://twitter.com/repeatedly/status/580690665283059712">March 25, 2015</a></blockquote>
+
+
+<script async src="http://repeatedly.github.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p><a href="https://twitter.com/repeatedly">@repeatedly</a> Verticaの場合K-safe1でも2でも基本的にはマスターデータのノードにしかアクセスはいかなくて、レプリの方にはアクセスいかないです！<a href="https://twitter.com/hashtag/vertica_meetup?src=hash">#vertica_meetup</a></p>&mdash; Civitaspo (@Civitaspo) <a href="https://twitter.com/Civitaspo/status/580721464376045568">March 25, 2015</a></blockquote>
+
+
+<script async src="http://repeatedly.github.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p><a href="https://twitter.com/Civitaspo">@Civitaspo</a> <a href="https://twitter.com/repeatedly">@repeatedly</a> 　レプリカはノード障害あった際に使われます。基本的には、レプリカは同じソートパターンを採用し、クエリーの高速性には寄与しません。K-safe=1のパターンが多いです。　<a href="https://twitter.com/hashtag/vertica_meetup?src=hash">#vertica_meetup</a></p>&mdash; Projection_man (@Projection_man) <a href="https://twitter.com/Projection_man/status/580771087895527424">March 25, 2015</a></blockquote>
+
+
+<script async src="http://repeatedly.github.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p>PrestoとかのようなMPPクエリエンジンと違ってストレージと結合しているし，
+この辺うまく使ってデータの読み込み効率化出来そうだなぁと思っているんだけど，ソースが見られないので何とも言えない…</p>
+
+<p>あとクラスタの再配置やデータのリバランスは結構時間が掛かるらしく，数日かかることもあるとのこと．
+パフォーマンスはそんなに落ちないらしいけど，別クラスタを立てて一気に入れ替えるのが楽なのかなぁーという．</p>
+
+<p>まー，やはり銀の弾丸はないので，皆それぞれ苦労するポイントはあるなという感じだった．
+話を聞かせてくれた人達に感謝 (-人-)</p>
+
+<h2>まとめ</h2>
+
+<p>第一回ということもあり，基本的な話が多かった印象でした．
+ただ実際に使っている人の話とかはやはり参考になる．</p>
+
+<p>第二回もあるかもとのことなので，またその時は参加するかもしれません．
+オープンソースではないので，気になる所の実装がチェック出来ないのがやっぱりつらい所…</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[データ転送ミドルウェア勉強会]]></title>
@@ -1620,68 +1764,6 @@ AWSなイベントなのでAWS関係のプラグインの紹介などなど，�
 <h2>まとめ</h2>
 
 <p><img src="http://repeatedly.github.com/images/kinki_sushi.jpg" title="&#34;Kinki no Sushi&#34;" alt="&#34;Kinki no Sushi&#34;"></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[そろそろFluentd v11についてひとこと言っておくか]]></title>
-    <link href="http://repeatedly.github.com/ja/2014/03/about-fluentd-v11/"/>
-    <updated>2014-03-05T19:40:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2014/03/about-fluentd-v11</id>
-    <content type="html"><![CDATA[<p>リリースは永遠にされません！</p>
-
-<p>日本では色々なところでv11の噂がまことしやかに囁かれていますが，
-俺がメインメンテナである限りv11がリリースされることはないので，諦めてv0.10.xを使ってください！</p>
-
-<p>以下まじめな話になります．</p>
-
-<h2>v11が生まれた背景と現状</h2>
-
-<p>v11が生まれたのは1年以上前です．背景には，v10と呼ばれる今のバージョンがプロトタイプを兼ねたリリースであり，
-「利用者のフィードバックを取り込んで，ダメな所をガッツリ書き換えて互換性を壊してメジャーバージョンアップや！」という流れがありました．</p>
-
-<p>しかし，v10は十分に柔軟でかつパフォーマンスも発揮しており，コミッタ陣はそれほどモチベーションがあったわけではありません．
-また，プラグインによって解決出来た問題も多く，v11が生まれた時ほどユーザから「v11が欲しい！」という要望は聞かれなくなりました．</p>
-
-<p>当たり前ですが，ユーザからの声がなければ「あれ，じゃあこの機能あんまり必要ないんじゃね？」ということになって削られるのはよくあることで，
-v11もそんな感じで開発リソースはあまり割かれなくなって行きました．<br />
-もともと空いた時間に@frsyuki，@tagomoris，@sonotsの人達がたまにコミットしていたくらいなので，直近では機能追加のコミットはほぼありません．</p>
-
-<h2>Fluentdのユーザ拡大</h2>
-
-<p>v11で互換性を壊しても大丈夫だろう，とコミッタ陣が思っていたものの一つに，当時Fluentdのプラグインの大半をコミッタの関係者が書いていた，
-というのがあります．<br />
-そのため，互換性を壊しても必要そうなプラグインの書き換えはすぐに終わるし，
-「えいや！」と同時にバージョン上げれば被害は少ないだろうという感じです．</p>
-
-<p>しかし，v10は思っていたよりも早くユーザが増え，今ではさきがけとなったWeb/アドテク業界のみならず，大小問わず様々な企業，
-IoTな分野など，世界的にも使われるようになってきました．<br />
-また，それにともないプラグイン数も200を越え，当初の目論見が難しくなっているのが現状です．</p>
-
-<h2>開発方針の変更とv1案</h2>
-
-<p>俺がFluentdのメインメンテナとなったのも関わってるんですが，「v11のリリースをどうするか？」という問題もハンドリングするようになりました．</br />
-個人的には「v11の機能群は有用だけど，互換性を壊してリリースするほどのものではないなぁ」というのがv11を見た結論であり，
-その辺やりとりしたのが以下のtogetter．</p>
-
-<p><a href="http://togetter.com/li/620329">Fluentd v11 なんてなかったんだ</a></p>
-
-<p>上のまとめにあるように，色々と話した結果，v11が持っているいくつかの機能をv10にマージし，
-それらが終わったらv1としてリリースしようというのが，現在の開発の方向性です．<br />
-段階的な変化になりますが，基本的には互換性が保たれるようにAPIを変えていくので，
-既存ユーザはそのまま使えますし，バージョンアップにともなって徐々に有用な機能が使えるようになります．<br /></p>
-
-<p>以下のissueで必要そうな機能リストと，進捗を管理してます．</p>
-
-<p><a href="https://github.com/fluent/fluentd/issues/251">Plan for v1 release</a></p>
-
-<p>v1というバージョンに関しては，今のFluentdのgemのバージョンがv0.10.xで，v0.11.xのことをv11と呼んでいて非常に紛らわしく，
-新しく入ってくるユーザとかを考えるとそろそろまじめにバージョニングした方が良いだろうという考えです．<br />
-v1だと安定版のイメージが強いですし，実際の所v0.10.xはv1でもおかしくない機能セットはすでに持っています．</p>
-
-<h2>まとめ</h2>
-
-<p>ということで，色々と今までの流れを書きましたが，皆さんFluentdを今後とも宜しくお願いします :)</p>
 ]]></content>
   </entry>
   
