@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Treasure Data | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/treasure-data/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-03-27T09:28:16+09:00</updated>
+  <updated>2015-04-09T17:49:51+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,50 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Developers.IO 2015]]></title>
+    <link href="http://repeatedly.github.com/ja/2015/04/developers-dot-io-2015/"/>
+    <updated>2015-04-09T17:31:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2015/04/developers-dot-io-2015</id>
+    <content type="html"><![CDATA[<p><a href="http://devio2015.classmethod.jp/">Developers.IO 2015 | IoT, BigData, BI. in 3/27(金),29(日)</a></p>
+
+<p>書くの遅れましたが，先月の末に行われたDevelopers.IO 2015で，登壇してました．</p>
+
+<h2>Treasure DataのAWS活用法</h2>
+
+<p>発表スライドは以下です．</p>
+
+<iframe src="http://repeatedly.github.com//www.slideshare.net/slideshow/embed_code/46410399" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://repeatedly.github.com//www.slideshare.net/repeatedly/treasure-data-and-aws-developersio-2015" title="Treasure Data and AWS - Developers.io 2015" target="_blank">Treasure Data and AWS - Developers.io 2015</a> </strong> from <strong><a href="http://repeatedly.github.com//www.slideshare.net/repeatedly" target="_blank">N Masahiro</a></strong> </div></p>
+
+<p>Developers Dayの日で「なるべくニッチな話をしてください」と言われたのと，
+TD Techtalkに参加出来なかった人も見に来るというのもあったので，Treasure Dataのデータインポートとかクエリ処理周りの
+内部処理的な話をしました．</p>
+
+<p>Treasure Dataみたいなサービスを自力で作る人は少ないとは思いますが，
+昨今データ解析周りの需要は増えているので，もし社内でそういう案がある人の参考にでもなればという感じです．
+といっても，クラスメソッドさんのイベントでもあり，AWS要素多めの内容になっています．</p>
+
+<p>一番最後に決まったセッションだったんですが，部屋的には埋まっていた感じなので良かったです．クラスメソッドさんのまとめやtogetterのまとめは以下にあるので，参考にしてみてください．</p>
+
+<ul>
+<li><a href="http://dev.classmethod.jp/business/bigdata/developers-io-2015-treasure-data-cmdevio2015b/">【セッションレポート】Developers.IO 2015 Treasure DataのAWS活用法 #cmdevio2015B</a></li>
+<li><a href="http://togetter.com/li/794727">2015/03/29 Developers.IO 2015 Developer Day サポーター様トラックB #cmdevio2015B</a></li>
+</ul>
+
+
+<h2>イベントの感想</h2>
+
+<p>SAPさんの会場で，複数のトラックで行われており，盛況でした．興味があったものの参加出来なかったセッションがいくつかあったのが心残りといえば心残り．最後の抽選では色々と欲しいものがあったものの，残念ながら手に入れることは出来ませんでした．また似たようなイベントがあったときにはリベンジしたい…</p>
+
+<p>クラスメソッドさん勢いあるなぁと感じたイベントでした．まだまだこれからも色々とやるようなので，盛り上げるのに今後も協力出来ればという感じです．</p>
+
+<p>皆さんお疲れ様でした！</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[July Tech Festa 2013]]></title>

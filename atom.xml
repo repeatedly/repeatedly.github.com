@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-03-27T09:28:16+09:00</updated>
+  <updated>2015-04-09T17:49:51+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,50 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Developers.IO 2015]]></title>
+    <link href="http://repeatedly.github.com/ja/2015/04/developers-dot-io-2015/"/>
+    <updated>2015-04-09T17:31:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2015/04/developers-dot-io-2015</id>
+    <content type="html"><![CDATA[<p><a href="http://devio2015.classmethod.jp/">Developers.IO 2015 | IoT, BigData, BI. in 3/27(金),29(日)</a></p>
+
+<p>書くの遅れましたが，先月の末に行われたDevelopers.IO 2015で，登壇してました．</p>
+
+<h2>Treasure DataのAWS活用法</h2>
+
+<p>発表スライドは以下です．</p>
+
+<iframe src="http://repeatedly.github.com//www.slideshare.net/slideshow/embed_code/46410399" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://repeatedly.github.com//www.slideshare.net/repeatedly/treasure-data-and-aws-developersio-2015" title="Treasure Data and AWS - Developers.io 2015" target="_blank">Treasure Data and AWS - Developers.io 2015</a> </strong> from <strong><a href="http://repeatedly.github.com//www.slideshare.net/repeatedly" target="_blank">N Masahiro</a></strong> </div></p>
+
+<p>Developers Dayの日で「なるべくニッチな話をしてください」と言われたのと，
+TD Techtalkに参加出来なかった人も見に来るというのもあったので，Treasure Dataのデータインポートとかクエリ処理周りの
+内部処理的な話をしました．</p>
+
+<p>Treasure Dataみたいなサービスを自力で作る人は少ないとは思いますが，
+昨今データ解析周りの需要は増えているので，もし社内でそういう案がある人の参考にでもなればという感じです．
+といっても，クラスメソッドさんのイベントでもあり，AWS要素多めの内容になっています．</p>
+
+<p>一番最後に決まったセッションだったんですが，部屋的には埋まっていた感じなので良かったです．クラスメソッドさんのまとめやtogetterのまとめは以下にあるので，参考にしてみてください．</p>
+
+<ul>
+<li><a href="http://dev.classmethod.jp/business/bigdata/developers-io-2015-treasure-data-cmdevio2015b/">【セッションレポート】Developers.IO 2015 Treasure DataのAWS活用法 #cmdevio2015B</a></li>
+<li><a href="http://togetter.com/li/794727">2015/03/29 Developers.IO 2015 Developer Day サポーター様トラックB #cmdevio2015B</a></li>
+</ul>
+
+
+<h2>イベントの感想</h2>
+
+<p>SAPさんの会場で，複数のトラックで行われており，盛況でした．興味があったものの参加出来なかったセッションがいくつかあったのが心残りといえば心残り．最後の抽選では色々と欲しいものがあったものの，残念ながら手に入れることは出来ませんでした．また似たようなイベントがあったときにはリベンジしたい…</p>
+
+<p>クラスメソッドさん勢いあるなぁと感じたイベントでした．まだまだこれからも色々とやるようなので，盛り上げるのに今後も協力出来ればという感じです．</p>
+
+<p>皆さんお疲れ様でした！</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[第一回 Vertica勉強会]]></title>
@@ -1716,54 +1760,6 @@ This limitation is of little concern in Fluentd forward use-case.</p>
 <p>Cool.io isn&#8217;t dead and Cool.io is still improved. We are now working on more better environment support and fixing the bugs.</p>
 
 <p>If you have a bug of Cool.io, then please file it on github :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[札幌 2014 冬]]></title>
-    <link href="http://repeatedly.github.com/ja/2014/03/sapporo-2014-winter/"/>
-    <updated>2014-03-22T15:41:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2014/03/sapporo-2014-winter</id>
-    <content type="html"><![CDATA[<p>二つのイベントに参加するため，札幌に行ってました．</p>
-
-<h2><a href="http://www.hicta.or.jp/index_oshirase_detail.php?id=624">技術セミナー２０１４～ビッグデータ時代のＩＴシーズ～</a></h2>
-
-<p>北海道IT推進協会さまのイベントで，ビッグデータとかデータ解析周りについてクラウド要素も含めて，ビジネス的な話をしてきました．
-参加者に経営者の方も多い感じだったので，なるべく技術的な用語は使わないよう心がけて講演．</p>
-
-<p>いつもとは違う雰囲気の中での講演で，こういうのも勉強になって良いかなと．</p>
-
-<h2><a href="http://connpass.com/event/5222/">AWS勉強会 in 北海道札幌！</a></h2>
-
-<p>メインは上のイベントだったのだけど，それだけで北海道を去るのも勿体ないなぁと他のイベントを探していたら</p>
-
-<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p>話す側でお願いしますw <a href="https://twitter.com/repeatedly">@repeatedly</a> あれ，よく見たらクラスメソッドさんの勉強会が次の日にある．これに参加しようかな？ &gt; &quot;AWS勉強会 in 北海道札幌！（懇親会有）&quot; <a href="http://t.co/doSVv4FPb8">http://t.co/doSVv4FPb8</a></p>&mdash; よこたさとし (@sato_shi) <a href="https://twitter.com/sato_shi/statuses/441211073375371264">March 5, 2014</a></blockquote>
-
-
-<script async src="http://repeatedly.github.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-<p>とのreplyをもらったので，飛び入りでFluentdについて発表してきました．</p>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/32700881?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/treasure-data/fluentd-and-aws-at-classmethod" title="Fluentd and AWS at classmethod" target="_blank">Fluentd and AWS at classmethod</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
-
-<p>Fluentd利用者も少なかったので，基本的な動作原理や，Fluentdが有用なユースケース，
-AWSなイベントなのでAWS関係のプラグインの紹介などなど，一通りやった．</p>
-
-<p>懇親会で色々と話を聞いたけど，まだ地方？だとそもそもデータを集めてなかったり，
-データ解析に関しての需要が出てきておらず，Fluentdなどを使う段階になってないとのこと．
-そもそもIT化出来てない会社とかもあるのでまずはそこから，とも<br />
-東京とかだとこの辺の動きが活発だけど，中央以外ではまた違った形で活動しないと，
-「便利なソフトウェアがある！」とかで広めることは出来ないなぁと実感．<br /></p>
-
-<p>色々と考えないと行けないことが増えた感じで，この辺の話を聞けたのは良かった．</p>
-
-<h2>まとめ</h2>
-
-<p><img src="http://repeatedly.github.com/images/kinki_sushi.jpg" title="&#34;Kinki no Sushi&#34;" alt="&#34;Kinki no Sushi&#34;"></p>
 ]]></content>
   </entry>
   

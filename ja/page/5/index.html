@@ -9,7 +9,8 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Developers Summit 2014：開発者のためのITカンファレンス セッション登壇も兼ねて，初めてデブサミに参加してきました． 1日目 OSSコミッタ大集合 これに登壇してました．登壇といっても，それぞれのプロジェクトの人がわいわいと自分の関わってるプロジェクトについて &hellip;">
+  <meta name="description" content="Sensu 最近人気が出てきているようなので試して見た．
+仕組みに関しては本家のドキュメントとかスライドとか見ると大体分かる． 雑感: server, client, api, dashboardに分かれているのは良い 実装はRubyでシンプルに書かれているように見える．多分弄るのは簡単 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +70,93 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2014/02/the-thoughts-of-sensu/">Sensu雑感</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-25T02:15:00+09:00" pubdate data-updated="true">Feb 25<span>th</span>, 2014</time>
+        
+         | <a href="/ja/2014/02/the-thoughts-of-sensu/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://sensuapp.org/">Sensu</a></p>
+
+<p>最近人気が出てきているようなので試して見た．
+仕組みに関しては本家のドキュメントとかスライドとか見ると大体分かる．</p>
+
+<p>雑感:</p>
+
+<ul>
+<li>server, client, api, dashboardに分かれているのは良い
+
+<ul>
+<li>実装はRubyでシンプルに書かれているように見える．多分弄るのは簡単</li>
+</ul>
+</li>
+<li>RabbitMQとRedisが必要なのが試すのに結構つらい．chefとかpuppetを使うと良いらしい？
+
+<ul>
+<li>なんかテストモードがあるなら知りたい</li>
+<li>ドキュメントは最低限はある．Advancedなことしようとするとgithubとか先人を頼ることになる</li>
+</ul>
+</li>
+<li>設定がJSONなのはいいけど，ログすらJSONなのは徹底している</li>
+<li>RabbitMQにはクライアントから登録しにいくようで，勝手に監視対象が増えるのは楽
+
+<ul>
+<li>マスターからのpullは限界があるので，この仕組みはモニタリングでは筋が良さそう</li>
+</ul>
+</li>
+<li>プラグインは簡単に書けるが，現状失敗したら諦める前提らしい
+
+<ul>
+<li>まじめにハンドリングするなら，他のと連携する必要がある</li>
+</ul>
+</li>
+<li>apiが気がつけば落ちてる時があって，原因がよく分からない</li>
+<li>Fluentdのハンドラがコミュニティプラグインになかったので<a href="https://github.com/sensu/sensu-community-plugins/blob/master/handlers/notification/fluentd.rb">書いた</a></li>
+</ul>
+
+
+<p>「FluentdかSensuかどっちかに寄せたい」みたいな記事を誰かが書いてた記憶があるけど，何となく分かる．
+Fluentdのプラグイン機構でSensuのクライアント周りの機構はよりロバストに実装出来る．<br />
+コアの機能は結構シンプルなので，visualizationまで考えるとどうしたもんかという感じ．</p>
+
+<p>Sensuはモニタリングのためのフレームワークなのでその辺の機能が中心に開発されてるけど，
+そこの尖った部分が必要でなければ，RabbitMQとかと相まって結構大がかりにも見える．<br />
+Nagiosとかは使ったことはないので，その辺と違ってどこまでメリットがあるのかはよく分かってないけど，
+新しく作るシステムで一からモニタリングシステムを構築するなら十分有り．</p>
+
+<p>仕組み的には柔軟でAPIとかで管理も楽に出来るようになってるので，今後ユーザは増えそうな気もしている．
+しかしRabbitMQとRedisの二つ必要なのどうにかならないものか…</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -343,106 +431,6 @@ Workerで処理がどう進むかとかその辺の話．Splitsやそれぞれ�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2014/01/cross-2014/">CROSS 2014</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-18T23:57:00+09:00" pubdate data-updated="true">Jan 18<span>th</span>, 2014</time>
-        
-         | <a href="/ja/2014/01/cross-2014/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.cross-party.com/">CROSS 2014</a>というイベントがあり，
-<a href="http://www.cross-party.com/programs/distributed/">分散処理システムCROSS</a>というセッションのオーナーをやってきた．</p>
-
-<h2>分散処理システムCROSS</h2>
-
-<p>元々はログ収集で1セッションどうか，という話だった．が，
-もうFluentdとかの話は色々な所でやってるし，ここで1時間やってもあんま成果はないだろうということでやめた．
-そもそも日本でFluentd以外のログ収集プロジェクトで深い話を出来る人は希で，探すのがつらい．<br /></p>
-
-<p>その変わり分散処理でも話が来ていたので，そっち側でどうにかやることにした．
-分散処理だとなんかアルゴリズムとかそっち系の色が強くなりそうなので，とりあえずシステムをつけた．</p>
-
-<h3>メンバ</h3>
-
-<p>@oza_x86，@kuenishi，@shot6の三人にお願いした．時間を作って頂いてありがとうございました！
-人選に関しては，少し前にTwitterでつぶやいたけど，以下のような感じで選んだ．</p>
-
-<ul>
-<li>分散処理システムを研究・開発している人</li>
-<li>分散処理システムを開発・販売している人</li>
-<li>分散処理システムを運用・サービスとして展開している人</li>
-<li>分散処理システムの基盤を運用・提供している人</li>
-</ul>
-
-
-<p>事前打ち合わせの飲み会をやったけど，自己紹介して結局はなんか適当に喋りましょうということに．</p>
-
-<h3>当日</h3>
-
-<p>セッションが始まる前に，Hadoopやデータベースとかの入門的な話には多分ならないし，
-他に面白そうなセッションがあるので〜，と誘導したにも関わらず，なんか結構人が入ってて驚いた！</p>
-
-<p>色々と予防線は張ったものの，個人的には1時間それなりに話題は出せたんじゃないかと思ってます．
-RaftやPaxosのような合意周り，Jepsenなどの分散処理システムの検証ツール，
-Hadoopやその他のシステムの運用的な話，などなど．<br />
-分散処理システムにおけるモデルの検証とかはやはり鬼門なので，今後色々と勉強したい所．</p>
-
-<p>しかしモデレータというのは色々と疲れますね…</p>
-
-<h2>その他のセッション</h2>
-
-<h3>エンジニアの恋・愛・セックスのDevOps、ホントのところどうしたらいいの</h3>
-
-<p>間に合わなくて参加出来なかったが，かなり反響があったセッションっぽい．
-後で録画を見る．</p>
-
-<h3>ぶつかり稽古</h3>
-
-<p>セッションオーナーが登壇しないという酷いセッションだったｗ
-けど内容そのものは，他社のレビュースタイルとか色々と知れて面白かった．</p>
-
-<h3>アンカンファレンス</h3>
-
-<p>Fluentd v11の話で登録したけど，雨の予報でも出社しないと噂の某モリスさんが一人でセッションの時間全部使い切り，
-何も話せなかった．</p>
-
-<h2>まとめ</h2>
-
-<p>去年と違ってRed Bullガールがいないのが残念だった！来年は期待したい．</p>
-
-<p>全体としては，Tシャツや雑誌の新刊も貰えたし，何人かリアルで合えたしで，色々とドタバタしたけど楽しかったので良し．皆さんお疲れ様でした！</p>
-
-<p><img src="/images/cross_2014.jpg" title="&#34;CROSS 2014 photo&#34;" alt="&#34;CROSS 2014 photo&#34;"></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/ja/page/6/">&larr; Older</a>
@@ -460,6 +448,10 @@ Hadoopやその他のシステムの運用的な話，などなど．<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/ja/2015/04/developers-dot-io-2015/">Developers.IO 2015</a>
+      </li>
+    
+      <li class="post">
         <a href="/ja/2015/03/vertica-meetup-1/">第一回 Vertica勉強会</a>
       </li>
     
@@ -473,10 +465,6 @@ Hadoopやその他のシステムの運用的な話，などなど．<br />
     
       <li class="post">
         <a href="/ja/2015/01/serverspec-book/">Serverspec本</a>
-      </li>
-    
-      <li class="post">
-        <a href="/ja/2014/12/inventory-2014/">2014年振り返り</a>
       </li>
     
   </ul>
