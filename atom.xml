@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-04-09T17:49:51+09:00</updated>
+  <updated>2015-04-09T17:52:45+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Developers.IO 2015]]></title>
-    <link href="http://repeatedly.github.com/ja/2015/04/developers-dot-io-2015/"/>
+    <link href="http://repeatedly.github.com/ja/2015/04/developers-io-2015/"/>
     <updated>2015-04-09T17:31:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2015/04/developers-dot-io-2015</id>
+    <id>http://repeatedly.github.com/ja/2015/04/developers-io-2015</id>
     <content type="html"><![CDATA[<p><a href="http://devio2015.classmethod.jp/">Developers.IO 2015 | IoT, BigData, BI. in 3/27(金),29(日)</a></p>
 
 <p>書くの遅れましたが，先月の末に行われたDevelopers.IO 2015で，登壇してました．</p>
