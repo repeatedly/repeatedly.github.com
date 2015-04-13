@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-04-09T17:52:45+09:00</updated>
+  <updated>2015-04-13T23:41:48+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,59 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Fluentdの現実装のPros/Cons]]></title>
+    <link href="http://repeatedly.github.com/ja/2015/04/fluentd-architecture-pros-and-cons/"/>
+    <updated>2015-04-13T23:22:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2015/04/fluentd-architecture-pros-and-cons</id>
+    <content type="html"><![CDATA[<p>TODO: 必要なら図を足す</p>
+
+<h2>内部のイベントストリームの扱い</h2>
+
+<ul>
+<li>Pros: Inputがスケーラブルに実装しやすく，データストリームを正常時/エラー時で切り替えやすい</li>
+<li>Cons: エラーハンドリングがブロッキングモデルよりも複雑になりやすい</li>
+</ul>
+
+
+<p>以下長々と理由書きます．</p>
+
+<p>Fluentdはイベントストリームを効率良く，またロバストに扱うことを目的に設計されています．そのため，独自の転送プロトコル(forwardプラグイン)を実装していますし，内部のイベントのハンドリングもそれに沿うようになっています．ただ，それによって相性の悪い操作とかもあります．</p>
+
+<p>Fluentdはバッファ機能を提供しており，これによって転送の効率化とエラー時のデータロスを防ぐ設計になっています．が，あまりにも書き込み先が遅いなどの問題があると，バッファの制限を超えてしまうことがあります．<br />
+この時，FluentdはInputプラグインにエラーを返します．これによりInputプラグインはさらにエラーを外部にも伝搬させることが出来，forwardプラグインなら再送や，エラーが続くようならセカンダリに流すなどが出来るようになっています．これはデータストリームを流し続けるため，またInputプラグインがブロックせずに大量の入力を扱えるようにするため，こうなっています．</p>
+
+<p>このモデルは，データがストリームではない過去ログの一括転送などと少し相性が悪いです(例えばtail -> elasticsearch)．Elasticsearchの時によく問題に当たるのですが，Elasticsearchは1台だと受け付けられるデータ量はそれほど多くなく，大量の過去ログを一気に送ろうとするとOutputプラグインのフラッシュ処理が追いつかなくなり，結果バッファが溜まっていきリミットを越えInput側にエラーが返り続けることになります(tailの場合はひたすらリトライ)．</p>
+
+<p>一方，Elasticsearchと一緒によく使われるLogstashはFluentdとは違うアプローチをとっています．内部には長さ固定のブロッキングキュー(Outputのバッファではない)がInputとOutputの間に存在しており，Inputはそのキューがあくまで処理がブロックします．<br />
+そのため，上記のような過去ログの転送などでは，キューが空くまで読み込み処理は行われないのでOutput側が詰まっても，問題なくいずれは完走します．その変わりブロックしているため，外部からデータが送られてくるようなケースにおいては，このブロックがどんどん伝搬していくので，大量の入力を捌くのが難しくなります．</p>
+
+<p>この辺に関しては最近のイベントでも言及されてました(ここで言われているログが抜ける云々はInput側の問題ではなくて，ESが高負荷になりすぎてES側でrejectされてるんだと思います．<a href="https://www.elastic.co/blog/performance-considerations-elasticsearch-indexing">この記事</a>参照)．</p>
+
+<blockquote class="twitter-tweet" lang="en"><p>fluentdは日本では流行ってるけど、キューがあふれるとキューに入りきらなかったログが抜けることがある、logstashなら大丈夫なので、大量の過去ログ投入するといはlogstashがおすすめ。 <a href="https://twitter.com/hashtag/jdt54?src=hash">#jdt54</a> <a href="https://twitter.com/hashtag/JavaDayTokyo?src=hash">#JavaDayTokyo</a></p>&mdash; mogami (@smogami) <a href="https://twitter.com/smogami/status/585713225800495105">April 8, 2015</a></blockquote>
+
+
+<script async src="http://repeatedly.github.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p>これらのモデルの差は</p>
+
+<ul>
+<li>Fluentdはロバストなログ転送をするために</li>
+<li>Logstashはログの管理をするために(昔はそれほどES/Kibanaと密結合していなかったはず)</li>
+</ul>
+
+
+<p>という出生の違いによって生まれているのかなぁと思っています．</p>
+
+<p>実のところFluentdで過去ログを転送している人はいて大きな問題にはなってないのですが，どうしてもキャパシティが足りないところに無理にやろうとすると，上記のElasticsearchのような問題が起きたりするので気をつけましょうという感じです(一括転送専用にバッファをチューニングするのは面倒だったりしますし…)．</p>
+
+<p>今だと<a href="http://www.embulk.org/docs/">Embulk</a>があるので，大量データの一括転送はそちらを使ってくださいという流れになりますが，ブロックする挙動があっても損はないとは思うので，うまくバッファのAPIが整備出来れば，back-pressureっぽい機能は入れようかとは思ったりはしてます(<a href="https://github.com/fluent/fluentd/issues/567">fluent/fluentd #569</a>)．</p>
+
+<p>今回はFluentdとLogstashしか言及してませんが，他にもいくつかログ収集のプロダクトは存在しているので，上記のイベントのライフサイクルや，転送プロトコルでどういうセマンティクスがあるのかなどは，使う場合には一通りチェックした方が良いと思います．</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Developers.IO 2015]]></title>
@@ -1716,50 +1769,6 @@ Multi OS feature has been enabled for <a href="https://github.com/fluent/fluentd
 <p><a href="https://travis-ci.org/fluent/fluentd/builds/25147077">fluent/fluentd on Travis CI</a></p>
 
 <p>This is very useful for checking commit and PR. Thanks Travis CI and Facebook team!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[The status of Cool.io]]></title>
-    <link href="http://repeatedly.github.com/2014/05/the-status-of-coolio/"/>
-    <updated>2014-05-06T02:55:00+09:00</updated>
-    <id>http://repeatedly.github.com/2014/05/the-status-of-coolio</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/tarcieri/cool.io">Cool.io</a> was revived after I became a maintainer. This article describes the current stauts and future work of Cool.io.</p>
-
-<p>Cool.io is a core of <a href="http://fluentd.org/">Fluentd</a> so I am focusing Fluentd related features.</p>
-
-<h2>Windows support</h2>
-
-<p>Cool.io is the one of blocker for Fluentd Windows support. Since version 1.2, Cool.io works on Windows and I release mingw based cross-compiling gem for Windows environment.</p>
-
-<p>You can now use Cool.io via <code>gem install cool.io</code> on Windows and we started to implement <a href="https://github.com/fluent/fluentd/tree/windows">Windows support of Fluentd</a>.</p>
-
-<h3>The limitation on Windows</h3>
-
-<p>Cool.io uses <code>select</code> on Windows, not IOCP. In this result, the performance isn&#8217;t better than other environments.
-This limitation is of little concern in Fluentd forward use-case.</p>
-
-<h2>JRuby support</h2>
-
-<p>Fluentd works on CRuby and Rubinius. If support JRuby, Fluentd will work on almost popular Ruby environemnts.</p>
-
-<p>Since May 2014, <a href="https://github.com/taichi">@taichi</a> started to implement <a href="https://github.com/tarcieri/cool.io/issues/32">JRuby support</a>. @taichi has experience with Java and evented IO frameworks so he is a good person for this task ;)</p>
-
-<h2>Remove Ruby 1.8 support</h2>
-
-<p>Ruby 1.8 is dead language so Cool.io removes 1.8 support since version 1.2.</p>
-
-<h2>Remove HttpClient</h2>
-
-<p>AFAIK, there is no HttpClient users including Fluentd. This class depends on Ragel to parse HTTP. It increases the maintenance cost and hard to support on cross platform.</p>
-
-<p>So HttpClient will not be maintained in the future.</p>
-
-<h2>Conclusion</h2>
-
-<p>Cool.io isn&#8217;t dead and Cool.io is still improved. We are now working on more better environment support and fixing the bugs.</p>
-
-<p>If you have a bug of Cool.io, then please file it on github :)</p>
 ]]></content>
   </entry>
   
