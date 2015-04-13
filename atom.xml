@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-04-14T02:41:49+09:00</updated>
+  <updated>2015-04-14T02:50:22+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -18,8 +18,13 @@
     <link href="http://repeatedly.github.com/ja/2015/04/fluentd-architecture-pros-and-cons/"/>
     <updated>2015-04-13T23:22:00+09:00</updated>
     <id>http://repeatedly.github.com/ja/2015/04/fluentd-architecture-pros-and-cons</id>
-    <content type="html"><![CDATA[<p>TODO: 必要なら図を足す
-TODO: 他に書いた方が良いPros/Consがあったら追記</p>
+    <content type="html"><![CDATA[<p>TODO:</p>
+
+<ul>
+<li>必要なら図を足す</li>
+<li>他に書いた方が良いPros/Consのリクエストがあったら追記</li>
+</ul>
+
 
 <h2>内部のイベントストリームの扱い</h2>
 
