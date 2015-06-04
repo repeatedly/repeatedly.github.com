@@ -9,8 +9,8 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Presto ソースコードリーディング #4 いつものようにLINEでやりました！ @frsyukiが帰国する前に，という流れで開催決定・募集が1週間前というタイトなスケジュールでしたが，
-無茶ぶりにつきあってくれた@ueshinさんに感謝． 当日の内容 togetterのまとめを見れば， &hellip;">
+  <meta name="description" content="fluent-plugin-http-puma 標準で入っているin_httpとは違って，Pumaと呼ばれるWebサーバベースのHTTP(S)でのリクエストを受け付けるInputプラグイン書きました． 使い方 fluent-gemでインストール． 1
+$ fluent-gem install &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,6 +70,143 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2014/07/release-fluent-plugin-http-puma/">Release fluent-plugin-http-puma</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-20T18:42:00+09:00" pubdate data-updated="true">Jul 20<span>th</span>, 2014</time>
+        
+         | <a href="/ja/2014/07/release-fluent-plugin-http-puma/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/repeatedly/fluent-plugin-http-puma">fluent-plugin-http-puma</a></p>
+
+<p>標準で入っているin_httpとは違って，Pumaと呼ばれるWebサーバベースのHTTP(S)でのリクエストを受け付けるInputプラグイン書きました．</p>
+
+<h2>使い方</h2>
+
+<p>fluent-gemでインストール．</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ fluent-gem install fluent-plugin-http-puma</span></code></pre></td></tr></table></div></figure>
+
+
+<p>in_httpとほぼ同じように動きますが，独自でHTTPリクエストをパースしてないので，keepaliveやボディサイズチェック用のオプションはありません．その代わりPuma関係のオプションが増えてます(<a href="https://github.com/repeatedly/fluent-plugin-http-puma#configuration">README参照</a>)．<br />
+一番の違いは，HTTPSをサポートしている所です．<code>use_ssl</code>と<code>ssl_keys</code>を使うことで，HTTPSとして立ち上がります．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> http_puma
+</span><span class='line'>
+</span><span class='line'>  <span class="err">use_</span><span class="nb">ssl</span>
+</span><span class='line'>  ssl_keys [<span class="s2">&quot;/path/to/key&quot;</span>, <span class="s2">&quot;/path/to/cert&quot;</span>]
+</span><span class='line'><span class="nt">&lt;/source&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>パフォーマンス</h2>
+
+<p>手元のMBPで試して見たら，HTTPはin_httpより少し速かった．HTTPSは当たり前ですがｶﾞｸｯと落ちます．</p>
+
+<p>クライアントはRubyの<code>net/http</code>を使って，小さめのjsonを<code>application/json</code>で送ってます．</p>
+
+<ul>
+<li>in_http</li>
+</ul>
+
+
+<p>平均2400 events/secくらい．</p>
+
+<pre><code>2014-07-20 19:02:30 +0900 [info]: plugin:out_flowcounter_simple count:2318      indicator:num   unit:second
+2014-07-20 19:02:31 +0900 [info]: plugin:out_flowcounter_simple count:2420      indicator:num   unit:second
+2014-07-20 19:02:32 +0900 [info]: plugin:out_flowcounter_simple count:2383      indicator:num   unit:second
+2014-07-20 19:02:33 +0900 [info]: plugin:out_flowcounter_simple count:2399      indicator:num   unit:second
+2014-07-20 19:02:34 +0900 [info]: plugin:out_flowcounter_simple count:2382      indicator:num   unit:second
+</code></pre>
+
+<ul>
+<li>in_http_puma</li>
+</ul>
+
+
+<p>平均2500 events/secくらい．Ojを使ったらもっと速くなるかと思ったけど，ほぼ誤差の範囲だった．</p>
+
+<pre><code>2014-07-20 19:01:12 +0900 [info]: plugin:out_flowcounter_simple count:2472      indicator:num   unit:second
+2014-07-20 19:01:13 +0900 [info]: plugin:out_flowcounter_simple count:2550      indicator:num   unit:second
+2014-07-20 19:01:14 +0900 [info]: plugin:out_flowcounter_simple count:2294      indicator:num   unit:second
+2014-07-20 19:01:15 +0900 [info]: plugin:out_flowcounter_simple count:2537      indicator:num   unit:second
+2014-07-20 19:01:16 +0900 [info]: plugin:out_flowcounter_simple count:2538      indicator:num   unit:second
+</code></pre>
+
+<ul>
+<li>in_http_puma with VERIFY_NONE client</li>
+</ul>
+
+
+<p>平均400 events/secくらい．けどVERIFY_NONEはほとんど本番では使われないので参考程度．</p>
+
+<pre><code>2014-07-20 19:04:06 +0900 [info]: plugin:out_flowcounter_simple count:406       indicator:num   unit:second
+2014-07-20 19:04:07 +0900 [info]: plugin:out_flowcounter_simple count:365       indicator:num   unit:second
+2014-07-20 19:04:08 +0900 [info]: plugin:out_flowcounter_simple count:400       indicator:num   unit:second
+2014-07-20 19:04:09 +0900 [info]: plugin:out_flowcounter_simple count:399       indicator:num   unit:second
+2014-07-20 19:04:10 +0900 [info]: plugin:out_flowcounter_simple count:400       indicator:num   unit:second
+</code></pre>
+
+<ul>
+<li>in_http_puma with VERIFY_PEER client</li>
+</ul>
+
+
+<p>平均320 events/secくらい．高負荷環境で無ければ大丈夫かな…？</p>
+
+<pre><code>2014-07-20 19:05:18 +0900 [info]: plugin:out_flowcounter_simple count:329       indicator:num   unit:second
+2014-07-20 19:05:19 +0900 [info]: plugin:out_flowcounter_simple count:327       indicator:num   unit:second
+2014-07-20 19:05:20 +0900 [info]: plugin:out_flowcounter_simple count:327       indicator:num   unit:second
+2014-07-20 19:05:21 +0900 [info]: plugin:out_flowcounter_simple count:325       indicator:num   unit:second
+2014-07-20 19:05:22 +0900 [info]: plugin:out_flowcounter_simple count:326       indicator:num   unit:second
+</code></pre>
+
+<h2>まとめ</h2>
+
+<p>モダンと言われるPumaってどんなもんなんだろう？と調べてたら，HTTPSを標準でサポートしてるし，ライブラリとしても簡単に使えそうだったので試して見たら，それなりにパフォーマンスが出たので公開してみたという感じです．<br />
+Pumaなので，今後FluentdがJRubyとかサポートしても普通にそのまま使えると思います．</p>
+
+<p>実際HTTPSを処理するならFluentdの前にNginxとかを置いた方が良いのだけど，バックエンドでも通信はHTTPSでやってるとかなんか縛りがあるような環境では，手軽に使えるのではないかと思います．</p>
+
+<p>何かあれば<a href="https://github.com/repeatedly/fluent-plugin-http-puma">issue/pull request</a>に投げてもらえれば対応します．</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -419,83 +556,6 @@ Pull Requestのおかげもあり，対応templateも少し増えてます．</p
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2014/03/sapporo-2014-winter/">札幌 2014 冬</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-22T15:41:00+09:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2014</time>
-        
-         | <a href="/ja/2014/03/sapporo-2014-winter/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>二つのイベントに参加するため，札幌に行ってました．</p>
-
-<h2><a href="http://www.hicta.or.jp/index_oshirase_detail.php?id=624">技術セミナー２０１４～ビッグデータ時代のＩＴシーズ～</a></h2>
-
-<p>北海道IT推進協会さまのイベントで，ビッグデータとかデータ解析周りについてクラウド要素も含めて，ビジネス的な話をしてきました．
-参加者に経営者の方も多い感じだったので，なるべく技術的な用語は使わないよう心がけて講演．</p>
-
-<p>いつもとは違う雰囲気の中での講演で，こういうのも勉強になって良いかなと．</p>
-
-<h2><a href="http://connpass.com/event/5222/">AWS勉強会 in 北海道札幌！</a></h2>
-
-<p>メインは上のイベントだったのだけど，それだけで北海道を去るのも勿体ないなぁと他のイベントを探していたら</p>
-
-<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p>話す側でお願いしますw <a href="https://twitter.com/repeatedly">@repeatedly</a> あれ，よく見たらクラスメソッドさんの勉強会が次の日にある．これに参加しようかな？ &gt; &quot;AWS勉強会 in 北海道札幌！（懇親会有）&quot; <a href="http://t.co/doSVv4FPb8">http://t.co/doSVv4FPb8</a></p>&mdash; よこたさとし (@sato_shi) <a href="https://twitter.com/sato_shi/statuses/441211073375371264">March 5, 2014</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-<p>とのreplyをもらったので，飛び入りでFluentdについて発表してきました．</p>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/32700881?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/treasure-data/fluentd-and-aws-at-classmethod" title="Fluentd and AWS at classmethod" target="_blank">Fluentd and AWS at classmethod</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
-
-<p>Fluentd利用者も少なかったので，基本的な動作原理や，Fluentdが有用なユースケース，
-AWSなイベントなのでAWS関係のプラグインの紹介などなど，一通りやった．</p>
-
-<p>懇親会で色々と話を聞いたけど，まだ地方？だとそもそもデータを集めてなかったり，
-データ解析に関しての需要が出てきておらず，Fluentdなどを使う段階になってないとのこと．
-そもそもIT化出来てない会社とかもあるのでまずはそこから，とも<br />
-東京とかだとこの辺の動きが活発だけど，中央以外ではまた違った形で活動しないと，
-「便利なソフトウェアがある！」とかで広めることは出来ないなぁと実感．<br /></p>
-
-<p>色々と考えないと行けないことが増えた感じで，この辺の話を聞けたのは良かった．</p>
-
-<h2>まとめ</h2>
-
-<p><img src="/images/kinki_sushi.jpg" title="&#34;Kinki no Sushi&#34;" alt="&#34;Kinki no Sushi&#34;"></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/ja/page/5/">&larr; Older</a>
@@ -513,6 +573,10 @@ AWSなイベントなのでAWS関係のプラグインの紹介などなど，�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/ja/2015/06/fluentd-meetup-2015-summer/">Fluentd meetup 2015 summer</a>
+      </li>
+    
+      <li class="post">
         <a href="/ja/2015/04/fluentd-architecture-pros-and-cons/">Fluentdの現実装のPros/Cons</a>
       </li>
     
@@ -526,10 +590,6 @@ AWSなイベントなのでAWS関係のプラグインの紹介などなど，�
     
       <li class="post">
         <a href="/ja/2015/02/data-transfer-middleware-meetup/">データ転送ミドルウェア勉強会</a>
-      </li>
-    
-      <li class="post">
-        <a href="/ja/2015/02/presto-meetup-1/">Presto meetup #1</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-04-14T16:07:42+09:00</updated>
+  <updated>2015-06-04T16:10:34+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,38 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Fluentd meetup 2015 summer]]></title>
+    <link href="http://repeatedly.github.com/ja/2015/06/fluentd-meetup-2015-summer/"/>
+    <updated>2015-06-04T16:07:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2015/06/fluentd-meetup-2015-summer</id>
+    <content type="html"><![CDATA[<p><a href="http://eventdots.jp/event/495315">Fluentd Meetup 2015 夏 - 2015/06/01(月) - dots.</a></p>
+
+<p>募集が約2週間前とかなり直近になってしまったんですが，100人以上の方の参加がありました．場所を提供してくれたgloopsさん，受付などサポートしてくれたdots.さん，懇親会などをスポンサーしてくれたTreasure Dataさん，発表者の方々，また当日参加してくれた皆さん，ありがとうございました！</p>
+
+<p>Eduardoが東京の地下迷宮に迷ったりとハプニングも少しありましたが，無事終わって良かったです．fluent-bitのお披露目を兼ねたイベントでしたが，さっそくパッチを送ってくれてる人もいて，正式版リリースはまだですがフィードバックをガンガン貰えればという感じです :)</p>
+
+<p>また，他の方の発表も，Fluentdを単なるログの収集だけではなく，工夫して色々と実現されているのも良い知見になりました．やはりプラグインで柔軟に弄れると，利用の幅が広がって面白いですね．</p>
+
+<p>次は秋か冬辺り，v0.14のお披露目もかねて開催出来ればと思っています．</p>
+
+<h2>Fluentd v0.12 - master guide -</h2>
+
+<p>俺が行った発表はタイトル通りv0.12に関する発表です．</p>
+
+<iframe src="http://repeatedly.github.com//www.slideshare.net/slideshow/embed_code/key/4pNx1vXeqMZNBM" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://repeatedly.github.com//www.slideshare.net/repeatedly/fluentd-v012-master-guide" title="Fluentd v0.12 master guide" target="_blank">Fluentd v0.12 master guide</a> </strong> from <strong><a href="http://repeatedly.github.com//www.slideshare.net/repeatedly" target="_blank">N Masahiro</a></strong> </div></p>
+
+<p>v0.12から追加された機能について，細かいものから目玉機能でもあるFilterやLabel，at-least-onceなどについても再度一から説明した感じになります．</p>
+
+<p>v0.10を使っている方は，このスライドを見ればv0.10とv0.12の差分が分かると思います．td-agent 2.2からは同梱されているFluentdはv0.12になっているので，どんどんFilterとかを使って行きましょう．secretオプションとかは最近入ったばかりなので，次リリースされるtd-agent 2.2.1から使えるようになります :)</p>
+
+<p>他の方のスライドは上に貼った募集ページの&#8221;イベントレポート&#8221;の所にあるので，興味のある方は是非チェックしてみてください！</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Fluentdの現実装のPros/Cons]]></title>
@@ -1758,24 +1790,6 @@ Pull Requestのおかげもあり，対応templateも少し増えてます．</p
 <p>P.S.</p>
 
 <p>フリークアウトさんのオフィスにある，バスケのゴールにダンク出来なかったのが悔しいので，足腰鍛え直す．</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[MultiOS testing for Fluentd repository on Travis CI]]></title>
-    <link href="http://repeatedly.github.com/2014/05/multios-testing-for-fluentd-repository-on-travis-ci/"/>
-    <updated>2014-05-15T14:22:00+09:00</updated>
-    <id>http://repeatedly.github.com/2014/05/multios-testing-for-fluentd-repository-on-travis-ci</id>
-    <content type="html"><![CDATA[<p>Recently, Travis CI announces &#8220;Multi-OS feature&#8221; on their blog.</p>
-
-<p><a href="http://blog.travis-ci.com/2014-05-13-multi-os-feature-available/">Multi-OS Feature Available</a></p>
-
-<p>If this feature is enabled, our project can be tested on both Linux and Mac OS X. <br />
-Multi OS feature has been enabled for <a href="https://github.com/fluent/fluentd/commit/e4bb4f61e91c70a95690d19b07414b485e7a3542">Fluentd repository</a>. See following build:</p>
-
-<p><a href="https://travis-ci.org/fluent/fluentd/builds/25147077">fluent/fluentd on Travis CI</a></p>
-
-<p>This is very useful for checking commit and PR. Thanks Travis CI and Facebook team!</p>
 ]]></content>
   </entry>
   

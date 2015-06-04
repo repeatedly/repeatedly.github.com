@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: book - Go ahead!</title>
+  <title>Fluentd meetup 2015 summer - Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Category: book">
+  <meta name="description" content="Fluentd Meetup 2015 夏 - 2015/06/01(月) - dots. 募集が約2週間前とかなり直近になってしまったんですが，100人以上の方の参加がありました．場所を提供してくれたgloopsさん，受付などサポートしてくれたdots.さん， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.comcategories/book">
+  <link rel="canonical" href="http://repeatedly.github.com/ja/2015/06/fluentd-meetup-2015-summer">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -58,10 +58,8 @@
 
   
 <ul class="main-navigation">
-  <li><a href="/">Home</a></li>
-  <li><a href="/works">Works</a></li>
-  <li><a href="/archives">Archives</a></li>
-  <li><a href="/ja">Japanese</a></li>
+  <li><a href="/ja/archives">Archives</a></li>
+  <li><a href="/">English</a></li>
 </ul>
 
   
@@ -70,36 +68,118 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: book</h1>
+    
+      <h1 class="entry-title">Fluentd meetup 2015 summer</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-04T16:07:00+09:00" pubdate data-updated="true">Jun 4<span>th</span>, 2015</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p><a href="http://eventdots.jp/event/495315">Fluentd Meetup 2015 夏 - 2015/06/01(月) - dots.</a></p>
 
-  
-  <h2>2012</h2>
+<p>募集が約2週間前とかなり直近になってしまったんですが，100人以上の方の参加がありました．場所を提供してくれたgloopsさん，受付などサポートしてくれたdots.さん，懇親会などをスポンサーしてくれたTreasure Dataさん，発表者の方々，また当日参加してくれた皆さん，ありがとうございました！</p>
 
-<article>
-  
-<h1><a href="/2012/12/published-introduction-to-tornado-in-japan/">Published 'Introduction to Tornado' in Japan</a></h1>
-<time datetime="2012-12-25T03:59:00+09:00" pubdate><span class='month'>Dec</span> <span class='day'>25</span> <span class='year'>2012</span></time>
+<p>Eduardoが東京の地下迷宮に迷ったりとハプニングも少しありましたが，無事終わって良かったです．fluent-bitのお披露目を兼ねたイベントでしたが，さっそくパッチを送ってくれてる人もいて，正式版リリースはまだですがフィードバックをガンガン貰えればという感じです :)</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/categories/book/'>book</a>, <a class='category' href='/categories/tornado/'>tornado</a></span>
-</footer>
+<p>また，他の方の発表も，Fluentdを単なるログの収集だけではなく，工夫して色々と実現されているのも良い知見になりました．やはりプラグインで柔軟に弄れると，利用の幅が広がって面白いですね．</p>
+
+<p>次は秋か冬辺り，v0.14のお披露目もかねて開催出来ればと思っています．</p>
+
+<h2>Fluentd v0.12 - master guide -</h2>
+
+<p>俺が行った発表はタイトル通りv0.12に関する発表です．</p>
+
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/4pNx1vXeqMZNBM" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
 
 
-</article>
+<p> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/repeatedly/fluentd-v012-master-guide" title="Fluentd v0.12 master guide" target="_blank">Fluentd v0.12 master guide</a> </strong> from <strong><a href="//www.slideshare.net/repeatedly" target="_blank">N Masahiro</a></strong> </div></p>
 
+<p>v0.12から追加された機能について，細かいものから目玉機能でもあるFilterやLabel，at-least-onceなどについても再度一から説明した感じになります．</p>
+
+<p>v0.10を使っている方は，このスライドを見ればv0.10とv0.12の差分が分かると思います．td-agent 2.2からは同梱されているFluentdはv0.12になっているので，どんどんFilterとかを使って行きましょう．secretオプションとかは最近入ったばかりなので，次リリースされるtd-agent 2.2.1から使えるようになります :)</p>
+
+<p>他の方のスライドは上に貼った募集ページの&#8221;イベントレポート&#8221;の所にあるので，興味のある方は是非チェックしてみてください！</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Masahiro Nakagawa</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-04T16:07:00+09:00" pubdate data-updated="true">Jun 4<span>th</span>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/fluentd/'>fluentd</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2015/06/fluentd-meetup-2015-summer/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2015/06/fluentd-meetup-2015-summer/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/ja/2015/04/fluentd-architecture-pros-and-cons/" title="Previous Post: Fluentdの現実装のPros/Cons">&laquo; Fluentdの現実装のPros/Cons</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -200,7 +280,10 @@
       var disqus_shortname = 'repeatedly';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://repeatedly.github.com/ja/2015/06/fluentd-meetup-2015-summer/';
+        var disqus_url = 'http://repeatedly.github.com/ja/2015/06/fluentd-meetup-2015-summer/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
