@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-06-04T16:10:34+09:00</updated>
+  <updated>2015-06-19T18:48:02+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,26 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[YAPC::Asia 2015 talk]]></title>
+    <link href="http://repeatedly.github.com/ja/2015/06/yapc-asia-2015-talk/"/>
+    <updated>2015-06-19T16:15:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2015/06/yapc-asia-2015-talk</id>
+    <content type="html"><![CDATA[<p><a href="http://yapcasia.org/2015/">YAPC::Asia 2015</a>が8月にあるんですが，最後ということでトークをサブミットしてみました．</p>
+
+<p><a href="http://yapcasia.org/2015/talk/show/dd8ce20e-fad2-11e4-b6e7-8ab37d574c3a">データ分析基盤を支える技術 - YAPC::Asia Tokyo 2015</a></p>
+
+<p>Abstractに書いてあるとおり，そんな感じの話を60分かけてします．
+各ソフトウェアとかの詳細に言及すると60分に収まらないので，深い話とかは
+別途飲み会とかでしましょう(トークが落ちてもちゃんと参加します！)．</p>
+
+<p><a href="https://teppeis.github.io/yapc-talk-ranking/">YAPC::Asia Tokyo 2015 Talk Ranking</a></p>
+
+<p>現在30位前後で受かるかわかりませんが，聞きたいトークがいくつかあるので，
+裏番組にならないことを祈るばかりです&#8230;(-人-)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Fluentd meetup 2015 summer]]></title>
@@ -1746,50 +1766,6 @@ Pull Requestのおかげもあり，対応templateも少し増えてます．</p
 
 
 <p>他，何か要望があれば<a href="https://github.com/repeatedly/fluent-plugin-netflow">issue/pull request</a>をしてもらえれば対応します．</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Fluentd v1 and Roadmapというプレゼンをしてきた]]></title>
-    <link href="http://repeatedly.github.com/ja/2014/05/fluentd-v1-and-roadmap/"/>
-    <updated>2014-05-15T18:55:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2014/05/fluentd-v1-and-roadmap</id>
-    <content type="html"><![CDATA[<p><a href="http://eventdots.jp/event/49560">Fluentd Meetup 新しい応用事例とv1に関する発表</a></p>
-
-<p>フリークアウトさんのオフィスでFluentd Meetupがあり，Fluentdのv1について話してきました．</p>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/34652297?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/treasure-data/fluentd-v1-and-roadmap" title="Fluentd v1 and Roadmap" target="_blank">Fluentd v1 and Roadmap</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
-
-<p>今回の発表は，今までのv11やv1に関してのまとめ的な発表になっています．<br />
-以下のリンク集を見れば，発表内容の大抵はカバー出来ると思います．
-また，他の方もまとめ記事とかを書かれているので，そちらも参照してください．</p>
-
-<ul>
-<li><a href="http://repeatedly.github.io/ja/2014/03/about-fluentd-v11/">そろそろFluentd v11についてひとこと言っておくか</a></li>
-<li><a href="https://github.com/fluent/fluentd/issues/251">Plan for v1 release #251</a></li>
-<li><a href="https://github.com/fluent/fluentd/issues/317">Support JRuby #317</a></li>
-<li><a href="https://github.com/fluent/fluentd/tree/windows">FluentdのWindowsブランチ</a></li>
-<li><a href="https://github.com/fluent/fluentd/pull/293">Add &#8211;use-v1-config option to enable new configuration format #293</a></li>
-<li><a href="https://github.com/repeatedly/omnibus-td-agent">td-agent2のパッケージリポジトリ</a></li>
-</ul>
-
-
-<p>俺の方から言えることは，Fluentd v0.10.46以降を使っている方は，
-積極的に<code>--use-v1-config</code>オプションを使ってくださいということです．<br />
-既存のフォーマットとの違いは<a href="http://docs.fluentd.org/articles/config-file#v1-format">ドキュメントを参照</a>してください．</p>
-
-<p>td-agent2は今ビルド中で，今週末あたりにリリースしたいと思ってます(パッケージングツールをアップデートしたら色々と壊れて無駄に時間が…)．
-それ以降はv1にリソースを割けるはずなので，フィルタやラベルなどを実装していく予定です．ご期待ください！</p>
-
-<p>また，Treasure DataはFluentdの開発者含め<a href="http://www.treasuredata.com/jp/about/careers.php">人材を募集している</a>ので，
-興味のある方はぜひぜひコンタクトをしてもらえればと思います！</p>
-
-<p>P.S.</p>
-
-<p>フリークアウトさんのオフィスにある，バスケのゴールにダンク出来なかったのが悔しいので，足腰鍛え直す．</p>
 ]]></content>
   </entry>
   

@@ -9,7 +9,8 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Presto meetup 1月20日に第一回をやりました！キャンセルも少なめで，イベント参加100人強，懇親会が80人くらいでした．予想の倍以上集まった感じで，Prestoも注目されてるんだなと実感したイベントでした． 今回は基本から始まり，それぞれ今使っている人達に，運用の話， &hellip;">
+  <meta name="description" content="データ転送ミドルウェア勉強会
+「データ転送ミドルウェア勉強会」レポート #dtm_meetup 「古橋君がアメリカに帰る前にEmbulkのリリースイベントしちゃうか〜」というノリで1日で立ち上げたイベントでしたが，めちゃくちゃ人が集まって正直驚きでした． Embulk以外にも， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +70,61 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2015/02/data-transfer-middleware-meetup/">データ転送ミドルウェア勉強会</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-02T17:00:00+09:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2015</time>
+        
+         | <a href="/ja/2015/02/data-transfer-middleware-meetup/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li><a href="http://eventdots.jp/event/312015">データ転送ミドルウェア勉強会</a></li>
+<li><a href="http://dev.classmethod.jp/tool/dtm_meetup/">「データ転送ミドルウェア勉強会」レポート #dtm_meetup</a></li>
+</ul>
+
+
+<p>「古橋君がアメリカに帰る前にEmbulkのリリースイベントしちゃうか〜」というノリで1日で立ち上げたイベントでしたが，めちゃくちゃ人が集まって正直驚きでした．</p>
+
+<p>Embulk以外にも，ファイル転送のドンであるHULFTの機能や20年以上つづく開発のアレコレ，Fluentdのv1までのバージョニングと実装予定の機能の説明，そしてHTTP2対応ウェブサーバであるh2oの話，などなど結構バラエティに富んだイベントになったんじゃないかと思っています．</p>
+
+<p>質疑応答や懇親会でEmbulkに色々とフィードバックがあったり，その後触ってもらってバグ報告などもらったりして，イベントをやった甲斐があったなと実感してます．要望の多かったresume機能などもさっそく実装が始まっているので，随時チェックしてもらえればと思います．<br />
+また，FluentdとEmbulkの関係みたいなものも，別途記事にする予定です．</p>
+
+<p>データ転送ミドルウェア勉強会みたいなイベント，結構需要があるようなので，また色々と開いて行きたいと思っています．</p>
+
+<p>会場をかしてくれたSAP Japan，会場手配などをしてくれたdots，懇親会をスポンサーしてくれたTreasure Data，発表者の方々，また参加者の方々，皆さんお疲れ様でした！</p>
+
+<p>スライドは上記に貼ってある&#8221;「データ転送ミドルウェア勉強会」レポート #dtm_meetup&#8221;でまとめられているので，気になる方は参照してみてください！</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -411,101 +467,6 @@ v1に向けて，とりあえず年末に<a href="http://qiita.com/repeatedly/it
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2014/09/serverengine-at-rubykaigi-2014/">ServerEngine at RubyKaigi 2014</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-22T00:03:00+09:00" pubdate data-updated="true">Sep 22<span>nd</span>, 2014</time>
-        
-         | <a href="/ja/2014/09/serverengine-at-rubykaigi-2014/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://rubykaigi.org/2014">RubyKaigi 2014</a>で<a href="http://rubykaigi.org/2014/presentation/S-MasahiroNakagawa">ServerEngineについて発表</a>してきました．</p>
-
-<p>最初は<a href="http://www.fluentd.org/">Fluentd</a>で発表しようかと思ったんですが，別の有用なプロジェクトの話もそろそろした方がいいかな，ということでServerEngineにしました． <a href="http://blog.livedoor.jp/sonots/archives/40303560.html">@sonotsさんがFluentdの発表をしてくれた</a>ので，被らなくて良かった…</p>
-
-<p><img src="/images/rubykaigi2014_serverengine_pic.jpg" width="425" title="&#34;RubyKaigi 2014: ServerEngine&#34;" alt="&#34;RubyKaigi 2014: ServerEngine&#34;">
-画像は<a href="https://twitter.com/gihyoreport/status/512867195504701440/photo/1">技評さんから</a>．</p>
-
-<p>以下がスライドです．書いてないことも発表では色々と話したので，動画もセットで見た方が良いです．</p>
-
-<iframe src="//www.slideshare.net/slideshow/embed_code/39292931" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/treasure-data/rubykaigi-2014-serverengine" title="RubyKaigi 2014: ServerEngine" target="_blank">RubyKaigi 2014: ServerEngine</a> </strong> from <strong><a href="//www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
-
-<iframe width="560" height="315" src="//www.youtube.com/embed/_f7XEDvnZIU?list=UUBSg5zH-VFJ42BGQFk4VH2A" frameborder="0" allowfullscreen></iframe>
-
-
-<h2>ServerEngine</h2>
-
-<p><a href="https://github.com/fluent/serverengine">fluent/serverengine</a></p>
-
-<p>ServerEngineはTreasure Dataで開発・運用されている分散キューや分散スケジューラ，それとFluentdなどの経験を元に，汎用的な部分を抽出してフレームワークにしたプロダクトです．発表で言及した機能の他にもBlockingFlagなどのユーティリティがあるので，Rubyでデーモンやバッチワーカーを書くときには是非試して貰えればと思います．</p>
-
-<p>また，FluentdもいずれはServerEngineベースになる予定です．今でもServerEngineと似たような機能を俺俺で実装しているのですが，ServerEngineにすることでよりコードは簡潔に，また新しい機能も実装出来るようになります．この辺は乞うご期待という感じです．</p>
-
-<h2>発表に関して</h2>
-
-<p>1週間前に台北で英語でのキーノートがあり，直前まで時間が取れませんでした．台北後にひたすらスライドを作り，前日にやっと完成という，かなり際どいスケジュール．</p>
-
-<p>本番どうかなと思ったんですが，時間進行を見ながら一部詳細を飛ばしたり，メインホールだったけどそんなに詰まることなく発表出来たんじゃないかなと思います．ここ数年は色々と大きいイベントでの発表も増え，それらの経験のおかげか，日本語であればそれなりにこなせるようになってきたかなと実感してます．</p>
-
-<p>また，Railsとか関係のない，どちらかというと地味というか泥臭い感じの話が多めだったんですが，何人かには受けたようで，良かったです．</p>
-
-<blockquote class="twitter-tweet" lang="en"><p><a href="https://twitter.com/repeatedly">@repeatedly</a> 今年のセッションの中でトップクラスなぐらい良いセッションでした</p>&mdash; 複数DB (@ryopeko) <a href="https://twitter.com/ryopeko/status/512867029565460480">September 19, 2014</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-
-
-<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p><a href="https://twitter.com/repeatedly">@repeatedly</a> よかったですよ！数年前にあれば、あの時苦労しなくてもよかったのに…と思ってしまいました</p>&mdash; Toshiwo (@toshiwo) <a href="https://twitter.com/toshiwo/status/512879201326596097">September 19, 2014</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-
-
-<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p><a href="https://twitter.com/repeatedly">@repeatedly</a> BTW, your talk was great and ServerEngine is cool. Thanks!</p>&mdash; Hiroshi Nakamura (@nahi) <a href="https://twitter.com/nahi/status/513213969855565824">September 20, 2014</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-<p>聞きに来てくれた皆さん，手伝ってくれたスタッフ，そして同時通訳の方々，ありがとうございました！！</p>
-
-<p>とりあえず8月9月のイベントラッシュが終わった感じなので，少しのんびりしたい…んだけど，11月のRubyConfで<a href="http://rubyconf.org/program#prop_569">kiyoto-sanがFluentdについて発表する</a>ようなので，俺も参加しているかもしれません．</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/ja/page/3/">&larr; Older</a>
@@ -523,6 +484,10 @@ v1に向けて，とりあえず年末に<a href="http://qiita.com/repeatedly/it
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/ja/2015/06/yapc-asia-2015-talk/">YAPC::Asia 2015 talk</a>
+      </li>
+    
+      <li class="post">
         <a href="/ja/2015/06/fluentd-meetup-2015-summer/">Fluentd meetup 2015 summer</a>
       </li>
     
@@ -536,10 +501,6 @@ v1に向けて，とりあえず年末に<a href="http://qiita.com/repeatedly/it
     
       <li class="post">
         <a href="/ja/2015/03/vertica-meetup-1/">第一回 Vertica勉強会</a>
-      </li>
-    
-      <li class="post">
-        <a href="/ja/2015/02/data-transfer-middleware-meetup/">データ転送ミドルウェア勉強会</a>
       </li>
     
   </ul>
