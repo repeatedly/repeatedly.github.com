@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>CROSS 2014 - Go ahead!</title>
+  <title>YAPC::Asia Tokyo 2015での発表 - Go ahead!</title>
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="CROSS 2014というイベントがあり，
-分散処理システムCROSSというセッションのオーナーをやってきた． 分散処理システムCROSS 元々はログ収集で1セッションどうか，という話だった．が，
-もうFluentdとかの話は色々な所でやってるし， &hellip;">
+  <meta name="description" content="YAPC::Asia Tokyo 2015 今年で最後となるYAPC::Asia Tokyoで，データ分析基盤まわりについて発表してきました．部屋は満席だったようで，聞きに来てくれた皆さん，ありがとうございました． データ分析基盤を支える技術 - YAPC::Asia Tokyo 2015 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://repeatedly.github.com/ja/2014/01/cross-2014">
+  <link rel="canonical" href="http://repeatedly.github.com/ja/2015/08/yapc-asia-tokyo-2015-presentation">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -74,7 +72,7 @@
   
   <header>
     
-      <h1 class="entry-title">CROSS 2014</h1>
+      <h1 class="entry-title">YAPC::Asia Tokyo 2015での発表</h1>
     
     
       <p class="meta">
@@ -90,7 +88,7 @@
   
 
 
-<time datetime="2014-01-18T23:57:00+09:00" pubdate data-updated="true">Jan 18<span>th</span>, 2014</time>
+<time datetime="2015-08-24T05:03:00+09:00" pubdate data-updated="true">Aug 24<span>th</span>, 2015</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -99,69 +97,27 @@
   </header>
 
 
-<div class="entry-content"><p><a href="http://www.cross-party.com/">CROSS 2014</a>というイベントがあり，
-<a href="http://www.cross-party.com/programs/distributed/">分散処理システムCROSS</a>というセッションのオーナーをやってきた．</p>
+<div class="entry-content"><p><a href="http://yapcasia.org/2015/">YAPC::Asia Tokyo 2015</a></p>
 
-<h2>分散処理システムCROSS</h2>
+<p>今年で最後となるYAPC::Asia Tokyoで，データ分析基盤まわりについて発表してきました．部屋は満席だったようで，聞きに来てくれた皆さん，ありがとうございました．</p>
 
-<p>元々はログ収集で1セッションどうか，という話だった．が，
-もうFluentdとかの話は色々な所でやってるし，ここで1時間やってもあんま成果はないだろうということでやめた．
-そもそも日本でFluentd以外のログ収集プロジェクトで深い話を出来る人は希で，探すのがつらい．<br /></p>
+<p><a href="http://yapcasia.org/2015/talk/show/dd8ce20e-fad2-11e4-b6e7-8ab37d574c3a">データ分析基盤を支える技術 - YAPC::Asia Tokyo 2015</a>
+<a href="http://togetter.com/li/863876">これが今どきのデータ解析基盤だ！初心者のためのデータ解析講座 #yapcasia #yapcasiaD - Togetterまとめ</a></p>
 
-<p>その変わり分散処理でも話が来ていたので，そっち側でどうにかやることにした．
-分散処理だとなんかアルゴリズムとかそっち系の色が強くなりそうなので，とりあえずシステムをつけた．</p>
-
-<h3>メンバ</h3>
-
-<p>@oza_x86，@kuenishi，@shot6の三人にお願いした．時間を作って頂いてありがとうございました！
-人選に関しては，少し前にTwitterでつぶやいたけど，以下のような感じで選んだ．</p>
-
-<ul>
-<li>分散処理システムを研究・開発している人</li>
-<li>分散処理システムを開発・販売している人</li>
-<li>分散処理システムを運用・サービスとして展開している人</li>
-<li>分散処理システムの基盤を運用・提供している人</li>
-</ul>
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/FpWq4AfpocmGIy" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
 
 
-<p>事前打ち合わせの飲み会をやったけど，自己紹介して結局はなんか適当に喋りましょうということに．</p>
+<p> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/repeatedly/technologies-for-data-analytics-platform" title="Technologies for Data Analytics Platform" target="_blank">Technologies for Data Analytics Platform</a> </strong> from <strong><a href="//www.slideshare.net/repeatedly" target="_blank">N Masahiro</a></strong> </div></p>
 
-<h3>当日</h3>
+<p>どういう展開にしようか悩んだんですが，データ分析基盤の構築に使われる様々なソフトウェアが，どういう問題を解決するために導入されているのか，またその一方どういう問題を持っているのか，を一からデータ分析基盤を作るという流れで話していくことにしました．<br />
+既にガリガリやっている人向けではなくて，これからやろうとしている人，やってるけど現状の仕組みだと厳しくなってきたので今後どうしようか考えている人，などの参考になればと思っています．</p>
 
-<p>セッションが始まる前に，Hadoopやデータベースとかの入門的な話には多分ならないし，
-他に面白そうなセッションがあるので〜，と誘導したにも関わらず，なんか結構人が入ってて驚いた！</p>
+<p>データ分析周りに興味があった人が結構聞きに来てくれたらしく，全体の流れを俯瞰できて良かった，みたいな感想もチラホラ見受けられたので，この構成にして良かったな，とホッとしています．<br />
+スライドのまとめにも書いていますが，Treasure Dataなどのデータ分析基盤や，AWSやGCPやAzureのような分析基盤を作るためのコンポーネントを提供しているクラウドが増えているので，自分で一から構築する必要性はかなり低くなっています．「どういうソフトウェアがありどういうことが出来るのか」を知っておくのは重要ですが，なるべく便利なサービスを利用して，ビジネスに集中した方が良いでしょう．</p>
 
-<p>色々と予防線は張ったものの，個人的には1時間それなりに話題は出せたんじゃないかと思ってます．
-RaftやPaxosのような合意周り，Jepsenなどの分散処理システムの検証ツール，
-Hadoopやその他のシステムの運用的な話，などなど．<br />
-分散処理システムにおけるモデルの検証とかはやはり鬼門なので，今後色々と勉強したい所．</p>
+<p>SparkやFlink，その他可視化，機械学習，データパイプラインなども話したかったんですが，時間が足りなかったので，これらはまたどこかでチャンスがあれば話しても良いかなぁと．</p>
 
-<p>しかしモデレータというのは色々と疲れますね…</p>
-
-<h2>その他のセッション</h2>
-
-<h3>エンジニアの恋・愛・セックスのDevOps、ホントのところどうしたらいいの</h3>
-
-<p>間に合わなくて参加出来なかったが，かなり反響があったセッションっぽい．
-後で録画を見る．</p>
-
-<h3>ぶつかり稽古</h3>
-
-<p>セッションオーナーが登壇しないという酷いセッションだったｗ
-けど内容そのものは，他社のレビュースタイルとか色々と知れて面白かった．</p>
-
-<h3>アンカンファレンス</h3>
-
-<p>Fluentd v11の話で登録したけど，雨の予報でも出社しないと噂の某モリスさんが一人でセッションの時間全部使い切り，
-何も話せなかった．</p>
-
-<h2>まとめ</h2>
-
-<p>去年と違ってRed Bullガールがいないのが残念だった！来年は期待したい．</p>
-
-<p>全体としては，Tシャツや雑誌の新刊も貰えたし，何人かリアルで合えたしで，色々とドタバタしたけど楽しかったので良し．皆さんお疲れ様でした！</p>
-
-<p><img src="/images/cross_2014.jpg" title="&#34;CROSS 2014 photo&#34;" alt="&#34;CROSS 2014 photo&#34;"></p>
+<p>上のtogetterのまとめには質疑応答に関するtweetはまとめられてないようなので，気になる方はいずれアップロードされる動画を見てください :)</p>
 </div>
 
 
@@ -184,15 +140,21 @@ Hadoopやその他のシステムの運用的な話，などなど．<br />
   
 
 
-<time datetime="2014-01-18T23:57:00+09:00" pubdate data-updated="true">Jan 18<span>th</span>, 2014</time>
+<time datetime="2015-08-24T05:03:00+09:00" pubdate data-updated="true">Aug 24<span>th</span>, 2015</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/categories/yapc/'>YAPC</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2014/01/cross-2014/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2014/01/cross-2014/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2015/08/yapc-asia-tokyo-2015-presentation/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2015/08/yapc-asia-tokyo-2015-presentation/" >Tweet</a>
   
   
   
@@ -203,10 +165,8 @@ Hadoopやその他のシステムの運用的な話，などなど．<br />
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/ja/2014/01/2013-report/" title="Previous Post: 2013年の振り返り">&laquo; 2013年の振り返り</a>
+        <a class="basic-alignment left" href="/ja/2015/06/yapc-asia-2015-talk/" title="Previous Post: YAPC::Asia 2015 talk">&laquo; YAPC::Asia 2015 talk</a>
       
-      
-        <a class="basic-alignment right" href="/ja/2014/01/fluentd-v11-at-tokuben/" title="next Post: Fluentd v11 at Tokuben">Fluentd v11 at Tokuben &raquo;</a>
       
     </p>
   </footer>
@@ -318,8 +278,8 @@ Hadoopやその他のシステムの運用的な話，などなど．<br />
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://repeatedly.github.com/ja/2014/01/cross-2014/';
-        var disqus_url = 'http://repeatedly.github.com/ja/2014/01/cross-2014/';
+        var disqus_identifier = 'http://repeatedly.github.com/ja/2015/08/yapc-asia-tokyo-2015-presentation/';
+        var disqus_url = 'http://repeatedly.github.com/ja/2015/08/yapc-asia-tokyo-2015-presentation/';
         var disqus_script = 'embed.js';
       
     (function () {

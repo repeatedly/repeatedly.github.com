@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: YAPC | Go ahead!]]></title>
+  <link href="http://repeatedly.github.com/categories/yapc/atom.xml" rel="self"/>
+  <link href="http://repeatedly.github.com/"/>
+  <updated>2015-08-24T05:10:18+09:00</updated>
+  <id>http://repeatedly.github.com/</id>
+  <author>
+    <name><![CDATA[Masahiro Nakagawa]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[YAPC::Asia Tokyo 2015での発表]]></title>
+    <link href="http://repeatedly.github.com/ja/2015/08/yapc-asia-tokyo-2015-presentation/"/>
+    <updated>2015-08-24T05:03:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2015/08/yapc-asia-tokyo-2015-presentation</id>
+    <content type="html"><![CDATA[<p><a href="http://yapcasia.org/2015/">YAPC::Asia Tokyo 2015</a></p>
+
+<p>今年で最後となるYAPC::Asia Tokyoで，データ分析基盤まわりについて発表してきました．部屋は満席だったようで，聞きに来てくれた皆さん，ありがとうございました．</p>
+
+<p><a href="http://yapcasia.org/2015/talk/show/dd8ce20e-fad2-11e4-b6e7-8ab37d574c3a">データ分析基盤を支える技術 - YAPC::Asia Tokyo 2015</a>
+<a href="http://togetter.com/li/863876">これが今どきのデータ解析基盤だ！初心者のためのデータ解析講座 #yapcasia #yapcasiaD - Togetterまとめ</a></p>
+
+<iframe src="http://repeatedly.github.com//www.slideshare.net/slideshow/embed_code/key/FpWq4AfpocmGIy" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="http://repeatedly.github.com//www.slideshare.net/repeatedly/technologies-for-data-analytics-platform" title="Technologies for Data Analytics Platform" target="_blank">Technologies for Data Analytics Platform</a> </strong> from <strong><a href="http://repeatedly.github.com//www.slideshare.net/repeatedly" target="_blank">N Masahiro</a></strong> </div></p>
+
+<p>どういう展開にしようか悩んだんですが，データ分析基盤の構築に使われる様々なソフトウェアが，どういう問題を解決するために導入されているのか，またその一方どういう問題を持っているのか，を一からデータ分析基盤を作るという流れで話していくことにしました．<br />
+既にガリガリやっている人向けではなくて，これからやろうとしている人，やってるけど現状の仕組みだと厳しくなってきたので今後どうしようか考えている人，などの参考になればと思っています．</p>
+
+<p>データ分析周りに興味があった人が結構聞きに来てくれたらしく，全体の流れを俯瞰できて良かった，みたいな感想もチラホラ見受けられたので，この構成にして良かったな，とホッとしています．<br />
+スライドのまとめにも書いていますが，Treasure Dataなどのデータ分析基盤や，AWSやGCPやAzureのような分析基盤を作るためのコンポーネントを提供しているクラウドが増えているので，自分で一から構築する必要性はかなり低くなっています．「どういうソフトウェアがありどういうことが出来るのか」を知っておくのは重要ですが，なるべく便利なサービスを利用して，ビジネスに集中した方が良いでしょう．</p>
+
+<p>SparkやFlink，その他可視化，機械学習，データパイプラインなども話したかったんですが，時間が足りなかったので，これらはまたどこかでチャンスがあれば話しても良いかなぁと．</p>
+
+<p>上のtogetterのまとめには質疑応答に関するtweetはまとめられてないようなので，気になる方はいずれアップロードされる動画を見てください :)</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -9,8 +9,7 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="データ転送ミドルウェア勉強会
-「データ転送ミドルウェア勉強会」レポート #dtm_meetup 「古橋君がアメリカに帰る前にEmbulkのリリースイベントしちゃうか〜」というノリで1日で立ち上げたイベントでしたが，めちゃくちゃ人が集まって正直驚きでした． Embulk以外にも， &hellip;">
+  <meta name="description" content="第１回 Vertica 勉強会 DeNAでVerticaの勉強会が開かれるということで行ってきた．皆さんお疲れ様 &amp; ありがとうございました． VerticaはMPPデータベースと呼ばれるプロダクトの一つ．まとめみたいなのはすでに他の人が用意してくれているので，そちらを参照してください． &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,6 +69,179 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2015/03/vertica-meetup-1/">第一回 Vertica勉強会</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-26T18:54:00+09:00" pubdate data-updated="true">Mar 26<span>th</span>, 2015</time>
+        
+         | <a href="/ja/2015/03/vertica-meetup-1/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://atnd.org/events/62925">第１回 Vertica 勉強会</a></p>
+
+<p>DeNAでVerticaの勉強会が開かれるということで行ってきた．皆さんお疲れ様 &amp; ありがとうございました．</p>
+
+<p>VerticaはMPPデータベースと呼ばれるプロダクトの一つ．まとめみたいなのはすでに他の人が用意してくれているので，そちらを参照してください．</p>
+
+<ul>
+<li><a href="http://togetter.com/li/799648">第1回 Vertica 勉強会 - Togetterまとめ</a></li>
+<li><a href="http://estrellita.hatenablog.com/entry/2015/03/25/233003">第1回Vertica勉強会に参加してきた - INPUTしたらOUTPUT!</a></li>
+<li><a href="http://d.hatena.ne.jp/wyukawa/20150326/1427360270">第１回 Vertica 勉強会に行ってきた - wyukawa’s blog</a></li>
+</ul>
+
+
+<h2>はじめてのVertica！（はじめのて方にも、20分で分かりやすく解説）</h2>
+
+<p>Verticaの基本的な話．<a href="http://db.lcs.mit.edu/projects/cstore/">C-Store</a>が元になっていて，
+やはりC-Storeの論文に書かれている機能がベースになってた．</p>
+
+<p>ここで出てきた</p>
+
+<ul>
+<li>列指向フォーマット
+
+<ul>
+<li>そして列毎の圧縮</li>
+</ul>
+</li>
+<li>Shared Nothing</li>
+<li>ANSI SQL準拠</li>
+</ul>
+
+
+<p>とかはMPPでは基本的な特徴で，それらを一通り持っている感じ．</p>
+
+<p>少し珍しいものとしては，マルチマスタみたいにすべてのノードがクエリを受け付ける所．
+複数クエリが飛んでいる時にどういう負荷分散をするか分かってないけど，クエリを投げた時にあるノードが自動でリーダーになるっぽい．<br />
+Impalaも似たような仕組みだけど，Statestoreみたいな外部サービスすら存在してないようなので，
+クラスタがどういう風に状態を共有しているのかが，個人的には気になっている．</p>
+
+<p>あとで言及するけど，DB Designerというツールが一番の肝.</p>
+
+<h2>DeNAでのverticaを活用したアナリスト業務のご紹介</h2>
+
+<p>DeNAでどうやってVerticaを利用しているかの話．まだPrestoやImpalaが広まる前から利用しているようで，
+やはりHiveやPigをAd-hocクエリの代わりに使うのはつらかったという．</p>
+
+<p>もちろんすべてをVerticaでやっているわけではなくて，データはHadoopクラスタにも入れていて，
+でかいサービスなどの場合はHadoopで中間データをつくってVerticaに入れているという，よくある構成.<br />
+ストレージと密結合しているMPPデータベースはこまめなロードが大抵苦手なので，
+データ量が大きいところでは皆この構成を取っている．</p>
+
+<p><code>lead</code>とか<code>lag</code>とかのWindow関数はHiveやPrestoでも使えるんだけど，<code>timeseriese</code>というgap-fillingな関数は少し面白いなと思った．</p>
+
+<h2>DeNAでのVertica運用について</h2>
+
+<p>FluentdとKafkaを使ってデータを収集している話があって，ここでもFluentdが！</p>
+
+<p>ここでHadoopを機械学習にも使っているという話をしていた．何のプロジェクトを使っているんだろうか？懇親会で聞くの忘れてた．</p>
+
+<p>運用に関して色々とTipsを話されていて，参考になる発表だった．
+データインポート時に型が一致してないレコードをデフォルトで捨てるのが，なかなか豪快だなぁという感じ．</p>
+
+<p>あとクエリは基本Resource Poolで細かく制御するのが複数ユーザで使う時の前提．
+これはどこのMPPデータベースでも同じで，何もしないと一人がでかいクエリ投げると他の処理が止まってしまう．</p>
+
+<h2>CTC、Vertica はじめました！－テスト結果を共有！</h2>
+
+<p>「Verticaがすごい」という話だったんだけど，テスト内容の詳細がなくて，
+どういうスキーマで，どれくらいのデータがあって，どういうクエリかが分からずかなりふわっとしていた．
+あとグラフに目盛りとかもなかったので，さらにすごさがよく分からなかった…</p>
+
+<p>お客さんのテスト結果ということらしいので詳細を話せないのは分かるのだけど，
+こういうオープンなイベントだと<a href="http://www.tpc.org/information/benchmarks.asp">TPC</a>とか使って分かるデータで見せないと，
+ちょっと厳しいかなぁという感じ(特にパフォーマンスとかを気にするエンジニアには)．</p>
+
+<h2>Verticaの速さの秘密、プロジェクションに関して20分で！</h2>
+
+<p>Verticaでのテーブルは単にどういうカラムがあるかというスキーマを持っているだけで，
+実際にデータを保持するのはプロジェクションという単位．誰かがtweetしていたけど，Materialized Viewみたいなもの．</p>
+
+<p>ここでDB Desingerというのが使えて，データやクエリを登録すると，それに最適なプロジェクションを構築してくれるらしい．
+プロジェクションは一つのテーブルに何個も構築出来るので，それぞれ必要なプロジェクションを作っておけば，
+後でクエリエンジンが勝手に最適なプロジェクションを選んで実行してくれる．</p>
+
+<p>Vertica，てきとうにやっても速い，みたいなの前聞いたことあったけど，実際はDB Designerにお任せという感じのようだ．
+DB Designer便利だけど，当たり前だけどプロジェクション作るとそれだけ容量食うので，作りすぎに注意．</p>
+
+<p>データロード時に集計してしまうLive Aggregate Projectionという仕組みがあるのだけど，
+ロードの負荷が結構無視できないVerticaだと，大規模だと使いにくい印象を受けた．</p>
+
+<h2>懇親会</h2>
+
+<p>色々と生の声が聞けた．</p>
+
+<p>懇親会でユーザに聞いた話だと，OOMみたいなので落ちることはないらしく，20-30人とかで投げてもキューに貯めて順次処理する．
+ただメモリ使用量が大きすぎたり，キューが貯まりすぎると，落ちるより先にクエリがRejectされる．</p>
+
+<p>K-safetyといういわゆるレプリケーションの仕組みがあるのだけど，DeNAさんや他のユーザも1とのこと．
+2にするとデータロードの負荷が高くなり，色々と大変になるらしい．<br />
+個人的には，K-safetyの数を増やせばデータの分散具合が増してクエリの処理効率がよくなると思っていたんだけど，
+Verticaは基本マスターデータしか見に行かないので，増やしても意味ないらしい．</p>
+
+<blockquote class="twitter-tweet" lang="en"><p>K-safe 2ってレプリケーションすることでデータを分散させるわけだから，その分各ノードでのデータのローカリティがあがってクエリが高速になる気もするし，安易に減らすのはアンチパターンな気もする <a href="https://twitter.com/hashtag/vertica_meetup?src=hash">#vertica_meetup</a></p>&mdash; Mr. Fiber (@repeatedly) <a href="https://twitter.com/repeatedly/status/580690665283059712">March 25, 2015</a></blockquote>
+
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p><a href="https://twitter.com/repeatedly">@repeatedly</a> Verticaの場合K-safe1でも2でも基本的にはマスターデータのノードにしかアクセスはいかなくて、レプリの方にはアクセスいかないです！<a href="https://twitter.com/hashtag/vertica_meetup?src=hash">#vertica_meetup</a></p>&mdash; Civitaspo (@Civitaspo) <a href="https://twitter.com/Civitaspo/status/580721464376045568">March 25, 2015</a></blockquote>
+
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p><a href="https://twitter.com/Civitaspo">@Civitaspo</a> <a href="https://twitter.com/repeatedly">@repeatedly</a> 　レプリカはノード障害あった際に使われます。基本的には、レプリカは同じソートパターンを採用し、クエリーの高速性には寄与しません。K-safe=1のパターンが多いです。　<a href="https://twitter.com/hashtag/vertica_meetup?src=hash">#vertica_meetup</a></p>&mdash; Projection_man (@Projection_man) <a href="https://twitter.com/Projection_man/status/580771087895527424">March 25, 2015</a></blockquote>
+
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p>PrestoとかのようなMPPクエリエンジンと違ってストレージと結合しているし，
+この辺うまく使ってデータの読み込み効率化出来そうだなぁと思っているんだけど，ソースが見られないので何とも言えない…</p>
+
+<p>あとクラスタの再配置やデータのリバランスは結構時間が掛かるらしく，数日かかることもあるとのこと．
+パフォーマンスはそんなに落ちないらしいけど，別クラスタを立てて一気に入れ替えるのが楽なのかなぁーという．</p>
+
+<p>まー，やはり銀の弾丸はないので，皆それぞれ苦労するポイントはあるなという感じだった．
+話を聞かせてくれた人達に感謝 (-人-)</p>
+
+<h2>まとめ</h2>
+
+<p>第一回ということもあり，基本的な話が多かった印象でした．
+ただ実際に使っている人の話とかはやはり参考になる．</p>
+
+<p>第二回もあるかもとのことなので，またその時は参加するかもしれません．
+オープンソースではないので，気になる所の実装がチェック出来ないのがやっぱりつらい所…</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -381,92 +553,6 @@ v1に向けて，とりあえず年末に<a href="http://qiita.com/repeatedly/it
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2014/09/hadoopcon-2014-in-taiwan/">HadoopCon 2014 in Taiwan</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-26T01:26:00+09:00" pubdate data-updated="true">Sep 26<span>th</span>, 2014</time>
-        
-         | <a href="/ja/2014/09/hadoopcon-2014-in-taiwan/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>記事にするの遅れたけど，9月12日から9月16日まで台北に行ってきた．
-目的は台北で行われた<a href="http://2014.hadoopcon.org/wp/?page_id=21">HadoopCon 2014</a>で発表すること．</p>
-
-<p>一緒に参加することになったモリスさんの感想記事は<a href="http://d.hatena.ne.jp/tagomoris/20140916/1410857871">こちら</a>.</p>
-
-<h2>HadoopCon 2014</h2>
-
-<p><img src="/images/hadoopcon2014_taiwan.jpg" width="600" title="&#34;HadoopCon 2014&#34;" alt="&#34;HadoopCon 2014&#34;"></p>
-
-<p>色々と紆余曲折？があり，なぜか俺がキーノートで発表することに．
-初めての英語での発表が40分のキーノートということもあって，色々と疲れた．<br /></p>
-
-<iframe src="//www.slideshare.net/slideshow/embed_code/39130038" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/treasure-data/sql-on-hadoop-in-taiwan-39130038" title="SQL on Hadoop in Taiwan" target="_blank">SQL on Hadoop in Taiwan</a> </strong> from <strong><a href="//www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
-
-<p>発表内容はHadoop上で使えるSQLプロダクトについて，基本からTreasure Dataでの経験周りを含めてあれやこれや話した．
-質問もあったので，俺のアレな英語でもそれなりに伝わっていたのかなという感じ．</p>
-
-<p>他のセッションも聞きたかったのだけど，中国語で正直何を話しているか分からなかったので，外のスペースで他の人と話していた．<br />
-海外から招待された人の気持ちが分かった一瞬だったｗ</p>
-
-<p>カンファレンス会場だった中央研究院は，台北政府直属？の研究所らしくかなり大きかった．向こうの人曰く，大抵のイベントはここでやっているらしい．
-その他，大規模ではないけどHBaseを使っている所が多かったりと，色々と情報交換も出来た感じで良かった．</p>
-
-<h2>残りは観光</h2>
-
-<p>HadoopCon 2014で知り合った人たちが観光案内をしてくれて，HadoopConの日と次の日に色々と回れた．</p>
-
-<p>台北101含む観光地だったり，地元の人が集まる店だったり，夜市だったり，色々と解説もしてくれてかなり楽しめた．</p>
-
-<p><img src="/images/hadoopcon2014_temple.jpg" width="500" title="&#34;HadoopCon 2014: Temple&#34;" alt="&#34;HadoopCon 2014: Temple&#34;">
-<img src="/images/hadoopcon2014_chiang.jpg" width="500" title="&#34;HadoopCon 2014: Chiang&#34;" alt="&#34;HadoopCon 2014: Chiang&#34;">
-<img src="/images/hadoopcon2014_soup_dumpling.jpg" width="500" title="&#34;HadoopCon 2014: Soup dumplin&#34;" alt="&#34;HadoopCon 2014: Soup dumplin&#34;">
-<img src="/images/hadoopcon2014_yoichi.jpg" width="500" title="&#34;HadoopCon 2014: Night market&#34;" alt="&#34;HadoopCon 2014: Night market&#34;">
-<img src="/images/hadoopcon2014_yoichi_shop.jpg" width="500" title="&#34;HadoopCon 2014: Night market shop&#34;" alt="&#34;HadoopCon 2014: Night market shop&#34;"></p>
-
-<p>写真あげまくるのもアレなので，残りはFBのアルバムで…</p>
-
-<h2>感想</h2>
-
-<p>色々と調整してくれた台北の人たちには本当に感謝というか，かなり台北中は楽できたので，こういう恩はいつか返したいなと．</p>
-
-<p>台北，ココイチとかすき家とか大戸屋とかゆで太郎とか麺屋武蔵とかあるので，日本の人がいっても多分食には困らない．
-ホテルとか，探せば普通に日本語が通じる所もかなりあるので，気軽にこれる所だなぁと．<br />
-交通費もかなり安いので，気軽にタクシーとか乗れる．</p>
-
-<p>RubyConfとかOSDCとか，大きめのイベントも毎年やってるっぽいので，近いし，英語の練習がてら皆さんも参加しましょう！と参加仲間を増やす作戦．</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/ja/page/3/">&larr; Older</a>
@@ -484,6 +570,10 @@ v1に向けて，とりあえず年末に<a href="http://qiita.com/repeatedly/it
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/ja/2015/08/yapc-asia-tokyo-2015-presentation/">YAPC::Asia Tokyo 2015での発表</a>
+      </li>
+    
+      <li class="post">
         <a href="/ja/2015/06/yapc-asia-2015-talk/">YAPC::Asia 2015 talk</a>
       </li>
     
@@ -497,10 +587,6 @@ v1に向けて，とりあえず年末に<a href="http://qiita.com/repeatedly/it
     
       <li class="post">
         <a href="/ja/2015/04/developers-io-2015/">Developers.IO 2015</a>
-      </li>
-    
-      <li class="post">
-        <a href="/ja/2015/03/vertica-meetup-1/">第一回 Vertica勉強会</a>
       </li>
     
   </ul>
