@@ -9,8 +9,8 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="fluent-plugin-netflow CiscoのNetflowプロトコルを受け取るFluentdプラグインを書きました．
-公開してみたら結構反応が良くて，地味にユーザが多そうですね… 経緯 Fluentdを調べていたユーザから「ログ収集基盤をFluentdベースにしたいんだけど， &hellip;">
+  <meta name="description" content="fluent-plugin-multi-format-parser 一つのログファイルの中に複数のフォーマットがある時に利用可能なパーサプラグイン書きました． 使い方 fluent-gemでインストール． 1
+$ fluent-gem install fluent-plugin-multi- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,6 +70,113 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2014/07/release-fluent-plugin-multi-format-parser/">Release fluent-plugin-multi-format-parser</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-13T21:00:00+09:00" pubdate data-updated="true">Jul 13<span>th</span>, 2014</time>
+        
+         | <a href="/ja/2014/07/release-fluent-plugin-multi-format-parser/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/repeatedly/fluent-plugin-multi-format-parser">fluent-plugin-multi-format-parser</a></p>
+
+<p>一つのログファイルの中に複数のフォーマットがある時に利用可能なパーサプラグイン書きました．</p>
+
+<h2>使い方</h2>
+
+<p>fluent-gemでインストール．</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ fluent-gem install fluent-plugin-multi-format-parser</span></code></pre></td></tr></table></div></figure>
+
+
+<p>インストールすると，TextParserを利用している<code>in_tail</code>や<code>in_udp</code>などで<code>multi_format</code>が使えるようになります．
+そこで<code>&lt;pattern&gt;</code>を複数並べてください．<code>&lt;pattern&gt;</code>内の各設定は，利用するパーサにそのまま渡されます．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
+</span><span class='line'>  <span class="nb">type</span> udp
+</span><span class='line'>  <span class="nb">tag</span> logs.multi
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">format</span> multi_format
+</span><span class='line'>  <span class="nt">&lt;pattern&gt;</span>
+</span><span class='line'>    <span class="nb">format</span> apache
+</span><span class='line'>  <span class="nt">&lt;/pattern&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;pattern&gt;</span>
+</span><span class='line'>    <span class="nb">format</span> json
+</span><span class='line'>  <span class="nt">&lt;/pattern&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;pattern&gt;</span>
+</span><span class='line'>    <span class="nb">format</span> <span class="k">none</span>
+</span><span class='line'>  <span class="nt">&lt;/pattern&gt;</span>
+</span><span class='line'><span class="nt">&lt;/match&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>&lt;pattern&gt;</code>を上から順番に試し，パース出来たらその結果を返します．上の設定例だと，最初に<code>apache</code>，次に<code>json</code>，最後に<code>none</code>になります．
+たとえば，以下のようなログ群を<code>in_udp</code>に流すと</p>
+
+<pre><code>192.168.0.1 - - [28/Feb/2013:12:00:00 +0900] "GET / HTTP/1.1" 200 777
+{"k1":"v", "k2":123456}
+foobar
+</code></pre>
+
+<p>以下のように処理されます．</p>
+
+<pre><code>2013-02-28 12:00:00 +0900 test.**: {"host":"192.168.0.1","user":"-","method":"GET","path":"/","code":"200","size":"777"}
+2014-07-13 20:56:55 +0900 test.**: {"k":"v","k1":123456}
+2014-07-13 20:56:55 +0900 test.**: {"message":"foobar"}
+</code></pre>
+
+<h2>まとめ</h2>
+
+<p>ログファイルの中に複数のフォーマットが混じるのは望ましいことではないのですが，どうしてもそういう状況が起きるときには，使ってみてください．</p>
+
+<p>あと，実装はかなり単純なので，パーサプラグインのサンプルにでもしてもらえればと思います．</p>
+
+<p>何か要望があれば<a href="https://github.com/repeatedly/fluent-plugin-multi-format-parser">issue/pull request</a>に投げてもらえれば対応します．</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -411,93 +518,6 @@ v1だと安定版のイメージが強いですし，実際の所v0.10.xはv1で
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2014/02/the-thoughts-of-sensu/">Sensu雑感</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-02-25T02:15:00+09:00" pubdate data-updated="true">Feb 25<span>th</span>, 2014</time>
-        
-         | <a href="/ja/2014/02/the-thoughts-of-sensu/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://sensuapp.org/">Sensu</a></p>
-
-<p>最近人気が出てきているようなので試して見た．
-仕組みに関しては本家のドキュメントとかスライドとか見ると大体分かる．</p>
-
-<p>雑感:</p>
-
-<ul>
-<li>server, client, api, dashboardに分かれているのは良い
-
-<ul>
-<li>実装はRubyでシンプルに書かれているように見える．多分弄るのは簡単</li>
-</ul>
-</li>
-<li>RabbitMQとRedisが必要なのが試すのに結構つらい．chefとかpuppetを使うと良いらしい？
-
-<ul>
-<li>なんかテストモードがあるなら知りたい</li>
-<li>ドキュメントは最低限はある．Advancedなことしようとするとgithubとか先人を頼ることになる</li>
-</ul>
-</li>
-<li>設定がJSONなのはいいけど，ログすらJSONなのは徹底している</li>
-<li>RabbitMQにはクライアントから登録しにいくようで，勝手に監視対象が増えるのは楽
-
-<ul>
-<li>マスターからのpullは限界があるので，この仕組みはモニタリングでは筋が良さそう</li>
-</ul>
-</li>
-<li>プラグインは簡単に書けるが，現状失敗したら諦める前提らしい
-
-<ul>
-<li>まじめにハンドリングするなら，他のと連携する必要がある</li>
-</ul>
-</li>
-<li>apiが気がつけば落ちてる時があって，原因がよく分からない</li>
-<li>Fluentdのハンドラがコミュニティプラグインになかったので<a href="https://github.com/sensu/sensu-community-plugins/blob/master/handlers/notification/fluentd.rb">書いた</a></li>
-</ul>
-
-
-<p>「FluentdかSensuかどっちかに寄せたい」みたいな記事を誰かが書いてた記憶があるけど，何となく分かる．
-Fluentdのプラグイン機構でSensuのクライアント周りの機構はよりロバストに実装出来る．<br />
-コアの機能は結構シンプルなので，visualizationまで考えるとどうしたもんかという感じ．</p>
-
-<p>Sensuはモニタリングのためのフレームワークなのでその辺の機能が中心に開発されてるけど，
-そこの尖った部分が必要でなければ，RabbitMQとかと相まって結構大がかりにも見える．<br />
-Nagiosとかは使ったことはないので，その辺と違ってどこまでメリットがあるのかはよく分かってないけど，
-新しく作るシステムで一からモニタリングシステムを構築するなら十分有り．</p>
-
-<p>仕組み的には柔軟でAPIとかで管理も楽に出来るようになってるので，今後ユーザは増えそうな気もしている．
-しかしRabbitMQとRedisの二つ必要なのどうにかならないものか…</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/ja/page/6/">&larr; Older</a>
@@ -515,6 +535,10 @@ Nagiosとかは使ったことはないので，その辺と違ってどこま�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/ja/2015/09/tokyo-apache-drill-meetup-1/">Tokyo Apache Drill Meetup 第一回</a>
+      </li>
+    
+      <li class="post">
         <a href="/ja/2015/08/yapc-asia-tokyo-2015-presentation/">YAPC::Asia Tokyo 2015での発表</a>
       </li>
     
@@ -528,10 +552,6 @@ Nagiosとかは使ったことはないので，その辺と違ってどこま�
     
       <li class="post">
         <a href="/ja/2015/04/fluentd-architecture-pros-and-cons/">Fluentdの現実装のPros/Cons</a>
-      </li>
-    
-      <li class="post">
-        <a href="/ja/2015/04/developers-io-2015/">Developers.IO 2015</a>
       </li>
     
   </ul>

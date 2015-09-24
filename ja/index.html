@@ -9,7 +9,8 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="YAPC::Asia Tokyo 2015 今年で最後となるYAPC::Asia Tokyoで，データ分析基盤まわりについて発表してきました．部屋は満席だったようで，聞きに来てくれた皆さん，ありがとうございました．会場はD言語erにふさわしくD会場でした． データ分析基盤を支える技術 - YAPC &hellip;">
+  <meta name="description" content="Tokyo Apache Drill Meetup
+MapR CTOも来日！ Tokyo Apache Drill Meetup #tokyodrill まとめ 上のイベントに参加してました．普通の感想は他の人が書くと思うので，質問した内容とその返答を書いておきます． スキーマを自動検出するけど &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +70,82 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2015/09/tokyo-apache-drill-meetup-1/">Tokyo Apache Drill Meetup 第一回</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-09-24T18:47:00+09:00" pubdate data-updated="true">Sep 24<span>th</span>, 2015</time>
+        
+         | <a href="/ja/2015/09/tokyo-apache-drill-meetup-1/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li><a href="http://drill.connpass.com/event/19809/">Tokyo Apache Drill Meetup</a></li>
+<li><a href="http://togetter.com/li/874140">MapR CTOも来日！ Tokyo Apache Drill Meetup #tokyodrill まとめ</a></li>
+</ul>
+
+
+<p>上のイベントに参加してました．普通の感想は他の人が書くと思うので，質問した内容とその返答を書いておきます．</p>
+
+<h2>スキーマを自動検出するけど，途中で変わったらどうなるの？</h2>
+
+<p>現状はエラーになる．</p>
+
+<p>DrillはSchema on Readに加えて，データ読み込み時にスキーマを自動で生成する機能もある(Embulkのguessみたいなもの)．JSONとかのローカルファイルに対してクエリ投げる時は，いちいちスキーマを自分で設定する必要がなくて便利なのだけど，さすがに後半のデータで急に型が変わったりフィールドが増えたりすると，クエリ処理を続行できないとのこと．<br />
+そういう時はちゃんとスキーマを事前に定義する必要がある</p>
+
+<h2>クエリ毎のリソース制御ってどうしてるの？</h2>
+
+<p>現状その手の機能はない．並行で処理するクエリの数は制限できる．</p>
+
+<p>Prestoだとクエリ毎にメモリ使用量とかを制限できて，それによってどれだけクエリが投げられても，ワーカー群はかなり安定して処理を実行できるようになっている．現状のDrillユーザは，あらかじめどれだけメモリを使うかなどを測定して，それに見合ったクラスタを構築しているらしい．</p>
+
+<h2>大きいDrillクラスタって今どれくらい？</h2>
+
+<p>1クラスタ100台の事例はある，とのこと．</p>
+
+<p>Prestoだと1クラスタ1000台とかの事例はあるけど，これを聞く限りまだ大規模での事例はそこまでないようだ．ここは後発なのものあって，今後事例は出てくるかもしれないが，上で言及したリソース制御とかがないと，大規模での運用は結構厳しそう．</p>
+
+<h2>分析系の関数やWindow関数がほとんどないようだけど，今どうやって解析してるの？</h2>
+
+<p>Window関数相当のSQLを頑張って書いているか，自分達でDrillを拡張しているかのどちらか．</p>
+
+<p>Drillは現状の1.1だと，Window関数とかはあまりサポートされてなくて，Presto/Impalaで使える便利関数群が色々と使えない．今Drillを採用している人達はどうやって様々な分析をやっているのか，というのは運用・自社開発でカバーという感じらしい．この辺がこなれないと，普通の人達が使うのは結構厳しい感じ．</p>
+
+<hr />
+
+<p>上がMapRの人達に聞いた内容．後発なのでPrestoなどの良いところを取り込んでいるものの，まだ成熟してない感じなので，プロダクションで使うには運用でカバーしないといけない箇所が結構あるなぁという．<br />
+ApacheプロジェクトだしMapRがかなり開発リソースを割いてる感じなので，上記の問題群はいずれ解決されるだろうとは思いますが，Presto/Impalaもかなり開発が活発なので，どこまで差別化出来るのかが今後の注目ポイントになりそう．</p>
+
+<p>俺も時間を作って色々とチェックしてみるか…</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -327,79 +404,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2015/04/developers-io-2015/">Developers.IO 2015</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-04-09T17:31:00+09:00" pubdate data-updated="true">Apr 9<span>th</span>, 2015</time>
-        
-         | <a href="/ja/2015/04/developers-io-2015/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://devio2015.classmethod.jp/">Developers.IO 2015 | IoT, BigData, BI. in 3/27(金),29(日)</a></p>
-
-<p>書くの遅れましたが，先月の末に行われたDevelopers.IO 2015で，登壇してました．</p>
-
-<h2>Treasure DataのAWS活用法</h2>
-
-<p>発表スライドは以下です．</p>
-
-<iframe src="//www.slideshare.net/slideshow/embed_code/46410399" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/repeatedly/treasure-data-and-aws-developersio-2015" title="Treasure Data and AWS - Developers.io 2015" target="_blank">Treasure Data and AWS - Developers.io 2015</a> </strong> from <strong><a href="//www.slideshare.net/repeatedly" target="_blank">N Masahiro</a></strong> </div></p>
-
-<p>Developers Dayの日で「なるべくニッチな話をしてください」と言われたのと，
-TD Techtalkに参加出来なかった人も見に来るというのもあったので，Treasure Dataのデータインポートとかクエリ処理周りの
-内部処理的な話をしました．</p>
-
-<p>Treasure Dataみたいなサービスを自力で作る人は少ないとは思いますが，
-昨今データ解析周りの需要は増えているので，もし社内でそういう案がある人の参考にでもなればという感じです．
-といっても，クラスメソッドさんのイベントでもあり，AWS要素多めの内容になっています．</p>
-
-<p>一番最後に決まったセッションだったんですが，部屋的には埋まっていた感じなので良かったです．クラスメソッドさんのまとめやtogetterのまとめは以下にあるので，参考にしてみてください．</p>
-
-<ul>
-<li><a href="http://dev.classmethod.jp/business/bigdata/developers-io-2015-treasure-data-cmdevio2015b/">【セッションレポート】Developers.IO 2015 Treasure DataのAWS活用法 #cmdevio2015B</a></li>
-<li><a href="http://togetter.com/li/794727">2015/03/29 Developers.IO 2015 Developer Day サポーター様トラックB #cmdevio2015B</a></li>
-</ul>
-
-
-<h2>イベントの感想</h2>
-
-<p>SAPさんの会場で，複数のトラックで行われており，盛況でした．興味があったものの参加出来なかったセッションがいくつかあったのが心残りといえば心残り．最後の抽選では色々と欲しいものがあったものの，残念ながら手に入れることは出来ませんでした．また似たようなイベントがあったときにはリベンジしたい…</p>
-
-<p>クラスメソッドさん勢いあるなぁと感じたイベントでした．まだまだこれからも色々とやるようなので，盛り上げるのに今後も協力出来ればという感じです．</p>
-
-<p>皆さんお疲れ様でした！</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/ja/page/2/">&larr; Older</a>
@@ -415,6 +419,10 @@ TD Techtalkに参加出来なかった人も見に来るというのもあった
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/ja/2015/09/tokyo-apache-drill-meetup-1/">Tokyo Apache Drill Meetup 第一回</a>
+      </li>
+    
+      <li class="post">
         <a href="/ja/2015/08/yapc-asia-tokyo-2015-presentation/">YAPC::Asia Tokyo 2015での発表</a>
       </li>
     
@@ -428,10 +436,6 @@ TD Techtalkに参加出来なかった人も見に来るというのもあった
     
       <li class="post">
         <a href="/ja/2015/04/fluentd-architecture-pros-and-cons/">Fluentdの現実装のPros/Cons</a>
-      </li>
-    
-      <li class="post">
-        <a href="/ja/2015/04/developers-io-2015/">Developers.IO 2015</a>
       </li>
     
   </ul>

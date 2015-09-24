@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-08-24T12:23:34+09:00</updated>
+  <updated>2015-09-24T18:55:07+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Tokyo Apache Drill Meetup 第一回]]></title>
+    <link href="http://repeatedly.github.com/ja/2015/09/tokyo-apache-drill-meetup-1/"/>
+    <updated>2015-09-24T18:47:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2015/09/tokyo-apache-drill-meetup-1</id>
+    <content type="html"><![CDATA[<ul>
+<li><a href="http://drill.connpass.com/event/19809/">Tokyo Apache Drill Meetup</a></li>
+<li><a href="http://togetter.com/li/874140">MapR CTOも来日！ Tokyo Apache Drill Meetup #tokyodrill まとめ</a></li>
+</ul>
+
+
+<p>上のイベントに参加してました．普通の感想は他の人が書くと思うので，質問した内容とその返答を書いておきます．</p>
+
+<h2>スキーマを自動検出するけど，途中で変わったらどうなるの？</h2>
+
+<p>現状はエラーになる．</p>
+
+<p>DrillはSchema on Readに加えて，データ読み込み時にスキーマを自動で生成する機能もある(Embulkのguessみたいなもの)．JSONとかのローカルファイルに対してクエリ投げる時は，いちいちスキーマを自分で設定する必要がなくて便利なのだけど，さすがに後半のデータで急に型が変わったりフィールドが増えたりすると，クエリ処理を続行できないとのこと．<br />
+そういう時はちゃんとスキーマを事前に定義する必要がある</p>
+
+<h2>クエリ毎のリソース制御ってどうしてるの？</h2>
+
+<p>現状その手の機能はない．並行で処理するクエリの数は制限できる．</p>
+
+<p>Prestoだとクエリ毎にメモリ使用量とかを制限できて，それによってどれだけクエリが投げられても，ワーカー群はかなり安定して処理を実行できるようになっている．現状のDrillユーザは，あらかじめどれだけメモリを使うかなどを測定して，それに見合ったクラスタを構築しているらしい．</p>
+
+<h2>大きいDrillクラスタって今どれくらい？</h2>
+
+<p>1クラスタ100台の事例はある，とのこと．</p>
+
+<p>Prestoだと1クラスタ1000台とかの事例はあるけど，これを聞く限りまだ大規模での事例はそこまでないようだ．ここは後発なのものあって，今後事例は出てくるかもしれないが，上で言及したリソース制御とかがないと，大規模での運用は結構厳しそう．</p>
+
+<h2>分析系の関数やWindow関数がほとんどないようだけど，今どうやって解析してるの？</h2>
+
+<p>Window関数相当のSQLを頑張って書いているか，自分達でDrillを拡張しているかのどちらか．</p>
+
+<p>Drillは現状の1.1だと，Window関数とかはあまりサポートされてなくて，Presto/Impalaで使える便利関数群が色々と使えない．今Drillを採用している人達はどうやって様々な分析をやっているのか，というのは運用・自社開発でカバーという感じらしい．この辺がこなれないと，普通の人達が使うのは結構厳しい感じ．</p>
+
+<hr />
+
+<p>上がMapRの人達に聞いた内容．後発なのでPrestoなどの良いところを取り込んでいるものの，まだ成熟してない感じなので，プロダクションで使うには運用でカバーしないといけない箇所が結構あるなぁという．<br />
+ApacheプロジェクトだしMapRがかなり開発リソースを割いてる感じなので，上記の問題群はいずれ解決されるだろうとは思いますが，Presto/Impalaもかなり開発が活発なので，どこまで差別化出来るのかが今後の注目ポイントになりそう．</p>
+
+<p>俺も時間を作って色々とチェックしてみるか…</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[YAPC::Asia Tokyo 2015での発表]]></title>
@@ -1647,84 +1694,6 @@ partitionedの話とか，現在の実行モデルにおけるオペレータの
 Presto meetupみたいなもう少し緩めのイベントもやる予定です．</p>
 
 <p>お楽しみに :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Release fluent-plugin-multi-format-parser]]></title>
-    <link href="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-multi-format-parser/"/>
-    <updated>2014-07-13T21:00:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-multi-format-parser</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/fluent-plugin-multi-format-parser">fluent-plugin-multi-format-parser</a></p>
-
-<p>一つのログファイルの中に複数のフォーマットがある時に利用可能なパーサプラグイン書きました．</p>
-
-<h2>使い方</h2>
-
-<p>fluent-gemでインストール．</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ fluent-gem install fluent-plugin-multi-format-parser</span></code></pre></td></tr></table></div></figure>
-
-
-<p>インストールすると，TextParserを利用している<code>in_tail</code>や<code>in_udp</code>などで<code>multi_format</code>が使えるようになります．
-そこで<code>&lt;pattern&gt;</code>を複数並べてください．<code>&lt;pattern&gt;</code>内の各設定は，利用するパーサにそのまま渡されます．</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> udp
-</span><span class='line'>  <span class="nb">tag</span> logs.multi
-</span><span class='line'>
-</span><span class='line'>  <span class="nb">format</span> multi_format
-</span><span class='line'>  <span class="nt">&lt;pattern&gt;</span>
-</span><span class='line'>    <span class="nb">format</span> apache
-</span><span class='line'>  <span class="nt">&lt;/pattern&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;pattern&gt;</span>
-</span><span class='line'>    <span class="nb">format</span> json
-</span><span class='line'>  <span class="nt">&lt;/pattern&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;pattern&gt;</span>
-</span><span class='line'>    <span class="nb">format</span> <span class="k">none</span>
-</span><span class='line'>  <span class="nt">&lt;/pattern&gt;</span>
-</span><span class='line'><span class="nt">&lt;/match&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>&lt;pattern&gt;</code>を上から順番に試し，パース出来たらその結果を返します．上の設定例だと，最初に<code>apache</code>，次に<code>json</code>，最後に<code>none</code>になります．
-たとえば，以下のようなログ群を<code>in_udp</code>に流すと</p>
-
-<pre><code>192.168.0.1 - - [28/Feb/2013:12:00:00 +0900] "GET / HTTP/1.1" 200 777
-{"k1":"v", "k2":123456}
-foobar
-</code></pre>
-
-<p>以下のように処理されます．</p>
-
-<pre><code>2013-02-28 12:00:00 +0900 test.**: {"host":"192.168.0.1","user":"-","method":"GET","path":"/","code":"200","size":"777"}
-2014-07-13 20:56:55 +0900 test.**: {"k":"v","k1":123456}
-2014-07-13 20:56:55 +0900 test.**: {"message":"foobar"}
-</code></pre>
-
-<h2>まとめ</h2>
-
-<p>ログファイルの中に複数のフォーマットが混じるのは望ましいことではないのですが，どうしてもそういう状況が起きるときには，使ってみてください．</p>
-
-<p>あと，実装はかなり単純なので，パーサプラグインのサンプルにでもしてもらえればと思います．</p>
-
-<p>何か要望があれば<a href="https://github.com/repeatedly/fluent-plugin-multi-format-parser">issue/pull request</a>に投げてもらえれば対応します．</p>
 ]]></content>
   </entry>
   

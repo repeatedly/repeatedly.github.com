@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Tokyo Apache Drill Meetup 第一回 - Go ahead!</title>
+  <meta name="author" content="Masahiro Nakagawa">
+
+  
+  <meta name="description" content="Tokyo Apache Drill Meetup
+MapR CTOも来日！ Tokyo Apache Drill Meetup #tokyodrill まとめ 上のイベントに参加してました．普通の感想は他の人が書くと思うので，質問した内容とその返答を書いておきます． スキーマを自動検出するけど &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://repeatedly.github.com/ja/2015/09/tokyo-apache-drill-meetup-1">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Go ahead!" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Go ahead!</a></h1>
+  
+    <h2>Memoization for Everything</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:repeatedly.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+
+
+  
+<ul class="main-navigation">
+  <li><a href="/ja/archives">Archives</a></li>
+  <li><a href="/">English</a></li>
+</ul>
+
+  
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Tokyo Apache Drill Meetup 第一回</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-09-24T18:47:00+09:00" pubdate data-updated="true">Sep 24<span>th</span>, 2015</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><ul>
+<li><a href="http://drill.connpass.com/event/19809/">Tokyo Apache Drill Meetup</a></li>
+<li><a href="http://togetter.com/li/874140">MapR CTOも来日！ Tokyo Apache Drill Meetup #tokyodrill まとめ</a></li>
+</ul>
+
+
+<p>上のイベントに参加してました．普通の感想は他の人が書くと思うので，質問した内容とその返答を書いておきます．</p>
+
+<h2>スキーマを自動検出するけど，途中で変わったらどうなるの？</h2>
+
+<p>現状はエラーになる．</p>
+
+<p>DrillはSchema on Readに加えて，データ読み込み時にスキーマを自動で生成する機能もある(Embulkのguessみたいなもの)．JSONとかのローカルファイルに対してクエリ投げる時は，いちいちスキーマを自分で設定する必要がなくて便利なのだけど，さすがに後半のデータで急に型が変わったりフィールドが増えたりすると，クエリ処理を続行できないとのこと．<br />
+そういう時はちゃんとスキーマを事前に定義する必要がある</p>
+
+<h2>クエリ毎のリソース制御ってどうしてるの？</h2>
+
+<p>現状その手の機能はない．並行で処理するクエリの数は制限できる．</p>
+
+<p>Prestoだとクエリ毎にメモリ使用量とかを制限できて，それによってどれだけクエリが投げられても，ワーカー群はかなり安定して処理を実行できるようになっている．現状のDrillユーザは，あらかじめどれだけメモリを使うかなどを測定して，それに見合ったクラスタを構築しているらしい．</p>
+
+<h2>大きいDrillクラスタって今どれくらい？</h2>
+
+<p>1クラスタ100台の事例はある，とのこと．</p>
+
+<p>Prestoだと1クラスタ1000台とかの事例はあるけど，これを聞く限りまだ大規模での事例はそこまでないようだ．ここは後発なのものあって，今後事例は出てくるかもしれないが，上で言及したリソース制御とかがないと，大規模での運用は結構厳しそう．</p>
+
+<h2>分析系の関数やWindow関数がほとんどないようだけど，今どうやって解析してるの？</h2>
+
+<p>Window関数相当のSQLを頑張って書いているか，自分達でDrillを拡張しているかのどちらか．</p>
+
+<p>Drillは現状の1.1だと，Window関数とかはあまりサポートされてなくて，Presto/Impalaで使える便利関数群が色々と使えない．今Drillを採用している人達はどうやって様々な分析をやっているのか，というのは運用・自社開発でカバーという感じらしい．この辺がこなれないと，普通の人達が使うのは結構厳しい感じ．</p>
+
+<hr />
+
+<p>上がMapRの人達に聞いた内容．後発なのでPrestoなどの良いところを取り込んでいるものの，まだ成熟してない感じなので，プロダクションで使うには運用でカバーしないといけない箇所が結構あるなぁという．<br />
+ApacheプロジェクトだしMapRがかなり開発リソースを割いてる感じなので，上記の問題群はいずれ解決されるだろうとは思いますが，Presto/Impalaもかなり開発が活発なので，どこまで差別化出来るのかが今後の注目ポイントになりそう．</p>
+
+<p>俺も時間を作って色々とチェックしてみるか…</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Masahiro Nakagawa</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-09-24T18:47:00+09:00" pubdate data-updated="true">Sep 24<span>th</span>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/drill/'>Drill</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://repeatedly.github.com/ja/2015/09/tokyo-apache-drill-meetup-1/" data-via="repeatedly" data-counturl="http://repeatedly.github.com/ja/2015/09/tokyo-apache-drill-meetup-1/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/ja/2015/08/yapc-asia-tokyo-2015-presentation/" title="Previous Post: YAPC::Asia Tokyo 2015での発表">&laquo; YAPC::Asia Tokyo 2015での発表</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/ja/2015/09/tokyo-apache-drill-meetup-1/">Tokyo Apache Drill Meetup 第一回</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2015/08/yapc-asia-tokyo-2015-presentation/">YAPC::Asia Tokyo 2015での発表</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2015/06/yapc-asia-2015-talk/">YAPC::Asia 2015 talk</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2015/06/fluentd-meetup-2015-summer/">Fluentd meetup 2015 summer</a>
+      </li>
+    
+      <li class="post">
+        <a href="/ja/2015/04/fluentd-architecture-pros-and-cons/">Fluentdの現実装のPros/Cons</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/repeatedly">@repeatedly</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'repeatedly',
+            count: 4,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("repeatedly", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/repeatedly" class="twitter-follow-button" data-show-count="false">Follow @repeatedly</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Masahiro Nakagawa -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'repeatedly';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://repeatedly.github.com/ja/2015/09/tokyo-apache-drill-meetup-1/';
+        var disqus_url = 'http://repeatedly.github.com/ja/2015/09/tokyo-apache-drill-meetup-1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

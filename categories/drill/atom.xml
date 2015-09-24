@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Drill | Go ahead!]]></title>
+  <link href="http://repeatedly.github.com/categories/drill/atom.xml" rel="self"/>
+  <link href="http://repeatedly.github.com/"/>
+  <updated>2015-09-24T18:55:07+09:00</updated>
+  <id>http://repeatedly.github.com/</id>
+  <author>
+    <name><![CDATA[Masahiro Nakagawa]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Tokyo Apache Drill Meetup 第一回]]></title>
+    <link href="http://repeatedly.github.com/ja/2015/09/tokyo-apache-drill-meetup-1/"/>
+    <updated>2015-09-24T18:47:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2015/09/tokyo-apache-drill-meetup-1</id>
+    <content type="html"><![CDATA[<ul>
+<li><a href="http://drill.connpass.com/event/19809/">Tokyo Apache Drill Meetup</a></li>
+<li><a href="http://togetter.com/li/874140">MapR CTOも来日！ Tokyo Apache Drill Meetup #tokyodrill まとめ</a></li>
+</ul>
+
+
+<p>上のイベントに参加してました．普通の感想は他の人が書くと思うので，質問した内容とその返答を書いておきます．</p>
+
+<h2>スキーマを自動検出するけど，途中で変わったらどうなるの？</h2>
+
+<p>現状はエラーになる．</p>
+
+<p>DrillはSchema on Readに加えて，データ読み込み時にスキーマを自動で生成する機能もある(Embulkのguessみたいなもの)．JSONとかのローカルファイルに対してクエリ投げる時は，いちいちスキーマを自分で設定する必要がなくて便利なのだけど，さすがに後半のデータで急に型が変わったりフィールドが増えたりすると，クエリ処理を続行できないとのこと．<br />
+そういう時はちゃんとスキーマを事前に定義する必要がある</p>
+
+<h2>クエリ毎のリソース制御ってどうしてるの？</h2>
+
+<p>現状その手の機能はない．並行で処理するクエリの数は制限できる．</p>
+
+<p>Prestoだとクエリ毎にメモリ使用量とかを制限できて，それによってどれだけクエリが投げられても，ワーカー群はかなり安定して処理を実行できるようになっている．現状のDrillユーザは，あらかじめどれだけメモリを使うかなどを測定して，それに見合ったクラスタを構築しているらしい．</p>
+
+<h2>大きいDrillクラスタって今どれくらい？</h2>
+
+<p>1クラスタ100台の事例はある，とのこと．</p>
+
+<p>Prestoだと1クラスタ1000台とかの事例はあるけど，これを聞く限りまだ大規模での事例はそこまでないようだ．ここは後発なのものあって，今後事例は出てくるかもしれないが，上で言及したリソース制御とかがないと，大規模での運用は結構厳しそう．</p>
+
+<h2>分析系の関数やWindow関数がほとんどないようだけど，今どうやって解析してるの？</h2>
+
+<p>Window関数相当のSQLを頑張って書いているか，自分達でDrillを拡張しているかのどちらか．</p>
+
+<p>Drillは現状の1.1だと，Window関数とかはあまりサポートされてなくて，Presto/Impalaで使える便利関数群が色々と使えない．今Drillを採用している人達はどうやって様々な分析をやっているのか，というのは運用・自社開発でカバーという感じらしい．この辺がこなれないと，普通の人達が使うのは結構厳しい感じ．</p>
+
+<hr />
+
+<p>上がMapRの人達に聞いた内容．後発なのでPrestoなどの良いところを取り込んでいるものの，まだ成熟してない感じなので，プロダクションで使うには運用でカバーしないといけない箇所が結構あるなぁという．<br />
+ApacheプロジェクトだしMapRがかなり開発リソースを割いてる感じなので，上記の問題群はいずれ解決されるだろうとは思いますが，Presto/Impalaもかなり開発が活発なので，どこまで差別化出来るのかが今後の注目ポイントになりそう．</p>
+
+<p>俺も時間を作って色々とチェックしてみるか…</p>
+]]></content>
+  </entry>
+  
+</feed>
