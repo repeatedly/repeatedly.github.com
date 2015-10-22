@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-09-24T18:55:07+09:00</updated>
+  <updated>2015-10-22T21:24:43+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,137 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[TinySegmenterのベンチマーク + D言語版]]></title>
+    <link href="http://repeatedly.github.com/ja/2015/10/tinysegmenter-benchmark-and-d/"/>
+    <updated>2015-10-22T20:51:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2015/10/tinysegmenter-benchmark-and-d</id>
+    <content type="html"><![CDATA[<p><a href="http://chezou.hatenablog.com/entry/2015/10/21/234317">TinySegmenterをJulia移植したらMITの先生に指導してもらえた話</a></p>
+
+<p>上の記事がTLで結構話題になっていて，そういえば昔TinySegmenterをD言語で実装したなぁと掘り起こした(<a href="https://gist.github.com/repeatedly/33a74fcc922a1ae529ec">TinySegmenter written in D</a>)．5年前のコードだったけど最新版でもさっくりと動いたので，どれくらいか比較のためにベンチマークを取ってみた．</p>
+
+<p>結果としては，Juliaには勝てなかった．コードを読んだ限り，Julia実装は他のとは違って中間のsegmentsリストを作らなかったりとか最適化がちょくちょく入っているので，この辺D言語でも頑張れば近いパフォーマンスは出せそう．</p>
+
+<p>ベンチマークしたのは手元のMBP．それぞれの処理系は<code>*env</code>で入れたり<code>homebrew</code>を使って入れたりした．</p>
+
+<ul>
+<li>Processor: 2.6 GHz Intel Core i7</li>
+<li>Memory: 16 GB 1600 MHz DDR3</li>
+</ul>
+
+
+<p>上の記事のベンチマーク結果は，Pythonのベンチマークだけループ回数が100じゃなくて10だったり，Juliaの実装にTC1などのスコアリングがなかったりといくつか完璧ではないので，修正した後にchezouさんが再度計測しなおすと思われます(すでに本人には報告済み)．</p>
+
+<p>以下手元でのベンチマーク結果．速かった順．</p>
+
+<hr />
+
+<ul>
+<li>julia 0.4.0</li>
+</ul>
+
+
+<p>masterだとTC1とかの修正が入ってます．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% julia -L ../src/TinySegmenter.jl benchmark.jl
+</span><span class='line'>
+</span><span class='line'>  8.887454 seconds <span class="o">(</span>5.04 M allocations: 253.778 MB, 0.53% gc <span class="nb">time</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>ldc2-0.16.0-beta2</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% ~/ldc2-0.16.0-beta2-osx-x86_64/bin/ldc2 tinysegmenter.d -O3 -boundscheck<span class="o">=</span>off -inline -release -run benchmark.d
+</span><span class='line'>
+</span><span class='line'>segment: <span class="m">14</span> secs, <span class="m">923</span> ms, and <span class="m">352</span> μs
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>nodejs v4.2.1</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% node benchmark.js
+</span><span class='line'>
+</span><span class='line'>82.42sec
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Ruby 2.2.3</li>
+</ul>
+
+
+<p>高速化したバージョン．パッチはすでに本家に投げました(<a href="https://github.com/6/tiny_segmenter/pull/1">Improve performance by repeatedly · Pull Request #1 · 6/tiny_segmenter</a>)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% <span class="nv">RUBYLIB</span><span class="o">=</span>./lib ruby benchmark.rb
+</span><span class='line'>                 user     system      total        real
+</span><span class='line'>segment    110.560000   0.800000 111.360000 <span class="o">(</span>111.823173<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Python 3.5.0</li>
+</ul>
+
+
+<p>Python 2の方は3.5に比べて遅いらしいのでやってない．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% python tinysegmenter3.py
+</span><span class='line'><span class="c">## benchmarker:         release 4.0.1 (for python)</span>
+</span><span class='line'><span class="c">## python version:      3.5.0</span>
+</span><span class='line'><span class="c">## python compiler:     GCC 4.2.1 Compatible Apple LLVM 7.0.0 (clang-700.0.72)</span>
+</span><span class='line'><span class="c">## python platform:     Darwin-15.0.0-x86_64-i386-64bit</span>
+</span><span class='line'><span class="c">## python executable:   /Users/repeatedly/.pyenv/versions/3.5.0/bin/python</span>
+</span><span class='line'><span class="c">## cpu model:           Intel(R) Core(TM) i7-4960HQ CPU @ 2.60GHz </span>
+</span><span class='line'><span class="c">## parameters:          loop=1, cycle=1, extra=0</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">##                        real    (total    = user    + sys)</span>
+</span><span class='line'>tokenize              181.4310  181.0800  180.2500    0.8300
+</span><span class='line'>
+</span><span class='line'><span class="c">## Ranking                real</span>
+</span><span class='line'>tokenize              181.4310  <span class="o">(</span>100.0<span class="o">)</span> ********************
+</span><span class='line'>
+</span><span class='line'><span class="c">## Matrix                 real    [01]</span>
+</span><span class='line'><span class="o">[</span>01<span class="o">]</span> tokenize         181.4310   100.0
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Tokyo Apache Drill Meetup 第一回]]></title>
@@ -1654,46 +1785,6 @@ Pumaなので，今後FluentdがJRubyとかサポートしても普通にその�
 <p>実際HTTPSを処理するならFluentdの前にNginxとかを置いた方が良いのだけど，バックエンドでも通信はHTTPSでやってるとかなんか縛りがあるような環境では，手軽に使えるのではないかと思います．</p>
 
 <p>何かあれば<a href="https://github.com/repeatedly/fluent-plugin-http-puma">issue/pull request</a>に投げてもらえれば対応します．</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Prestoソースコードリーディング #4]]></title>
-    <link href="http://repeatedly.github.com/ja/2014/07/presto-scr-4/"/>
-    <updated>2014-07-17T17:53:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2014/07/presto-scr-4</id>
-    <content type="html"><![CDATA[<p><a href="http://atnd.org/events/53545">Presto ソースコードリーディング #4</a></p>
-
-<p>いつものようにLINEでやりました！</p>
-
-<p>@frsyukiが帰国する前に，という流れで開催決定・募集が1週間前というタイトなスケジュールでしたが，
-無茶ぶりにつきあってくれた@ueshinさんに感謝．</p>
-
-<h2>当日の内容</h2>
-
-<p><a href="http://togetter.com/li/694128">togetterのまとめ</a>を見れば，なんとなく大まかな流れは把握できるはず…！</p>
-
-<p>ueshinさんが第二回のashigeruさんの論理計画実行の後を継いで，
-物理計画実行周りの話をしてくれました(<a href="https://gist.github.com/ueshin/5e38cfe915ce15f756b1">資料のgist</a>)．
-バイトコード生成しての高速化の話とか，Presto以外でも有用な話が出てました．</p>
-
-<p>frsyukiが現在のPrestoの開発体制の話，Treasure Dataでハックしている所の紹介，
-CREATE VIEWなどの実装がなぜこうなっているのか(これはfrsyuki案が通ったらしい)，
-今後Prestoチームがやろうとしていることなど含め，その場で色々と議論する感じになりました．</p>
-
-<h2>まとめ</h2>
-
-<p>少人数でソースコードレベルで興味のある人が集まっているのもあり，いつも通り濃い感じでした！
-partitionedの話とか，現在の実行モデルにおけるオペレータの実装の話とか，
-この辺を話すイベントはあんまりないんじゃないかなと思います．</p>
-
-<p>次第5回をいつやるかは決まってませんが，いずれやる予定です．</p>
-
-<p>またソースコードリーディングとは別に，Prestoのユースケースや，
-プロダクションで動かしている人の運用の話などを共有する，
-Presto meetupみたいなもう少し緩めのイベントもやる予定です．</p>
-
-<p>お楽しみに :)</p>
 ]]></content>
   </entry>
   

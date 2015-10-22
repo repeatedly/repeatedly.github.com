@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mongodb | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/mongodb/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-09-24T18:55:07+09:00</updated>
+  <updated>2015-10-22T21:24:43+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -51,27 +51,24 @@ td-agentには既に同梱されているため，td-agentを利用している�
 
 <p>MongoDBにイベントを書き込みます．BufferedOutputを利用しているため，イベントをバッファリングし，フラッシュする時にバルクでMongoDBに書き込みます．</p>
 
-<p>```aconf
-<match mongo.**>
-  type mongo</p>
+<pre><code class="aconf">&lt;match mongo.**&gt;
+  type mongo
 
-<p>  database fluentd
+  database fluentd
   collection log
   host host1
   port 10000
-</match>
-```</p>
+&lt;/match&gt;
+</code></pre>
 
 <p>これが基本的な設定の例です．この設定に対してApacheのログを読み込ませた場合には，例えば以下のようになります．</p>
 
-<p>```js
-$ mongo --host host1 --port 10000</p>
-
-<blockquote><p>use fluentd
-db.log.find()
+<pre><code class="js">$ mongo --host host1 --port 10000
+&gt; use fluentd
+&gt; db.log.find()
 {"host": "127.0.0.1", "method": "GET", "path": "/", "code": "200", ...}
 ...
-```</p></blockquote>
+</code></pre>
 
 <ul>
 <li>database (必須)</li>
@@ -119,30 +116,28 @@ db.log.find()
 
 <p>MongoDBのユーザ認証を使うようにします．以下のように <em>user</em> と <em>password</em> を設定に書きます．</p>
 
-<p>```aconf
-<match mongo.**>
+<pre><code class="aconf">&lt;match mongo.**&gt;
   type mongo
-  # ...</p>
+  # ...
 
-<p>  user handa
+  user handa
   password shinobu
-</match>
-```</p>
+&lt;/match&gt;
+</code></pre>
 
 <h3>capped</h3>
 
 <p>MongoDBの場合，出力先のコレクションに<a href="http://www.mongodb.org/display/DOCS/Capped+Collections">cappedコレクション</a>を使いたくなる時が結構あります．そのため，設定で指定することが出来ます．</p>
 
-<p>```aconf
-<match mongo.**>
+<pre><code class="aconf">&lt;match mongo.**&gt;
   type mongo
-  # ...</p>
+  # ...
 
-<p>  capped
+  capped
   capped_max  100
   capped_size 100m
-</match>
-```</p>
+&lt;/match&gt;
+</code></pre>
 
 <ul>
 <li>capped</li>
@@ -169,15 +164,14 @@ db.log.find()
 
 <p>MongoDBのようにコレクションが勝手に作られるデータベースを使っていると，Fluentdのタグに対応したそれぞれのコレクションに勝手に振り分けて保存したい時が出てきます．その時には <em>tag_mapped</em> を使います．</p>
 
-<p>```aconf
-<match mongo.**>
+<pre><code class="aconf">&lt;match mongo.**&gt;
   type mongo
-  #...</p>
+  #...
 
-<p>  tag_mapped
+  tag_mapped
   remove_tag_prefix mongo.
-</match>
-```</p>
+&lt;/match&gt;
+</code></pre>
 
 <ul>
 <li>tag_mapped</li>
@@ -199,20 +193,19 @@ db.log.find()
 
 <p>MongoDBのレプリカセットにイベントを書き込みます．<strong>mongo_replset</strong> タイプは <strong>mongo</strong> タイプを継承して実装しているため， <em>database</em> や <em>tag_mapped</em> など，基本的な設定は <strong>mongo</strong> タイプを引き継ぎます．そのため，ここでは <strong>mongo_replset</strong> だけの設定に関して書きます</p>
 
-<p>```aconf
-<match mongo.**>
+<pre><code class="aconf">&lt;match mongo.**&gt;
   type mongo_replset
-  #...</p>
+  #...
 
-<p>  nodes host1:27017,host2:27018,host3:27019
-  num_retries 30</p>
+  nodes host1:27017,host2:27018,host3:27019
+  num_retries 30
 
-<p>  name replset_name
+  name replset_name
   read secondary
   refresh_mode sync
   refresh_interval 60
-</match>
-```</p>
+&lt;/match&gt;
+</code></pre>
 
 <ul>
 <li>nodes (必須)</li>
@@ -243,20 +236,19 @@ db.log.find()
 
 <p>このInputプラグインは，in_tailと同じような動作をMongoDBのcappedコレクションに対して行います(通常のコレクションではソートされた状態で，位置を覚えて取得することが出来ないためです)．また，MongoDBから取得するドキュメントの'_id'フィールドの値はObjectIDになっておりJSONやMessagePackで扱えないため，'_id_str'フィールドに文字列としてセットされます．</p>
 
-<p>```aconf
-<source>
-  type mongo_tail</p>
+<pre><code class="aconf">&lt;source&gt;
+  type mongo_tail
 
-<p>  database fluentd
+  database fluentd
   collection capped_log
   host host1
-  port 10000</p>
+  port 10000
 
-<p>  tag mongo.log
+  tag mongo.log
   time_key time
   id_store_file /path/to/last_id
-</source>
-```</p>
+&lt;/source&gt;
+</code></pre>
 
 <ul>
 <li>tag (必須 or tag_keyがあるときはオプション)</li>
@@ -319,51 +311,45 @@ db.log.find()
 
 <p>今のところはcappedのチェックしかしてませんが，違う設定で既に存在しているコレクションに書き込もうとしていた場合には，以下のような例外を投げるようにしています．これは設定の使い回しなどで，うっかり誤ったコレクションに書き込むなどのミスを防ぐためにつけています．</p>
 
-<p><code>sh
-"New configuration is different from existing collection: new = foo, old = bar"
-</code></p>
+<pre><code class="sh">"New configuration is different from existing collection: new = foo, old = bar"
+</code></pre>
 
 <p>また，tag_mappedの場合は現在細かな指定が出来ないため，デフォルトではこのチェックはしないようになっています．
 この動作のon/offを切り替えるには <em>disable_collection_check</em> で指定します．</p>
 
-<p><code>aconf
-&lt;match mongo.**&gt;
+<pre><code class="aconf">&lt;match mongo.**&gt;
   #...
   disable_collection_check true
 &lt;/match&gt;
-</code></p>
+</code></pre>
 
 <h2>壊れているドキュメントの扱い</h2>
 
 <p>様々なアプリケーションのログをFluentdに流し込んでいると，たまにBSONとしてシリアライズ出来ないログが混じったりすることがあります(文字コードが壊れている，MongoDBとしてInvalidなフォーマットを持っている)．この場合に，Fluentdとしてはログを勝手に捨てることは出来ません．なので，mongoのOutputプラグインでは，そのようなログはバイナリにしてMongoDBに保存するようにしています．
 例えば以下のようなログが来たとします:</p>
 
-<p><code>js
-{"key1": "invalid value", "key2": "valid value", "time": ISODate("2012-01-15T21:09:53Z") }
-</code></p>
+<pre><code class="js">{"key1": "invalid value", "key2": "valid value", "time": ISODate("2012-01-15T21:09:53Z") }
+</code></pre>
 
 <p>この時key1の値がBSONに出来ないので，その壊れているフィールドと，Mixinで特別扱いされるtimeなどのフィールドを除くその他のフィールドを丸ごとバイナリに変換します(なぜ丸ごとするのかというと，RubyのBSONライブラリが失敗したフィールドを教えてくれないからです)．その結果，以下のようなフォーマットになります．</p>
 
-<p><code>js
-{"__broken_data": BinData(0, Marshal.dump result of {"key1": "invalid value", "key2": "valid value"}), "time": ISODate("2012-01-15T21:09:53Z") }
-</code></p>
+<pre><code class="js">{"__broken_data": BinData(0, Marshal.dump result of {"key1": "invalid value", "key2": "valid value"}), "time": ISODate("2012-01-15T21:09:53Z") }
+</code></pre>
 
 <p>バイナリになった壊れたデータは'__broken_data'という特別なフィールドにセットされ，再度insertが行われます．後でこの壊れたデータをチェックしたい場合には，以下のようなRubyスクリプトでチェックすることが出来ます</p>
 
-<p><code>rb
-collection.find({'__broken_data' =&gt; {'$exists' =&gt; true}}).each do |doc|
+<pre><code class="rb">collection.find({'__broken_data' =&gt; {'$exists' =&gt; true}}).each do |doc|
   p Marshal.load(doc['__broken_data'].to_s) #=&gt; {"key1": "invalid value", "key2": "valid value"}
 end
-</code></p>
+</code></pre>
 
 <p>ここまで書いてなんですが，そもそもログの種類によっては壊れているものは捨てても良い場合があると思います．その時は， <em>ignore_invalid_record</em> を使うことで捨てることが出来ます</p>
 
-<p><code>aconf
-&lt;match mongo.**&gt;
+<pre><code class="aconf">&lt;match mongo.**&gt;
   #...
   ignore_invalid_record true
 &lt;/match&gt;
-</code></p>
+</code></pre>
 
 <h2>MongoDBそのものの制限</h2>
 
@@ -413,20 +399,16 @@ e.g. output to local file, ignoring documents and etc.</p>
 
 <p><em>insert</em> without <code>:collect_on_error</code>:</p>
 
-<p>```ruby</p>
-
-<h1>docs is [{}, {}, ...]</h1>
-
-<p>result = collection.insert(docs)
-```</p>
+<pre><code class="ruby"># docs is [{}, {}, ...]
+result = collection.insert(docs)
+</code></pre>
 
 <p><em>result</em> is an array of inserted document.</p>
 
 <p><em>insert</em> with <code>:collect_on_error</code>:</p>
 
-<p><code>ruby
-result, invalid_docs = collection.insert(docs, :collect_on_error =&gt; true)
-</code></p>
+<pre><code class="ruby">result, invalid_docs = collection.insert(docs, :collect_on_error =&gt; true)
+</code></pre>
 
 <p><em>result</em> is same as insert without <code>:collect_on_error</code>.
 <em>invalid_docs</em> is an array of invalid document which removed ObjectId field.
@@ -454,27 +436,26 @@ For example, see <a href="https://github.com/fluent/fluent-plugin-mongo/commit/4
 
 <p>Example configuration is below:</p>
 
-<p>```apache
-<match mongo.**>
+<pre><code class="apache">&lt;match mongo.**&gt;
   type mongo_replset
   database fluent
-  collection logs</p>
+  collection logs
 
-<p>  # each node separated by ','
-  nodes localhost:27017,localhost:27018,localhost:27019</p>
+  # each node separated by ','
+  nodes localhost:27017,localhost:27018,localhost:27019
 
-<p>  # num_retries is threshold at failover, default is 60.
+  # num_retries is threshold at failover, default is 60.
   # If retry count reached this threshold, mongo plugin raises an exception.
-  num_retries 30</p>
+  num_retries 30
 
-<p>  # following optional parameters passed to ReplSetConnection of mongo-ruby-driver.
+  # following optional parameters passed to ReplSetConnection of mongo-ruby-driver.
   # See mongo-ruby-driver docs for more detail.
   #name replset_name
   #read secondary
   #refresh_mode sync
   #refresh_interval 60
-</match>
-```</p>
+&lt;/match&gt;
+</code></pre>
 
 <h3>Handling invalid records</h3>
 
@@ -485,15 +466,13 @@ And Mongo plugin inserts marshaled record as a broken data to same collection.</
 
 <p>If passed following invalid record:</p>
 
-<p><code>js
-{"key1": "invalid value", "key2": "valid value", "time": ISODate("2012-01-15T21:09:53Z")}
-</code></p>
+<pre><code class="js">{"key1": "invalid value", "key2": "valid value", "time": ISODate("2012-01-15T21:09:53Z")}
+</code></pre>
 
 <p>then Mongo plugin converts this record to following format:</p>
 
-<p><code>js
-{"__broken_data": Marshal.dump result of {"key1": "invalid value", "key2": "valid value"}, "time": ISODate("2012-01-15T21:09:53Z")}
-</code></p>
+<pre><code class="js">{"__broken_data": Marshal.dump result of {"key1": "invalid value", "key2": "valid value"}, "time": ISODate("2012-01-15T21:09:53Z")}
+</code></pre>
 
 <p>In the result, we can rescue and analyze a broken data later.</p>
 
@@ -506,40 +485,38 @@ so Mongo plugin marshals all attributes excluding Fluentd keys("tag_key" and "ti
 
 <p>If you want to ignore an invalid record, set <em>ignore_invalid_document</em> parameter in match.</p>
 
-<p>```apache
-<match forward.*>
-  ...</p>
+<pre><code class="apache">&lt;match forward.*&gt;
+  ...
 
-<p>  # ignore invalid documents at write operation
-  ignore_invalid_document true</p>
+  # ignore invalid documents at write operation
+  ignore_invalid_document true
 
-<p>  ...
-</match>
-```</p>
+  ...
+&lt;/match&gt;
+</code></pre>
 
 <h3>Tag mapped mode in <em>mongo</em> type</h3>
 
 <p>0.6.0 merges <em>mongo_tag_collection</em> type into <em>mongo</em> type.
 You can use <em>tag_mapped</em> parameter in <em>mongo</em> type for enabling tag mapped mode.</p>
 
-<p>```apache
-<match forward.*>
+<pre><code class="apache">&lt;match forward.*&gt;
   type mongo
-  database fluent</p>
+  database fluent
 
-<p>  # You use 'tag_mapped', then tag mapped mode enabled.
-  tag_mapped</p>
+  # You use 'tag_mapped', then tag mapped mode enabled.
+  tag_mapped
 
-<p>  # If tag is "forward.foo.bar", then prefix "forward." is removed.
+  # If tag is "forward.foo.bar", then prefix "forward." is removed.
   # Collection name to insert is "foo.bar".
-  remove_tag_prefix forward.</p>
+  remove_tag_prefix forward.
 
-<p>  # This configuration is used if tag not found. Default is 'untagged'.
-  collection misc</p>
+  # This configuration is used if tag not found. Default is 'untagged'.
+  collection misc
 
-<p>  # Other configurations here
-</match>
-```</p>
+  # Other configurations here
+&lt;/match&gt;
+</code></pre>
 
 <h2>TODO</h2>
 

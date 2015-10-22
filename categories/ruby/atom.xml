@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/ruby/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-09-24T18:55:07+09:00</updated>
+  <updated>2015-10-22T21:24:43+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -43,20 +43,16 @@ e.g. output to local file, ignoring documents and etc.</p>
 
 <p><em>insert</em> without <code>:collect_on_error</code>:</p>
 
-<p>```ruby</p>
-
-<h1>docs is [{}, {}, ...]</h1>
-
-<p>result = collection.insert(docs)
-```</p>
+<pre><code class="ruby"># docs is [{}, {}, ...]
+result = collection.insert(docs)
+</code></pre>
 
 <p><em>result</em> is an array of inserted document.</p>
 
 <p><em>insert</em> with <code>:collect_on_error</code>:</p>
 
-<p><code>ruby
-result, invalid_docs = collection.insert(docs, :collect_on_error =&gt; true)
-</code></p>
+<pre><code class="ruby">result, invalid_docs = collection.insert(docs, :collect_on_error =&gt; true)
+</code></pre>
 
 <p><em>result</em> is same as insert without <code>:collect_on_error</code>.
 <em>invalid_docs</em> is an array of invalid document which removed ObjectId field.

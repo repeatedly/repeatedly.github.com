@@ -4,7 +4,7 @@
   <title><![CDATA[Category: D | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/d/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-09-24T18:55:07+09:00</updated>
+  <updated>2015-10-22T21:24:43+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -152,18 +152,16 @@ LTSV is the flexible and robust row oriented format.</p>
 
 <p><code>fromLTSV</code> for parsing:</p>
 
-<p><code>d
-auto apacheLog = "host:127.0.0.1\tident:-\tuser:foo\ttime:[10/Oct/2000:13:55:36 -0700]\treq:GET /apache.gif HTTP/1.0\tstatus:200\tsize:777\treferer:http://www.example.com/start.html\tua:Mozilla/4.08 [en] (Win98; I ;Nav)";
+<pre><code class="d">auto apacheLog = "host:127.0.0.1\tident:-\tuser:foo\ttime:[10/Oct/2000:13:55:36 -0700]\treq:GET /apache.gif HTTP/1.0\tstatus:200\tsize:777\treferer:http://www.example.com/start.html\tua:Mozilla/4.08 [en] (Win98; I ;Nav)";
 auto record = fromLTSV(apacheLog);
 writeln(record["host"]); // "127.0.0.1"
-</code></p>
+</code></pre>
 
 <p><code>toLTSV</code> for dumping:</p>
 
-<p><code>d
-auto line = ["foo":"bar", "hoge":"fuga", "piyo":"puyo"].toLTSV();
+<pre><code class="d">auto line = ["foo":"bar", "hoge":"fuga", "piyo":"puyo"].toLTSV();
 writeln(line); // "foo:bar\thoge:fuga\tpiyo:puyo"
-</code></p>
+</code></pre>
 
 <p>Enjoy LTSV!</p>
 ]]></content>
@@ -183,25 +181,21 @@ yajl-d is 2 - 3 times faster than std.json (try simple benchmark in example dire
 
 <p>Following code is basic form:</p>
 
-<p>```d
-import yajl.yajl;</p>
+<pre><code class="d">import yajl.yajl;
 
-<p>// yajl-d can serialize / deserialize D object.
+// yajl-d can serialize / deserialize D object.
 struct Hoge
-{</p>
+{ 
+    ulong id;
+    string word;
+    bool yes; 
+}
 
-<pre><code>ulong id;
-string word;
-bool yes; 
-</code></pre>
-
-<p>}</p>
-
-<p>// {"id":100,"word":"hey!","yes":true}
+// {"id":100,"word":"hey!","yes":true}
 Hoge hoge1 = Hoge(100, "hey!", true);
 Hoge hoge2 = decode!Hoge(encode(hoge1));
 assert(hoge1 == hoge2);
-```</p>
+</code></pre>
 
 <p><code>encode</code> and <code>decode</code> are the wrapper of <code>Encoder</code> and <code>Decoder</code>. If you want to know more details of <code>Encoder</code> and <code>Decoder</code>. See README and the DDoc.</p>
 
@@ -221,13 +215,12 @@ Thanks to Lloyd!</p>
 
 <p>Current version provides only siphash24 function:</p>
 
-<p>```d
-import siphash;</p>
+<pre><code class="d">import siphash;
 
-<p>ubyte[16] k = cast(ubyte[])"To be|not to be!";
+ubyte[16] k = cast(ubyte[])"To be|not to be!";
 ubyte[] msg = cast(ubyte[])"that is the question.";
 auto hashed = siphash24(k, msg);
-```</p>
+</code></pre>
 
 <p>I plan to add std.digest like struct and other APIs if needed.</p>
 

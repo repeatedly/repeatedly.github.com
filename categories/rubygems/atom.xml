@@ -4,7 +4,7 @@
   <title><![CDATA[Category: rubygems | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/rubygems/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-09-24T18:55:07+09:00</updated>
+  <updated>2015-10-22T21:24:43+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -23,22 +23,15 @@
 <p>I hit this problem at fluent-plugin-mongo 0.6.0.
 Some user failed fluent-plugin-mongo 0.6.0 installation with following message.</p>
 
-<p>```</p>
-
-<h1>fluent-gem install fluent-plugin-mongo</h1>
-
-<p>ERROR:  While executing gem ... (NoMethodError)</p>
-
-<pre><code>undefined method `call' for nil:NilClass
+<pre><code># fluent-gem install fluent-plugin-mongo
+ERROR:  While executing gem ... (NoMethodError)
+    undefined method `call' for nil:NilClass
 </code></pre>
-
-<p>```</p>
 
 <p>In short, you should use the range form, e.g.:</p>
 
-<p><code>ruby
-gem.add_dependency "mongo", ["&gt;= 1.5.2", "&lt;= 1.5.2"]
-</code></p>
+<pre><code class="ruby">gem.add_dependency "mongo", ["&gt;= 1.5.2", "&lt;= 1.5.2"]
+</code></pre>
 
 <p>for an exact match dependency for old or <strong>Syck</strong> environment when building a gem.</p>
 
@@ -51,44 +44,37 @@ Current Ruby's <strong>YAML</strong> engine is <strong>Psych</strong>. <strong>P
 
 <p>For example, if you add an exact match dependency to the gem:</p>
 
-<p><code>ruby
-gem.add_dependency "mongo", "= 1.5.2"
-</code></p>
+<pre><code class="ruby">gem.add_dependency "mongo", "= 1.5.2"
+</code></pre>
 
 <p>then <strong>Psych</strong> generates following metadata:</p>
 
-<p>```yaml
-- !ruby/object:Gem::Dependency
+<pre><code class="yaml">- !ruby/object:Gem::Dependency 
   name: mongo
-  requirement: &amp;id002 !ruby/object:Gem::Requirement</p>
-
-<pre><code>none: false
-requirements: 
-- - =
-  - !ruby/object:Gem::Version 
-    version: 1.5.2
-</code></pre>
-
-<p>  type: :runtime
+  requirement: &amp;id002 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - =
+      - !ruby/object:Gem::Version 
+        version: 1.5.2
+  type: :runtime
   prerelease: false
   version_requirements: *id002
-```</p>
+</code></pre>
 
 <p>Problem is here. See line <em>6</em>.</p>
 
 <p>Old Ruby's <strong>YAML</strong> engine is <strong>Syck</strong>. <strong>Syck</strong> can't treat unquoted '=' correctly.
 In <strong>Psych</strong>, the result of loading this metadata is correct:</p>
 
-<p><code>ruby
-"= 1.5.2"
-</code></p>
+<pre><code class="ruby">"= 1.5.2"
+</code></pre>
 
 <p>but, <strong>Syck</strong> parses unquoted '=' as a <strong>YAML</strong>'s default key by mistake.
 So loaded result is broken:</p>
 
-<p><code>ruby
-"#&lt;Syck::DefaultKey:0x0000010380cc40&gt; 1.5.2"
-</code></p>
+<pre><code class="ruby">"#&lt;Syck::DefaultKey:0x0000010380cc40&gt; 1.5.2"
+</code></pre>
 
 <p><strong>RubyGems</strong> don't know <code>#&lt;Syck::DefaultKey:0x0000010380cc40></code> operation.
 In the result, the gem installation failed in <strong>Syck</strong> environement.</p>
@@ -100,9 +86,8 @@ In the result, the gem installation failed in <strong>Syck</strong> environement
 <p><strong>Psych</strong> and <strong>Syck</strong> treat '&lt;=' / '>=' correctly,
 so we can use following form to avoid this problem.</p>
 
-<p><code>ruby
-gem.add_dependency "mongo", ["&gt;= 1.5.2", "&lt;= 1.5.2"]
-</code></p>
+<pre><code class="ruby">gem.add_dependency "mongo", ["&gt;= 1.5.2", "&lt;= 1.5.2"]
+</code></pre>
 
 <p>This is an ad-hoc approach, but works fine :)<br />
 I strongly recommend this approach.</p>
@@ -115,22 +100,18 @@ I strongly recommend this approach.</p>
 
 <p>Using <strong>Syck</strong>, generated metadata is below:</p>
 
-<p>```yaml
-- !ruby/object:Gem::Dependency
+<pre><code class="yaml">- !ruby/object:Gem::Dependency 
   name: mongo
-  requirement: &amp;id002 !ruby/object:Gem::Requirement</p>
-
-<pre><code>none: false
-requirements: 
-- - "="
-  - !ruby/object:Gem::Version 
-    version: 1.5.2
-</code></pre>
-
-<p>  type: :runtime
+  requirement: &amp;id002 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - "="
+      - !ruby/object:Gem::Version 
+        version: 1.5.2
+  type: :runtime
   prerelease: false
   version_requirements: *id002
-```</p>
+</code></pre>
 
 <p><strong>Syck</strong> treat '"="' as a string, not default key. So we can use '=' for an exact match dependency.</p>
 

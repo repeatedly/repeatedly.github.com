@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: TinySegmenter | Go ahead!]]></title>
+  <link href="http://repeatedly.github.com/categories/tinysegmenter/atom.xml" rel="self"/>
+  <link href="http://repeatedly.github.com/"/>
+  <updated>2015-10-22T21:24:43+09:00</updated>
+  <id>http://repeatedly.github.com/</id>
+  <author>
+    <name><![CDATA[Masahiro Nakagawa]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[TinySegmenterのベンチマーク + D言語版]]></title>
+    <link href="http://repeatedly.github.com/ja/2015/10/tinysegmenter-benchmark-and-d/"/>
+    <updated>2015-10-22T20:51:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2015/10/tinysegmenter-benchmark-and-d</id>
+    <content type="html"><![CDATA[<p><a href="http://chezou.hatenablog.com/entry/2015/10/21/234317">TinySegmenterをJulia移植したらMITの先生に指導してもらえた話</a></p>
+
+<p>上の記事がTLで結構話題になっていて，そういえば昔TinySegmenterをD言語で実装したなぁと掘り起こした(<a href="https://gist.github.com/repeatedly/33a74fcc922a1ae529ec">TinySegmenter written in D</a>)．5年前のコードだったけど最新版でもさっくりと動いたので，どれくらいか比較のためにベンチマークを取ってみた．</p>
+
+<p>結果としては，Juliaには勝てなかった．コードを読んだ限り，Julia実装は他のとは違って中間のsegmentsリストを作らなかったりとか最適化がちょくちょく入っているので，この辺D言語でも頑張れば近いパフォーマンスは出せそう．</p>
+
+<p>ベンチマークしたのは手元のMBP．それぞれの処理系は<code>*env</code>で入れたり<code>homebrew</code>を使って入れたりした．</p>
+
+<ul>
+<li>Processor: 2.6 GHz Intel Core i7</li>
+<li>Memory: 16 GB 1600 MHz DDR3</li>
+</ul>
+
+
+<p>上の記事のベンチマーク結果は，Pythonのベンチマークだけループ回数が100じゃなくて10だったり，Juliaの実装にTC1などのスコアリングがなかったりといくつか完璧ではないので，修正した後にchezouさんが再度計測しなおすと思われます(すでに本人には報告済み)．</p>
+
+<p>以下手元でのベンチマーク結果．速かった順．</p>
+
+<hr />
+
+<ul>
+<li>julia 0.4.0</li>
+</ul>
+
+
+<p>masterだとTC1とかの修正が入ってます．</p>
+
+<pre><code class="sh">% julia -L ../src/TinySegmenter.jl benchmark.jl
+
+  8.887454 seconds (5.04 M allocations: 253.778 MB, 0.53% gc time)
+</code></pre>
+
+<ul>
+<li>ldc2-0.16.0-beta2</li>
+</ul>
+
+
+<pre><code class="sh">% ~/ldc2-0.16.0-beta2-osx-x86_64/bin/ldc2 tinysegmenter.d -O3 -boundscheck=off -inline -release -run benchmark.d
+
+segment: 14 secs, 923 ms, and 352 μs
+</code></pre>
+
+<ul>
+<li>nodejs v4.2.1</li>
+</ul>
+
+
+<pre><code class="sh">% node benchmark.js
+
+82.42sec
+</code></pre>
+
+<ul>
+<li>Ruby 2.2.3</li>
+</ul>
+
+
+<p>高速化したバージョン．パッチはすでに本家に投げました(<a href="https://github.com/6/tiny_segmenter/pull/1">Improve performance by repeatedly · Pull Request #1 · 6/tiny_segmenter</a>)</p>
+
+<pre><code class="sh">% RUBYLIB=./lib ruby benchmark.rb
+                 user     system      total        real
+segment    110.560000   0.800000 111.360000 (111.823173)
+</code></pre>
+
+<ul>
+<li>Python 3.5.0</li>
+</ul>
+
+
+<p>Python 2の方は3.5に比べて遅いらしいのでやってない．</p>
+
+<pre><code class="sh">% python tinysegmenter3.py
+## benchmarker:         release 4.0.1 (for python)
+## python version:      3.5.0
+## python compiler:     GCC 4.2.1 Compatible Apple LLVM 7.0.0 (clang-700.0.72)
+## python platform:     Darwin-15.0.0-x86_64-i386-64bit
+## python executable:   /Users/repeatedly/.pyenv/versions/3.5.0/bin/python
+## cpu model:           Intel(R) Core(TM) i7-4960HQ CPU @ 2.60GHz 
+## parameters:          loop=1, cycle=1, extra=0
+
+##                        real    (total    = user    + sys)
+tokenize              181.4310  181.0800  180.2500    0.8300
+
+## Ranking                real
+tokenize              181.4310  (100.0) ********************
+
+## Matrix                 real    [01]
+[01] tokenize         181.4310   100.0
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

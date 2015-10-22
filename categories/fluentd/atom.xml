@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Fluentd | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/fluentd/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-09-24T18:55:07+09:00</updated>
+  <updated>2015-10-22T21:24:43+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -250,8 +250,7 @@ Fluentdなんかはプラグイン機構でガンガンインフラの人にも�
 <iframe width="480" height="302" src="http://www.ustream.tv/embed/recorded/30009634?v=3&amp;wmode=direct" scrolling="no" frameborder="0" style="border: 0px none transparent;">    </iframe>
 
 
-<br /><a href="http://www.ustream.tv/" style="padding: 2px 0px 4px; width: 400px; background: #ffffff; display: block; color: #000000; font-weight: normal; font-size: 10px; text-decoration: underline; text-align: center;" target="_blank">Video streaming by Ustream</a>
-
+<p><br /><a href="http://www.ustream.tv/" style="padding: 2px 0px 4px; width: 400px; background: #ffffff; display: block; color: #000000; font-weight: normal; font-size: 10px; text-decoration: underline; text-align: center;" target="_blank">Video streaming by Ustream</a></p>
 
 <p>最初はfrsyukiが登壇予定に上がっていたんだけど，今彼はアメリカということで代打で役割が回ってきた，というのが発表の経緯．</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mspgack-rpc | Go ahead!]]></title>
   <link href="http://repeatedly.github.com/categories/mspgack-rpc/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-09-24T18:55:07+09:00</updated>
+  <updated>2015-10-22T21:24:43+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -23,26 +23,22 @@
 <p>The main feature is MessagePack RPC Server support.<br />
 Example is below:</p>
 
-<p>```python
-import msgpackrpc</p>
+<pre><code class="python">import msgpackrpc
 
-<p>class SumServer:
-  def sum(x, y):</p>
+class SumServer:
+  def sum(x, y):
+    return x + y
 
-<pre><code>return x + y
-</code></pre>
-
-<p>server = msgpackrpc.Server(SumServer())
+server = msgpackrpc.Server(SumServer())
 server.listen(msgpackrpc.Address("localhost", 10000))
 server.start()
-```</p>
+</code></pre>
 
 <p>You can use Client to access this server:</p>
 
-<p><code>python
-client = msgpackrpc.Client(msgpackrpc.Address("localhost", 10000))
+<pre><code class="python">client = msgpackrpc.Client(msgpackrpc.Address("localhost", 10000))
 client.call("sum", 1, 2) # =&gt; 3
-</code></p>
+</code></pre>
 
 <h2>Other improvements</h2>
 

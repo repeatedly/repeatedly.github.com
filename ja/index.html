@@ -9,8 +9,7 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Tokyo Apache Drill Meetup
-MapR CTOも来日！ Tokyo Apache Drill Meetup #tokyodrill まとめ 上のイベントに参加してました．普通の感想は他の人が書くと思うので，質問した内容とその返答を書いておきます． スキーマを自動検出するけど &hellip;">
+  <meta name="description" content="TinySegmenterをJulia移植したらMITの先生に指導してもらえた話 上の記事がTLで結構話題になっていて，そういえば昔TinySegmenterをD言語で実装したなぁと掘り起こした(TinySegmenter written in D)． &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,6 +69,166 @@ MapR CTOも来日！ Tokyo Apache Drill Meetup #tokyodrill まとめ 上のイ�
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2015/10/tinysegmenter-benchmark-and-d/">TinySegmenterのベンチマーク + D言語版</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-22T20:51:00+09:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2015</time>
+        
+         | <a href="/ja/2015/10/tinysegmenter-benchmark-and-d/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://chezou.hatenablog.com/entry/2015/10/21/234317">TinySegmenterをJulia移植したらMITの先生に指導してもらえた話</a></p>
+
+<p>上の記事がTLで結構話題になっていて，そういえば昔TinySegmenterをD言語で実装したなぁと掘り起こした(<a href="https://gist.github.com/repeatedly/33a74fcc922a1ae529ec">TinySegmenter written in D</a>)．5年前のコードだったけど最新版でもさっくりと動いたので，どれくらいか比較のためにベンチマークを取ってみた．</p>
+
+<p>結果としては，Juliaには勝てなかった．コードを読んだ限り，Julia実装は他のとは違って中間のsegmentsリストを作らなかったりとか最適化がちょくちょく入っているので，この辺D言語でも頑張れば近いパフォーマンスは出せそう．</p>
+
+<p>ベンチマークしたのは手元のMBP．それぞれの処理系は<code>*env</code>で入れたり<code>homebrew</code>を使って入れたりした．</p>
+
+<ul>
+<li>Processor: 2.6 GHz Intel Core i7</li>
+<li>Memory: 16 GB 1600 MHz DDR3</li>
+</ul>
+
+
+<p>上の記事のベンチマーク結果は，Pythonのベンチマークだけループ回数が100じゃなくて10だったり，Juliaの実装にTC1などのスコアリングがなかったりといくつか完璧ではないので，修正した後にchezouさんが再度計測しなおすと思われます(すでに本人には報告済み)．</p>
+
+<p>以下手元でのベンチマーク結果．速かった順．</p>
+
+<hr />
+
+<ul>
+<li>julia 0.4.0</li>
+</ul>
+
+
+<p>masterだとTC1とかの修正が入ってます．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% julia -L ../src/TinySegmenter.jl benchmark.jl
+</span><span class='line'>
+</span><span class='line'>  8.887454 seconds <span class="o">(</span>5.04 M allocations: 253.778 MB, 0.53% gc <span class="nb">time</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>ldc2-0.16.0-beta2</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% ~/ldc2-0.16.0-beta2-osx-x86_64/bin/ldc2 tinysegmenter.d -O3 -boundscheck<span class="o">=</span>off -inline -release -run benchmark.d
+</span><span class='line'>
+</span><span class='line'>segment: <span class="m">14</span> secs, <span class="m">923</span> ms, and <span class="m">352</span> μs
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>nodejs v4.2.1</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% node benchmark.js
+</span><span class='line'>
+</span><span class='line'>82.42sec
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Ruby 2.2.3</li>
+</ul>
+
+
+<p>高速化したバージョン．パッチはすでに本家に投げました(<a href="https://github.com/6/tiny_segmenter/pull/1">Improve performance by repeatedly · Pull Request #1 · 6/tiny_segmenter</a>)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% <span class="nv">RUBYLIB</span><span class="o">=</span>./lib ruby benchmark.rb
+</span><span class='line'>                 user     system      total        real
+</span><span class='line'>segment    110.560000   0.800000 111.360000 <span class="o">(</span>111.823173<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Python 3.5.0</li>
+</ul>
+
+
+<p>Python 2の方は3.5に比べて遅いらしいのでやってない．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% python tinysegmenter3.py
+</span><span class='line'><span class="c">## benchmarker:         release 4.0.1 (for python)</span>
+</span><span class='line'><span class="c">## python version:      3.5.0</span>
+</span><span class='line'><span class="c">## python compiler:     GCC 4.2.1 Compatible Apple LLVM 7.0.0 (clang-700.0.72)</span>
+</span><span class='line'><span class="c">## python platform:     Darwin-15.0.0-x86_64-i386-64bit</span>
+</span><span class='line'><span class="c">## python executable:   /Users/repeatedly/.pyenv/versions/3.5.0/bin/python</span>
+</span><span class='line'><span class="c">## cpu model:           Intel(R) Core(TM) i7-4960HQ CPU @ 2.60GHz </span>
+</span><span class='line'><span class="c">## parameters:          loop=1, cycle=1, extra=0</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">##                        real    (total    = user    + sys)</span>
+</span><span class='line'>tokenize              181.4310  181.0800  180.2500    0.8300
+</span><span class='line'>
+</span><span class='line'><span class="c">## Ranking                real</span>
+</span><span class='line'>tokenize              181.4310  <span class="o">(</span>100.0<span class="o">)</span> ********************
+</span><span class='line'>
+</span><span class='line'><span class="c">## Matrix                 real    [01]</span>
+</span><span class='line'><span class="o">[</span>01<span class="o">]</span> tokenize         181.4310   100.0
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -315,95 +474,6 @@ ApacheプロジェクトだしMapRがかなり開発リソースを割いてる�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2015/04/fluentd-architecture-pros-and-cons/">Fluentdの現実装のPros/Cons</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-04-13T23:22:00+09:00" pubdate data-updated="true">Apr 13<span>th</span>, 2015</time>
-        
-         | <a href="/ja/2015/04/fluentd-architecture-pros-and-cons/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>TODO:</p>
-
-<ul>
-<li>必要なら図を足す</li>
-<li>他に書いた方が良いPros/Consのリクエストがあったら追記</li>
-</ul>
-
-
-<h2>内部のイベントストリームの扱い</h2>
-
-<ul>
-<li>Pros: Inputがスケーラブルに実装しやすく，データストリームを正常時/エラー時で切り替えやすい</li>
-<li>Cons: エラーハンドリングがブロッキングモデルよりも複雑になりやすい</li>
-</ul>
-
-
-<p>以下長々と理由書きます．</p>
-
-<p>Fluentdはイベントストリームを効率良く，またロバストに扱うことを目的に設計されています．そのため，独自の転送プロトコル(forwardプラグイン)を実装していますし，内部のイベントのハンドリングもそれに沿うようになっています．ただ，それによって相性の悪い操作とかもあります．</p>
-
-<p>Fluentdはバッファ機能を提供しており，これによって転送の効率化とエラー時のデータロスを防ぐ設計になっています．が，あまりにも書き込み先が遅いなどの問題があると，バッファの制限を超えてしまうことがあります．<br />
-この時，FluentdはInputプラグインにエラーを返します．これによりInputプラグインはさらにエラーを外部にも伝搬させることが出来，forwardプラグインなら再送や，エラーが続くようならセカンダリに流すなどが出来るようになっています．これはデータストリームを流し続けるため，またInputプラグインがブロックせずに大量の入力を扱えるようにするため，こうなっています．</p>
-
-<p>このモデルは，データがストリームではない過去ログの一括転送などと少し相性が悪いです．例えばtailを使って過去ログをElasticsearchに一気に流す時によく問題に当たるのですが，Elasticsearchは1台だと受け付けられるデータ量はそれほど多くなく(ここはチューニングに左右されます)，大量の過去ログを一気に送ろうとするとOutputプラグインのフラッシュ処理が追いつかなくなり，結果バッファが溜まりリミットを越え，Input側にエラーが返り続けることになります(tailの場合はひたすらリトライ)．</p>
-
-<p>一方，Elasticsearchと一緒によく使われるLogstashはFluentdとは違うアプローチをとっています．内部には長さ固定のブロッキングキュー(Outputのバッファではない)がInputとOutputの間に存在しており，Inputはそのキューがあくまで処理がブロックします．<br />
-そのため，上記のような過去ログの転送などでは，キューが空くまで処理は行われないので，Output側が詰まってもエラーなどにはなりません．その変わりブロックしているため，外部からデータが送られてくるようなケースにおいては，このブロックがどんどん伝搬していくので，大量・多数の入力を捌くのが難しくなります．</p>
-
-<p>この辺に関しては最近のイベントでも言及されてました(ここで言われているログが抜ける云々はInput側の問題ではなくて，ESが高負荷になりすぎてES側でrejectされてるんだと思います．<a href="https://www.elastic.co/blog/performance-considerations-elasticsearch-indexing">この記事</a>参照)．</p>
-
-<blockquote class="twitter-tweet" lang="en"><p>fluentdは日本では流行ってるけど、キューがあふれるとキューに入りきらなかったログが抜けることがある、logstashなら大丈夫なので、大量の過去ログ投入するといはlogstashがおすすめ。 <a href="https://twitter.com/hashtag/jdt54?src=hash">#jdt54</a> <a href="https://twitter.com/hashtag/JavaDayTokyo?src=hash">#JavaDayTokyo</a></p>&mdash; mogami (@smogami) <a href="https://twitter.com/smogami/status/585713225800495105">April 8, 2015</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-<p>これらのモデルの差は</p>
-
-<ul>
-<li>Fluentdはロバストなログ転送をするために</li>
-<li>Logstashはログの管理をするために(昔はそれほどES/Kibanaと密結合していなかったはず)</li>
-</ul>
-
-
-<p>という出生の違いによって生まれているのかなぁと思っています．</p>
-
-<p>実のところFluentdで過去ログを転送している人はいて大きな問題にはなってないのですが，どうしてもキャパシティが足りないところに無理にやろうとすると，上記のElasticsearchのような問題が起きたりするので気をつけましょうという感じです．(一括転送専用にバッファをチューニングするのは面倒だったりしますし…)．<br />
-実際1レコードずつSQL発行してinsertを行うmysqlプラグインでも，最近同じ問題が起きてました．これはバルクロード版で解決しました．</p>
-
-<p>今だと<a href="http://www.embulk.org/docs/">Embulk</a>があるので，大量データの一括転送はそちらを使ってくださいという流れになりますが，ブロックする挙動があっても損はないとは思うので，うまくバッファのAPIが整備出来れば，back-pressureっぽい機能は入れようかとは思ったりはしてます(<a href="https://github.com/fluent/fluentd/issues/567">fluent/fluentd #569</a>)．</p>
-
-<p>今回はFluentdとLogstashしか言及してませんが，他にもいくつかログ収集のプロダクトは存在しているので，上記のイベントのライフサイクルや，転送プロトコルでどういうセマンティクスがあるのかなどは，使う場合には一通りチェックした方が良いと思います．</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/ja/page/2/">&larr; Older</a>
@@ -419,6 +489,10 @@ ApacheプロジェクトだしMapRがかなり開発リソースを割いてる�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/ja/2015/10/tinysegmenter-benchmark-and-d/">TinySegmenterのベンチマーク + D言語版</a>
+      </li>
+    
+      <li class="post">
         <a href="/ja/2015/09/tokyo-apache-drill-meetup-1/">Tokyo Apache Drill Meetup 第一回</a>
       </li>
     
@@ -432,10 +506,6 @@ ApacheプロジェクトだしMapRがかなり開発リソースを割いてる�
     
       <li class="post">
         <a href="/ja/2015/06/fluentd-meetup-2015-summer/">Fluentd meetup 2015 summer</a>
-      </li>
-    
-      <li class="post">
-        <a href="/ja/2015/04/fluentd-architecture-pros-and-cons/">Fluentdの現実装のPros/Cons</a>
       </li>
     
   </ul>

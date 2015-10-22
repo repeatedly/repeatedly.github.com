@@ -9,8 +9,8 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="Sensu 最近人気が出てきているようなので試して見た．
-仕組みに関しては本家のドキュメントとかスライドとか見ると大体分かる． 雑感: server, client, api, dashboardに分かれているのは良い 実装はRubyでシンプルに書かれているように見える．多分弄るのは簡単 &hellip;">
+  <meta name="description" content="リリースは永遠にされません！ 日本では色々なところでv11の噂がまことしやかに囁かれていますが，
+俺がメインメンテナである限りv11がリリースされることはないので，諦めてv0.10.xを使ってください！ 以下まじめな話になります． v11が生まれた背景と現状 v11が生まれたのは1年以上前です． &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,6 +70,97 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2014/03/about-fluentd-v11/">そろそろFluentd v11についてひとこと言っておくか</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-05T19:40:00+09:00" pubdate data-updated="true">Mar 5<span>th</span>, 2014</time>
+        
+         | <a href="/ja/2014/03/about-fluentd-v11/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>リリースは永遠にされません！</p>
+
+<p>日本では色々なところでv11の噂がまことしやかに囁かれていますが，
+俺がメインメンテナである限りv11がリリースされることはないので，諦めてv0.10.xを使ってください！</p>
+
+<p>以下まじめな話になります．</p>
+
+<h2>v11が生まれた背景と現状</h2>
+
+<p>v11が生まれたのは1年以上前です．背景には，v10と呼ばれる今のバージョンがプロトタイプを兼ねたリリースであり，
+「利用者のフィードバックを取り込んで，ダメな所をガッツリ書き換えて互換性を壊してメジャーバージョンアップや！」という流れがありました．</p>
+
+<p>しかし，v10は十分に柔軟でかつパフォーマンスも発揮しており，コミッタ陣はそれほどモチベーションがあったわけではありません．
+また，プラグインによって解決出来た問題も多く，v11が生まれた時ほどユーザから「v11が欲しい！」という要望は聞かれなくなりました．</p>
+
+<p>当たり前ですが，ユーザからの声がなければ「あれ，じゃあこの機能あんまり必要ないんじゃね？」ということになって削られるのはよくあることで，
+v11もそんな感じで開発リソースはあまり割かれなくなって行きました．<br />
+もともと空いた時間に@frsyuki，@tagomoris，@sonotsの人達がたまにコミットしていたくらいなので，直近では機能追加のコミットはほぼありません．</p>
+
+<h2>Fluentdのユーザ拡大</h2>
+
+<p>v11で互換性を壊しても大丈夫だろう，とコミッタ陣が思っていたものの一つに，当時Fluentdのプラグインの大半をコミッタの関係者が書いていた，
+というのがあります．<br />
+そのため，互換性を壊しても必要そうなプラグインの書き換えはすぐに終わるし，
+「えいや！」と同時にバージョン上げれば被害は少ないだろうという感じです．</p>
+
+<p>しかし，v10は思っていたよりも早くユーザが増え，今ではさきがけとなったWeb/アドテク業界のみならず，大小問わず様々な企業，
+IoTな分野など，世界的にも使われるようになってきました．<br />
+また，それにともないプラグイン数も200を越え，当初の目論見が難しくなっているのが現状です．</p>
+
+<h2>開発方針の変更とv1案</h2>
+
+<p>俺がFluentdのメインメンテナとなったのも関わってるんですが，「v11のリリースをどうするか？」という問題もハンドリングするようになりました．</br />
+個人的には「v11の機能群は有用だけど，互換性を壊してリリースするほどのものではないなぁ」というのがv11を見た結論であり，
+その辺やりとりしたのが以下のtogetter．</p>
+
+<p><a href="http://togetter.com/li/620329">Fluentd v11 なんてなかったんだ</a></p>
+
+<p>上のまとめにあるように，色々と話した結果，v11が持っているいくつかの機能をv10にマージし，
+それらが終わったらv1としてリリースしようというのが，現在の開発の方向性です．<br />
+段階的な変化になりますが，基本的には互換性が保たれるようにAPIを変えていくので，
+既存ユーザはそのまま使えますし，バージョンアップにともなって徐々に有用な機能が使えるようになります．<br /></p>
+
+<p>以下のissueで必要そうな機能リストと，進捗を管理してます．</p>
+
+<p><a href="https://github.com/fluent/fluentd/issues/251">Plan for v1 release</a></p>
+
+<p>v1というバージョンに関しては，今のFluentdのgemのバージョンがv0.10.xで，v0.11.xのことをv11と呼んでいて非常に紛らわしく，
+新しく入ってくるユーザとかを考えるとそろそろまじめにバージョニングした方が良いだろうという考えです．<br />
+v1だと安定版のイメージが強いですし，実際の所v0.10.xはv1でもおかしくない機能セットはすでに持っています．</p>
+
+<h2>まとめ</h2>
+
+<p>ということで，色々と今までの流れを書きましたが，皆さんFluentdを今後とも宜しくお願いします :)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -374,63 +465,6 @@ Workerで処理がどう進むかとかその辺の話．Splitsやそれぞれ�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2014/01/fluentd-v11-at-tokuben/">Fluentd v11 at Tokuben</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-26T02:39:00+09:00" pubdate data-updated="true">Jan 26<span>th</span>, 2014</time>
-        
-         | <a href="/ja/2014/01/fluentd-v11-at-tokuben/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://atnd.org/events/46924">@特勉</a>というイベントに呼ばれたので，Fluentd v11について発表してきました．</p>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/30427877?rel=0" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/treasure-data/fluentd-v11-at-tokuben" title="Fluentd v11 at tokuben" target="_blank">Fluentd v11 at tokuben</a> </strong> from <strong><a href="http://www.slideshare.net/treasure-data" target="_blank">Treasure Data, Inc.</a></strong> </div></p>
-
-<p>今現在見えている機能群について一通りその背景とか，v10ではどうだったのかを絡めて話したので，上のスライドだけ見ても少しわかりにくいかもしれません．新しい機能の確認みたいな感じで眺めて貰えると．</p>
-
-<p>特勉は今回はログ・データ解析がテーマでしたが，色々とテーマを変えて定期的にやるようなので，随時チェックしておくと良いと思います．</p>
-
-<h2>その後…</h2>
-
-<p><a href="http://togetter.com/li/620329">Fluentd v11 なんてなかったんだ</a></p>
-
-<p>で，実はこの発表の次の日にTwitterで色々とやりとりがあり，上記のスライドに書かれているいくつかの機能は，v10に取り込まれる可能性が高いです．というか，v11そのものが消える可能性は普通にあります．</p>
-
-<p>Fluentdそのものの改善では色々と考えていることはあるので，定期的にチェックして頂けると！後「v10でこういうところが使いにくい」とかあると，開発陣にフィードバックして貰えると助かります．</p>
-
-<p>それでは！</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/ja/page/7/">&larr; Older</a>
@@ -448,6 +482,10 @@ Workerで処理がどう進むかとかその辺の話．Splitsやそれぞれ�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/ja/2015/10/tinysegmenter-benchmark-and-d/">TinySegmenterのベンチマーク + D言語版</a>
+      </li>
+    
+      <li class="post">
         <a href="/ja/2015/09/tokyo-apache-drill-meetup-1/">Tokyo Apache Drill Meetup 第一回</a>
       </li>
     
@@ -461,10 +499,6 @@ Workerで処理がどう進むかとかその辺の話．Splitsやそれぞれ�
     
       <li class="post">
         <a href="/ja/2015/06/fluentd-meetup-2015-summer/">Fluentd meetup 2015 summer</a>
-      </li>
-    
-      <li class="post">
-        <a href="/ja/2015/04/fluentd-architecture-pros-and-cons/">Fluentdの現実装のPros/Cons</a>
       </li>
     
   </ul>
