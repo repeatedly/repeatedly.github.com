@@ -9,9 +9,7 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="TODO: 必要なら図を足す
-他に書いた方が良いPros/Consのリクエストがあったら追記 内部のイベントストリームの扱い Pros: Inputがスケーラブルに実装しやすく，データストリームを正常時/エラー時で切り替えやすい
-Cons: &hellip;">
+  <meta name="description" content="Fluentd Meetup 2015 夏 - 2015/06/01(月) - dots. 募集が約2週間前とかなり直近になってしまったんですが，100人以上の方の参加がありました．場所を提供してくれたgloopsさん，受付などサポートしてくれたdots.さん， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +69,67 @@ Cons: &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2015/06/fluentd-meetup-2015-summer/">Fluentd meetup 2015 summer</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-04T16:07:00+09:00" pubdate data-updated="true">Jun 4<span>th</span>, 2015</time>
+        
+         | <a href="/ja/2015/06/fluentd-meetup-2015-summer/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://eventdots.jp/event/495315">Fluentd Meetup 2015 夏 - 2015/06/01(月) - dots.</a></p>
+
+<p>募集が約2週間前とかなり直近になってしまったんですが，100人以上の方の参加がありました．場所を提供してくれたgloopsさん，受付などサポートしてくれたdots.さん，懇親会などをスポンサーしてくれたTreasure Dataさん，発表者の方々，また当日参加してくれた皆さん，ありがとうございました！</p>
+
+<p>Eduardoが東京の地下迷宮に迷ったりとハプニングも少しありましたが，無事終わって良かったです．fluent-bitのお披露目を兼ねたイベントでしたが，さっそくパッチを送ってくれてる人もいて，正式版リリースはまだですがフィードバックをガンガン貰えればという感じです :)</p>
+
+<p>また，他の方の発表も，Fluentdを単なるログの収集だけではなく，工夫して色々と実現されているのも良い知見になりました．やはりプラグインで柔軟に弄れると，利用の幅が広がって面白いですね．</p>
+
+<p>次は秋か冬辺り，v0.14のお披露目もかねて開催出来ればと思っています．</p>
+
+<h2>Fluentd v0.12 - master guide -</h2>
+
+<p>俺が行った発表はタイトル通りv0.12に関する発表です．</p>
+
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/4pNx1vXeqMZNBM" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/repeatedly/fluentd-v012-master-guide" title="Fluentd v0.12 master guide" target="_blank">Fluentd v0.12 master guide</a> </strong> from <strong><a href="//www.slideshare.net/repeatedly" target="_blank">N Masahiro</a></strong> </div></p>
+
+<p>v0.12から追加された機能について，細かいものから目玉機能でもあるFilterやLabel，at-least-onceなどについても再度一から説明した感じになります．</p>
+
+<p>v0.10を使っている方は，このスライドを見ればv0.10とv0.12の差分が分かると思います．td-agent 2.2からは同梱されているFluentdはv0.12になっているので，どんどんFilterとかを使って行きましょう．secretオプションとかは最近入ったばかりなので，次リリースされるtd-agent 2.2.1から使えるようになります :)</p>
+
+<p>他の方のスライドは上に貼った募集ページの&#8221;イベントレポート&#8221;の所にあるので，興味のある方は是非チェックしてみてください！</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -462,90 +521,6 @@ Verticaは基本マスターデータしか見に行かないので，増やし�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2015/02/presto-meetup-1/">Presto meetup #1</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-02-02T02:00:00+09:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2015</time>
-        
-         | <a href="/ja/2015/02/presto-meetup-1/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://eventdots.jp/event/276987">Presto meetup</a></p>
-
-<p>1月20日に第一回をやりました！キャンセルも少なめで，イベント参加100人強，懇親会が80人くらいでした．予想の倍以上集まった感じで，Prestoも注目されてるんだなと実感したイベントでした．</p>
-
-<p>今回は基本から始まり，それぞれ今使っている人達に，運用の話，BIツールとの連携の話，どういう組み合わせで使っているかなど発表してもらいました．「PrestoのDynamoDBコネクタを作る！」みたいな話もあったりして，リリースが待ち遠しい所です．</p>
-
-<p>懇親会でもたくさんの人と話をしましたが，やはり安定した運用のしやすさとか，コネクタによる複数ソースへのアクセスなど，色々と使っている理由含め情報交換出来たのが良かったです．発表してくれそうな人を二人くらい見つけたので，日程は決まってませんが，また第二回でもやろうと思っています．</p>
-
-<p>このイベントの後，発表に関しての議論が他で行われたりもして，良いイベントになったんじゃないかと思います．</p>
-
-<p>会場をかしてくれたFreakOut，会場準備や手配などをしてくれたdots，懇親会をスポンサーしてくれたTreasure Data，発表者の方々，また参加者の方々，皆さんお疲れ様でした！
-第二回でお会いしましょう :)</p>
-
-<p>スライドは以下です．</p>
-
-<h3>いまさら聞けないPrestoのアーキテクチャ 〜 設計の違いから知るPrestoのメリットとデメリット</h3>
-
-<iframe src="//www.slideshare.net/slideshow/embed_code/43692990" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/frsyuki/understanding-presto-presto-meetup-tokyo-1" title="Understanding Presto - Presto meetup @ Tokyo #1" target="_blank">Understanding Presto - Presto meetup @ Tokyo #1</a> </strong> from <strong><a href="//www.slideshare.net/frsyuki" target="_blank">Sadayuki Furuhashi</a></strong> </div></p>
-
-<h3>Presto as a Service 〜 運用とモニタリングのコツ</h3>
-
-<iframe src="//www.slideshare.net/slideshow/embed_code/43693529" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/taroleo/presto-as-a-service-at-treasure-data" title="Presto as a Service - Tips for operation and monitoring" target="_blank">Presto as a Service - Tips for operation and monitoring</a> </strong> from <strong><a href="//www.slideshare.net/taroleo" target="_blank">Taro L. Saito</a></strong> </div></p>
-
-<h3>Presto in my use case</h3>
-
-<iframe src="//www.slideshare.net/slideshow/embed_code/43701223" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/wyukawa/presto-in-myusecase" title="Presto in my_use_case" target="_blank">Presto in my_use_case</a> </strong> from <strong><a href="//www.slideshare.net/wyukawa" target="_blank">Wataru Yukawa</a></strong> </div></p>
-
-<h3>シロクでの利用方法と、Sparkとの比較</h3>
-
-<script async class="speakerdeck-embed" data-id="65ca751085cb0132de3a7a1c3ec56d64" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
-
-
-<h3>社内の利用例の紹介と、自社でのHIVE、TEZとの比較</h3>
-
-<iframe src="//www.slideshare.net/slideshow/embed_code/43774471" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/Ogibayashi/20140120-presto-meetupen" title="20140120 presto meetup_en" target="_blank">20140120 presto meetup_en</a> </strong> from <strong><a href="//www.slideshare.net/Ogibayashi" target="_blank">Ogibayashi</a></strong> </div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/ja/page/3/">&larr; Older</a>
@@ -563,6 +538,10 @@ Verticaは基本マスターデータしか見に行かないので，増やし�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/ja/2016/12/aws-athena-impression/">AWS Athena雑感</a>
+      </li>
+    
+      <li class="post">
         <a href="/ja/2015/10/tinysegmenter-benchmark-and-d/">TinySegmenterのベンチマーク + D言語版</a>
       </li>
     
@@ -576,10 +555,6 @@ Verticaは基本マスターデータしか見に行かないので，増やし�
     
       <li class="post">
         <a href="/ja/2015/06/yapc-asia-2015-talk/">YAPC::Asia 2015 talk</a>
-      </li>
-    
-      <li class="post">
-        <a href="/ja/2015/06/fluentd-meetup-2015-summer/">Fluentd meetup 2015 summer</a>
       </li>
     
   </ul>
@@ -641,7 +616,7 @@ Verticaは基本マスターデータしか見に行かないので，増やし�
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Masahiro Nakagawa -
+  Copyright &copy; 2016 - Masahiro Nakagawa -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

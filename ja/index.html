@@ -9,7 +9,7 @@
   <meta name="author" content="Masahiro Nakagawa">
 
   
-  <meta name="description" content="TinySegmenterをJulia移植したらMITの先生に指導してもらえた話 上の記事がTLで結構話題になっていて，そういえば昔TinySegmenterをD言語で実装したなぁと掘り起こした(TinySegmenter written in D)． &hellip;">
+  <meta name="description" content="Amazon Athena — Serverless Interactive Query Service - AWS Prestoのフォースを感じたので，知り合いが試した情報も含めて，今思っている所を書いてみる． 実装 Athenaのページにあるように，実行エンジンは独自実装ではなくて， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +69,105 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/ja/2016/12/aws-athena-impression/">AWS Athena雑感</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-12-05T19:00:00+09:00" pubdate data-updated="true">Dec 5<span>th</span>, 2016</time>
+        
+         | <a href="/ja/2016/12/aws-athena-impression/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://aws.amazon.com/athena/">Amazon Athena — Serverless Interactive Query Service - AWS</a></p>
+
+<p>Prestoのフォースを感じたので，知り合いが試した情報も含めて，今思っている所を書いてみる．</p>
+
+<h2>実装</h2>
+
+<p>Athenaのページにあるように，実行エンジンは独自実装ではなくて，Facebookが公開しているPrestoを使っている．FacebookのみならずTreasure Data，Airbnb，Netflixなどクエリがガンガン飛ぶ環境で元気に動いている実績もあるので，拡張性，パフォーマンス，安定性で選ばれたのだろうと思われる．あとAWS的にJavaの方が相性は良さそう．</p>
+
+<h2>パフォーマンス</h2>
+
+<p>いくつかの記事で言及されている．</p>
+
+<ul>
+<li><a href="https://aws.amazon.com/jp/blogs/big-data/analyzing-data-in-s3-using-amazon-athena/">Analyzing Data in S3 using Amazon Athena</a></li>
+<li><a href="http://data.gunosy.io/entry/aws-athena-vs-bigquery">Amazon AthenaをBigQueryと比較してみた</a></li>
+<li><a href="http://dev.classmethod.jp/cloud/aws/amazon-athena-using-parquet/">Amazon Athena: カラムナフォーマット『Parquet』でクエリを試してみた</a></li>
+</ul>
+
+
+<p>これらを見ると，Prestoをそんなに改造せずに動かしている感じ．例えばGunosyさんやclassmethodさんの記事ではとりあえずフルスキャンをするcsv.gzの方がParquetより速い．データ量が少ないのとクエリが単純なので誤差の範囲に収まってる可能性もあるが，ParquetのReaderをAthena向けに改造している感じはしない(TQA(TDのPresto)の場合，PlazmaDB向けに色々と最適化したReaderを実装してパフォーマンスを稼いでいる(<a href="https://twitter.com/taroleo/status/804152866881478658">参考</a>))．</p>
+
+<p>AWSがGoogleのColossus相当を持っているという話は聞かないものの，それでもBigQueryに近いパフォーマンスが出たりもするようなので，1クエリで多めにワーカーを使っているんじゃないかと思っている．TQAがクエリによっては同じデータ量でBigQueryとかその他DWHより高速に動いたケースってのはいくつかあるので，Prestoを使っているAthenaでも同様になると思われる．</p>
+
+<p>あと細かなところだけど知り合いの試した情報によると，TQAとかBigQueryはキューイングされてから実行が完了するまでの実行時間が表示されるが，Athenaはクエリが走り始めてから完了するまでの時間しか表示されてないようなので，キューイングまわりで時間が掛かっている場合，体感と表示時間にかなり差があくようだ．</p>
+
+<h2>スケジューリング</h2>
+
+<p>1クラスタに数千ワーカー(今のPrestoだと万は怪しい？)があって，そこにユーザが割り当てられ，そこの中でさらに適宜ワーカーを選んで処理をしている感じ．</p>
+
+<p><a href="http://dev.classmethod.jp/cloud/athena-cloudfront-logs/">Amazon AthenaでCloudFrontログをSQLで解析する #reinvent #athena</a></p>
+
+<p>例えばこの記事の最後に「同じSELECTでも数秒で終わるものが時間帯によって数百秒かかることがあったり」というのがあるので，リソースが空いてるワーカーやクラスタをちゃんと選んでいるのではなくて，おそらくランダムか割り当て回数が少ないワーカーを選んでいるっぽい．この辺はBigQueryと同じで，実際複数ユーザが投げ続ける環境だと空いてるワーカーをクエリ負荷含めて探すのはかなり難しいので，この手のアプローチがシンプルでそれなりによく動く．</p>
+
+<p>ただ，知人の試した結果だと，1時間弱くらいResourceUnavailableで弾かれ続けた，みたいな状況もあるようなので，重めのクエリを投げ続けると制限されるのか，ユーザのクラスタ割り当てが一定時間は固定で，ビジーなクラスタに割り当てられるとクエリが失敗しやすくなるのかもしれない．</p>
+
+<p>Athenaのページに同時実行数に関する記述がないので，この辺どれだけ絞っているのかよく分からないのが悩ましいところ……</p>
+
+<h2>エラーハンドリング</h2>
+
+<p>どうもPresto内部でいくつかエラーを握りつぶしているっぽい．これはBigQueryもそうなんだけど，多分そのエラーによってクラスタの状態とかバックエンドの詳細が分かってしまうので，「とりあえずエラー」みたいなのを返しているようだ．
+エラーが起きたらとりあえずretryする感じになりそう．</p>
+
+<h2>カスタマイズされている部分</h2>
+
+<p>ユーザが目に見えるところだと，DDLとか禁止されているクエリ周り．例えば運用上発行されたら困るDDLとかはもちろん弾かれるし，生のPrestoとかTQAだと通るクエリがAthenaではエラーになったりすることもあるようなので，その辺は運用との兼ね合いで禁止しているようだ．</p>
+
+<p>あと当たり前だけどHiveのmetastore周りはAWS向けに専用サーバを実装しているっぽい．</p>
+
+<h2>料金</h2>
+
+<p>ここは思いっきりBigQueryを参考にしているようだ，がBilling Tierみたいなのはない．いずれ入るかもしれないが，AthenaはBigQueryのようにバッチとか含めてDWH的に使わせる気はあまりないようなので，当分ないだろうと思っている．
+ただ，AWSは既存のうまく行ってるサービスを自社サービスに取り込んで提供する傾向が強いので，今後BigQueryに寄せていく可能性はありそう．</p>
+
+<p>Athenaは様々なフォーマットに投げられる一方，jsonやcsvみたいなオブジェクトを対象にすると強制的にフルスキャンになるので，その分課金がバーストしやすい．列指向にするにはEMRのSparkとか使って行うのが鉄板のようだ．</p>
+
+<p>あと当たり前だけどS3に対する保存・APIリクエスト・データ転送分も別途課金されるので，1TB per 5$ + additionalというのは気をつけてないと，想像より課金されてた，みたいなのが起きやすそう．特にデータ転送量．</p>
+
+<h2>感想</h2>
+
+<p>結構TLとか見てると，「BigQueryの対抗だ！」みたいなtweetを見かけたりするけど，個人的にはあくまでManaged Prestoって感じでまだ対抗みたいな感じはしてない．今後，ヘビーユーザが増えた時にどこまでうまくworkするのかは気になっているところ．</p>
+
+<p>出来れば，AWSからPrestoにガンガンパッチとかFeature Requestが飛んでくれると嬉しいなぁと思ってます．</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -413,67 +512,6 @@ ApacheプロジェクトだしMapRがかなり開発リソースを割いてる�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/ja/2015/06/fluentd-meetup-2015-summer/">Fluentd meetup 2015 summer</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-06-04T16:07:00+09:00" pubdate data-updated="true">Jun 4<span>th</span>, 2015</time>
-        
-         | <a href="/ja/2015/06/fluentd-meetup-2015-summer/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://eventdots.jp/event/495315">Fluentd Meetup 2015 夏 - 2015/06/01(月) - dots.</a></p>
-
-<p>募集が約2週間前とかなり直近になってしまったんですが，100人以上の方の参加がありました．場所を提供してくれたgloopsさん，受付などサポートしてくれたdots.さん，懇親会などをスポンサーしてくれたTreasure Dataさん，発表者の方々，また当日参加してくれた皆さん，ありがとうございました！</p>
-
-<p>Eduardoが東京の地下迷宮に迷ったりとハプニングも少しありましたが，無事終わって良かったです．fluent-bitのお披露目を兼ねたイベントでしたが，さっそくパッチを送ってくれてる人もいて，正式版リリースはまだですがフィードバックをガンガン貰えればという感じです :)</p>
-
-<p>また，他の方の発表も，Fluentdを単なるログの収集だけではなく，工夫して色々と実現されているのも良い知見になりました．やはりプラグインで柔軟に弄れると，利用の幅が広がって面白いですね．</p>
-
-<p>次は秋か冬辺り，v0.14のお披露目もかねて開催出来ればと思っています．</p>
-
-<h2>Fluentd v0.12 - master guide -</h2>
-
-<p>俺が行った発表はタイトル通りv0.12に関する発表です．</p>
-
-<iframe src="//www.slideshare.net/slideshow/embed_code/key/4pNx1vXeqMZNBM" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/repeatedly/fluentd-v012-master-guide" title="Fluentd v0.12 master guide" target="_blank">Fluentd v0.12 master guide</a> </strong> from <strong><a href="//www.slideshare.net/repeatedly" target="_blank">N Masahiro</a></strong> </div></p>
-
-<p>v0.12から追加された機能について，細かいものから目玉機能でもあるFilterやLabel，at-least-onceなどについても再度一から説明した感じになります．</p>
-
-<p>v0.10を使っている方は，このスライドを見ればv0.10とv0.12の差分が分かると思います．td-agent 2.2からは同梱されているFluentdはv0.12になっているので，どんどんFilterとかを使って行きましょう．secretオプションとかは最近入ったばかりなので，次リリースされるtd-agent 2.2.1から使えるようになります :)</p>
-
-<p>他の方のスライドは上に貼った募集ページの&#8221;イベントレポート&#8221;の所にあるので，興味のある方は是非チェックしてみてください！</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/ja/page/2/">&larr; Older</a>
@@ -489,6 +527,10 @@ ApacheプロジェクトだしMapRがかなり開発リソースを割いてる�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/ja/2016/12/aws-athena-impression/">AWS Athena雑感</a>
+      </li>
+    
+      <li class="post">
         <a href="/ja/2015/10/tinysegmenter-benchmark-and-d/">TinySegmenterのベンチマーク + D言語版</a>
       </li>
     
@@ -502,10 +544,6 @@ ApacheプロジェクトだしMapRがかなり開発リソースを割いてる�
     
       <li class="post">
         <a href="/ja/2015/06/yapc-asia-2015-talk/">YAPC::Asia 2015 talk</a>
-      </li>
-    
-      <li class="post">
-        <a href="/ja/2015/06/fluentd-meetup-2015-summer/">Fluentd meetup 2015 summer</a>
       </li>
     
   </ul>
@@ -567,7 +605,7 @@ ApacheプロジェクトだしMapRがかなり開発リソースを割いてる�
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Masahiro Nakagawa -
+  Copyright &copy; 2016 - Masahiro Nakagawa -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

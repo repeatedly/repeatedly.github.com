@@ -4,7 +4,7 @@
   <title><![CDATA[Go ahead!]]></title>
   <link href="http://repeatedly.github.com/atom.xml" rel="self"/>
   <link href="http://repeatedly.github.com/"/>
-  <updated>2015-10-22T21:24:43+09:00</updated>
+  <updated>2016-12-05T19:06:24+09:00</updated>
   <id>http://repeatedly.github.com/</id>
   <author>
     <name><![CDATA[Masahiro Nakagawa]]></name>
@@ -12,6 +12,76 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[AWS Athena雑感]]></title>
+    <link href="http://repeatedly.github.com/ja/2016/12/aws-athena-impression/"/>
+    <updated>2016-12-05T19:00:00+09:00</updated>
+    <id>http://repeatedly.github.com/ja/2016/12/aws-athena-impression</id>
+    <content type="html"><![CDATA[<p><a href="https://aws.amazon.com/athena/">Amazon Athena — Serverless Interactive Query Service - AWS</a></p>
+
+<p>Prestoのフォースを感じたので，知り合いが試した情報も含めて，今思っている所を書いてみる．</p>
+
+<h2>実装</h2>
+
+<p>Athenaのページにあるように，実行エンジンは独自実装ではなくて，Facebookが公開しているPrestoを使っている．FacebookのみならずTreasure Data，Airbnb，Netflixなどクエリがガンガン飛ぶ環境で元気に動いている実績もあるので，拡張性，パフォーマンス，安定性で選ばれたのだろうと思われる．あとAWS的にJavaの方が相性は良さそう．</p>
+
+<h2>パフォーマンス</h2>
+
+<p>いくつかの記事で言及されている．</p>
+
+<ul>
+<li><a href="https://aws.amazon.com/jp/blogs/big-data/analyzing-data-in-s3-using-amazon-athena/">Analyzing Data in S3 using Amazon Athena</a></li>
+<li><a href="http://data.gunosy.io/entry/aws-athena-vs-bigquery">Amazon AthenaをBigQueryと比較してみた</a></li>
+<li><a href="http://dev.classmethod.jp/cloud/aws/amazon-athena-using-parquet/">Amazon Athena: カラムナフォーマット『Parquet』でクエリを試してみた</a></li>
+</ul>
+
+
+<p>これらを見ると，Prestoをそんなに改造せずに動かしている感じ．例えばGunosyさんやclassmethodさんの記事ではとりあえずフルスキャンをするcsv.gzの方がParquetより速い．データ量が少ないのとクエリが単純なので誤差の範囲に収まってる可能性もあるが，ParquetのReaderをAthena向けに改造している感じはしない(TQA(TDのPresto)の場合，PlazmaDB向けに色々と最適化したReaderを実装してパフォーマンスを稼いでいる(<a href="https://twitter.com/taroleo/status/804152866881478658">参考</a>))．</p>
+
+<p>AWSがGoogleのColossus相当を持っているという話は聞かないものの，それでもBigQueryに近いパフォーマンスが出たりもするようなので，1クエリで多めにワーカーを使っているんじゃないかと思っている．TQAがクエリによっては同じデータ量でBigQueryとかその他DWHより高速に動いたケースってのはいくつかあるので，Prestoを使っているAthenaでも同様になると思われる．</p>
+
+<p>あと細かなところだけど知り合いの試した情報によると，TQAとかBigQueryはキューイングされてから実行が完了するまでの実行時間が表示されるが，Athenaはクエリが走り始めてから完了するまでの時間しか表示されてないようなので，キューイングまわりで時間が掛かっている場合，体感と表示時間にかなり差があくようだ．</p>
+
+<h2>スケジューリング</h2>
+
+<p>1クラスタに数千ワーカー(今のPrestoだと万は怪しい？)があって，そこにユーザが割り当てられ，そこの中でさらに適宜ワーカーを選んで処理をしている感じ．</p>
+
+<p><a href="http://dev.classmethod.jp/cloud/athena-cloudfront-logs/">Amazon AthenaでCloudFrontログをSQLで解析する #reinvent #athena</a></p>
+
+<p>例えばこの記事の最後に「同じSELECTでも数秒で終わるものが時間帯によって数百秒かかることがあったり」というのがあるので，リソースが空いてるワーカーやクラスタをちゃんと選んでいるのではなくて，おそらくランダムか割り当て回数が少ないワーカーを選んでいるっぽい．この辺はBigQueryと同じで，実際複数ユーザが投げ続ける環境だと空いてるワーカーをクエリ負荷含めて探すのはかなり難しいので，この手のアプローチがシンプルでそれなりによく動く．</p>
+
+<p>ただ，知人の試した結果だと，1時間弱くらいResourceUnavailableで弾かれ続けた，みたいな状況もあるようなので，重めのクエリを投げ続けると制限されるのか，ユーザのクラスタ割り当てが一定時間は固定で，ビジーなクラスタに割り当てられるとクエリが失敗しやすくなるのかもしれない．</p>
+
+<p>Athenaのページに同時実行数に関する記述がないので，この辺どれだけ絞っているのかよく分からないのが悩ましいところ……</p>
+
+<h2>エラーハンドリング</h2>
+
+<p>どうもPresto内部でいくつかエラーを握りつぶしているっぽい．これはBigQueryもそうなんだけど，多分そのエラーによってクラスタの状態とかバックエンドの詳細が分かってしまうので，「とりあえずエラー」みたいなのを返しているようだ．
+エラーが起きたらとりあえずretryする感じになりそう．</p>
+
+<h2>カスタマイズされている部分</h2>
+
+<p>ユーザが目に見えるところだと，DDLとか禁止されているクエリ周り．例えば運用上発行されたら困るDDLとかはもちろん弾かれるし，生のPrestoとかTQAだと通るクエリがAthenaではエラーになったりすることもあるようなので，その辺は運用との兼ね合いで禁止しているようだ．</p>
+
+<p>あと当たり前だけどHiveのmetastore周りはAWS向けに専用サーバを実装しているっぽい．</p>
+
+<h2>料金</h2>
+
+<p>ここは思いっきりBigQueryを参考にしているようだ，がBilling Tierみたいなのはない．いずれ入るかもしれないが，AthenaはBigQueryのようにバッチとか含めてDWH的に使わせる気はあまりないようなので，当分ないだろうと思っている．
+ただ，AWSは既存のうまく行ってるサービスを自社サービスに取り込んで提供する傾向が強いので，今後BigQueryに寄せていく可能性はありそう．</p>
+
+<p>Athenaは様々なフォーマットに投げられる一方，jsonやcsvみたいなオブジェクトを対象にすると強制的にフルスキャンになるので，その分課金がバーストしやすい．列指向にするにはEMRのSparkとか使って行うのが鉄板のようだ．</p>
+
+<p>あと当たり前だけどS3に対する保存・APIリクエスト・データ転送分も別途課金されるので，1TB per 5$ + additionalというのは気をつけてないと，想像より課金されてた，みたいなのが起きやすそう．特にデータ転送量．</p>
+
+<h2>感想</h2>
+
+<p>結構TLとか見てると，「BigQueryの対抗だ！」みたいなtweetを見かけたりするけど，個人的にはあくまでManaged Prestoって感じでまだ対抗みたいな感じはしてない．今後，ヘビーユーザが増えた時にどこまでうまくworkするのかは気になっているところ．</p>
+
+<p>出来れば，AWSからPrestoにガンガンパッチとかFeature Requestが飛んでくれると嬉しいなぁと思ってます．</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[TinySegmenterのベンチマーク + D言語版]]></title>
@@ -1677,114 +1747,6 @@ MPPと一纏めにするにはユースケースや得意なものが違うの�
 
 <script async src="http://repeatedly.github.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Release fluent-plugin-http-puma]]></title>
-    <link href="http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-http-puma/"/>
-    <updated>2014-07-20T18:42:00+09:00</updated>
-    <id>http://repeatedly.github.com/ja/2014/07/release-fluent-plugin-http-puma</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/repeatedly/fluent-plugin-http-puma">fluent-plugin-http-puma</a></p>
-
-<p>標準で入っているin_httpとは違って，Pumaと呼ばれるWebサーバベースのHTTP(S)でのリクエストを受け付けるInputプラグイン書きました．</p>
-
-<h2>使い方</h2>
-
-<p>fluent-gemでインストール．</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ fluent-gem install fluent-plugin-http-puma</span></code></pre></td></tr></table></div></figure>
-
-
-<p>in_httpとほぼ同じように動きますが，独自でHTTPリクエストをパースしてないので，keepaliveやボディサイズチェック用のオプションはありません．その代わりPuma関係のオプションが増えてます(<a href="https://github.com/repeatedly/fluent-plugin-http-puma#configuration">README参照</a>)．<br />
-一番の違いは，HTTPSをサポートしている所です．<code>use_ssl</code>と<code>ssl_keys</code>を使うことで，HTTPSとして立ち上がります．</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='aconf'><span class='line'><span class="nt">&lt;source&gt;</span>
-</span><span class='line'>  <span class="nb">type</span> http_puma
-</span><span class='line'>
-</span><span class='line'>  <span class="err">use_</span><span class="nb">ssl</span>
-</span><span class='line'>  ssl_keys [<span class="s2">&quot;/path/to/key&quot;</span>, <span class="s2">&quot;/path/to/cert&quot;</span>]
-</span><span class='line'><span class="nt">&lt;/source&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>パフォーマンス</h2>
-
-<p>手元のMBPで試して見たら，HTTPはin_httpより少し速かった．HTTPSは当たり前ですがｶﾞｸｯと落ちます．</p>
-
-<p>クライアントはRubyの<code>net/http</code>を使って，小さめのjsonを<code>application/json</code>で送ってます．</p>
-
-<ul>
-<li>in_http</li>
-</ul>
-
-
-<p>平均2400 events/secくらい．</p>
-
-<pre><code>2014-07-20 19:02:30 +0900 [info]: plugin:out_flowcounter_simple count:2318      indicator:num   unit:second
-2014-07-20 19:02:31 +0900 [info]: plugin:out_flowcounter_simple count:2420      indicator:num   unit:second
-2014-07-20 19:02:32 +0900 [info]: plugin:out_flowcounter_simple count:2383      indicator:num   unit:second
-2014-07-20 19:02:33 +0900 [info]: plugin:out_flowcounter_simple count:2399      indicator:num   unit:second
-2014-07-20 19:02:34 +0900 [info]: plugin:out_flowcounter_simple count:2382      indicator:num   unit:second
-</code></pre>
-
-<ul>
-<li>in_http_puma</li>
-</ul>
-
-
-<p>平均2500 events/secくらい．Ojを使ったらもっと速くなるかと思ったけど，ほぼ誤差の範囲だった．</p>
-
-<pre><code>2014-07-20 19:01:12 +0900 [info]: plugin:out_flowcounter_simple count:2472      indicator:num   unit:second
-2014-07-20 19:01:13 +0900 [info]: plugin:out_flowcounter_simple count:2550      indicator:num   unit:second
-2014-07-20 19:01:14 +0900 [info]: plugin:out_flowcounter_simple count:2294      indicator:num   unit:second
-2014-07-20 19:01:15 +0900 [info]: plugin:out_flowcounter_simple count:2537      indicator:num   unit:second
-2014-07-20 19:01:16 +0900 [info]: plugin:out_flowcounter_simple count:2538      indicator:num   unit:second
-</code></pre>
-
-<ul>
-<li>in_http_puma with VERIFY_NONE client</li>
-</ul>
-
-
-<p>平均400 events/secくらい．けどVERIFY_NONEはほとんど本番では使われないので参考程度．</p>
-
-<pre><code>2014-07-20 19:04:06 +0900 [info]: plugin:out_flowcounter_simple count:406       indicator:num   unit:second
-2014-07-20 19:04:07 +0900 [info]: plugin:out_flowcounter_simple count:365       indicator:num   unit:second
-2014-07-20 19:04:08 +0900 [info]: plugin:out_flowcounter_simple count:400       indicator:num   unit:second
-2014-07-20 19:04:09 +0900 [info]: plugin:out_flowcounter_simple count:399       indicator:num   unit:second
-2014-07-20 19:04:10 +0900 [info]: plugin:out_flowcounter_simple count:400       indicator:num   unit:second
-</code></pre>
-
-<ul>
-<li>in_http_puma with VERIFY_PEER client</li>
-</ul>
-
-
-<p>平均320 events/secくらい．高負荷環境で無ければ大丈夫かな…？</p>
-
-<pre><code>2014-07-20 19:05:18 +0900 [info]: plugin:out_flowcounter_simple count:329       indicator:num   unit:second
-2014-07-20 19:05:19 +0900 [info]: plugin:out_flowcounter_simple count:327       indicator:num   unit:second
-2014-07-20 19:05:20 +0900 [info]: plugin:out_flowcounter_simple count:327       indicator:num   unit:second
-2014-07-20 19:05:21 +0900 [info]: plugin:out_flowcounter_simple count:325       indicator:num   unit:second
-2014-07-20 19:05:22 +0900 [info]: plugin:out_flowcounter_simple count:326       indicator:num   unit:second
-</code></pre>
-
-<h2>まとめ</h2>
-
-<p>モダンと言われるPumaってどんなもんなんだろう？と調べてたら，HTTPSを標準でサポートしてるし，ライブラリとしても簡単に使えそうだったので試して見たら，それなりにパフォーマンスが出たので公開してみたという感じです．<br />
-Pumaなので，今後FluentdがJRubyとかサポートしても普通にそのまま使えると思います．</p>
-
-<p>実際HTTPSを処理するならFluentdの前にNginxとかを置いた方が良いのだけど，バックエンドでも通信はHTTPSでやってるとかなんか縛りがあるような環境では，手軽に使えるのではないかと思います．</p>
-
-<p>何かあれば<a href="https://github.com/repeatedly/fluent-plugin-http-puma">issue/pull request</a>に投げてもらえれば対応します．</p>
 ]]></content>
   </entry>
   
